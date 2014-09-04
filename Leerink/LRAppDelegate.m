@@ -19,7 +19,7 @@
 #import "LRLoginViewController.h"
 #import "LRCRMListViewController.h"
 #import "LRMainClientPageViewController.h"
-//#import <Parse/Parse.h>
+#import <Parse/Parse.h>
 
 @implementation LRAppDelegate
 @synthesize coreDataHelper;
@@ -36,11 +36,6 @@
     LRMainClientPageViewController *aMainClientPAgeController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRMainClientPageViewController class])];
     self.aBaseNavigationController = [[UINavigationController alloc] initWithRootViewController:aMainClientPAgeController];
     
-    LRCRMListViewController *aContactListViewController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRCRMListViewController class])];
-    self.crmListViewController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRCRMListViewController class])];
-    // self.aBaseNavigationController = [[UINavigationController alloc] initWithRootViewController:self.crmListViewController];
-    aContactListViewController.tabBarItem.title = @"CRM";
-    
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
         // Load resources for iOS 6.1 or earlier
     } else {
@@ -53,14 +48,16 @@
     [self.window makeKeyAndVisible];
     
     ///
-    // [Parse setApplicationId:@"0921QnBasJhIv1cFQkxC8f4aJupFnUbIuCnq8qB6"
-    //             clientKey:@"CrXy8wSEnkuvmm67ebWMbEOpzFbUA55dI3MFtLjL"];
+     [Parse setApplicationId:@"0921QnBasJhIv1cFQkxC8f4aJupFnUbIuCnq8qB6"
+                 clientKey:@"CrXy8wSEnkuvmm67ebWMbEOpzFbUA55dI3MFtLjL"];
+    
     // Let the device know we want to receive push notifications
 	[application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
      UIRemoteNotificationTypeAlert|
      UIRemoteNotificationTypeSound];
     ///
     
+    // initialise the core data helper singleton class
     if (!self.coreDataHelper) {
         self.coreDataHelper = [LRCoreDataHelper new];
         [self.coreDataHelper setupCoreData];
@@ -188,7 +185,7 @@
     return self.coreDataHelper;
 }
 #pragma mark - Push notification code
-/*- (void)application:(UIApplication *)application
+- (void)application:(UIApplication *)application
  didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
  {
  // Store the deviceToken in the current installation and save it to Parse.
@@ -201,7 +198,7 @@
  didReceiveRemoteNotification:(NSDictionary *)userInfo {
  [PFPush handlePush:userInfo];
  }
- */
+
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
 	NSLog(@"Failed to get token, error: %@", error);

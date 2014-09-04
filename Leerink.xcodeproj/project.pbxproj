@@ -98,6 +98,9 @@
 		84D3C10A19B88994007455F9 /* LRUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C10919B88994007455F9 /* LRUtility.m */; };
 		84D3C11019B88A77007455F9 /* RTCustomTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C10D19B88A77007455F9 /* RTCustomTextField.m */; };
 		84D3C11119B88A77007455F9 /* UITextField+previousNextToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C10F19B88A77007455F9 /* UITextField+previousNextToolBar.m */; };
+		84D3C11519B8A36C007455F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C11419B8A36C007455F9 /* StoreKit.framework */; };
+		84D3C11C19B8A487007455F9 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C11A19B8A487007455F9 /* Bolts.framework */; };
+		84D3C11D19B8A487007455F9 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C11B19B8A487007455F9 /* Parse.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -249,6 +252,9 @@
 		84D3C10D19B88A77007455F9 /* RTCustomTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTCustomTextField.m; sourceTree = "<group>"; };
 		84D3C10E19B88A77007455F9 /* UITextField+previousNextToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+previousNextToolBar.h"; sourceTree = "<group>"; };
 		84D3C10F19B88A77007455F9 /* UITextField+previousNextToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+previousNextToolBar.m"; sourceTree = "<group>"; };
+		84D3C11419B8A36C007455F9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		84D3C11A19B8A487007455F9 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		84D3C11B19B8A487007455F9 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +262,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D3C11519B8A36C007455F9 /* StoreKit.framework in Frameworks */,
 				84D3C0F619B888A6007455F9 /* Security.framework in Frameworks */,
 				84D3C0F419B888A2007455F9 /* ImageIO.framework in Frameworks */,
 				84D3C0F219B88881007455F9 /* SystemConfiguration.framework in Frameworks */,
@@ -271,9 +278,11 @@
 				84D3C0DD19B88833007455F9 /* CoreData.framework in Frameworks */,
 				84D3C0DE19B88833007455F9 /* CoreLocation.framework in Frameworks */,
 				84D3C0E019B88833007455F9 /* QuartzCore.framework in Frameworks */,
+				84D3C11D19B8A487007455F9 /* Parse.framework in Frameworks */,
 				84D3C00619B86F9E007455F9 /* CoreGraphics.framework in Frameworks */,
 				84D3C0D719B88811007455F9 /* libxml2.2.dylib in Frameworks */,
 				84D3C0D819B88811007455F9 /* libxml2.dylib in Frameworks */,
+				84D3C11C19B8A487007455F9 /* Bolts.framework in Frameworks */,
 				84D3C00819B86F9E007455F9 /* UIKit.framework in Frameworks */,
 				84D3C00419B86F9E007455F9 /* Foundation.framework in Frameworks */,
 			);
@@ -314,6 +323,9 @@
 		84D3C00219B86F9E007455F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84D3C11A19B8A487007455F9 /* Bolts.framework */,
+				84D3C11B19B8A487007455F9 /* Parse.framework */,
+				84D3C11419B8A36C007455F9 /* StoreKit.framework */,
 				84D3C0F519B888A6007455F9 /* Security.framework */,
 				84D3C0F319B888A2007455F9 /* ImageIO.framework */,
 				84D3C0F119B88881007455F9 /* SystemConfiguration.framework */,
@@ -799,6 +811,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -839,6 +852,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -858,6 +872,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Leerink/Leerink-Prefix.pch";
 				INFOPLIST_FILE = "Leerink/Leerink-Info.plist";
@@ -871,6 +886,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Leerink/Leerink-Prefix.pch";
 				INFOPLIST_FILE = "Leerink/Leerink-Info.plist";
@@ -938,6 +954,7 @@
 				84D3C03719B86F9E007455F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		84D3C03819B86F9E007455F9 /* Build configuration list for PBXNativeTarget "LeerinkTests" */ = {
 			isa = XCConfigurationList;
@@ -946,6 +963,7 @@
 				84D3C03A19B86F9E007455F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

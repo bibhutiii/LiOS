@@ -12,8 +12,6 @@
 
 @interface LRAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) LRCRMListViewController *crmListViewController;
 @property (strong, nonatomic) UINavigationController *aBaseNavigationController;
 @property (nonatomic, strong) LRCoreDataHelper *coreDataHelper;
 
