@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="LRAnalyst" representedClassName="LRAnalyst" syncable="YES">
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="analystDocuments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LRDocument" inverseName="analyst" inverseEntity="LRDocument" syncable="YES"/>
+    </entity>
+    <entity name="LRDocument" representedClassName="LRDocument" syncable="YES">
+        <attribute name="documentAuthor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="documentDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="documentID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="documentTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="analyst" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LRAnalyst" inverseName="analystDocuments" inverseEntity="LRAnalyst" syncable="YES"/>
+        <relationship name="sector" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LRSector" inverseName="sectorDocuments" inverseEntity="LRSector" syncable="YES"/>
+        <relationship name="symbol" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LRSymbol" inverseName="symbolDocuments" inverseEntity="LRSymbol" syncable="YES"/>
+    </entity>
+    <entity name="LRSector" representedClassName="LRSector" syncable="YES">
+        <attribute name="researchID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="sectorName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="sectorDocuments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LRDocument" inverseName="sector" inverseEntity="LRDocument" syncable="YES"/>
+    </entity>
+    <entity name="LRSymbol" representedClassName="LRSymbol" syncable="YES">
+        <attribute name="nameSymbol" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tickerID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="symbolDocuments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LRDocument" inverseName="symbol" inverseEntity="LRDocument" syncable="YES"/>
+    </entity>
+    <entity name="LRUser" representedClassName="LRUser" syncable="YES">
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="roleId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="LRUserRoles" representedClassName="LRUserRoles" syncable="YES">
+        <attribute name="userRole" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userRoleId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="LRAnalyst" positionX="-45" positionY="63" width="128" height="103"/>
+        <element name="LRSector" positionX="-45" positionY="63" width="128" height="88"/>
+        <element name="LRSymbol" positionX="-36" positionY="72" width="128" height="88"/>
+        <element name="LRUser" positionX="-36" positionY="54" width="128" height="90"/>
+        <element name="LRUserRoles" positionX="-54" positionY="18" width="128" height="75"/>
+        <element name="LRDocument" positionX="-45" positionY="63" width="128" height="148"/>
+    </elements>
+</model>
