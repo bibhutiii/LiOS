@@ -9,6 +9,8 @@
 #import "LRGetAnalystService.h"
 #import "LRUser.h"
 #import "LRAnalyst.h"
+#import "NSString+HTML.h"
+
 
 @interface LRGetAnalystService ()
 
@@ -52,11 +54,11 @@
                              "</SOAP-ENV:Envelope>"];
     
     
-    NSURL *url = [NSURL URLWithString:@"http://10.0.100.40:8081/iOS_QA/Service1.svc"];
+    NSURL *url = [NSURL URLWithString:locationOfServiceURL];
     NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
     NSString *msgLength = [NSString stringWithFormat:@"%d", (int)[soapMessage length]];
     [theRequest addValue: @"text/xml" forHTTPHeaderField:@"Content-Type"];
-    [theRequest addValue: @"http://tempuri.org/IService1/GetAnalysts" forHTTPHeaderField:@"Soapaction"];
+    [theRequest addValue: @"http://tempuri.org/IIIRPIOSService/GetAnalysts" forHTTPHeaderField:@"Soapaction"];
     [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
     [theRequest setHTTPMethod:@"POST"];
     [theRequest setHTTPBody: [soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
@@ -87,19 +89,26 @@
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
 	NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[webData length]);
+    if((unsigned long)[webData length] == 0) {
+        if([self.delegate respondsToSelector:@selector(didLoadData:)]){
+            [self.delegate didLoadData:FALSE];
+        }
+    }
+    else {
+        NSString *theXML = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
         
-	NSString *theXML = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
-    
-    NSString *aDecodedString = [theXML stringByDecodingHTMLEntities];
-    NSLog(@"%@",aDecodedString);
-    
-	xmlParser = [[NSXMLParser alloc]initWithData:webData];
-	[xmlParser setDelegate: self];
-	//[xmlParser setShouldResolveExternalEntities: NO];
-	[xmlParser parse];
-    //
-	//[webData release];
-	//[resultTable reloadData];
+        NSString *aDecodedString = [theXML stringByDecodingHTMLEntities];
+        NSLog(@"%@",aDecodedString);
+        
+        xmlParser = [[NSXMLParser alloc]initWithData:webData];
+        [xmlParser setDelegate: self];
+        //[xmlParser setShouldResolveExternalEntities: NO];
+        [xmlParser parse];
+        //
+        //[webData release];
+        //[resultTable reloadData];
+        
+    }
 }
 
 
@@ -139,15 +148,21 @@
             NSArray *array = [name componentsSeparatedByString:@","];
             analyst.firstName = [array objectAtIndex:1];
             analyst.lastName = [array objectAtIndex:0];
-            analyst.userId = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"userID"] intValue]];
+            analyst.userId = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"UserID"] intValue]];
         }
         [[LRCoreDataHelper sharedStorageManager] saveContext];
         
+        [self sendTheListOfAnalystsAfterSavingInDatabase:^(BOOL analystSaved) {
+            
+        }];
         // after the data has been loaded into the database, reload the table to compose the data in the tableview.
-        if([self.delegate respondsToSelector:@selector(didLoadData)]) {
-            [self.delegate didLoadData];
+        if([self.delegate respondsToSelector:@selector(didLoadData:)]) {
+            [self.delegate didLoadData:TRUE];
         }
     }
 }
-
+- (void)sendTheListOfAnalystsAfterSavingInDatabase:(LRGetSaveAnalystsToDatabase)analystysSaveblock
+{
+    analystysSaveblock(TRUE);
+}
 @end

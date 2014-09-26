@@ -2,8 +2,8 @@
 //  LRGetDocumentService.h
 //  Leerink
 //
-//  Created by Ashish on 21/08/2014.
-//  Copyright (c) 2014 admin. All rights reserved.
+//  Created by Ashish on 11/09/2014.
+//  Copyright (c) 2014 leerink. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -24,5 +24,6 @@ typedef void (^LRGetDocumentResponse)(BOOL isDocumentFetched);
 @property (nonatomic, assign) id <LRLoadDataDelegate> delegate;
 
 - (id)initWithURL:(NSURL *)url;
-- (void)getDocument:(LRGetDocumentResponse)responseBlock withDocumentType:(NSString *)documentType andId:(int )documentTypeId;
+- (void)getDocument:(LRGetDocumentResponse)responseBlock withDocumentId:(int )documentId withUserId:(int )userId andPath:(NSString *)path;
 @end
+

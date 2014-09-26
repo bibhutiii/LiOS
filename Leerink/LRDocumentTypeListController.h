@@ -9,6 +9,9 @@
 #import "LRParentNavigationController.h"
 
 @interface LRDocumentTypeListController : LRParentNavigationController<LRLoadDataDelegate,UISearchBarDelegate>
+
 @property (strong, nonatomic) NSString *titleHeader;
 @property (assign, nonatomic) eLRDocumentType eDocumentType;
+
+- (void)didLoadData;
 @end

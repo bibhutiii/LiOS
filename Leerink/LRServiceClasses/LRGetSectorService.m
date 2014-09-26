@@ -55,16 +55,16 @@
                              "</SOAP-ENV:Envelope>"];
     
     
-    NSURL *url = [NSURL URLWithString:@"http://10.0.100.40:8081/iOS_QA/Service1.svc"];
+    NSURL *url = [NSURL URLWithString:locationOfServiceURL];
     NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
     NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[soapMessage length]];
     [theRequest addValue: @"text/xml" forHTTPHeaderField:@"Content-Type"];
-    [theRequest addValue: @"http://tempuri.org/IService1/GetSectors" forHTTPHeaderField:@"Soapaction"];
+    [theRequest addValue: @"http://tempuri.org/IIIRPIOSService/GetSectors" forHTTPHeaderField:@"Soapaction"];
     [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
     [theRequest setHTTPMethod:@"POST"];
     [theRequest setHTTPBody: [soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
     NSURLConnection *theConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-
+    
     if (theConnection) {
         webData = [[NSMutableData alloc]init];
     }
@@ -90,17 +90,22 @@
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
 	NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[webData length]);
-    
-    
-    
-	NSString *theXML = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
-    
-    NSString *aDecodedString = [theXML stringByDecodingHTMLEntities];
-    NSLog(@"%@",aDecodedString);
-    
-	xmlParser = [[NSXMLParser alloc]initWithData:webData];
-	[xmlParser setDelegate: self];
-	[xmlParser parse];
+    if((unsigned long)[webData length] == 0) {
+        if([self.delegate respondsToSelector:@selector(didLoadData:)]){
+            [self.delegate didLoadData:FALSE];
+        }
+    }
+    else {
+        
+        NSString *theXML = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
+        
+        NSString *aDecodedString = [theXML stringByDecodingHTMLEntities];
+        NSLog(@"%@",aDecodedString);
+        
+        xmlParser = [[NSXMLParser alloc]initWithData:webData];
+        [xmlParser setDelegate: self];
+        [xmlParser parse];
+    }
 }
 
 
@@ -137,7 +142,7 @@
             for (NSDictionary *analystDictionary in self.symbolsArray) {
                 LRSector *aSector = (LRSector *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRSector" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
                 
-                aSector.researchID = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"researchID"] intValue]];
+                aSector.researchID = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"ResearchID"] intValue]];
                 aSector.sectorName = [analystDictionary objectForKey:@"SectorName"];
             }
         }
@@ -148,15 +153,15 @@
             for (NSDictionary *analystDictionary in self.symbolsArray) {
                 LRSector *aSector = (LRSector *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRSector" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
                 
-                aSector.researchID = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"researchID"] intValue]];
+                aSector.researchID = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"ResearchID"] intValue]];
                 aSector.sectorName = [analystDictionary objectForKey:@"SectorName"];
             }
         }
         [[LRCoreDataHelper sharedStorageManager] saveContext];
         
         // after the data has been loaded into the database, reload the table to compose the data in the tableview.
-        if([self.delegate respondsToSelector:@selector(didLoadData)]) {
-            [self.delegate didLoadData];
+        if([self.delegate respondsToSelector:@selector(didLoadData:)]) {
+            [self.delegate didLoadData:TRUE];
         }
     }
 }

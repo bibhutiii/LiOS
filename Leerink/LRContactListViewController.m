@@ -151,8 +151,8 @@
 #pragma mark - UITableView delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone?@"Main_iPhone":@"Main_iPad" bundle:nil];
-    LRContactDetailViewController *aContactDetailViewController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRContactDetailViewController class])];
+    
+    LRContactDetailViewController *aContactDetailViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRContactDetailViewController class])];
     aContactDetailViewController.titleHeader = [self.contactListArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:aContactDetailViewController animated:TRUE];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -168,7 +168,7 @@
 /*
  #pragma mark - Navigation
  
- // In a storyboard-based application, you will often want to do a little preparation before navigation
+ // In a [LRAppDelegate myStoryBoard]-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
  {
  // Get the new view controller using [segue destinationViewController].

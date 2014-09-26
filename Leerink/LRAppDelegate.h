@@ -10,6 +10,8 @@
 #import "LRCRMListViewController.h"
 #import "LRCoreDataHelper.h"
 
+#define appDelegate ((LRAppdelegate *)[[UIApplication sharedApplication] delegate])
+
 @interface LRAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -20,6 +22,9 @@
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
++ (LRAppDelegate *)myAppdelegate;
++ (UIStoryboard *)myStoryBoard;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

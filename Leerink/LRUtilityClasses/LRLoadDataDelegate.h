@@ -10,6 +10,8 @@
 
 @protocol LRLoadDataDelegate <NSObject>
 
-- (void)didLoadData;
-
+@optional
+- (void)didLoadData:(BOOL)isDataReceived;
+- (void)didLoadDocumentOnWebView:(NSData *)documentData;
+- (void)failedToParseTheDocumentWithErrorMessage:(NSString *)errorMessage;
 @end

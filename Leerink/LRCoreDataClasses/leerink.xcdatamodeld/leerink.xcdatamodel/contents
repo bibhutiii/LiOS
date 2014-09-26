@@ -10,6 +10,7 @@
         <attribute name="documentAuthor" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="documentDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="documentID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="documentPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="documentTitle" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="analyst" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LRAnalyst" inverseName="analystDocuments" inverseEntity="LRAnalyst" syncable="YES"/>
         <relationship name="sector" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LRSector" inverseName="sectorDocuments" inverseEntity="LRSector" syncable="YES"/>
@@ -35,11 +36,11 @@
         <attribute name="userRoleId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="LRAnalyst" positionX="-45" positionY="63" width="128" height="103"/>
+        <element name="LRAnalyst" positionX="-45" positionY="63" width="128" height="105"/>
+        <element name="LRDocument" positionX="-45" positionY="63" width="128" height="165"/>
         <element name="LRSector" positionX="-45" positionY="63" width="128" height="88"/>
         <element name="LRSymbol" positionX="-36" positionY="72" width="128" height="88"/>
         <element name="LRUser" positionX="-36" positionY="54" width="128" height="90"/>
         <element name="LRUserRoles" positionX="-54" positionY="18" width="128" height="75"/>
-        <element name="LRDocument" positionX="-45" positionY="63" width="128" height="148"/>
     </elements>
 </model>

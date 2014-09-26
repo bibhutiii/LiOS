@@ -22,5 +22,12 @@
 #import "LRGetAnalystService.h"
 #import "LRLoadDataDelegate.h"
 #import "LREnums.h"
+#import "NSDate+RFC1123.h"
+#import "NSDate+RTConvenience.h"
+#import <Social/Social.h>
+#import <Accounts/Accounts.h>
 
 #endif
+
+#define baseURLForService @"http://bos-portalqa-web.internal.leerink.com/iOS/iOS.IIRPIOSService.svc?singleWsdl"
+#define locationOfServiceURL @"http://10.140.217.20/iOS/iOS.IIRPIOSService.svc" 

@@ -7,6 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8467DD9019C32EEB00BFA20F /* LRAnalyst.m in Sources */ = {isa = PBXBuildFile; fileRef = 8467DD8F19C32EEB00BFA20F /* LRAnalyst.m */; };
+		8467DD9319D032B300BFA20F /* LRSaveDataToDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8467DD9219D032B300BFA20F /* LRSaveDataToDatabase.m */; };
+		8467DD9919D17BCB00BFA20F /* NSDate+RTConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 8467DD9719D17BCB00BFA20F /* NSDate+RTConvenience.m */; };
+		84BED43619D55B00005C80F3 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84BED43519D55B00005C80F3 /* Accounts.framework */; };
+		84BED45519D5988C005C80F3 /* NSDateFormatter+STTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED43919D5988C005C80F3 /* NSDateFormatter+STTwitter.m */; };
+		84BED45619D5988C005C80F3 /* NSError+STTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED43B19D5988C005C80F3 /* NSError+STTwitter.m */; };
+		84BED45719D5988C005C80F3 /* NSString+STTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED43D19D5988C005C80F3 /* NSString+STTwitter.m */; };
+		84BED45819D5988C005C80F3 /* STHTTPRequest+STTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED43F19D5988C005C80F3 /* STHTTPRequest+STTwitter.m */; };
+		84BED45919D5988C005C80F3 /* STTwitterAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED44219D5988C005C80F3 /* STTwitterAPI.m */; };
+		84BED45A19D5988C005C80F3 /* STTwitterAppOnly.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED44419D5988C005C80F3 /* STTwitterAppOnly.m */; };
+		84BED45B19D5988C005C80F3 /* STTwitterHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED44619D5988C005C80F3 /* STTwitterHTML.m */; };
+		84BED45C19D5988C005C80F3 /* STTwitterOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED44819D5988C005C80F3 /* STTwitterOAuth.m */; };
+		84BED45D19D5988C005C80F3 /* STTwitterOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED44A19D5988C005C80F3 /* STTwitterOS.m */; };
+		84BED45E19D5988C005C80F3 /* STTwitterOSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED44C19D5988C005C80F3 /* STTwitterOSRequest.m */; };
+		84BED45F19D5988C005C80F3 /* BAVPlistNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED45019D5988C005C80F3 /* BAVPlistNode.m */; };
+		84BED46019D5988C005C80F3 /* JSONSyntaxHighlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED45219D5988C005C80F3 /* JSONSyntaxHighlight.m */; };
+		84BED46119D5988C005C80F3 /* STHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED45419D5988C005C80F3 /* STHTTPRequest.m */; };
+		84BED46319D59E0A005C80F3 /* Twitter-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 84BED46219D59E0A005C80F3 /* Twitter-32.png */; };
+		84BED46619D59EE3005C80F3 /* LRTwitterListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED46519D59EE3005C80F3 /* LRTwitterListsViewController.m */; };
+		84BED46919D5A17D005C80F3 /* LRTwitterListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED46819D5A17D005C80F3 /* LRTwitterListTableViewCell.m */; };
+		84BED46B19D5A189005C80F3 /* LRTwitterListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BED46A19D5A189005C80F3 /* LRTwitterListTableViewCell.xib */; };
 		84D3C00419B86F9E007455F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C00319B86F9E007455F9 /* Foundation.framework */; };
 		84D3C00619B86F9E007455F9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C00519B86F9E007455F9 /* CoreGraphics.framework */; };
 		84D3C00819B86F9E007455F9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C00719B86F9E007455F9 /* UIKit.framework */; };
@@ -30,13 +51,11 @@
 		84D3C05319B88657007455F9 /* LRLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C04819B88657007455F9 /* LRLoginViewController.m */; };
 		84D3C05419B88657007455F9 /* LRMainClientPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C04A19B88657007455F9 /* LRMainClientPageViewController.m */; };
 		84D3C05519B88657007455F9 /* LRParentNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C04C19B88657007455F9 /* LRParentNavigationController.m */; };
-		84D3C09F19B886A7007455F9 /* LRAnalyst.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C05A19B886A7007455F9 /* LRAnalyst.m */; };
-		84D3C0A019B886A7007455F9 /* LRDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C05C19B886A7007455F9 /* LRDocument.m */; };
 		84D3C0A119B886A7007455F9 /* LRSector.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C05E19B886A7007455F9 /* LRSector.m */; };
 		84D3C0A219B886A7007455F9 /* LRSymbol.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C06019B886A7007455F9 /* LRSymbol.m */; };
 		84D3C0A319B886A7007455F9 /* LRUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C06219B886A7007455F9 /* LRUser.m */; };
 		84D3C0A419B886A7007455F9 /* LRUserRoles.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C06419B886A7007455F9 /* LRUserRoles.m */; };
-		84D3C0A519B886A7007455F9 /* LRGetDocumentService.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C06719B886A7007455F9 /* LRGetDocumentService.m */; };
+		84D3C0A519B886A7007455F9 /* LRGetDocumentListService.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C06719B886A7007455F9 /* LRGetDocumentListService.m */; };
 		84D3C0A619B886A7007455F9 /* LRGetSectorService.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C06919B886A7007455F9 /* LRGetSectorService.m */; };
 		84D3C0A719B886A7007455F9 /* LRGetSymbolService.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C06B19B886A7007455F9 /* LRGetSymbolService.m */; };
 		84D3C0A819B886A7007455F9 /* LRContactListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C06E19B886A7007455F9 /* LRContactListTableViewCell.m */; };
@@ -44,7 +63,7 @@
 		84D3C0AA19B886A7007455F9 /* LRDocumentTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C07119B886A7007455F9 /* LRDocumentTypeTableViewCell.m */; };
 		84D3C0AB19B886A7007455F9 /* LRDocumentTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D3C07219B886A7007455F9 /* LRDocumentTypeTableViewCell.xib */; };
 		84D3C0AC19B886A7007455F9 /* NSData+MKBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C07819B886A7007455F9 /* NSData+MKBase64.m */; };
-		84D3C0AD19B886A7007455F9 /* NSDate+RFC1123.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C07A19B886A7007455F9 /* NSDate+RFC1123.m */; };
+		84D3C0AD19B886A7007455F9 /* NSDate+RFC1123.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C07A19B886A7007455F9 /* NSDate+RFC1123.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		84D3C0AE19B886A7007455F9 /* NSDictionary+RequestEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C07C19B886A7007455F9 /* NSDictionary+RequestEncoding.m */; };
 		84D3C0AF19B886A7007455F9 /* NSString+MKNetworkKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C07E19B886A7007455F9 /* NSString+MKNetworkKitAdditions.m */; };
 		84D3C0B019B886A7007455F9 /* UIAlertView+MKNetworkKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C08019B886A7007455F9 /* UIAlertView+MKNetworkKitAdditions.m */; };
@@ -91,16 +110,19 @@
 		84D3C0F219B88881007455F9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C0F119B88881007455F9 /* SystemConfiguration.framework */; };
 		84D3C0F419B888A2007455F9 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C0F319B888A2007455F9 /* ImageIO.framework */; };
 		84D3C0F619B888A6007455F9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C0F519B888A6007455F9 /* Security.framework */; };
-		84D3C10219B88914007455F9 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C0F819B88914007455F9 /* GTMNSString+HTML.m */; };
 		84D3C10419B88914007455F9 /* LRWebEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C0FD19B88914007455F9 /* LRWebEngine.m */; };
 		84D3C10519B88914007455F9 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C0FF19B88914007455F9 /* MBProgressHUD.m */; };
-		84D3C10619B88914007455F9 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C10119B88914007455F9 /* NSString+HTML.m */; };
 		84D3C10A19B88994007455F9 /* LRUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C10919B88994007455F9 /* LRUtility.m */; };
 		84D3C11019B88A77007455F9 /* RTCustomTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C10D19B88A77007455F9 /* RTCustomTextField.m */; };
 		84D3C11119B88A77007455F9 /* UITextField+previousNextToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C10F19B88A77007455F9 /* UITextField+previousNextToolBar.m */; };
 		84D3C11519B8A36C007455F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C11419B8A36C007455F9 /* StoreKit.framework */; };
 		84D3C11C19B8A487007455F9 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C11A19B8A487007455F9 /* Bolts.framework */; };
 		84D3C11D19B8A487007455F9 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C11B19B8A487007455F9 /* Parse.framework */; };
+		84D3C12319BEF96C007455F9 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C12019BEF96C007455F9 /* GTMNSString+HTML.m */; };
+		84D3C12419BEF96C007455F9 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C12219BEF96C007455F9 /* NSString+HTML.m */; };
+		84D3C12719C1CB8C007455F9 /* LRGetDocumentService.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C12619C1CB8C007455F9 /* LRGetDocumentService.m */; };
+		84D3C12A19C1CCFC007455F9 /* LRDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C12919C1CCFC007455F9 /* LRDocumentViewController.m */; };
+		84D3C12D19C1D619007455F9 /* LRDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C12C19C1D619007455F9 /* LRDocument.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +136,47 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8467DD8E19C32EEB00BFA20F /* LRAnalyst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRAnalyst.h; sourceTree = "<group>"; };
+		8467DD8F19C32EEB00BFA20F /* LRAnalyst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRAnalyst.m; sourceTree = "<group>"; };
+		8467DD9119D032B300BFA20F /* LRSaveDataToDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSaveDataToDatabase.h; sourceTree = "<group>"; };
+		8467DD9219D032B300BFA20F /* LRSaveDataToDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSaveDataToDatabase.m; sourceTree = "<group>"; };
+		8467DD9619D17BCB00BFA20F /* NSDate+RTConvenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+RTConvenience.h"; sourceTree = "<group>"; };
+		8467DD9719D17BCB00BFA20F /* NSDate+RTConvenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+RTConvenience.m"; sourceTree = "<group>"; };
+		84BED43519D55B00005C80F3 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		84BED43819D5988C005C80F3 /* NSDateFormatter+STTwitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+STTwitter.h"; sourceTree = "<group>"; };
+		84BED43919D5988C005C80F3 /* NSDateFormatter+STTwitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+STTwitter.m"; sourceTree = "<group>"; };
+		84BED43A19D5988C005C80F3 /* NSError+STTwitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+STTwitter.h"; sourceTree = "<group>"; };
+		84BED43B19D5988C005C80F3 /* NSError+STTwitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+STTwitter.m"; sourceTree = "<group>"; };
+		84BED43C19D5988C005C80F3 /* NSString+STTwitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+STTwitter.h"; sourceTree = "<group>"; };
+		84BED43D19D5988C005C80F3 /* NSString+STTwitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+STTwitter.m"; sourceTree = "<group>"; };
+		84BED43E19D5988C005C80F3 /* STHTTPRequest+STTwitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "STHTTPRequest+STTwitter.h"; sourceTree = "<group>"; };
+		84BED43F19D5988C005C80F3 /* STHTTPRequest+STTwitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "STHTTPRequest+STTwitter.m"; sourceTree = "<group>"; };
+		84BED44019D5988C005C80F3 /* STTwitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTwitter.h; sourceTree = "<group>"; };
+		84BED44119D5988C005C80F3 /* STTwitterAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTwitterAPI.h; sourceTree = "<group>"; };
+		84BED44219D5988C005C80F3 /* STTwitterAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTwitterAPI.m; sourceTree = "<group>"; };
+		84BED44319D5988C005C80F3 /* STTwitterAppOnly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTwitterAppOnly.h; sourceTree = "<group>"; };
+		84BED44419D5988C005C80F3 /* STTwitterAppOnly.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTwitterAppOnly.m; sourceTree = "<group>"; };
+		84BED44519D5988C005C80F3 /* STTwitterHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTwitterHTML.h; sourceTree = "<group>"; };
+		84BED44619D5988C005C80F3 /* STTwitterHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTwitterHTML.m; sourceTree = "<group>"; };
+		84BED44719D5988C005C80F3 /* STTwitterOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTwitterOAuth.h; sourceTree = "<group>"; };
+		84BED44819D5988C005C80F3 /* STTwitterOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTwitterOAuth.m; sourceTree = "<group>"; };
+		84BED44919D5988C005C80F3 /* STTwitterOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTwitterOS.h; sourceTree = "<group>"; };
+		84BED44A19D5988C005C80F3 /* STTwitterOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTwitterOS.m; sourceTree = "<group>"; };
+		84BED44B19D5988C005C80F3 /* STTwitterOSRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTwitterOSRequest.h; sourceTree = "<group>"; };
+		84BED44C19D5988C005C80F3 /* STTwitterOSRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTwitterOSRequest.m; sourceTree = "<group>"; };
+		84BED44D19D5988C005C80F3 /* STTwitterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTwitterProtocol.h; sourceTree = "<group>"; };
+		84BED44F19D5988C005C80F3 /* BAVPlistNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BAVPlistNode.h; sourceTree = "<group>"; };
+		84BED45019D5988C005C80F3 /* BAVPlistNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BAVPlistNode.m; sourceTree = "<group>"; };
+		84BED45119D5988C005C80F3 /* JSONSyntaxHighlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONSyntaxHighlight.h; sourceTree = "<group>"; };
+		84BED45219D5988C005C80F3 /* JSONSyntaxHighlight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONSyntaxHighlight.m; sourceTree = "<group>"; };
+		84BED45319D5988C005C80F3 /* STHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STHTTPRequest.h; sourceTree = "<group>"; };
+		84BED45419D5988C005C80F3 /* STHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STHTTPRequest.m; sourceTree = "<group>"; };
+		84BED46219D59E0A005C80F3 /* Twitter-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Twitter-32.png"; sourceTree = "<group>"; };
+		84BED46419D59EE3005C80F3 /* LRTwitterListsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRTwitterListsViewController.h; sourceTree = "<group>"; };
+		84BED46519D59EE3005C80F3 /* LRTwitterListsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRTwitterListsViewController.m; sourceTree = "<group>"; };
+		84BED46719D5A17D005C80F3 /* LRTwitterListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRTwitterListTableViewCell.h; sourceTree = "<group>"; };
+		84BED46819D5A17D005C80F3 /* LRTwitterListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRTwitterListTableViewCell.m; sourceTree = "<group>"; };
+		84BED46A19D5A189005C80F3 /* LRTwitterListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LRTwitterListTableViewCell.xib; sourceTree = "<group>"; };
 		84D3C00019B86F9E007455F9 /* Leerink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Leerink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D3C00319B86F9E007455F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84D3C00519B86F9E007455F9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -131,29 +194,25 @@
 		84D3C02519B86F9E007455F9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		84D3C02D19B86F9E007455F9 /* LeerinkTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LeerinkTests-Info.plist"; sourceTree = "<group>"; };
 		84D3C02F19B86F9E007455F9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		84D3C03119B86F9E007455F9 /* LeerinkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeerinkTests.m; sourceTree = "<group>"; };
+		84D3C03119B86F9E007455F9 /* LeerinkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LeerinkTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D3C03B19B88657007455F9 /* LRAboutUSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRAboutUSViewController.h; sourceTree = "<group>"; };
-		84D3C03C19B88657007455F9 /* LRAboutUSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRAboutUSViewController.m; sourceTree = "<group>"; };
+		84D3C03C19B88657007455F9 /* LRAboutUSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRAboutUSViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D3C03D19B88657007455F9 /* LRContactDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRContactDetailViewController.h; sourceTree = "<group>"; };
-		84D3C03E19B88657007455F9 /* LRContactDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRContactDetailViewController.m; sourceTree = "<group>"; };
+		84D3C03E19B88657007455F9 /* LRContactDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRContactDetailViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D3C03F19B88657007455F9 /* LRContactListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRContactListViewController.h; sourceTree = "<group>"; };
-		84D3C04019B88657007455F9 /* LRContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRContactListViewController.m; sourceTree = "<group>"; };
+		84D3C04019B88657007455F9 /* LRContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRContactListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D3C04119B88657007455F9 /* LRCRMListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRCRMListViewController.h; sourceTree = "<group>"; };
-		84D3C04219B88657007455F9 /* LRCRMListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRCRMListViewController.m; sourceTree = "<group>"; };
+		84D3C04219B88657007455F9 /* LRCRMListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRCRMListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D3C04319B88657007455F9 /* LRDocumentListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDocumentListViewController.h; sourceTree = "<group>"; };
-		84D3C04419B88657007455F9 /* LRDocumentListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDocumentListViewController.m; sourceTree = "<group>"; };
+		84D3C04419B88657007455F9 /* LRDocumentListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRDocumentListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D3C04519B88657007455F9 /* LRDocumentTypeListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDocumentTypeListController.h; sourceTree = "<group>"; };
-		84D3C04619B88657007455F9 /* LRDocumentTypeListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDocumentTypeListController.m; sourceTree = "<group>"; };
+		84D3C04619B88657007455F9 /* LRDocumentTypeListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRDocumentTypeListController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D3C04719B88657007455F9 /* LRLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLoginViewController.h; sourceTree = "<group>"; };
-		84D3C04819B88657007455F9 /* LRLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRLoginViewController.m; sourceTree = "<group>"; };
+		84D3C04819B88657007455F9 /* LRLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRLoginViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D3C04919B88657007455F9 /* LRMainClientPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMainClientPageViewController.h; sourceTree = "<group>"; };
-		84D3C04A19B88657007455F9 /* LRMainClientPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRMainClientPageViewController.m; sourceTree = "<group>"; };
+		84D3C04A19B88657007455F9 /* LRMainClientPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRMainClientPageViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D3C04B19B88657007455F9 /* LRParentNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRParentNavigationController.h; sourceTree = "<group>"; };
-		84D3C04C19B88657007455F9 /* LRParentNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRParentNavigationController.m; sourceTree = "<group>"; };
-		84D3C05919B886A7007455F9 /* LRAnalyst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRAnalyst.h; sourceTree = "<group>"; };
-		84D3C05A19B886A7007455F9 /* LRAnalyst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRAnalyst.m; sourceTree = "<group>"; };
-		84D3C05B19B886A7007455F9 /* LRDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDocument.h; sourceTree = "<group>"; };
-		84D3C05C19B886A7007455F9 /* LRDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDocument.m; sourceTree = "<group>"; };
+		84D3C04C19B88657007455F9 /* LRParentNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRParentNavigationController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D3C05D19B886A7007455F9 /* LRSector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSector.h; sourceTree = "<group>"; };
 		84D3C05E19B886A7007455F9 /* LRSector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSector.m; sourceTree = "<group>"; };
 		84D3C05F19B886A7007455F9 /* LRSymbol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSymbol.h; sourceTree = "<group>"; };
@@ -162,8 +221,8 @@
 		84D3C06219B886A7007455F9 /* LRUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRUser.m; sourceTree = "<group>"; };
 		84D3C06319B886A7007455F9 /* LRUserRoles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRUserRoles.h; sourceTree = "<group>"; };
 		84D3C06419B886A7007455F9 /* LRUserRoles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRUserRoles.m; sourceTree = "<group>"; };
-		84D3C06619B886A7007455F9 /* LRGetDocumentService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGetDocumentService.h; sourceTree = "<group>"; };
-		84D3C06719B886A7007455F9 /* LRGetDocumentService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGetDocumentService.m; sourceTree = "<group>"; };
+		84D3C06619B886A7007455F9 /* LRGetDocumentListService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGetDocumentListService.h; sourceTree = "<group>"; };
+		84D3C06719B886A7007455F9 /* LRGetDocumentListService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGetDocumentListService.m; sourceTree = "<group>"; };
 		84D3C06819B886A7007455F9 /* LRGetSectorService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGetSectorService.h; sourceTree = "<group>"; };
 		84D3C06919B886A7007455F9 /* LRGetSectorService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGetSectorService.m; sourceTree = "<group>"; };
 		84D3C06A19B886A7007455F9 /* LRGetSymbolService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGetSymbolService.h; sourceTree = "<group>"; };
@@ -237,15 +296,11 @@
 		84D3C0F119B88881007455F9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		84D3C0F319B888A2007455F9 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		84D3C0F519B888A6007455F9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		84D3C0F719B88914007455F9 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
-		84D3C0F819B88914007455F9 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
 		84D3C0F919B88914007455F9 /* LRLoadDataDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLoadDataDelegate.h; sourceTree = "<group>"; };
 		84D3C0FC19B88914007455F9 /* LRWebEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRWebEngine.h; sourceTree = "<group>"; };
 		84D3C0FD19B88914007455F9 /* LRWebEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRWebEngine.m; sourceTree = "<group>"; };
 		84D3C0FE19B88914007455F9 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		84D3C0FF19B88914007455F9 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		84D3C10019B88914007455F9 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
-		84D3C10119B88914007455F9 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		84D3C10819B88994007455F9 /* LRUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRUtility.h; sourceTree = "<group>"; };
 		84D3C10919B88994007455F9 /* LRUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRUtility.m; sourceTree = "<group>"; };
 		84D3C10C19B88A77007455F9 /* RTCustomTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCustomTextField.h; sourceTree = "<group>"; };
@@ -255,6 +310,16 @@
 		84D3C11419B8A36C007455F9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		84D3C11A19B8A487007455F9 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		84D3C11B19B8A487007455F9 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		84D3C11F19BEF96C007455F9 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
+		84D3C12019BEF96C007455F9 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		84D3C12119BEF96C007455F9 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
+		84D3C12219BEF96C007455F9 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
+		84D3C12519C1CB8C007455F9 /* LRGetDocumentService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGetDocumentService.h; sourceTree = "<group>"; };
+		84D3C12619C1CB8C007455F9 /* LRGetDocumentService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGetDocumentService.m; sourceTree = "<group>"; };
+		84D3C12819C1CCFC007455F9 /* LRDocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDocumentViewController.h; sourceTree = "<group>"; };
+		84D3C12919C1CCFC007455F9 /* LRDocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDocumentViewController.m; sourceTree = "<group>"; };
+		84D3C12B19C1D619007455F9 /* LRDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDocument.h; sourceTree = "<group>"; };
+		84D3C12C19C1D619007455F9 /* LRDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDocument.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,13 +327,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84BED43619D55B00005C80F3 /* Accounts.framework in Frameworks */,
+				84D3C0EC19B88868007455F9 /* Social.framework in Frameworks */,
 				84D3C11519B8A36C007455F9 /* StoreKit.framework in Frameworks */,
 				84D3C0F619B888A6007455F9 /* Security.framework in Frameworks */,
 				84D3C0F419B888A2007455F9 /* ImageIO.framework in Frameworks */,
 				84D3C0F219B88881007455F9 /* SystemConfiguration.framework in Frameworks */,
 				84D3C0F019B88879007455F9 /* CFNetwork.framework in Frameworks */,
 				84D3C0EE19B88874007455F9 /* AudioToolbox.framework in Frameworks */,
-				84D3C0EC19B88868007455F9 /* Social.framework in Frameworks */,
 				84D3C0E919B88860007455F9 /* libsqlite3.0.dylib in Frameworks */,
 				84D3C0EA19B88860007455F9 /* libsqlite3.dylib in Frameworks */,
 				84D3C0E619B88859007455F9 /* libz.dylib in Frameworks */,
@@ -301,6 +367,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		84BED43719D5988C005C80F3 /* STTwitter */ = {
+			isa = PBXGroup;
+			children = (
+				84BED43819D5988C005C80F3 /* NSDateFormatter+STTwitter.h */,
+				84BED43919D5988C005C80F3 /* NSDateFormatter+STTwitter.m */,
+				84BED43A19D5988C005C80F3 /* NSError+STTwitter.h */,
+				84BED43B19D5988C005C80F3 /* NSError+STTwitter.m */,
+				84BED43C19D5988C005C80F3 /* NSString+STTwitter.h */,
+				84BED43D19D5988C005C80F3 /* NSString+STTwitter.m */,
+				84BED43E19D5988C005C80F3 /* STHTTPRequest+STTwitter.h */,
+				84BED43F19D5988C005C80F3 /* STHTTPRequest+STTwitter.m */,
+				84BED44019D5988C005C80F3 /* STTwitter.h */,
+				84BED44119D5988C005C80F3 /* STTwitterAPI.h */,
+				84BED44219D5988C005C80F3 /* STTwitterAPI.m */,
+				84BED44319D5988C005C80F3 /* STTwitterAppOnly.h */,
+				84BED44419D5988C005C80F3 /* STTwitterAppOnly.m */,
+				84BED44519D5988C005C80F3 /* STTwitterHTML.h */,
+				84BED44619D5988C005C80F3 /* STTwitterHTML.m */,
+				84BED44719D5988C005C80F3 /* STTwitterOAuth.h */,
+				84BED44819D5988C005C80F3 /* STTwitterOAuth.m */,
+				84BED44919D5988C005C80F3 /* STTwitterOS.h */,
+				84BED44A19D5988C005C80F3 /* STTwitterOS.m */,
+				84BED44B19D5988C005C80F3 /* STTwitterOSRequest.h */,
+				84BED44C19D5988C005C80F3 /* STTwitterOSRequest.m */,
+				84BED44D19D5988C005C80F3 /* STTwitterProtocol.h */,
+				84BED44E19D5988C005C80F3 /* Vendor */,
+			);
+			path = STTwitter;
+			sourceTree = "<group>";
+		};
+		84BED44E19D5988C005C80F3 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				84BED44F19D5988C005C80F3 /* BAVPlistNode.h */,
+				84BED45019D5988C005C80F3 /* BAVPlistNode.m */,
+				84BED45119D5988C005C80F3 /* JSONSyntaxHighlight.h */,
+				84BED45219D5988C005C80F3 /* JSONSyntaxHighlight.m */,
+				84BED45319D5988C005C80F3 /* STHTTPRequest.h */,
+				84BED45419D5988C005C80F3 /* STHTTPRequest.m */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
 		84D3BFF719B86F9E007455F9 = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +432,7 @@
 		84D3C00219B86F9E007455F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84BED43519D55B00005C80F3 /* Accounts.framework */,
 				84D3C11A19B8A487007455F9 /* Bolts.framework */,
 				84D3C11B19B8A487007455F9 /* Parse.framework */,
 				84D3C11419B8A36C007455F9 /* StoreKit.framework */,
@@ -356,31 +466,37 @@
 			children = (
 				84D3C01219B86F9E007455F9 /* LRAppDelegate.h */,
 				84D3C01319B86F9E007455F9 /* LRAppDelegate.m */,
-				84D3C01519B86F9E007455F9 /* Main_iPhone.storyboard */,
-				84D3C01819B86F9E007455F9 /* Main_iPad.storyboard */,
-				84D3C03B19B88657007455F9 /* LRAboutUSViewController.h */,
-				84D3C03C19B88657007455F9 /* LRAboutUSViewController.m */,
-				84D3C03D19B88657007455F9 /* LRContactDetailViewController.h */,
-				84D3C03E19B88657007455F9 /* LRContactDetailViewController.m */,
-				84D3C03F19B88657007455F9 /* LRContactListViewController.h */,
-				84D3C04019B88657007455F9 /* LRContactListViewController.m */,
-				84D3C04119B88657007455F9 /* LRCRMListViewController.h */,
-				84D3C04219B88657007455F9 /* LRCRMListViewController.m */,
-				84D3C04319B88657007455F9 /* LRDocumentListViewController.h */,
-				84D3C04419B88657007455F9 /* LRDocumentListViewController.m */,
-				84D3C04519B88657007455F9 /* LRDocumentTypeListController.h */,
-				84D3C04619B88657007455F9 /* LRDocumentTypeListController.m */,
 				84D3C04719B88657007455F9 /* LRLoginViewController.h */,
 				84D3C04819B88657007455F9 /* LRLoginViewController.m */,
 				84D3C04919B88657007455F9 /* LRMainClientPageViewController.h */,
 				84D3C04A19B88657007455F9 /* LRMainClientPageViewController.m */,
+				84D3C04519B88657007455F9 /* LRDocumentTypeListController.h */,
+				84D3C04619B88657007455F9 /* LRDocumentTypeListController.m */,
+				84D3C04319B88657007455F9 /* LRDocumentListViewController.h */,
+				84D3C04419B88657007455F9 /* LRDocumentListViewController.m */,
+				84D3C12819C1CCFC007455F9 /* LRDocumentViewController.h */,
+				84D3C12919C1CCFC007455F9 /* LRDocumentViewController.m */,
 				84D3C04B19B88657007455F9 /* LRParentNavigationController.h */,
 				84D3C04C19B88657007455F9 /* LRParentNavigationController.m */,
+				84D3C03F19B88657007455F9 /* LRContactListViewController.h */,
+				84D3C04019B88657007455F9 /* LRContactListViewController.m */,
+				84D3C03D19B88657007455F9 /* LRContactDetailViewController.h */,
+				84D3C03E19B88657007455F9 /* LRContactDetailViewController.m */,
+				84D3C04119B88657007455F9 /* LRCRMListViewController.h */,
+				84D3C04219B88657007455F9 /* LRCRMListViewController.m */,
+				84D3C03B19B88657007455F9 /* LRAboutUSViewController.h */,
+				84D3C03C19B88657007455F9 /* LRAboutUSViewController.m */,
+				84BED46419D59EE3005C80F3 /* LRTwitterListsViewController.h */,
+				84BED46519D59EE3005C80F3 /* LRTwitterListsViewController.m */,
+				84D3C01519B86F9E007455F9 /* Main_iPhone.storyboard */,
+				84D3C01819B86F9E007455F9 /* Main_iPad.storyboard */,
+				84BED43719D5988C005C80F3 /* STTwitter */,
 				84D3C05619B886A7007455F9 /* LRCoreDataClasses */,
 				84D3C05719B886A7007455F9 /* LRCoreDataFiles */,
 				84D3C06519B886A7007455F9 /* LRServiceClasses */,
 				84D3C06C19B886A7007455F9 /* LRTableViewCells */,
 				84D3C07319B886A7007455F9 /* LRUtilityClasses */,
+				84D3C11E19BEF938007455F9 /* LRCategoryClasses */,
 				84D3C07519B886A7007455F9 /* MKNetworkKit */,
 				84D3C08B19B886A7007455F9 /* RTCustomTextField */,
 				84D3C01E19B86F9E007455F9 /* Images.xcassets */,
@@ -431,10 +547,6 @@
 		84D3C05719B886A7007455F9 /* LRCoreDataFiles */ = {
 			isa = PBXGroup;
 			children = (
-				84D3C05919B886A7007455F9 /* LRAnalyst.h */,
-				84D3C05A19B886A7007455F9 /* LRAnalyst.m */,
-				84D3C05B19B886A7007455F9 /* LRDocument.h */,
-				84D3C05C19B886A7007455F9 /* LRDocument.m */,
 				84D3C05D19B886A7007455F9 /* LRSector.h */,
 				84D3C05E19B886A7007455F9 /* LRSector.m */,
 				84D3C05F19B886A7007455F9 /* LRSymbol.h */,
@@ -443,6 +555,10 @@
 				84D3C06219B886A7007455F9 /* LRUser.m */,
 				84D3C06319B886A7007455F9 /* LRUserRoles.h */,
 				84D3C06419B886A7007455F9 /* LRUserRoles.m */,
+				84D3C12B19C1D619007455F9 /* LRDocument.h */,
+				84D3C12C19C1D619007455F9 /* LRDocument.m */,
+				8467DD8E19C32EEB00BFA20F /* LRAnalyst.h */,
+				8467DD8F19C32EEB00BFA20F /* LRAnalyst.m */,
 			);
 			path = LRCoreDataFiles;
 			sourceTree = "<group>";
@@ -454,14 +570,16 @@
 				84D3C0D019B887B4007455F9 /* LRGetAnalystService.m */,
 				84D3C0D119B887B4007455F9 /* LRLoginService.h */,
 				84D3C0D219B887B4007455F9 /* LRLoginService.m */,
-				84D3C06619B886A7007455F9 /* LRGetDocumentService.h */,
-				84D3C06719B886A7007455F9 /* LRGetDocumentService.m */,
+				84D3C06619B886A7007455F9 /* LRGetDocumentListService.h */,
+				84D3C06719B886A7007455F9 /* LRGetDocumentListService.m */,
 				84D3C06819B886A7007455F9 /* LRGetSectorService.h */,
 				84D3C06919B886A7007455F9 /* LRGetSectorService.m */,
 				84D3C06A19B886A7007455F9 /* LRGetSymbolService.h */,
 				84D3C06B19B886A7007455F9 /* LRGetSymbolService.m */,
 				84D3C0CC19B8878A007455F9 /* LRLogOutService.h */,
 				84D3C0CD19B8878A007455F9 /* LRLogOutService.m */,
+				84D3C12519C1CB8C007455F9 /* LRGetDocumentService.h */,
+				84D3C12619C1CB8C007455F9 /* LRGetDocumentService.m */,
 			);
 			path = LRServiceClasses;
 			sourceTree = "<group>";
@@ -475,6 +593,9 @@
 				84D3C07019B886A7007455F9 /* LRDocumentTypeTableViewCell.h */,
 				84D3C07119B886A7007455F9 /* LRDocumentTypeTableViewCell.m */,
 				84D3C07219B886A7007455F9 /* LRDocumentTypeTableViewCell.xib */,
+				84BED46719D5A17D005C80F3 /* LRTwitterListTableViewCell.h */,
+				84BED46819D5A17D005C80F3 /* LRTwitterListTableViewCell.m */,
+				84BED46A19D5A189005C80F3 /* LRTwitterListTableViewCell.xib */,
 			);
 			path = LRTableViewCells;
 			sourceTree = "<group>";
@@ -483,17 +604,17 @@
 			isa = PBXGroup;
 			children = (
 				84D3C07419B886A7007455F9 /* LREnums.h */,
-				84D3C0F719B88914007455F9 /* GTMNSString+HTML.h */,
-				84D3C0F819B88914007455F9 /* GTMNSString+HTML.m */,
+				8467DD9119D032B300BFA20F /* LRSaveDataToDatabase.h */,
+				8467DD9219D032B300BFA20F /* LRSaveDataToDatabase.m */,
 				84D3C0F919B88914007455F9 /* LRLoadDataDelegate.h */,
 				84D3C0FC19B88914007455F9 /* LRWebEngine.h */,
 				84D3C0FD19B88914007455F9 /* LRWebEngine.m */,
 				84D3C0FE19B88914007455F9 /* MBProgressHUD.h */,
 				84D3C0FF19B88914007455F9 /* MBProgressHUD.m */,
-				84D3C10019B88914007455F9 /* NSString+HTML.h */,
-				84D3C10119B88914007455F9 /* NSString+HTML.m */,
 				84D3C10819B88994007455F9 /* LRUtility.h */,
 				84D3C10919B88994007455F9 /* LRUtility.m */,
+				8467DD9619D17BCB00BFA20F /* NSDate+RTConvenience.h */,
+				8467DD9719D17BCB00BFA20F /* NSDate+RTConvenience.m */,
 			);
 			path = LRUtilityClasses;
 			sourceTree = "<group>";
@@ -572,8 +693,20 @@
 				84D3C09B19B886A7007455F9 /* User-48.png */,
 				84D3C09C19B886A7007455F9 /* user_name_icon.png */,
 				84D3C09D19B886A7007455F9 /* user_name_icon@2x.png */,
+				84BED46219D59E0A005C80F3 /* Twitter-32.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		84D3C11E19BEF938007455F9 /* LRCategoryClasses */ = {
+			isa = PBXGroup;
+			children = (
+				84D3C11F19BEF96C007455F9 /* GTMNSString+HTML.h */,
+				84D3C12019BEF96C007455F9 /* GTMNSString+HTML.m */,
+				84D3C12119BEF96C007455F9 /* NSString+HTML.h */,
+				84D3C12219BEF96C007455F9 /* NSString+HTML.m */,
+			);
+			path = LRCategoryClasses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -666,8 +799,10 @@
 				84D3C0B919B886A7007455F9 /* Documents_32.png in Resources */,
 				84D3C0BF19B886A7007455F9 /* password_icon.png in Resources */,
 				84D3C0B619B886A7007455F9 /* arrowRightBlack@2x.png in Resources */,
+				84BED46319D59E0A005C80F3 /* Twitter-32.png in Resources */,
 				84D3C0C219B886A7007455F9 /* text_field@2x.png in Resources */,
 				84D3C0B519B886A7007455F9 /* About-32.png in Resources */,
+				84BED46B19D5A189005C80F3 /* LRTwitterListTableViewCell.xib in Resources */,
 				84D3C01719B86F9E007455F9 /* Main_iPhone.storyboard in Resources */,
 				84D3C0BC19B886A7007455F9 /* logo.png in Resources */,
 				84D3C0BD19B886A7007455F9 /* Logout-32.png in Resources */,
@@ -696,45 +831,64 @@
 				84D3C05019B88657007455F9 /* LRCRMListViewController.m in Sources */,
 				84D3C0B119B886A7007455F9 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
 				84D3C05519B88657007455F9 /* LRParentNavigationController.m in Sources */,
-				84D3C0A019B886A7007455F9 /* LRDocument.m in Sources */,
-				84D3C09F19B886A7007455F9 /* LRAnalyst.m in Sources */,
 				84D3C05119B88657007455F9 /* LRDocumentListViewController.m in Sources */,
+				8467DD9019C32EEB00BFA20F /* LRAnalyst.m in Sources */,
+				84BED45A19D5988C005C80F3 /* STTwitterAppOnly.m in Sources */,
 				84D3C04D19B88657007455F9 /* LRAboutUSViewController.m in Sources */,
+				84BED45E19D5988C005C80F3 /* STTwitterOSRequest.m in Sources */,
 				84D3C0A619B886A7007455F9 /* LRGetSectorService.m in Sources */,
+				84BED46619D59EE3005C80F3 /* LRTwitterListsViewController.m in Sources */,
 				84D3C05219B88657007455F9 /* LRDocumentTypeListController.m in Sources */,
+				84BED45C19D5988C005C80F3 /* STTwitterOAuth.m in Sources */,
 				84D3C0A119B886A7007455F9 /* LRSector.m in Sources */,
-				84D3C10619B88914007455F9 /* NSString+HTML.m in Sources */,
 				84D3C05319B88657007455F9 /* LRLoginViewController.m in Sources */,
+				84D3C12719C1CB8C007455F9 /* LRGetDocumentService.m in Sources */,
 				84D3C0A219B886A7007455F9 /* LRSymbol.m in Sources */,
 				84D3C0A419B886A7007455F9 /* LRUserRoles.m in Sources */,
+				84BED45919D5988C005C80F3 /* STTwitterAPI.m in Sources */,
 				84D3C04E19B88657007455F9 /* LRContactDetailViewController.m in Sources */,
+				84BED46119D5988C005C80F3 /* STHTTPRequest.m in Sources */,
+				84BED45519D5988C005C80F3 /* NSDateFormatter+STTwitter.m in Sources */,
 				84D3C0B319B886A7007455F9 /* MKNetworkOperation.m in Sources */,
 				84D3C0CB19B8874F007455F9 /* LRCoreDataHelper.m in Sources */,
+				84BED45D19D5988C005C80F3 /* STTwitterOS.m in Sources */,
+				8467DD9319D032B300BFA20F /* LRSaveDataToDatabase.m in Sources */,
 				84D3C01419B86F9E007455F9 /* LRAppDelegate.m in Sources */,
 				84D3C0B219B886A7007455F9 /* MKNetworkEngine.m in Sources */,
 				84D3C0A719B886A7007455F9 /* LRGetSymbolService.m in Sources */,
 				84D3C0AA19B886A7007455F9 /* LRDocumentTypeTableViewCell.m in Sources */,
 				84D3C0A319B886A7007455F9 /* LRUser.m in Sources */,
+				84D3C12419BEF96C007455F9 /* NSString+HTML.m in Sources */,
+				84BED46919D5A17D005C80F3 /* LRTwitterListTableViewCell.m in Sources */,
+				84D3C12D19C1D619007455F9 /* LRDocument.m in Sources */,
 				84D3C0AF19B886A7007455F9 /* NSString+MKNetworkKitAdditions.m in Sources */,
+				84BED45819D5988C005C80F3 /* STHTTPRequest+STTwitter.m in Sources */,
 				84D3C11119B88A77007455F9 /* UITextField+previousNextToolBar.m in Sources */,
 				84D3C10A19B88994007455F9 /* LRUtility.m in Sources */,
 				84D3C0AD19B886A7007455F9 /* NSDate+RFC1123.m in Sources */,
 				84D3C0AE19B886A7007455F9 /* NSDictionary+RequestEncoding.m in Sources */,
+				84BED45B19D5988C005C80F3 /* STTwitterHTML.m in Sources */,
+				84BED46019D5988C005C80F3 /* JSONSyntaxHighlight.m in Sources */,
 				84D3C11019B88A77007455F9 /* RTCustomTextField.m in Sources */,
 				84D3C0D419B887B4007455F9 /* LRLoginService.m in Sources */,
 				84D3C05419B88657007455F9 /* LRMainClientPageViewController.m in Sources */,
+				84D3C12A19C1CCFC007455F9 /* LRDocumentViewController.m in Sources */,
 				84D3C0A819B886A7007455F9 /* LRContactListTableViewCell.m in Sources */,
+				84BED45F19D5988C005C80F3 /* BAVPlistNode.m in Sources */,
 				84D3C0B419B886A7007455F9 /* Reachability.m in Sources */,
-				84D3C10219B88914007455F9 /* GTMNSString+HTML.m in Sources */,
-				84D3C0A519B886A7007455F9 /* LRGetDocumentService.m in Sources */,
+				84BED45719D5988C005C80F3 /* NSString+STTwitter.m in Sources */,
+				84D3C0A519B886A7007455F9 /* LRGetDocumentListService.m in Sources */,
 				84D3C01019B86F9E007455F9 /* main.m in Sources */,
 				84D3C0CE19B8878A007455F9 /* LRLogOutService.m in Sources */,
 				84D3C10419B88914007455F9 /* LRWebEngine.m in Sources */,
+				84D3C12319BEF96C007455F9 /* GTMNSString+HTML.m in Sources */,
 				84D3C04F19B88657007455F9 /* LRContactListViewController.m in Sources */,
 				84D3C10519B88914007455F9 /* MBProgressHUD.m in Sources */,
 				84D3C0AC19B886A7007455F9 /* NSData+MKBase64.m in Sources */,
 				84D3C0B019B886A7007455F9 /* UIAlertView+MKNetworkKitAdditions.m in Sources */,
+				84BED45619D5988C005C80F3 /* NSError+STTwitter.m in Sources */,
 				84D3C0C819B88741007455F9 /* leerink.xcdatamodeld in Sources */,
+				8467DD9919D17BCB00BFA20F /* NSDate+RTConvenience.m in Sources */,
 				84D3C0D319B887B4007455F9 /* LRGetAnalystService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

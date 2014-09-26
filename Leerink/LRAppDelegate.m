@@ -20,6 +20,7 @@
 #import "LRCRMListViewController.h"
 #import "LRMainClientPageViewController.h"
 #import <Parse/Parse.h>
+#import "LRWebEngine.h"
 
 @implementation LRAppDelegate
 @synthesize coreDataHelper;
@@ -27,13 +28,20 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
++ (LRAppDelegate *)myAppdelegate
+{
+    return (LRAppDelegate *)[[UIApplication sharedApplication] delegate];
+}
++ (UIStoryboard *)myStoryBoard
+{
+    return [UIStoryboard storyboardWithName:[[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone?@"Main_iPhone":@"Main_iPad" bundle:nil];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone?@"Main_iPhone":@"Main_iPad" bundle:nil];
-    
     // direct the user to the main client page controller
     
-    LRMainClientPageViewController *aMainClientPAgeController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRMainClientPageViewController class])];
+    LRMainClientPageViewController *aMainClientPAgeController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRMainClientPageViewController class])];
     self.aBaseNavigationController = [[UINavigationController alloc] initWithRootViewController:aMainClientPAgeController];
     
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
@@ -43,13 +51,13 @@
         self.window.tintColor = [UIColor blackColor];
     }
     //Add the login view controller as the root controller of the app window
-    LRLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
+    LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
     [self.window setRootViewController:loginVC];
     [self.window makeKeyAndVisible];
     
     ///
-     [Parse setApplicationId:@"0921QnBasJhIv1cFQkxC8f4aJupFnUbIuCnq8qB6"
-                 clientKey:@"CrXy8wSEnkuvmm67ebWMbEOpzFbUA55dI3MFtLjL"];
+    [Parse setApplicationId:@"0921QnBasJhIv1cFQkxC8f4aJupFnUbIuCnq8qB6"
+                  clientKey:@"CrXy8wSEnkuvmm67ebWMbEOpzFbUA55dI3MFtLjL"];
     
     // Let the device know we want to receive push notifications
 	[application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
@@ -63,6 +71,17 @@
         [self.coreDataHelper setupCoreData];
     }
     return YES;
+}
+#pragma mark - Orientation methods
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
+    NSUInteger orientations = UIInterfaceOrientationMaskAllButUpsideDown;
+    
+    if(self.window.rootViewController){
+        UIViewController *presentedViewController = [[self.aBaseNavigationController viewControllers] lastObject];
+        orientations = [presentedViewController supportedInterfaceOrientations];
+    }
+    
+    return orientations;
 }
 #pragma mark - Core data methods
 - (void)saveContext
@@ -185,19 +204,18 @@
     return self.coreDataHelper;
 }
 #pragma mark - Push notification code
-- (void)application:(UIApplication *)application
- didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
- {
- // Store the deviceToken in the current installation and save it to Parse.
- PFInstallation *currentInstallation = [PFInstallation currentInstallation];
- [currentInstallation setDeviceTokenFromData:deviceToken];
- [currentInstallation saveInBackground];
- }
- 
- - (void)application:(UIApplication *)application
- didReceiveRemoteNotification:(NSDictionary *)userInfo {
- [PFPush handlePush:userInfo];
- }
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackground];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    [PFPush handlePush:userInfo];
+}
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
@@ -205,6 +223,22 @@
 }
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:@"PrimaryRoleID"] intValue] == 6) {
+        if([[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] length] != 0) {
+            [[LRWebEngine defaultWebEngine] sendRequestToLogOutWithwithContextInfo:nil forResponseBlock:^(NSDictionary *responseDictionary) {
+                
+                LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
+                [[LRAppDelegate myAppdelegate].window setRootViewController:loginVC];
+                
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SessionId"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+            } errorHandler:^(NSError *error) {
+                DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
+                     [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
+            }];
+        }
+    }
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }

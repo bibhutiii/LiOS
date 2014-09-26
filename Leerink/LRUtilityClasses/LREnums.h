@@ -10,6 +10,19 @@ typedef enum
 {
     eLRDocumentAnalyst = 1000,
     eLRDocumentSector,
-    eLRDocumentSymbol
+    eLRDocumentSymbol,
+    eLRGetDocumentList
     
 }eLRDocumentType;
+
+
+
+typedef enum
+{
+    eLRDocumentListAnalyst = 2000,
+    eLRDocumentListSector,
+    eLRDocumentListSymbol
+    
+}eLRDocumentListType;
+
+

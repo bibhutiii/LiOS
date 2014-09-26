@@ -9,8 +9,10 @@
 #import "LRDocumentListViewController.h"
 #import "LRLoginViewController.h"
 #import "LRDocumentTypeTableViewCell.h"
-#import "LRGetDocumentService.h"
+#import "LRGetDocumentListService.h"
 #import "LRDocument.h"
+#import "LRDocumentViewController.h"
+#import "LRWebEngine.h"
 
 @interface LRDocumentListViewController ()
 {
@@ -34,10 +36,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSMutableDictionary *aContextInfoDictionary = [NSMutableDictionary new];
     // do the navigation bar settings
     self.navigationItem.title = @"Documents";
-    LRGetDocumentService *aGetDocumentService = nil;
-    aGetDocumentService = [[LRGetDocumentService alloc] initWithURL:[NSURL URLWithString:@"http://10.0.100.40:8081/iOS_QA/Service1.svc?singleWsdl"]];
+    LRGetDocumentListService *aGetDocumentService = nil;
+    aGetDocumentService = [[LRGetDocumentListService alloc] initWithURL:[NSURL URLWithString:baseURLForService]];
     aGetDocumentService.delegate = self;
     aGetDocumentService.documentType = self.documentType;
     aGetDocumentService.documentTypeId = self.documentTypeId;
@@ -45,26 +48,56 @@
     switch (self.documentType) {
         case eLRDocumentAnalyst:
         {
-            [aGetDocumentService getDocument:^(BOOL isDocumentFetched) {
-                
-            } withDocumentType:@"AnalystID" andId:self.documentTypeId];
+            [aContextInfoDictionary setObject:self.contextInfo forKey:@"AnalystDocumentList"];
+            [aContextInfoDictionary setObject:[NSNumber numberWithInt:self.documentListType] forKey:@"DocumentTypeList"];
+            [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentListWithwithContextInfo:aContextInfoDictionary forResponseDataBlock:^(NSDictionary *responseDictionary) {
+                if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
+                    [LRUtility stopActivityIndicatorFromView:self.view];
+                    [self didLoadData];
+                }
+            } errorHandler:^(NSError *error) {
+                DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
+                     [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
+
+            }];
+            
         }
             break;
         case eLRDocumentSector:
         {
-            [aGetDocumentService getDocument:^(BOOL isDocumentFetched) {
+            [aContextInfoDictionary setObject:self.contextInfo forKey:@"SectorDocumentList"];
+            [aContextInfoDictionary setObject:[NSNumber numberWithInt:self.documentListType] forKey:@"DocumentTypeList"];
+
+            [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentListWithwithContextInfo:aContextInfoDictionary forResponseDataBlock:^(NSDictionary *responseDictionary) {
+                if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
+                    [LRUtility stopActivityIndicatorFromView:self.view];
+                    [self didLoadData];
+                }
+            } errorHandler:^(NSError *error) {
+                DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
+                     [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
                 
-            } withDocumentType:@"researchID" andId:self.documentTypeId];
+            }];
         }
             break;
         case eLRDocumentSymbol:
         {
-            [aGetDocumentService getDocument:^(BOOL isDocumentFetched) {
+            [aContextInfoDictionary setObject:self.contextInfo forKey:@"SymbolDocumentList"];
+            [aContextInfoDictionary setObject:[NSNumber numberWithInt:self.documentListType] forKey:@"DocumentTypeList"];
+            
+            [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentListWithwithContextInfo:aContextInfoDictionary forResponseDataBlock:^(NSDictionary *responseDictionary) {
+                if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
+                    [LRUtility stopActivityIndicatorFromView:self.view];
+                    [self didLoadData];
+                }
+            } errorHandler:^(NSError *error) {
+                DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
+                     [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
                 
-            } withDocumentType:@"tickerID" andId:self.documentTypeId];
+            }];
         }
             break;
- 
+            
         default:
             break;
     }
@@ -73,42 +106,43 @@
 #pragma mark - Load the data into the table
 - (void)didLoadData
 {
-    switch (self.documentType)
-    {
-        case eLRDocumentAnalyst:
-        {
-            self.documentsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"analyst.userId == %d",self.documentTypeId, nil];
-        }
-            break;
-        case eLRDocumentSector:
-        {
-            self.documentsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"sector.researchID == %d",self.documentTypeId, nil];
-        }
-            break;
-        case eLRDocumentSymbol:
-        {
-            self.documentsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"symbol.tickerID == %d",self.documentTypeId, nil];
-        }
-            break;
-            
-        default:
-            break;
-    }
     
-    NSSortDescriptor *zoneSegmentsDescriptor = [[NSSortDescriptor alloc]
-                                                initWithKey:@"documentTitle" ascending:YES selector:@selector(caseInsensitiveCompare:)];
-    NSArray *sortDescriptors = @[zoneSegmentsDescriptor];
-    
-    self.documentsListArray = (NSMutableArray *)[self.documentsListArray sortedArrayUsingDescriptors:sortDescriptors];
-
-    [LRUtility stopActivityIndicatorFromView:self.view];
-    self.documentsListTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self.searchDisplayController.searchResultsTableView setRowHeight:self.documentsListTable.rowHeight];
-    self.documentsListTable.bounces = TRUE;
-    //
-    [self.documentsListTable reloadData];
-    tableContentSize = self.documentsListTable.contentSize;
-    tableContentSize.height = tableContentSize.height + 150.0;
+        switch (self.documentType)
+        {
+            case eLRDocumentAnalyst:
+            {
+                self.documentsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"analyst.userId == %d",self.documentTypeId, nil];
+            }
+                break;
+            case eLRDocumentSector:
+            {
+                self.documentsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"sector.researchID == %d",self.documentTypeId, nil];
+            }
+                break;
+            case eLRDocumentSymbol:
+            {
+                self.documentsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"symbol.tickerID == %d",self.documentTypeId, nil];
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
+     //   NSSortDescriptor *zoneSegmentsDescriptor = [[NSSortDescriptor alloc]
+           //                                         initWithKey:@"documentTitle" ascending:YES selector:@selector(caseInsensitiveCompare:)];
+      //  NSArray *sortDescriptors = @[zoneSegmentsDescriptor];
+        
+      //  self.documentsListArray = (NSMutableArray *)[self.documentsListArray sortedArrayUsingDescriptors:sortDescriptors];
+        
+        [LRUtility stopActivityIndicatorFromView:self.view];
+        self.documentsListTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+        [self.searchDisplayController.searchResultsTableView setRowHeight:self.documentsListTable.rowHeight];
+        self.documentsListTable.bounces = TRUE;
+        //
+        [self.documentsListTable reloadData];
+        tableContentSize = self.documentsListTable.contentSize;
+        tableContentSize.height = tableContentSize.height + 150.0;
     
 }
 #pragma mark - UITableViewDataSource
@@ -121,6 +155,7 @@
 
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"row count--%d",(unsigned)self.documentsListArray.count);
     return self.documentsListArray.count;
 }
 
@@ -131,7 +166,7 @@
     }
     
     [tableView setContentInset:UIEdgeInsetsMake(1.0, 0.0, 1.0, 0.0)];
-
+    
     
     NSString *CellIdentifier = NSStringFromClass([LRDocumentTypeTableViewCell class]);
     LRDocumentTypeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -143,7 +178,7 @@
     
     LRDocument *aDocument = (LRDocument *)[self.documentsListArray objectAtIndex:indexPath.row];
     [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor];
-
+    
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -153,10 +188,19 @@
 #pragma mark - UITableView delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone?@"Main_iPhone":@"Main_iPad" bundle:nil];
-    //LRLoginViewController *aAboutUsVC = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
-   // [self.navigationController pushViewController:aAboutUsVC animated:TRUE];
-    //[tableView deselectRowAtIndexPath:indexPath animated:YES];
+    LRDocument *aDocument = (LRDocument *)[self.documentsListArray objectAtIndex:indexPath.row];
+    
+    LRDocumentViewController *documentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
+    documentViewController.documentId = [aDocument.documentID intValue];
+    documentViewController.userId = 21804;
+    //documentViewController.documentPath = @"D:\\Release\\test.txt";
+    documentViewController.documentPath = aDocument.documentPath;
+    
+    [self.navigationController pushViewController:documentViewController animated:TRUE];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+- (NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
 }
 - (void)didReceiveMemoryWarning
 {
@@ -165,14 +209,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a [LRAppDelegate myStoryBoard]-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

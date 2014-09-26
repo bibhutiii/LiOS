@@ -291,6 +291,25 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,
   return [str md5];
 }
 
+-(void)setdocumentType:(eLRDocumentType)documentType
+{
+    NSLog(@"requestType = %d",documentType);
+    eDocumentType = documentType;
+}
+
+-(void)setdocumentListType:(eLRDocumentListType)documentListType
+{
+    eDocumentListType = documentListType;
+}
+
+- (eLRDocumentListType)eDocListType
+{
+    return eDocumentListType;
+}
+- (eLRDocumentType)eDocType
+{
+    return eDocumentType;
+}
 -(BOOL) isCachedResponse {
   
   return self.cachedResponse != nil;

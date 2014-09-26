@@ -2,8 +2,8 @@
 //  LRDocument.m
 //  Leerink
 //
-//  Created by Ashish on 21/08/2014.
-//  Copyright (c) 2014 admin. All rights reserved.
+//  Created by Ashish on 11/09/2014.
+//  Copyright (c) 2014 leerink. All rights reserved.
 //
 
 #import "LRDocument.h"
@@ -14,10 +14,11 @@
 
 @implementation LRDocument
 
-@dynamic documentID;
-@dynamic documentDate;
 @dynamic documentAuthor;
+@dynamic documentDate;
+@dynamic documentID;
 @dynamic documentTitle;
+@dynamic documentPath;
 @dynamic analyst;
 @dynamic sector;
 @dynamic symbol;

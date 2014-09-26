@@ -54,11 +54,11 @@
                              "</SOAP-ENV:Envelope>"];
     
     
-    NSURL *url = [NSURL URLWithString:@"http://10.0.100.40:8081/iOS_QA/Service1.svc"];
+    NSURL *url = [NSURL URLWithString:locationOfServiceURL];
     NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
     NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[soapMessage length]];
     [theRequest addValue: @"text/xml" forHTTPHeaderField:@"Content-Type"];
-    [theRequest addValue: @"http://tempuri.org/IService1/GetSymbols" forHTTPHeaderField:@"Soapaction"];
+    [theRequest addValue: @"http://tempuri.org/IIIRPIOSService/GetSymbols" forHTTPHeaderField:@"Soapaction"];
     [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
     [theRequest setHTTPMethod:@"POST"];
     [theRequest setHTTPBody: [soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
@@ -90,7 +90,12 @@
 {
 	NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[webData length]);
     
-    
+    if((unsigned long)[webData length] == 0) {
+        if([self.delegate respondsToSelector:@selector(didLoadData:)]){
+            [self.delegate didLoadData:FALSE];
+        }
+    }
+    else {
     
 	NSString *theXML = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
     
@@ -104,6 +109,7 @@
     //
 	//[webData release];
 	//[resultTable reloadData];
+    }
 }
 
 
@@ -140,7 +146,7 @@
             for (NSDictionary *analystDictionary in self.symbolsArray) {
                 LRSymbol *aSymbol = (LRSymbol *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRSymbol" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
                 
-                aSymbol.tickerID = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"tickerID"] intValue]];
+                aSymbol.tickerID = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"TickerID"] intValue]];
                 aSymbol.nameSymbol = [analystDictionary objectForKey:@"NameSymbol"];
             }
         }
@@ -151,15 +157,15 @@
             for (NSDictionary *analystDictionary in self.symbolsArray) {
                 LRSymbol *aSymbol = (LRSymbol *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRSymbol" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
                 
-                aSymbol.tickerID = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"tickerID"] intValue]];
+                aSymbol.tickerID = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"TickerID"] intValue]];
                 aSymbol.nameSymbol = [analystDictionary objectForKey:@"NameSymbol"];
             }
         }
         [[LRCoreDataHelper sharedStorageManager] saveContext];
         
         // after the data has been loaded into the database, reload the table to compose the data in the tableview.
-        if([self.delegate respondsToSelector:@selector(didLoadData)]) {
-            [self.delegate didLoadData];
+        if([self.delegate respondsToSelector:@selector(didLoadData:)]) {
+            [self.delegate didLoadData:TRUE];
         }
     }
 }

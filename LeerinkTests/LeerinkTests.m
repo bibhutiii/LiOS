@@ -21,8 +21,7 @@
 {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    viewController = [storyboard instantiateViewControllerWithIdentifier:@"LRLoginViewController"];
+    viewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:@"LRLoginViewController"];
      [viewController performSelectorOnMainThread:@selector(loadView) withObject:nil waitUntilDone:YES];
 }
 

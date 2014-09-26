@@ -93,9 +93,8 @@
     if(value) {
         [LRUtility stopActivityIndicatorFromView:self.view];
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone?@"Main_iPhone":@"Main_iPad" bundle:nil];
-        LRAppDelegate *appDelegate = (LRAppDelegate *)[[UIApplication sharedApplication] delegate];
         LRLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
-        [appDelegate.window setRootViewController:loginVC];
+        [[LRAppDelegate myAppdelegate].window setRootViewController:loginVC];
         UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
                                                                    message:[NSString stringWithFormat:@"Log out succesfull"]
                                                                   delegate:self

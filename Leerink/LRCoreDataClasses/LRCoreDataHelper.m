@@ -21,18 +21,16 @@ NSString *storeFilename = @"leerink.sqlite";
 
 + (LRCoreDataHelper *) sharedStorageManager
 {
-    LRAppDelegate * appDelegate = (LRAppDelegate *) [[UIApplication sharedApplication] delegate];
     
-    if (appDelegate.coreDataHelper.context == nil)
-        appDelegate.coreDataHelper.context = appDelegate.managedObjectContext;
+    if ([LRAppDelegate myAppdelegate].coreDataHelper.context == nil)
+        [LRAppDelegate myAppdelegate].coreDataHelper.context = [LRAppDelegate myAppdelegate].managedObjectContext;
     
-    return appDelegate.coreDataHelper;
+    return [LRAppDelegate myAppdelegate].coreDataHelper;
 }
 + (LRCoreDataHelper *) createStorageManager
 {
-    LRAppDelegate * appDelegate = (LRAppDelegate *) [[UIApplication sharedApplication] delegate];
     LRCoreDataHelper * manager = [[LRCoreDataHelper alloc] init];
-    manager.context = [appDelegate createManagedObjectContext];
+    manager.context = [[LRAppDelegate myAppdelegate] createManagedObjectContext];
     return manager;
 }
 #pragma mark - SETUP

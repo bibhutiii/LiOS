@@ -10,8 +10,6 @@
 
 @interface LRLoginViewController : UIViewController<UITextFieldDelegate>
 
-
-
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 

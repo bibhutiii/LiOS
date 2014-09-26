@@ -2,8 +2,8 @@
 //  LRAnalyst.m
 //  Leerink
 //
-//  Created by Ashish on 21/08/2014.
-//  Copyright (c) 2014 admin. All rights reserved.
+//  Created by Ashish on 12/09/2014.
+//  Copyright (c) 2014 leerink. All rights reserved.
 //
 
 #import "LRAnalyst.h"

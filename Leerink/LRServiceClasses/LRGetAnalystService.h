@@ -10,6 +10,7 @@
 #import "LRLoadDataDelegate.h"
 
 typedef void (^LRGetAnalystResponse)(BOOL isAnalystFetched);
+typedef void (^LRGetSaveAnalystsToDatabase)(BOOL analystSaved);
 
 @interface LRGetAnalystService : NSObject < NSXMLParserDelegate,NSURLConnectionDelegate,NSURLConnectionDataDelegate>
 {

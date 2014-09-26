@@ -23,6 +23,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#import "LREnums.h"
+
 @class MKNetworkOperation;
 
 typedef enum {
@@ -76,6 +78,9 @@ typedef enum {
   int _state;
   BOOL _freezable;
   MKNKPostDataEncodingType _postDataEncoding;
+    eLRDocumentType	eDocumentType;
+    eLRDocumentListType eDocumentListType;
+
 }
 
 /*!
@@ -685,7 +690,8 @@ typedef enum {
 -(void) updateHandlersFromOperation:(MKNetworkOperation*) operation;
 -(void) updateOperationBasedOnPreviousHeaders:(NSMutableDictionary*) headers;
 -(NSString*) uniqueIdentifier;
-
+@property (assign) eLRDocumentType documentType;
+@property (assign) eLRDocumentListType documentListType;
 - (instancetype)initWithURLString:(NSString *)aURLString
                  params:(NSDictionary *)params
              httpMethod:(NSString *)method;

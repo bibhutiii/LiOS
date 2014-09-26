@@ -9,6 +9,7 @@
 #import "LRMainClientPageViewController.h"
 #import "LRContactListTableViewCell.h"
 #import "LRDocumentTypeListController.h"
+#import "LRTwitterListsViewController.h"
 
 @interface LRMainClientPageViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *mainClientTable;
@@ -32,10 +33,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"Document Library";
+    // since the landing page has a static list of items add them into the array for the tableview's data source.
+
     self.aMainClientListArray = [[NSMutableArray alloc] initWithObjects:@"Today's Research",@"Symbol",@"Sector",@"Analyst", nil];
     [self.mainClientTable reloadData];
     self.mainClientTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
+}
+- (IBAction)fetchListsForTwitter:(id)sender {
+    
+    LRTwitterListsViewController *twitterListViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRTwitterListsViewController class])];
+    [self.navigationController pushViewController:twitterListViewController animated:TRUE];
+    
 }
 #pragma mark - UITableViewDataSource
 
@@ -73,8 +82,9 @@
 #pragma mark - UITableView delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone?@"Main_iPhone":@"Main_iPad" bundle:nil];
-    LRDocumentTypeListController *documentTypeListViewController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentTypeListController class])];
+    // based on the type of document selected, navigate to the documents list screen.
+    
+    LRDocumentTypeListController *documentTypeListViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentTypeListController class])];
 
     switch (indexPath.row) {
         case 0:
@@ -108,7 +118,7 @@
 /*
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+// In a [LRAppDelegate myStoryBoard]-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     // Get the new view controller using [segue destinationViewController].

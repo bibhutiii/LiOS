@@ -79,9 +79,9 @@
 #pragma mark - UITableView delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone?@"Main_iPhone":@"Main_iPad" bundle:nil];
+    
     if(indexPath.row == 2) {
-        LRContactListViewController *aContactListViewController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRContactListViewController class])];
+        LRContactListViewController *aContactListViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRContactListViewController class])];
         aContactListViewController.titleHeader = [self.crmListArray objectAtIndex:indexPath.row];
         //aMainClientListViewController.titleHeader = [self.crmListArray objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:aContactListViewController animated:TRUE];
@@ -89,12 +89,12 @@
     }
     else if(indexPath.row == 3) {
         
-        LRMainClientPageViewController *aMainClientListViewController = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRMainClientPageViewController class])];
+        LRMainClientPageViewController *aMainClientListViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRMainClientPageViewController class])];
         //aMainClientListViewController.titleHeader = [self.crmListArray objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:aMainClientListViewController animated:TRUE];
     }
     else if(indexPath.row == 4) {
-        LRAboutUSViewController *aAboutUsVC = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRAboutUSViewController class])];
+        LRAboutUSViewController *aAboutUsVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRAboutUSViewController class])];
         aAboutUsVC.tabBarItem.title = @"About Us";
         [self.navigationController pushViewController:aAboutUsVC animated:TRUE];
     }
@@ -111,7 +111,7 @@
 /*
  #pragma mark - Navigation
  
- // In a storyboard-based application, you will often want to do a little preparation before navigation
+ // In a [LRAppDelegate myStoryBoard]-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
  {
  // Get the new view controller using [segue destinationViewController].

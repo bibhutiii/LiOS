@@ -56,7 +56,7 @@
                              "</SOAP-ENV:Envelope>"];
     
     
-    NSURL *url = [NSURL URLWithString:@"http://10.0.100.40:8081/iOS_QA/Service1.svc?singleWsdl"];
+    NSURL *url = [NSURL URLWithString:@"http://10.140.217.20/LeerinkApi/api/Session/Create"];
     NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
     NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[soapMessage length]];
     [theRequest addValue: @"text/xml" forHTTPHeaderField:@"Content-Type"];
@@ -138,9 +138,8 @@
 {
     if([elementName isEqualToString:@"GetSymbolsResult"])
     {
-        LRAppDelegate *appDelegate = (LRAppDelegate *)[[UIApplication sharedApplication] delegate];
-        // appDelegate.aTabBarcontroller.selectedIndex = 0;
-        [appDelegate.window setRootViewController:appDelegate.aBaseNavigationController];
+        // [LRAppDelegate myAppdelegate].aTabBarcontroller.selectedIndex = 0;
+        [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
         
     }
 	if ([elementName isEqualToString:@"LoginResult"]) {
@@ -155,16 +154,15 @@
                               otherButtonTitles:nil] show];
         }
         else {
-            LRAppDelegate *appDelegate = (LRAppDelegate *)[[UIApplication sharedApplication] delegate];
-            // appDelegate.aTabBarcontroller.selectedIndex = 0;
-            [appDelegate.window setRootViewController:appDelegate.aBaseNavigationController];
+            // [LRAppDelegate myAppdelegate].aTabBarcontroller.selectedIndex = 0;
+            [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
             
             // adding the code to store data in database.
             LRUser *aUser = (LRUser *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRUser" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
             if([resultDictionary objectForKey:@"PrimaryRoleId"]) {
                 aUser.roleId = [resultDictionary objectForKey:@"PrimaryRoleId"];
             }
-            
+            // if the login is successful then store the current user in the data base.
             aUser.userName = self.userName;
             aUser.password = self.password;
             

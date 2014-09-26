@@ -22,7 +22,7 @@
     NSMutableArray *prevNextArray;
     UITextField *_refTextField;
     
-   }
+}
 #pragma mark - Add the user roles to the database
 - (void) addTheUserRolesToDatabase;
 @end
@@ -41,7 +41,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     // Do any additional setup after loading the view.
     self.userNameTextField.frame = CGRectMake(45.0, 154.0, 206.0, self.userNameTextField.frame.size.height);
     self.userNameTextField.textColor = [UIColor colorWithRed:65.0/255.0 green:65.0/255.0 blue:65.0/255.0 alpha:1.0];
@@ -73,56 +73,50 @@
 
 #pragma mark -
 - (IBAction)logIn:(id)sender {
-   
-    [self addTheUserRolesToDatabase];
     
+    // check if the username and password fields are not left empty.
     if([self.userNameTextField.text length] == 0) {
         UIAlertView *aUserNameAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                   message:[NSString stringWithFormat:@"Please enter a username"]
-                                                                  delegate:self
-                                                         cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                                                         otherButtonTitles:nil, nil];
+                                                                     message:[NSString stringWithFormat:@"Please enter a username"]
+                                                                    delegate:self
+                                                           cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                           otherButtonTitles:nil, nil];
         [aUserNameAlertView show];
         return;
     }
     else if([self.passwordTextField.text length] == 0) {
         UIAlertView *aPassWordAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                   message:[NSString stringWithFormat:@"Please enter a password"]
-                                                                  delegate:self
-                                                         cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                                                         otherButtonTitles:nil, nil];
+                                                                     message:[NSString stringWithFormat:@"Please enter a password"]
+                                                                    delegate:self
+                                                           cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                           otherButtonTitles:nil, nil];
         [aPassWordAlertView show];
         return;
     }
+    
+    // based on the login add the static user roles to the database.
+    [self addTheUserRolesToDatabase];
     /////
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
     
-    LRLoginService *aLoginService = [[LRLoginService alloc] initWithURL:[NSURL URLWithString:@"http://10.0.100.40:8081/iOS_QA/Service1.svc?singleWsdl"]];
-
-    //[aLoginService logInWithActivityIndicatorOnView:self.view withUserName:self.userNameTextField.text andPassword:self.passwordTextField.text];
-    
-   [aLoginService isLoginSuccessful:^(BOOL isLoginSuccessful){
-       if(isLoginSuccessful) {
-           [LRUtility stopActivityIndicatorFromView:self.view];
-       }
-   }
-                       withUserName:self.userNameTextField.text andPassword:self.passwordTextField.text];
-    /////
-   /* [[LRWebEngine defaultWebEngine] aNetWorkOperationWithCustomHeaderscompletionHandler:^(NSString *responseString) {
+    [[LRWebEngine defaultWebEngine] aNetWorkOperationWithCustomHeaderscompletionHandler:^(NSString *responseString) {
         
-        LRAppDelegate *appDelegate = (LRAppDelegate *)[[UIApplication sharedApplication] delegate];
-        [appDelegate.window setRootViewController:appDelegate.aTabBarcontroller];
-
-      //  [self dismissViewControllerAnimated:TRUE completion:^{
-
-        //}];
-                
-
+        [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
+        
+        NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+        NSData *responseData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSDictionary *aResponseDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
+        NSDictionary *aTempDictionary = [aResponseDictionary objectForKey:@"Data"];
+        [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
+        [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
+        [aStandardUserDefaults synchronize];
+        
     } errorHandler:^(NSError *error) {
         DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
              [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
-
-    }];*/
+        
+    }];
     
 }
 
@@ -131,7 +125,7 @@
 {
     NSArray *userRoles = nil;
     userRoles = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRUserRoles" withPredicate:nil, nil];
-
+    
     // if there are no user roles present in the database only then add the new roles.
     if(!userRoles.count) {
         userRoles = [NSArray arrayWithObjects:@"Institutional Sales Group",@"Equity Research Group",@"Institutional Client",@"Consultant",@"Corporate Consulting Group",@"Investment Banking Group",@"Sales Trading",@"Accounting",@"Middle Market Group",@"Marketing Group",@"Medacorp", nil];
@@ -187,7 +181,8 @@
 }
 #pragma mark -
 #pragma mark - Action methods for prev and next button
-- (void)next {
+- (void)next
+{
     if([prevNextArray containsObject:_refTextField])
     {
         int aIndex = (int)[prevNextArray indexOfObject:_refTextField];
@@ -224,7 +219,7 @@
 /*
  #pragma mark - Navigation
  
- // In a storyboard-based application, you will often want to do a little preparation before navigation
+ // In a [LRAppDelegate myStoryBoard]-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
  {
  // Get the new view controller using [segue destinationViewController].

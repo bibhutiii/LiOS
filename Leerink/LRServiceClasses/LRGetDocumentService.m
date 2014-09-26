@@ -2,8 +2,8 @@
 //  LRGetDocumentService.m
 //  Leerink
 //
-//  Created by Ashish on 21/08/2014.
-//  Copyright (c) 2014 admin. All rights reserved.
+//  Created by Ashish on 11/09/2014.
+//  Copyright (c) 2014 leerink. All rights reserved.
 //
 
 #import "LRGetDocumentService.h"
@@ -12,6 +12,7 @@
 #import "LRSymbol.h"
 #import "LRSector.h"
 #import "LRDocument.h"
+#import "NSString+HTML.h"
 
 @interface LRGetDocumentService ()
 
@@ -19,6 +20,8 @@
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *password;
 @property (strong, nonatomic) NSMutableArray *symbolsArray;
+@property (strong, nonatomic) NSData *documentData;
+@property (assign, nonatomic) BOOL isDocumentAvailable;
 @end
 
 @implementation LRGetDocumentService
@@ -35,9 +38,10 @@
     // service URL
     //http://portalqa.leerink.com/leerinkwebservice/leerinkservice.asmx
 }
-- (void)getDocument:(LRGetDocumentResponse)responseBlock withDocumentType:(NSString *)documentType andId:(int )documentTypeId
+- (void)getDocument:(LRGetDocumentResponse)responseBlock withDocumentId:(int )documentId withUserId:(int )userId andPath:(NSString *)path
 {
     __block BOOL isSectorFetched = TRUE;
+    self.isDocumentAvailable = FALSE;
     ////
     
     //Web Service Call
@@ -50,18 +54,20 @@
                              "SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"\n"
                              "xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"> \n"
                              "<SOAP-ENV:Body> \n"
-                             "<GetDocumentList xmlns=\"http://tempuri.org/\">"
-                             "<%@>%d</%@>\n"
-                             "</GetDocumentList>\n"
+                             "<GetDocument xmlns=\"http://tempuri.org/\">"
+                             "<documentID>%d</documentID>\n"
+                             "<userID>%d</userID>\n"
+                             "<path>%@</path>\n"
+                             "</GetDocument>\n"
                              "</SOAP-ENV:Body> \n"
-                             "</SOAP-ENV:Envelope>",documentType,documentTypeId,documentType];
+                             "</SOAP-ENV:Envelope>",documentId,userId,path];
     
     
-    NSURL *url = [NSURL URLWithString:@"http://10.0.100.40:8081/iOS_QA/Service1.svc"];
+    NSURL *url = [NSURL URLWithString:locationOfServiceURL];
     NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
     NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[soapMessage length]];
     [theRequest addValue: @"text/xml" forHTTPHeaderField:@"Content-Type"];
-    [theRequest addValue: @"http://tempuri.org/IService1/GetDocumentList" forHTTPHeaderField:@"Soapaction"];
+    [theRequest addValue: @"http://tempuri.org/IIIRPIOSService/GetDocument" forHTTPHeaderField:@"Soapaction"];
     [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
     [theRequest setHTTPMethod:@"POST"];
     [theRequest setHTTPBody: [soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
@@ -93,20 +99,22 @@
 {
 	NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[webData length]);
     
-    
-    
-	NSString *theXML = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
-    
-    NSString *aDecodedString = [theXML stringByDecodingHTMLEntities];
-    NSLog(@"%@",aDecodedString);
-    
-	xmlParser = [[NSXMLParser alloc]initWithData:webData];
-	[xmlParser setDelegate: self];
-	//[xmlParser setShouldResolveExternalEntities: NO];
-	[xmlParser parse];
-    //
-	//[webData release];
-	//[resultTable reloadData];
+    if((unsigned long)[webData length] == 0) {
+        if([self.delegate respondsToSelector:@selector(didLoadData:)]){
+            [self.delegate didLoadData:FALSE];
+        }
+    }
+    else {
+        
+        NSString *theXML = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
+        
+        NSString *aDecodedString = [theXML stringByDecodingHTMLEntities];
+        NSLog(@"%@",aDecodedString);
+        
+        xmlParser = [[NSXMLParser alloc]initWithData:webData];
+        [xmlParser setDelegate: self];
+        [xmlParser parse];
+    }
 }
 
 
@@ -115,7 +123,10 @@
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
 {
     NSLog(@"ELE -- %@",elementName);
-	if([elementName isEqualToString:@"GetDocumentListResult"])
+    if ([elementName isEqualToString:@"a:ErrorMessage"]) {
+        self.isDocumentAvailable = TRUE;
+    }
+	if([elementName isEqualToString:@"GetDocumentResult"])
     {
         self.symbolsArray = [NSMutableArray new];
     }
@@ -123,121 +134,30 @@
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    NSLog(@"FC -- %@",string);
+    //NSLog(@"FC -- %@",string);
+    if(self.isDocumentAvailable && string.length > 0) {
+        self.isDocumentAvailable = FALSE;
+        if([self.delegate respondsToSelector:@selector(failedToParseTheDocumentWithErrorMessage:)]) {
+            [self.delegate failedToParseTheDocumentWithErrorMessage:string];
+        }
+    }
     
-    NSData *responseData = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:string options:0];
     
-    self.symbolsArray = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
+    self.documentData = decodedData;
     
-    //  resultDictionary = [NSMutableDictionary dictionaryWithDictionary:parsedContent];
-    
-	//[nodeContent appendString:[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-    if([elementName isEqualToString:@"GetDocumentListResult"])
+    if([elementName isEqualToString:@"GetDocumentResult"])
     {
-        switch (self.documentType)
-        {
-            case eLRDocumentAnalyst:
-            {
-                NSArray *analystsArray = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRAnalyst" withPredicate:@"userId == %d",self.documentTypeId, nil];
-                if(analystsArray && analystsArray.count) {
-                    LRAnalyst *analyst = [analystsArray objectAtIndex:0];
-                    
-                    NSArray *documentsForAnalyst = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"analyst.userId == %d",self.documentTypeId, nil];
-                    if(documentsForAnalyst && documentsForAnalyst.count > 0) {
-                        for (LRDocument *aDocument in documentsForAnalyst) {
-                            [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:aDocument];
-                        }
-                    }
-
-                    for (NSDictionary *aDocumentDictionary in self.symbolsArray) {
-                        
-                        LRDocument *aDocument = (LRDocument *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRDocument" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
-                        aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"author"];
-                        aDocument.documentTitle = [aDocumentDictionary objectForKey:@"documentTitle"];
-                       // aDocument.documentDate = [aDocumentDictionary objectForKey:@"update_date"];
-                        aDocument.documentID = [aDocumentDictionary objectForKey:@"documentID"];
-                        
-                        aDocument.analyst = analyst;
-                        [analyst addAnalystDocumentsObject:aDocument];
-
-                        [[LRCoreDataHelper sharedStorageManager] saveContext];
-                    }
-                }
-
-            }
-                break;
-            case eLRDocumentSector:
-            {
-                NSArray *sectorsArray = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRSector" withPredicate:@"researchID == %d",self.documentTypeId, nil];
-                if(sectorsArray && sectorsArray.count) {
-                    LRSector *sector = [sectorsArray objectAtIndex:0];
-                    
-                    NSArray *documentsForAnalyst = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"sector.researchID == %d",self.documentTypeId, nil];
-                    if(documentsForAnalyst && documentsForAnalyst.count > 0) {
-                        for (LRDocument *aDocument in documentsForAnalyst) {
-                            [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:aDocument];
-                        }
-                    }
-                    
-                    for (NSDictionary *aDocumentDictionary in self.symbolsArray) {
-                        
-                        LRDocument *aDocument = (LRDocument *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRDocument" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
-                        aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"author"];
-                        aDocument.documentTitle = [aDocumentDictionary objectForKey:@"documentTitle"];
-                        // aDocument.documentDate = [aDocumentDictionary objectForKey:@"update_date"];
-                        aDocument.documentID = [aDocumentDictionary objectForKey:@"documentID"];
-                        
-                        aDocument.sector = sector;
-                        [sector addSectorDocumentsObject:aDocument];
-                        
-                        [[LRCoreDataHelper sharedStorageManager] saveContext];
-                    }
-                }
-
-            }
-                break;
-            case eLRDocumentSymbol:
-            {
-                NSArray *sectorsArray = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRSymbol" withPredicate:@"tickerID == %d",self.documentTypeId, nil];
-                if(sectorsArray && sectorsArray.count) {
-                    LRSymbol *symbol = [sectorsArray objectAtIndex:0];
-                    
-                    NSArray *documentsForAnalyst = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"symbol.tickerID == %d",self.documentTypeId, nil];
-                    if(documentsForAnalyst && documentsForAnalyst.count > 0) {
-                        for (LRDocument *aDocument in documentsForAnalyst) {
-                            [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:aDocument];
-                        }
-                    }
-                    
-                    for (NSDictionary *aDocumentDictionary in self.symbolsArray) {
-                        
-                        LRDocument *aDocument = (LRDocument *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRDocument" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
-                        aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"author"];
-                        aDocument.documentTitle = [aDocumentDictionary objectForKey:@"documentTitle"];
-                        // aDocument.documentDate = [aDocumentDictionary objectForKey:@"update_date"];
-                        aDocument.documentID = [aDocumentDictionary objectForKey:@"documentID"];
-                        
-                        aDocument.symbol = symbol;
-                        [symbol addSymbolDocumentsObject:aDocument];
-                        
-                        [[LRCoreDataHelper sharedStorageManager] saveContext];
-                    }
-                }
-            }
-                break;
-                
-            default:
-                break;
-        }
-        // after the data has been loaded into the database, reload the table to compose the data in the tableview.
-        if([self.delegate respondsToSelector:@selector(didLoadData)]) {
-            [self.delegate didLoadData];
+       // after the data has been loaded into the database, reload the table to compose the data in the tableview.
+        if([self.delegate respondsToSelector:@selector(didLoadDocumentOnWebView:)]) {
+            [self.delegate didLoadDocumentOnWebView:self.documentData];
         }
     }
 }
 
 @end
+

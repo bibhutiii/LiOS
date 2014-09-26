@@ -10,8 +10,10 @@
 #import "LRParentNavigationController.h"
 #import "LRLoadDataDelegate.h"
 
-@interface LRDocumentListViewController : LRParentNavigationController<LRLoadDataDelegate>
+@interface LRDocumentListViewController : LRParentNavigationController<LRLoadDataDelegate,UIWebViewDelegate>
 
 @property (nonatomic, assign) eLRDocumentType documentType;
+@property (nonatomic, assign) eLRDocumentListType documentListType;
 @property (nonatomic, assign) int documentTypeId;
+@property (nonatomic, strong) id contextInfo;
 @end
