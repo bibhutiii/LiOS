@@ -325,13 +325,8 @@
     if (nil != self.labelText) {
         // Get size of label text
         
-        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-            // Load resources for iOS 6.1 or earlier
-            dims = [self.labelText sizeWithFont:self.labelFont];
-        } else {
             // Load resources for iOS 7 or later
            dims = [self.labelText sizeWithAttributes: @{NSFontAttributeName:self.labelFont}];
-        }
 		
         // Compute label dimensions based on font metrics if size is larger than max then clip the label width
         float lHeight = dims.height;

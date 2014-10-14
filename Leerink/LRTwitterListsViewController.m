@@ -9,9 +9,10 @@
 #import "LRTwitterListsViewController.h"
 #import "STTwitter.h"
 #import "LRTwitterListTableViewCell.h"
+#import "LRTwitterListTweetsViewController.h"
+#import "LRTwitterList.h"
 
 @interface LRTwitterListsViewController ()
-@property (nonatomic, strong) STTwitterAPI *twitter;
 @property (nonatomic, strong) NSArray *twitterListsArray;
 @property (weak, nonatomic) IBOutlet UITableView *twitterListsTableView;
 
@@ -22,41 +23,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.twitter = [STTwitterAPI twitterAPIOSWithFirstAccount];
     self.twitterListsArray = [NSArray new];
     self.twitterListsTableView.delegate = self;
     self.twitterListsTableView.dataSource = self;
-     self.twitterListsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.twitterListsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     self.title = @"Lists";
     
-    [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
-    [STTwitterAPI twitterAPIWithOAuthConsumerName:@""
-                                      consumerKey:@"f8KKQr7cJVlbeIcuL2z20h7Vw"
-                                   consumerSecret:@"9JkMLP6qKG3z0o8VWSxs5Xkr3TlYO35d3jG9JQ4o75BuxixUZk"
-                                         username:@"Leerportal"
-                                         password:@"leerDev14sep"];
+    self.twitterListsArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRTwitterList" withPredicate:nil, nil];
+    [self.twitterListsTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
     
-    [_twitter verifyCredentialsWithSuccessBlock:^(NSString *username) {
-        
-        NSLog(@"Access granted for %@", username);
-        
-        [_twitter getListsSubscribedByUsername:@"Leerportal" orUserID:nil reverse:0 successBlock:^(NSArray *lists) {
-            self.twitterListsArray = lists;
-            NSLog(@"-- statuses: %@",self.twitterListsArray);
-            [self.twitterListsTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-            [LRUtility stopActivityIndicatorFromView:self.view];
-        } errorBlock:^(NSError *error) {
-            
-        }];
-        
-    } errorBlock:^(NSError *error) {
-        NSLog(@"-- error %@", error);
-    }];
-    
-    //[self.twitterListsTableView reloadData];
-
 }
+
 #pragma mark - UITableViewDataSource
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
@@ -71,12 +49,6 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        [tableView setSeparatorInset:UIEdgeInsetsZero];
-    }
-    
-   // [tableView setContentInset:UIEdgeInsetsMake(1.0, 0.0, 1.0, 0.0)];
-    
     NSString *CellIdentifier = NSStringFromClass([LRTwitterListTableViewCell class]);
     
     LRTwitterListTableViewCell *cell = [self.twitterListsTableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -87,10 +59,33 @@
         cell = (LRTwitterListTableViewCell *)[bundle objectAtIndex: 0];
     }
     
-    NSDictionary *aTwitterListDetailsDictionary = [self.twitterListsArray objectAtIndex:indexPath.row];
-    [cell fillDataForDocumentCellwithTwitterListMemberName:[aTwitterListDetailsDictionary objectForKey:@"name"]];
+    LRTwitterList *aTweetList = (LRTwitterList *)[self.twitterListsArray objectAtIndex:indexPath.row];
+    
+    [cell fillDataForDocumentCellwithTwitterListMemberName:aTweetList.listName andMemberImage:aTweetList.listImage];
     
     return cell;
+}
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    LRTwitterListTweetsViewController *aTweetsListVoiewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:@"LRTwitterListTweetsViewController"];
+    aTweetsListVoiewController.aTwitterList = (LRTwitterList *)[self.twitterListsArray objectAtIndex:indexPath.row];
+    aTweetsListVoiewController.isTwitterListCountMoreThanOne = TRUE;
+    [self.navigationController pushViewController:aTweetsListVoiewController animated:TRUE];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

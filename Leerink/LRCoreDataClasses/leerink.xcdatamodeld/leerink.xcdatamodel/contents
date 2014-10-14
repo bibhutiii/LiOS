@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="LRAnalyst" representedClassName="LRAnalyst" syncable="YES">
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
@@ -26,6 +26,17 @@
         <attribute name="tickerID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="symbolDocuments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LRDocument" inverseName="symbol" inverseEntity="LRDocument" syncable="YES"/>
     </entity>
+    <entity name="LRTweets" representedClassName="LRTweets" syncable="YES">
+        <attribute name="memberImage" optional="YES" attributeType="Transformable" valueTransformerName="NSUnarchiveFromDataTransformerName" syncable="YES"/>
+        <attribute name="tweet" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="LRTwitterList" representedClassName="LRTwitterList" syncable="YES">
+        <attribute name="listImage" optional="YES" attributeType="Transformable" valueTransformerName="NSUnarchiveFromDataTransformerName" syncable="YES"/>
+        <attribute name="listName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="listOwnerId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="listScreenName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="listSlug" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="LRUser" representedClassName="LRUser" syncable="YES">
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="roleId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -42,5 +53,7 @@
         <element name="LRSymbol" positionX="-36" positionY="72" width="128" height="88"/>
         <element name="LRUser" positionX="-36" positionY="54" width="128" height="90"/>
         <element name="LRUserRoles" positionX="-54" positionY="18" width="128" height="75"/>
+        <element name="LRTweets" positionX="-36" positionY="108" width="128" height="75"/>
+        <element name="LRTwitterList" positionX="-18" positionY="126" width="128" height="118"/>
     </elements>
 </model>

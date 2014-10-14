@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84093CA919E68B3300D20D19 /* LRTwitterListTweetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84093CA819E68B3300D20D19 /* LRTwitterListTweetsViewController.m */; };
+		84093CAC19E69CAD00D20D19 /* LRTweets.m in Sources */ = {isa = PBXBuildFile; fileRef = 84093CAB19E69CAD00D20D19 /* LRTweets.m */; };
+		84093CB519E6A83D00D20D19 /* LRTwitterList.m in Sources */ = {isa = PBXBuildFile; fileRef = 84093CB419E6A83D00D20D19 /* LRTwitterList.m */; };
+		84093CB719ED01FF00D20D19 /* logoutBtn1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84093CB619ED01FF00D20D19 /* logoutBtn1@2x.png */; };
 		8467DD9019C32EEB00BFA20F /* LRAnalyst.m in Sources */ = {isa = PBXBuildFile; fileRef = 8467DD8F19C32EEB00BFA20F /* LRAnalyst.m */; };
 		8467DD9319D032B300BFA20F /* LRSaveDataToDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8467DD9219D032B300BFA20F /* LRSaveDataToDatabase.m */; };
 		8467DD9919D17BCB00BFA20F /* NSDate+RTConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 8467DD9719D17BCB00BFA20F /* NSDate+RTConvenience.m */; };
@@ -136,6 +140,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84093CA719E68B3300D20D19 /* LRTwitterListTweetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRTwitterListTweetsViewController.h; sourceTree = "<group>"; };
+		84093CA819E68B3300D20D19 /* LRTwitterListTweetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRTwitterListTweetsViewController.m; sourceTree = "<group>"; };
+		84093CAA19E69CAD00D20D19 /* LRTweets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRTweets.h; sourceTree = "<group>"; };
+		84093CAB19E69CAD00D20D19 /* LRTweets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRTweets.m; sourceTree = "<group>"; };
+		84093CB319E6A83D00D20D19 /* LRTwitterList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRTwitterList.h; sourceTree = "<group>"; };
+		84093CB419E6A83D00D20D19 /* LRTwitterList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRTwitterList.m; sourceTree = "<group>"; };
+		84093CB619ED01FF00D20D19 /* logoutBtn1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logoutBtn1@2x.png"; sourceTree = "<group>"; };
 		8467DD8E19C32EEB00BFA20F /* LRAnalyst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRAnalyst.h; sourceTree = "<group>"; };
 		8467DD8F19C32EEB00BFA20F /* LRAnalyst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRAnalyst.m; sourceTree = "<group>"; };
 		8467DD9119D032B300BFA20F /* LRSaveDataToDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSaveDataToDatabase.h; sourceTree = "<group>"; };
@@ -488,6 +499,8 @@
 				84D3C03C19B88657007455F9 /* LRAboutUSViewController.m */,
 				84BED46419D59EE3005C80F3 /* LRTwitterListsViewController.h */,
 				84BED46519D59EE3005C80F3 /* LRTwitterListsViewController.m */,
+				84093CA719E68B3300D20D19 /* LRTwitterListTweetsViewController.h */,
+				84093CA819E68B3300D20D19 /* LRTwitterListTweetsViewController.m */,
 				84D3C01519B86F9E007455F9 /* Main_iPhone.storyboard */,
 				84D3C01819B86F9E007455F9 /* Main_iPad.storyboard */,
 				84BED43719D5988C005C80F3 /* STTwitter */,
@@ -559,6 +572,10 @@
 				84D3C12C19C1D619007455F9 /* LRDocument.m */,
 				8467DD8E19C32EEB00BFA20F /* LRAnalyst.h */,
 				8467DD8F19C32EEB00BFA20F /* LRAnalyst.m */,
+				84093CAA19E69CAD00D20D19 /* LRTweets.h */,
+				84093CAB19E69CAD00D20D19 /* LRTweets.m */,
+				84093CB319E6A83D00D20D19 /* LRTwitterList.h */,
+				84093CB419E6A83D00D20D19 /* LRTwitterList.m */,
 			);
 			path = LRCoreDataFiles;
 			sourceTree = "<group>";
@@ -694,6 +711,7 @@
 				84D3C09C19B886A7007455F9 /* user_name_icon.png */,
 				84D3C09D19B886A7007455F9 /* user_name_icon@2x.png */,
 				84BED46219D59E0A005C80F3 /* Twitter-32.png */,
+				84093CB619ED01FF00D20D19 /* logoutBtn1@2x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -792,6 +810,7 @@
 				84D3C0C319B886A7007455F9 /* User-48.png in Resources */,
 				84D3C01A19B86F9E007455F9 /* Main_iPad.storyboard in Resources */,
 				84D3C0C119B886A7007455F9 /* text_field.png in Resources */,
+				84093CB719ED01FF00D20D19 /* logoutBtn1@2x.png in Resources */,
 				84D3C0BA19B886A7007455F9 /* login_button.png in Resources */,
 				84D3C01F19B86F9E007455F9 /* Images.xcassets in Resources */,
 				84D3C0C519B886A7007455F9 /* user_name_icon@2x.png in Resources */,
@@ -844,6 +863,7 @@
 				84D3C05319B88657007455F9 /* LRLoginViewController.m in Sources */,
 				84D3C12719C1CB8C007455F9 /* LRGetDocumentService.m in Sources */,
 				84D3C0A219B886A7007455F9 /* LRSymbol.m in Sources */,
+				84093CB519E6A83D00D20D19 /* LRTwitterList.m in Sources */,
 				84D3C0A419B886A7007455F9 /* LRUserRoles.m in Sources */,
 				84BED45919D5988C005C80F3 /* STTwitterAPI.m in Sources */,
 				84D3C04E19B88657007455F9 /* LRContactDetailViewController.m in Sources */,
@@ -865,6 +885,7 @@
 				84BED45819D5988C005C80F3 /* STHTTPRequest+STTwitter.m in Sources */,
 				84D3C11119B88A77007455F9 /* UITextField+previousNextToolBar.m in Sources */,
 				84D3C10A19B88994007455F9 /* LRUtility.m in Sources */,
+				84093CA919E68B3300D20D19 /* LRTwitterListTweetsViewController.m in Sources */,
 				84D3C0AD19B886A7007455F9 /* NSDate+RFC1123.m in Sources */,
 				84D3C0AE19B886A7007455F9 /* NSDictionary+RequestEncoding.m in Sources */,
 				84BED45B19D5988C005C80F3 /* STTwitterHTML.m in Sources */,
@@ -890,6 +911,7 @@
 				84D3C0C819B88741007455F9 /* leerink.xcdatamodeld in Sources */,
 				8467DD9919D17BCB00BFA20F /* NSDate+RTConvenience.m in Sources */,
 				84D3C0D319B887B4007455F9 /* LRGetAnalystService.m in Sources */,
+				84093CAC19E69CAD00D20D19 /* LRTweets.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -963,7 +985,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sam Storer (9T33NF3537)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sam Storer (9T33NF3537)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -980,10 +1003,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "2B3A1967-CEBA-4988-A5A4-0B49E0C15FDF";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1003,7 +1027,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sam Storer (9T33NF3537)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sam Storer (9T33NF3537)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -1014,9 +1039,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PROVISIONING_PROFILE = "2B3A1967-CEBA-4988-A5A4-0B49E0C15FDF";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1031,6 +1057,8 @@
 				GCC_PREFIX_HEADER = "Leerink/Leerink-Prefix.pch";
 				INFOPLIST_FILE = "Leerink/Leerink-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "126222ef-0687-4738-be53-46bbd4978663";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1045,6 +1073,8 @@
 				GCC_PREFIX_HEADER = "Leerink/Leerink-Prefix.pch";
 				INFOPLIST_FILE = "Leerink/Leerink-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "126222ef-0687-4738-be53-46bbd4978663";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

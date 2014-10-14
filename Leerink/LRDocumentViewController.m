@@ -58,7 +58,14 @@
         }
         
     } errorHandler:^(NSError *errorString) {
-        
+        [LRUtility stopActivityIndicatorFromView:self.view];
+        UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                 message:[errorString description]
+                                                                delegate:self
+                                                       cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                       otherButtonTitles:nil, nil];
+        [errorAlertView show];
+
     }];
     
     

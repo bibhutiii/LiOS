@@ -13,19 +13,83 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e7u-iK-rwc" id="5jL-9Z-D6I">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STD-wL-Bd4">
-                        <rect key="frame" x="14" y="9" width="211" height="21"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6IU-8J-JKx">
+                        <rect key="frame" x="10" y="8" width="30" height="30"/>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STD-wL-Bd4">
+                        <rect key="frame" x="50" y="13" width="252" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="26i-o0-fu6"/>
+                            <constraint firstAttribute="width" constant="252" id="5ek-tF-Byh"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="STD-wL-Bd4" firstAttribute="top" secondItem="5jL-9Z-D6I" secondAttribute="top" constant="13" id="1vp-cH-Yvl"/>
+                    <constraint firstAttribute="trailing" secondItem="STD-wL-Bd4" secondAttribute="trailing" constant="18" id="Zlg-oE-hsn"/>
+                </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="listUserNameLabel" destination="STD-wL-Bd4" id="yFz-Hn-knC"/>
+                <outlet property="twitterListImageView" destination="6IU-8J-JKx" id="9Sc-MN-9Po"/>
             </connections>
-            <point key="canvasLocation" x="655" y="320"/>
+            <point key="canvasLocation" x="391" y="-69"/>
+        </tableViewCell>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Hpl-sN-NfW" customClass="LRTwitterListTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hpl-sN-NfW" id="sQ3-mg-cnB">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cGQ-Af-JZI">
+                        <rect key="frame" x="10" y="20" width="45" height="41"/>
+                    </imageView>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsVerticalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oLN-5L-Hrs">
+                        <rect key="frame" x="63" y="12" width="249" height="101"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.090196080505847931" green="0.17647059261798859" blue="0.43529415130615234" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                    </textView>
+                </subviews>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="tweetTextView" destination="oLN-5L-Hrs" id="Yp2-xE-c2f"/>
+                <outlet property="twitterListImageView" destination="cGQ-Af-JZI" id="5ju-EI-dSS"/>
+            </connections>
+            <point key="canvasLocation" x="391" y="79"/>
+        </tableViewCell>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="l9C-cX-n82" customClass="LRTwitterListTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l9C-cX-n82" id="IhA-lh-1rH">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dkc-sw-4NQ">
+                        <rect key="frame" x="8" y="14" width="294" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="294" id="IZr-Ts-hjJ"/>
+                            <constraint firstAttribute="height" constant="21" id="t3K-z8-6Ff"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Dkc-sw-4NQ" secondAttribute="trailing" constant="18" id="UER-HT-avH"/>
+                    <constraint firstItem="Dkc-sw-4NQ" firstAttribute="top" secondItem="IhA-lh-1rH" secondAttribute="top" constant="14" id="dWE-f8-Ifh"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+            <point key="canvasLocation" x="391" y="225"/>
         </tableViewCell>
     </objects>
 </document>

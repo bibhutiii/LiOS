@@ -11,6 +11,7 @@
 #import "LRLoginViewController.h"
 #import "LRUserRoles.h"
 #import "LRCoreDataHelper.h"
+#import "LRWebEngine.h"
 
 @interface LRParentNavigationController ()
 {
@@ -51,9 +52,9 @@
                                                                       }];
     
     SEL aLogoutButton = sel_registerName("logOut");
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Logout-32"] style:0 target:self action:aLogoutButton];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:nil style:0 target:self action:aLogoutButton];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-    
+    backButton.title = @"logout";
     self.navigationItem.rightBarButtonItem = backButton;
     
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
@@ -81,9 +82,30 @@
     if(alertView.tag == 200) {
         if(buttonIndex == 1) {
             [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
-            LRLogOutService *aLogoutService = [[LRLogOutService alloc] initWithURL:[NSURL URLWithString:@"http://10.0.100.40:8081/iOS_QA/Service1.svc?singleWsdl"]];
-            aLogoutService.delegate = self;
-            [aLogoutService logOutUserWithIndicatorInView:self.view];
+            [[LRWebEngine defaultWebEngine] sendRequestToLogOutWithwithContextInfo:nil forResponseBlock:^(NSDictionary *responseDictionary) {
+                if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SessionId"];
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserName"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [LRUtility stopActivityIndicatorFromView:self.view];
+                    
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone?@"Main_iPhone":@"Main_iPad" bundle:nil];
+                    LRLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
+                    [[LRAppDelegate myAppdelegate].window setRootViewController:loginVC];
+                    [[LRAppDelegate myAppdelegate].aBaseNavigationController popToRootViewControllerAnimated:FALSE];
+
+
+                }
+                
+            } errorHandler:^(NSError *errorString) {
+                UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                           message:[errorString description]
+                                                                          delegate:self
+                                                                 cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                 otherButtonTitles:nil, nil];
+                [aLogOutAlertView show];
+
+            }];
         }
     }
 }

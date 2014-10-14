@@ -49,7 +49,7 @@
     self.userNameTextField.backgroundColor = [UIColor whiteColor];
     self.userNameTextField.font = fontHelveticaNeueSize14;
     self.userNameTextField.autocorrectionType = UITextAutocorrectionTypeNo;
-    self.userNameTextField.keyboardType = UIKeyboardTypeDefault;
+    self.userNameTextField.keyboardType = UIKeyboardTypeEmailAddress;
     self.userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.userNameTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.userNameTextField.delegate = self;
@@ -97,26 +97,50 @@
     // based on the login add the static user roles to the database.
     [self addTheUserRolesToDatabase];
     /////
-    [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
     
-    [[LRWebEngine defaultWebEngine] aNetWorkOperationWithCustomHeaderscompletionHandler:^(NSString *responseString) {
+    NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
+    [aRequestDict setObject:self.userNameTextField.text forKey:@"Username"];
+    [aRequestDict setObject:self.passwordTextField.text forKey:@"Password"];
+  //  [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] forKey:@"DeviceId"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:self.userNameTextField.text forKey:@"UserName"];
+    
+    [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
+
+    
+   /* [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
+    
+    [[LRWebEngine defaultWebEngine] sendRequestToLoginWithParameters:aRequestDict andResponseBlock:^(NSString *responseString) {
         
         [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
-        
         NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
         NSData *responseData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
         
         NSDictionary *aResponseDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
-        NSDictionary *aTempDictionary = [aResponseDictionary objectForKey:@"Data"];
-        [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
-        [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
-        [aStandardUserDefaults synchronize];
+        if(![aResponseDictionary isKindOfClass:([NSNull class])]) {
+            NSDictionary *aTempDictionary = [aResponseDictionary objectForKey:@"Data"];
+                [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
+                [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
+                
+                [aStandardUserDefaults setObject:self.userNameTextField.text forKey:@"UserName"];
+                
+                [aStandardUserDefaults synchronize];
+        }
         
-    } errorHandler:^(NSError *error) {
-        DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
-             [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
+    } errorHandler:^(NSError *errorString) {
         
-    }];
+        [LRUtility stopActivityIndicatorFromView:self.view];
+        UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                 message:[errorString description]
+                                                                delegate:self
+                                                       cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                       otherButtonTitles:nil, nil];
+        [errorAlertView show];
+        DLog(@"%@\t%@\t%@\t%@", [errorString localizedDescription], [errorString localizedFailureReason],
+             [errorString localizedRecoveryOptions], [errorString localizedRecoverySuggestion]);
+        
+        
+    }];*/
     
 }
 

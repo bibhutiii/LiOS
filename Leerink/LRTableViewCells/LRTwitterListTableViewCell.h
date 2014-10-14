@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface LRTwitterListTableViewCell : UITableViewCell
-- (void)fillDataForDocumentCellwithTwitterListMemberName:(NSString *)memberName;
+- (void)fillDataForDocumentCellwithTwitterListMemberName:(NSString *)memberName andMemberImage:(id )image;
+- (void)fillDataForTweetCellWithTweet:(NSString *)iTweet andMemberImage:(id )image;
 @end

@@ -59,6 +59,14 @@
                 }
                 
             } errorHandler:^(NSError *error) {
+                [LRUtility stopActivityIndicatorFromView:self.view];
+                UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                         message:[error description]
+                                                                        delegate:self
+                                                               cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                               otherButtonTitles:nil, nil];
+                [errorAlertView show];
+
                 DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
                      [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
                 
@@ -74,6 +82,14 @@
                 }
                 
             } errorHandler:^(NSError *error) {
+                [LRUtility stopActivityIndicatorFromView:self.view];
+                UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                         message:[error description]
+                                                                        delegate:self
+                                                               cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                               otherButtonTitles:nil, nil];
+                [errorAlertView show];
+
                 DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
                      [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
                 
@@ -89,6 +105,14 @@
                 }
                 
             } errorHandler:^(NSError *error) {
+                [LRUtility stopActivityIndicatorFromView:self.view];
+                UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                         message:[error description]
+                                                                        delegate:self
+                                                               cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                               otherButtonTitles:nil, nil];
+                [errorAlertView show];
+
                 DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
                      [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
                 
@@ -258,13 +282,7 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        [tableView setSeparatorInset:UIEdgeInsetsZero];
-    }
-    
-    [tableView setContentInset:UIEdgeInsetsMake(1.0, 0.0, 1.0, 0.0)];
-    
+{    
     NSString *CellIdentifier = NSStringFromClass([LRContactListTableViewCell class]);
     
     LRContactListTableViewCell *cell = [self.analystsListTableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -386,6 +404,20 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 44;
+}
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 - (void)didReceiveMemoryWarning
 {

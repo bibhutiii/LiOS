@@ -29,5 +29,5 @@
 
 #endif
 
-#define baseURLForService @"http://bos-portalqa-web.internal.leerink.com/iOS/iOS.IIRPIOSService.svc?singleWsdl"
-#define locationOfServiceURL @"http://10.140.217.20/iOS/iOS.IIRPIOSService.svc" 
+#define baseURLForService @"https://bos-portalqa-web.internal.leerink.com/iOS/iOS.IIRPIOSService.svc?singleWsdl"
+#define locationOfServiceURL @"https://10.140.217.20/iOS/iOS.IIRPIOSService.svc"
