@@ -29,6 +29,8 @@
     <entity name="LRTweets" representedClassName="LRTweets" syncable="YES">
         <attribute name="memberImage" optional="YES" attributeType="Transformable" valueTransformerName="NSUnarchiveFromDataTransformerName" syncable="YES"/>
         <attribute name="tweet" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tweetDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tweetScreenName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="LRTwitterList" representedClassName="LRTwitterList" syncable="YES">
         <attribute name="listImage" optional="YES" attributeType="Transformable" valueTransformerName="NSUnarchiveFromDataTransformerName" syncable="YES"/>
@@ -51,9 +53,9 @@
         <element name="LRDocument" positionX="-45" positionY="63" width="128" height="165"/>
         <element name="LRSector" positionX="-45" positionY="63" width="128" height="88"/>
         <element name="LRSymbol" positionX="-36" positionY="72" width="128" height="88"/>
+        <element name="LRTweets" positionX="-36" positionY="108" width="128" height="105"/>
+        <element name="LRTwitterList" positionX="-18" positionY="126" width="128" height="118"/>
         <element name="LRUser" positionX="-36" positionY="54" width="128" height="90"/>
         <element name="LRUserRoles" positionX="-54" positionY="18" width="128" height="75"/>
-        <element name="LRTweets" positionX="-36" positionY="108" width="128" height="75"/>
-        <element name="LRTwitterList" positionX="-18" positionY="126" width="128" height="118"/>
     </elements>
 </model>

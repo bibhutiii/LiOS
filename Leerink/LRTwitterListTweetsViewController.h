@@ -6,10 +6,13 @@
 //  Copyright (c) 2014 leerink. All rights reserved.
 //
 
-#import "LRParentNavigationController.h"
+#import <UIKit/UIKit.h>
 #import "LRTwitterList.h"
+#import "LRTwitterListTableViewCell.h"
+#import "MNMPullToRefreshManager.h"
 
-@interface LRTwitterListTweetsViewController : LRParentNavigationController
+
+@interface LRTwitterListTweetsViewController : UIViewController<LRLoadURLDelegate,MNMPullToRefreshManagerClient>
 
 @property (nonatomic, strong) LRTwitterList *aTwitterList;
 @property (nonatomic, assign) BOOL isTwitterListCountMoreThanOne;

@@ -7,15 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LRCRMListViewController.h"
 #import "LRCoreDataHelper.h"
-
-#define appDelegate ((LRAppdelegate *)[[UIApplication sharedApplication] delegate])
 
 @interface LRAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+// the base navigation controller from where all the other controllers like lists,twitter will be pushed.
 @property (strong, nonatomic) UINavigationController *aBaseNavigationController;
+// a core data helper class to avoid the methods to be written in appDelegate.
 @property (nonatomic, strong) LRCoreDataHelper *coreDataHelper;
 
 
@@ -23,6 +22,7 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
+// class methods to fetch the storyboard and the appdelegare instead of defining them everywhere.
 + (LRAppDelegate *)myAppdelegate;
 + (UIStoryboard *)myStoryBoard;
 

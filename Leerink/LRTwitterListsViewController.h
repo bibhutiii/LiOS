@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 leerink. All rights reserved.
 //
 
-#import "LRParentNavigationController.h"
+#import <UIKit/UIKit.h>
 
-@interface LRTwitterListsViewController : LRParentNavigationController<UITableViewDataSource,UITableViewDelegate>
+@interface LRTwitterListsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @end

@@ -101,31 +101,47 @@
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
     [aRequestDict setObject:self.userNameTextField.text forKey:@"Username"];
     [aRequestDict setObject:self.passwordTextField.text forKey:@"Password"];
-  //  [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] forKey:@"DeviceId"];
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] != nil) {
+        [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] forKey:@"DeviceId"];
+    }
     
     [[NSUserDefaults standardUserDefaults] setObject:self.userNameTextField.text forKey:@"UserName"];
-    
-    [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
 
-    
+    [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
    /* [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
     
     [[LRWebEngine defaultWebEngine] sendRequestToLoginWithParameters:aRequestDict andResponseBlock:^(NSString *responseString) {
         
-        [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
         NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
         NSData *responseData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-        
-        NSDictionary *aResponseDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
-        if(![aResponseDictionary isKindOfClass:([NSNull class])]) {
-            NSDictionary *aTempDictionary = [aResponseDictionary objectForKey:@"Data"];
-                [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
-                [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
-                
-                [aStandardUserDefaults setObject:self.userNameTextField.text forKey:@"UserName"];
-                
-                [aStandardUserDefaults synchronize];
+        if(responseData) {
+            NSDictionary *aResponseDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
+            if(![aResponseDictionary isKindOfClass:([NSNull class])]) {
+                NSDictionary *aTempDictionary = [aResponseDictionary objectForKey:@"Data"];
+                if(aTempDictionary != (NSDictionary*)[NSNull null]) {
+                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
+                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
+                    
+                    [aStandardUserDefaults setObject:self.userNameTextField.text forKey:@"UserName"];
+                    
+                    [aStandardUserDefaults synchronize];
+                    
+                    [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
+                    
+                }
+                else {
+                    [LRUtility stopActivityIndicatorFromView:self.view];
+                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                             message:[aResponseDictionary objectForKey:@"Error"]
+                                                                            delegate:self
+                                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                   otherButtonTitles:nil, nil];
+                    [errorAlertView show];
+                    
+                }
+            }
         }
+        
         
     } errorHandler:^(NSError *errorString) {
         
@@ -164,6 +180,9 @@
         
         [[LRCoreDataHelper sharedStorageManager] saveContext];
     }
+}
+- (NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
 }
 #pragma mark -
 #pragma mark - UITextFielDelegate

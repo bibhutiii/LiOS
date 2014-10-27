@@ -39,11 +39,12 @@
     NSMutableDictionary *aContextInfoDictionary = [NSMutableDictionary new];
     // do the navigation bar settings
     self.navigationItem.title = @"Documents";
-    LRGetDocumentListService *aGetDocumentService = nil;
-    aGetDocumentService = [[LRGetDocumentListService alloc] initWithURL:[NSURL URLWithString:baseURLForService]];
-    aGetDocumentService.delegate = self;
-    aGetDocumentService.documentType = self.documentType;
-    aGetDocumentService.documentTypeId = self.documentTypeId;
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0f],
+                                                                      NSForegroundColorAttributeName : [UIColor whiteColor]
+                                                                      }];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:204/255.0 green:219/255.0 blue:230/255.0 alpha:1];
+    self.navigationController.navigationBar.translucent = NO;
+    
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
     switch (self.documentType) {
         case eLRDocumentAnalyst:
@@ -208,9 +209,8 @@
     LRDocument *aDocument = (LRDocument *)[self.documentsListArray objectAtIndex:indexPath.row];
     
     LRDocumentViewController *documentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
-    documentViewController.documentId = [aDocument.documentID intValue];
-    documentViewController.userId = 21804;
     //documentViewController.documentPath = @"D:\\Release\\test.txt";
+    documentViewController.documentTitleToBeSavedAsPdf = aDocument.documentTitle;
     documentViewController.documentPath = aDocument.documentPath;
     
     [self.navigationController pushViewController:documentViewController animated:TRUE];

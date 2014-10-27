@@ -14,6 +14,8 @@
 #import "LRTwitterList.h"
 #import "LRTwitterListTweetsViewController.h"
 #import "LRTweets.h"
+#import "LRWebEngine.h"
+#import "LRLoginViewController.h"
 
 @interface LRMainClientPageViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *mainClientTable;
@@ -43,9 +45,31 @@
 {
     [super viewWillAppear:TRUE];
     self.title = @"Document Library";
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0f],
+                                                                      NSForegroundColorAttributeName : [UIColor whiteColor]
+                                                                      }];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:204/255.0 green:219/255.0 blue:230/255.0 alpha:1];
+    self.navigationController.navigationBar.translucent = NO;
+    // split the user email and fetch the first name and last name of the user.
     NSArray *user = [[[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"] componentsSeparatedByString:@"@"];
-    self.aUserNameLabel.text = [user objectAtIndex:0];
-    NSLog(@"%@",[user objectAtIndex:0]);
+    if(user.count > 0) {
+       NSArray *splitUserFirstNameArray = [[user objectAtIndex:0] componentsSeparatedByString:@"."];
+        if(splitUserFirstNameArray.count > 0) {
+            self.aUserNameLabel.text = [splitUserFirstNameArray objectAtIndex:0];
+        }
+        else {
+            self.aUserNameLabel.text = [user objectAtIndex:0];
+        }
+    }
+    else {
+        self.aUserNameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"];
+    }
+    
+    SEL aLogoutButton = sel_registerName("logOut");
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:nil style:0 target:self action:aLogoutButton];
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    backButton.title = @"logout";
+    self.navigationItem.rightBarButtonItem = backButton;
     
     // since the landing page has a static list of items add them into the array for the tableview's data source.
     
@@ -55,7 +79,7 @@
     
 }
 - (IBAction)fetchListsForTwitter:(id)sender {
-    
+
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
     
     STTwitterAPI *twitter = [STTwitterAPI twitterAPIAppOnlyWithConsumerKey:@"f8KKQr7cJVlbeIcuL2z20h7Vw"
@@ -146,6 +170,54 @@
         [errorAlertView show];
     }];
 }
+- (void)logOut
+{
+    UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                               message:[NSString stringWithFormat:@"Are you sure you want to logout?"]
+                                                              delegate:self
+                                                     cancelButtonTitle:NSLocalizedString(@"No", @"")
+                                                     otherButtonTitles:NSLocalizedString(@"Yes", @""), nil];
+    [aLogOutAlertView setTag:200];
+    [aLogOutAlertView show];
+    
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 200) {
+        if(buttonIndex == 1) {
+            [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
+            [[LRWebEngine defaultWebEngine] sendRequestToLogOutWithwithContextInfo:nil forResponseBlock:^(NSDictionary *responseDictionary) {
+                if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
+                    if(![[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] isKindOfClass:([NSNull class])]) {
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SessionId"];
+                    }
+                    if(![[[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"] isKindOfClass:([NSNull class])]) {
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserName"];
+                    }
+                    
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [LRUtility stopActivityIndicatorFromView:self.view];
+                    
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone?@"Main_iPhone":@"Main_iPad" bundle:nil];
+                    LRLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
+                    [[LRAppDelegate myAppdelegate].window setRootViewController:loginVC];
+                    [[LRAppDelegate myAppdelegate].aBaseNavigationController popToRootViewControllerAnimated:FALSE];
+                    
+                    
+                }
+                
+            } errorHandler:^(NSError *errorString) {
+                UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                           message:[errorString description]
+                                                                          delegate:self
+                                                                 cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                 otherButtonTitles:nil, nil];
+                [aLogOutAlertView show];
+                
+            }];
+        }
+    }
+}
 #pragma mark - Save twitter list data to core data
 - (void)saveTwitterListDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray
 {
@@ -193,7 +265,9 @@
             LRTweets *aTweetList = (LRTweets *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRTweets" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
             aTweetList.tweet = [aTweetDetailsDictionary objectForKey:@"text"];
             aTweetList.memberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[aUserDetailsDictionary objectForKey:@"profile_image_url"]]]];
-            
+            aTweetList.tweetScreenName = [aUserDetailsDictionary objectForKey:@"screen_name"];
+            aTweetList.tweetDate = [aTweetDetailsDictionary objectForKey:@"created_at"];
+
             [[LRCoreDataHelper sharedStorageManager] saveContext];
         }
     }
@@ -268,6 +342,9 @@
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
+}
+- (NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
 }
 - (void)didReceiveMemoryWarning
 {

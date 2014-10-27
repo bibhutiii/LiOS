@@ -301,6 +301,7 @@ downloadProgressBlock:(void(^)(id json))downloadProgressBlock
                       parameters:parameters
              uploadProgressBlock:nil
            downloadProgressBlock:^(id request, id response) {
+               NSLog(@"response--%@",response);
                if(downloadProgressBlock) downloadProgressBlock(response);
            } successBlock:^(id request, NSDictionary *requestHeaders, NSDictionary *responseHeaders, id response) {
                if(successBlock) successBlock(responseHeaders, response);

@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 admin. All rights reserved.
 //
 
-#import "LRParentNavigationController.h"
+#import <UIKit/UIKit.h>
 
-@interface LRMainClientPageViewController : LRParentNavigationController
+@interface LRMainClientPageViewController : UIViewController
 
 @end

@@ -2,7 +2,7 @@
 //  LRTweets.m
 //  Leerink
 //
-//  Created by Ashish on 9/10/2014.
+//  Created by Ashish on 20/10/2014.
 //  Copyright (c) 2014 leerink. All rights reserved.
 //
 
@@ -11,7 +11,9 @@
 
 @implementation LRTweets
 
-@dynamic tweet;
 @dynamic memberImage;
+@dynamic tweet;
+@dynamic tweetDate;
+@dynamic tweetScreenName;
 
 @end

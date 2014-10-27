@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol LRLoadURLDelegate;
+
 @interface LRTwitterListTableViewCell : UITableViewCell
 - (void)fillDataForDocumentCellwithTwitterListMemberName:(NSString *)memberName andMemberImage:(id )image;
-- (void)fillDataForTweetCellWithTweet:(NSString *)iTweet andMemberImage:(id )image;
+- (void)fillDataForTweetCellWithTweet:(NSString *)iTweet andMemberImage:(id )image andDate:(NSString *)iDate;
+@property (nonatomic, assign) id <LRLoadURLDelegate> delegate;
+@end
+
+@protocol LRLoadURLDelegate <NSObject>
+
+- (void)loadWebViewWithURLString:(NSString *)url;
 @end

@@ -15,9 +15,7 @@
 // CarinaNebula12
 
 #import "LRAppDelegate.h"
-#import "LRAboutUSViewController.h"
 #import "LRLoginViewController.h"
-#import "LRCRMListViewController.h"
 #import "LRMainClientPageViewController.h"
 #import <Parse/Parse.h>
 #import "LRWebEngine.h"
@@ -28,18 +26,19 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+// return the Appdelegate and the storyboard from these class methods.
 + (LRAppDelegate *)myAppdelegate
 {
     return (LRAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 + (UIStoryboard *)myStoryBoard
 {
-    return [UIStoryboard storyboardWithName:[[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone?@"Main_iPhone":@"Main_iPad" bundle:nil];
+    return [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // direct the user to the main client page controller
+    // direct the user to the main client page controller if already logged in.
     
     LRMainClientPageViewController *aMainClientPAgeController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRMainClientPageViewController class])];
     self.aBaseNavigationController = [[UINavigationController alloc] initWithRootViewController:aMainClientPAgeController];
@@ -266,6 +265,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    application.applicationIconBadgeNumber = 0;
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

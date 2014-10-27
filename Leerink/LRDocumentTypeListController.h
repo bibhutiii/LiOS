@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 admin. All rights reserved.
 //
 
-#import "LRParentNavigationController.h"
+#import <UIKit/UIKit.h>
 
-@interface LRDocumentTypeListController : LRParentNavigationController<LRLoadDataDelegate,UISearchBarDelegate>
+@interface LRDocumentTypeListController : UIViewController<LRLoadDataDelegate,UISearchBarDelegate>
 
 @property (strong, nonatomic) NSString *titleHeader;
 @property (assign, nonatomic) eLRDocumentType eDocumentType;
