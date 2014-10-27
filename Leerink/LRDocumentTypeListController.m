@@ -46,6 +46,8 @@
     
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
     // Do any additional setup after loading the view.
+    self.delegate = [LRWebEngine defaultWebEngine];
+
     self.navigationItem.title = self.titleHeader;
     
     switch (self.eDocumentType)
@@ -426,6 +428,12 @@
 }
 - (NSUInteger)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskPortrait;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    if([self.delegate respondsToSelector:@selector(cancelaNetWorkOperation)]) {
+        [self.delegate cancelaNetWorkOperation];
+    }
 }
 - (void)didReceiveMemoryWarning
 {

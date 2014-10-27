@@ -13,7 +13,9 @@
 #import "LRSymbol.h"
 
 static LRWebEngine *sDefaultWebEngine = nil;
-
+@interface LRWebEngine ()
+@property (nonatomic, strong) MKNetworkOperation *iOperation;
+@end
 @implementation LRWebEngine
 #pragma mark -
 #pragma mark - Singleton Methods
@@ -56,9 +58,9 @@ static LRWebEngine *sDefaultWebEngine = nil;
     [aRequestDict setObject:@"cbrinzey@hqcm.commedatest.com" forKey:@"Username"];
     [aRequestDict setObject:@"WolfRayet12" forKey:@"Password"];
     
-    MKNetworkOperation *aNetworkOperation = [self operationWithPath:@"/LeerinkApi/api/Login/Login" params:aRequestDictionary httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/Login/Login" params:aRequestDictionary httpMethod:@"POST" ssl:TRUE];
     
-    [aNetworkOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
         NSLog(@"recieved currency -- %@",[completedOperation responseString]);
         completion(valueString);
@@ -66,20 +68,19 @@ static LRWebEngine *sDefaultWebEngine = nil;
     } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
         errorBlock(error);
     }];
-    [self enqueueOperation:aNetworkOperation];
-    return aNetworkOperation;
+    [self enqueueOperation:self.iOperation];
+    return self.iOperation;
 }
 - (MKNetworkOperation *)sendRequestToGetAnalystsWithResponseDataBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    MKNetworkOperation *aNetworkOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetAnalysts" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetAnalysts" params:nil httpMethod:@"POST" ssl:TRUE];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    self.iOperation.documentType = eLRDocumentAnalyst;
     
-    [aNetworkOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
-    aNetworkOperation.documentType = eLRDocumentAnalyst;
-    
-    [aNetworkOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
         NSLog(@"recieved currency -- %@",[completedOperation responseString]);
         
@@ -90,20 +91,21 @@ static LRWebEngine *sDefaultWebEngine = nil;
     } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
         errorBlock(error);
     }];
-    [self enqueueOperation:aNetworkOperation];
-    return aNetworkOperation;
+    [self enqueueOperation:self.iOperation];
+
+    return self.iOperation;
 }
 - (MKNetworkOperation *)sendRequestToGetSectorsWithResponseDataBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    MKNetworkOperation *aNetworkOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetSectors" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetSectors" params:nil httpMethod:@"POST" ssl:TRUE];
     
-    [aNetworkOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
-    aNetworkOperation.documentType = eLRDocumentSector;
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    self.iOperation.documentType = eLRDocumentSector;
     
-    [aNetworkOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
         NSLog(@"recieved currency -- %@",[completedOperation responseString]);
         
@@ -114,20 +116,20 @@ static LRWebEngine *sDefaultWebEngine = nil;
     } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
         errorBlock(error);
     }];
-    [self enqueueOperation:aNetworkOperation];
-    return aNetworkOperation;
+    [self enqueueOperation:self.iOperation];
+    return self.iOperation;
 }
 - (MKNetworkOperation *)sendRequestToGetSymbolsWithResponseDataBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    MKNetworkOperation *aNetworkOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetSymbols" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetSymbols" params:nil httpMethod:@"POST" ssl:TRUE];
     
-    [aNetworkOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
-    aNetworkOperation.documentType = eLRDocumentSymbol;
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    self.iOperation.documentType = eLRDocumentSymbol;
     
-    [aNetworkOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
         NSLog(@"recieved currency -- %@",[completedOperation responseString]);
         
@@ -138,21 +140,21 @@ static LRWebEngine *sDefaultWebEngine = nil;
     } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
         errorBlock(error);
     }];
-    [self enqueueOperation:aNetworkOperation];
-    return aNetworkOperation;
+    [self enqueueOperation:self.iOperation];
+    return self.iOperation;
 }
 - (MKNetworkOperation *)sendRequestToGetDocumentListWithwithContextInfo:(id)iContextInfo forResponseDataBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {    
     NSMutableDictionary *aContecxtInfoDictionary = (NSMutableDictionary *)iContextInfo;
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
-    MKNetworkOperation *aNetworkOperation = nil;
+    self.iOperation = nil;
     switch ([[aContecxtInfoDictionary objectForKey:@"DocumentTypeList"] intValue]) {
         case eLRDocumentListAnalyst:
         {
             LRAnalyst *analyst = (LRAnalyst *)[iContextInfo objectForKey:@"AnalystDocumentList"];
             [aRequestDict setObject:[NSNumber numberWithInt:[analyst.userId intValue]] forKey:@"AuthorID"];
-            aNetworkOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
-            aNetworkOperation.documentListType = eLRDocumentListAnalyst;
+            self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+            self.iOperation.documentListType = eLRDocumentListAnalyst;
 
         }
             break;
@@ -160,8 +162,8 @@ static LRWebEngine *sDefaultWebEngine = nil;
         {
             LRSector *sector = (LRSector *)[iContextInfo objectForKey:@"SectorDocumentList"];
             [aRequestDict setObject:[NSNumber numberWithInt:[sector.researchID intValue]] forKey:@"ResearchID"];
-            aNetworkOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
-            aNetworkOperation.documentListType = eLRDocumentListSector;
+            self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+            self.iOperation.documentListType = eLRDocumentListSector;
 
         }
             break;
@@ -169,8 +171,8 @@ static LRWebEngine *sDefaultWebEngine = nil;
         {
             LRSymbol *symbol = (LRSymbol *)[iContextInfo objectForKey:@"SymbolDocumentList"];
             [aRequestDict setObject:[NSNumber numberWithInt:[symbol.tickerID intValue]] forKey:@"tickerID"];
-            aNetworkOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
-            aNetworkOperation.documentListType = eLRDocumentListSymbol;
+            self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+            self.iOperation.documentListType = eLRDocumentListSymbol;
             
         }
             break;
@@ -181,9 +183,9 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;    
     
     
-    [aNetworkOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     
-    [aNetworkOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
         NSLog(@"recieved currency -- %@",[completedOperation responseString]);
         
@@ -194,8 +196,8 @@ static LRWebEngine *sDefaultWebEngine = nil;
     } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
         errorBlock(error);
     }];
-    [self enqueueOperation:aNetworkOperation];
-    return aNetworkOperation;
+    [self enqueueOperation:self.iOperation];
+    return self.iOperation;
     
 }
 - (MKNetworkOperation *)sendRequestToGetDocumentWithwithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
@@ -206,11 +208,11 @@ static LRWebEngine *sDefaultWebEngine = nil;
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
     [aRequestDict setObject:iContextInfo forKey:@"Path"];
     
-    MKNetworkOperation *aNetworkOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocument" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocument" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
     
-    [aNetworkOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     
-    [aNetworkOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
         NSLog(@"recieved currency -- %@",[completedOperation responseString]);
         
@@ -223,8 +225,8 @@ static LRWebEngine *sDefaultWebEngine = nil;
     } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
         errorBlock(error);
     }];
-    [self enqueueOperation:aNetworkOperation];
-    return aNetworkOperation;
+    [self enqueueOperation:self.iOperation];
+    return self.iOperation;
     
 }
 - (MKNetworkOperation *)sendRequestToLogOutWithwithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
@@ -236,12 +238,12 @@ static LRWebEngine *sDefaultWebEngine = nil;
     [aRequestDict setObject:@"abc" forKey:@"Guid"];
     [aRequestDict setObject:[aStandardUserDefaults objectForKey:@"SessionId"] forKey:@"sessionId"];
 
-    MKNetworkOperation *aNetworkOperation = [self operationWithPath:@"/LeerinkApi/api/Login/logout" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/Login/logout" params:nil httpMethod:@"POST" ssl:TRUE];
     
-    [aNetworkOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
-    //aNetworkOperation.documentListRequestType = eLRDocumentListAnalyst;
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    //self.iOperation.documentListRequestType = eLRDocumentListAnalyst;
     
-    [aNetworkOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
         NSLog(@"recieved currency -- %@",[completedOperation responseString]);
         
@@ -254,8 +256,15 @@ static LRWebEngine *sDefaultWebEngine = nil;
     } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
         errorBlock(error);
     }];
-    [self enqueueOperation:aNetworkOperation];
-    return aNetworkOperation;
+    [self enqueueOperation:self.iOperation];
+    return self.iOperation;
     
+}
+#pragma mark - Cancel Network operations
+- (void)cancelaNetWorkOperation
+{
+    if([self.iOperation isExecuting]) {
+        [self.iOperation cancel];
+    }
 }
 @end

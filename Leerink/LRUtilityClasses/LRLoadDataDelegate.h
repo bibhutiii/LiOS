@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "MKNetworkOperation.h"
 @protocol LRLoadDataDelegate <NSObject>
 
 @optional
 - (void)didLoadData:(BOOL)isDataReceived;
 - (void)didLoadDocumentOnWebView:(NSData *)documentData;
 - (void)failedToParseTheDocumentWithErrorMessage:(NSString *)errorMessage;
+- (void)cancelaNetWorkOperation;
 @end

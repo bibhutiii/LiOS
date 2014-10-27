@@ -11,6 +11,7 @@
 
 @interface LRDocumentListViewController : UIViewController<LRLoadDataDelegate,UIWebViewDelegate>
 
+@property (nonatomic, assign) id <LRLoadDataDelegate> delegate;
 @property (nonatomic, assign) eLRDocumentType documentType;
 @property (nonatomic, assign) eLRDocumentListType documentListType;
 @property (nonatomic, assign) int documentTypeId;

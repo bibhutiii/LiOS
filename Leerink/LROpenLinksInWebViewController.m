@@ -20,12 +20,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
+   // NSString *encodedString=[[self.linkURL relativeString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+  //  NSURL *weburl = [NSURL URLWithString:encodedString];
+   // self.linkURL = [NSURL URLWithString:@"http://www.google.com"];
     NSURLRequest *aUrlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.linkURL]];
+
+
     [self.openLinkInsideApplicationWebView loadRequest:aUrlRequest];
     
     SEL aLogoutButton = sel_registerName("openInSafari");
     
     self.actionBarButtonItem.action = aLogoutButton;
+    
+    
+  //  UIWebView *aEWbivew = [[UIWebView alloc] initWithFrame:self.openLinkInsideApplicationWebView.bounds];
+ //   [aEWbivew loadRequest:[NSURLRequest requestWithURL:self.linkURL]];
+   // [self.view addSubview:aEWbivew];
+    //aEWbivew.delegate = self;
 }
 - (void)openInSafari
 {
@@ -36,19 +47,16 @@
 }
 - (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSURL *url= [NSURL URLWithString:self.linkURL];
-    
     switch (buttonIndex)
     {
         case 0:
         {
-            [[UIApplication sharedApplication] openURL:url];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.linkURL]];
             break;
         }
     }
     
 }
-
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     NSLog(@"error--%@",error);
@@ -56,6 +64,10 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [LRUtility stopActivityIndicatorFromView:self.view];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+   // [self.openLinkInsideApplicationWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@" "]]];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

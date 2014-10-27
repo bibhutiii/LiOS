@@ -66,8 +66,8 @@
 -(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
     NSLog(@"URL: %@", URL);
-    if([self.delegate respondsToSelector:@selector(loadWebViewWithURLString:)]) {
-        [self.delegate loadWebViewWithURLString:[URL absoluteString]];
+    if([self.delegate respondsToSelector:@selector(loadWebViewWithURL:)]) {
+        [self.delegate loadWebViewWithURL:[URL absoluteString]];
     }
     //You can do anything with the URL here (like open in other web view).
     return NO;

@@ -18,5 +18,5 @@
 
 @protocol LRLoadURLDelegate <NSObject>
 
-- (void)loadWebViewWithURLString:(NSString *)url;
+- (void)loadWebViewWithURL:(NSString *)url;
 @end

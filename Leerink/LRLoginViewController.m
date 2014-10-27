@@ -23,6 +23,8 @@
     UITextField *_refTextField;
     
 }
+@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 #pragma mark - Add the user roles to the database
 - (void) addTheUserRolesToDatabase;
 @end
@@ -107,8 +109,7 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:self.userNameTextField.text forKey:@"UserName"];
 
-    [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
-   /* [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
+    [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
     
     [[LRWebEngine defaultWebEngine] sendRequestToLoginWithParameters:aRequestDict andResponseBlock:^(NSString *responseString) {
         
@@ -156,7 +157,7 @@
              [errorString localizedRecoveryOptions], [errorString localizedRecoverySuggestion]);
         
         
-    }];*/
+    }];
     
 }
 
@@ -253,6 +254,7 @@
     [_refTextField resignFirstResponder];
     
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

@@ -171,7 +171,7 @@
         [errorAlertView show];
     }];
 }
-- (void)loadWebViewWithURLString:(NSString *)url
+- (void)loadWebViewWithURL:(NSString *)url
 {
     LROpenLinksInWebViewController *aOpenLinkInsideWebViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:@"LROpenLinksInWebViewController"];
     aOpenLinkInsideWebViewController.linkURL = url;

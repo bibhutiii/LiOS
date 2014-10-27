@@ -264,7 +264,7 @@
     
     [self performSelector:@selector(loadTable) withObject:nil afterDelay:1.0f];
 }
-- (void)loadWebViewWithURLString:(NSString *)url
+- (void)loadWebViewWithURL:(NSString *)url
 {
     LROpenLinksInWebViewController *aOpenLinkInsideWebViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:@"LROpenLinksInWebViewController"];
     aOpenLinkInsideWebViewController.linkURL = url;

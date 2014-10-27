@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LROpenLinksInWebViewController : UIViewController<UIActionSheetDelegate>
+@interface LROpenLinksInWebViewController : UIViewController<UIActionSheetDelegate,UIWebViewDelegate>
 
 @property (nonatomic, strong) NSString *linkURL;
 @end

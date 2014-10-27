@@ -10,6 +10,7 @@
 
 @interface LRDocumentViewController : UIViewController<LRLoadDataDelegate,UIDocumentInteractionControllerDelegate>
 
+@property (nonatomic, assign) id <LRLoadDataDelegate> delegate;
 @property (nonatomic, strong) NSString *documentTitleToBeSavedAsPdf;
 @property (nonatomic, strong) NSString *documentPath;
 

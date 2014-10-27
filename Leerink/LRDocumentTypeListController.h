@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) NSString *titleHeader;
 @property (assign, nonatomic) eLRDocumentType eDocumentType;
+@property (nonatomic, assign) id <LRLoadDataDelegate> delegate;
 
 - (void)didLoadData;
 @end

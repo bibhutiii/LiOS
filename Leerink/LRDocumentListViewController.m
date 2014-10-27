@@ -46,6 +46,8 @@
     self.navigationController.navigationBar.translucent = NO;
     
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
+    self.delegate = [LRWebEngine defaultWebEngine];
+
     switch (self.documentType) {
         case eLRDocumentAnalyst:
         {
@@ -232,6 +234,12 @@
 }
 - (NSUInteger)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskPortrait;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    if([self.delegate respondsToSelector:@selector(cancelaNetWorkOperation)]) {
+        [self.delegate cancelaNetWorkOperation];
+    }
 }
 - (void)didReceiveMemoryWarning
 {

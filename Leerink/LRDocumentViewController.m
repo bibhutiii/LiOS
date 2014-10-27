@@ -38,6 +38,8 @@
     self.navigationController.navigationBar.translucent = NO;
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
     
+    self.delegate = [LRWebEngine defaultWebEngine];
+    
     [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentWithwithContextInfo:self.documentPath forResponseBlock:^(NSDictionary *responseDictionary) {
         
         if([[responseDictionary objectForKey:@"Error"] isKindOfClass:([NSNull class])]) {
@@ -146,7 +148,12 @@
 {
     [self.documentReaderWebView loadData:documentData MIMEType:@"application/pdf" textEncodingName:@"utf-8" baseURL:nil];
 }
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    if([self.delegate respondsToSelector:@selector(cancelaNetWorkOperation)]) {
+        [self.delegate cancelaNetWorkOperation];
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

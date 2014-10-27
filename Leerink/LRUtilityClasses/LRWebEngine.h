@@ -8,8 +8,9 @@
 
 #import "MKNetworkEngine.h"
 #import "MKNetworkOperation.h"
+#import "LRLoadDataDelegate.h"
 
-@interface LRWebEngine : MKNetworkEngine
+@interface LRWebEngine : MKNetworkEngine<LRLoadDataDelegate>
 {
     MKNetworkEngine *mnetworkEngine;
 }

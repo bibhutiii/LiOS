@@ -74,6 +74,8 @@
         self.coreDataHelper = [LRCoreDataHelper new];
         [self.coreDataHelper setupCoreData];
     }
+  //  NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:@"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3", @"UserAgent", nil];
+ //   [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
     return YES;
 }
 #pragma mark - Orientation methods
