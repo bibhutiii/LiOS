@@ -25,6 +25,8 @@
 // class methods to fetch the storyboard and the appdelegare instead of defining them everywhere.
 + (LRAppDelegate *)myAppdelegate;
 + (UIStoryboard *)myStoryBoard;
++ (NSArray *)fetchDataFromPlist;
++ (NSString *)fetchPathOfCustomPlist;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

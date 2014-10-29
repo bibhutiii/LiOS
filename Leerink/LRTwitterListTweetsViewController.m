@@ -151,7 +151,7 @@
         
         cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell fillDataForTweetCellWithTweet:aTweetObj.tweet andMemberImage:aTweetObj.memberImage andDate:aTweetObj.tweetDate];
+        [cell fillDataForTweetCellWithTweet:aTweetObj.tweet andMemberImage:aTweetObj.memberImage andDate:aTweetObj.tweetDate andUserName:aTweetObj.tweetScreenName];
         
     }
     
@@ -185,7 +185,7 @@
         NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:aTweetObj.tweet attributes:attributesDictionary];
         
         CGRect requiredHeight = [string boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin context:nil];
-        return requiredHeight.size.height + 50.0;
+        return requiredHeight.size.height + 80.0;
     }
     return 44;
 }

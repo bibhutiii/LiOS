@@ -38,6 +38,10 @@
 		84D22D5F19F5516600131FA2 /* MNMPullToRefreshIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D22D5719F5516600131FA2 /* MNMPullToRefreshIcon@2x.png */; };
 		84D22D6019F5516600131FA2 /* MNMPullToRefreshManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D22D5919F5516600131FA2 /* MNMPullToRefreshManager.m */; };
 		84D22D6119F5516600131FA2 /* MNMPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D22D5B19F5516600131FA2 /* MNMPullToRefreshView.m */; };
+		84D2D46619FFB21B004C884C /* Check_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2D46519FFB21B004C884C /* Check_32.png */; };
+		84D2D46919FFB493004C884C /* checkbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2D46719FFB493004C884C /* checkbox@2x.png */; };
+		84D2D46A19FFB493004C884C /* uncheckbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2D46819FFB493004C884C /* uncheckbox@2x.png */; };
+		84D2D46C19FFCD84004C884C /* Document.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84D2D46B19FFCD84004C884C /* Document.plist */; };
 		84D3C00419B86F9E007455F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C00319B86F9E007455F9 /* Foundation.framework */; };
 		84D3C00619B86F9E007455F9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C00519B86F9E007455F9 /* CoreGraphics.framework */; };
 		84D3C00819B86F9E007455F9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C00719B86F9E007455F9 /* UIKit.framework */; };
@@ -201,6 +205,10 @@
 		84D22D5A19F5516600131FA2 /* MNMPullToRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNMPullToRefreshView.h; sourceTree = "<group>"; };
 		84D22D5B19F5516600131FA2 /* MNMPullToRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMPullToRefreshView.m; sourceTree = "<group>"; };
 		84D22D5C19F5516600131FA2 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/MNMPullToRefresh.strings; sourceTree = "<group>"; };
+		84D2D46519FFB21B004C884C /* Check_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Check_32.png; sourceTree = "<group>"; };
+		84D2D46719FFB493004C884C /* checkbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox@2x.png"; sourceTree = "<group>"; };
+		84D2D46819FFB493004C884C /* uncheckbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uncheckbox@2x.png"; sourceTree = "<group>"; };
+		84D2D46B19FFCD84004C884C /* Document.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Document.plist; sourceTree = "<group>"; };
 		84D3C00019B86F9E007455F9 /* Leerink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Leerink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84D3C00319B86F9E007455F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84D3C00519B86F9E007455F9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -538,6 +546,7 @@
 			isa = PBXGroup;
 			children = (
 				84D3C00B19B86F9E007455F9 /* Leerink-Info.plist */,
+				84D2D46B19FFCD84004C884C /* Document.plist */,
 				84D3C00C19B86F9E007455F9 /* InfoPlist.strings */,
 				84D3C00F19B86F9E007455F9 /* main.m */,
 				84D3C01119B86F9E007455F9 /* Leerink-Prefix.pch */,
@@ -711,6 +720,9 @@
 		84D3C08C19B886A7007455F9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				84D2D46719FFB493004C884C /* checkbox@2x.png */,
+				84D2D46819FFB493004C884C /* uncheckbox@2x.png */,
+				84D2D46519FFB21B004C884C /* Check_32.png */,
 				84D3C08D19B886A7007455F9 /* About-32.png */,
 				84D3C08E19B886A7007455F9 /* arrowRightBlack@2x.png */,
 				84D3C08F19B886A7007455F9 /* Cloud Contacts Silver-32.png */,
@@ -829,6 +841,7 @@
 				84D3C0B719B886A7007455F9 /* Cloud Contacts Silver-32.png in Resources */,
 				84D3C0AB19B886A7007455F9 /* LRDocumentTypeTableViewCell.xib in Resources */,
 				84D3C0BE19B886A7007455F9 /* password.png in Resources */,
+				84D2D46619FFB21B004C884C /* Check_32.png in Resources */,
 				84D3C0C319B886A7007455F9 /* User-48.png in Resources */,
 				84D3C0C119B886A7007455F9 /* text_field.png in Resources */,
 				84D22D5F19F5516600131FA2 /* MNMPullToRefreshIcon@2x.png in Resources */,
@@ -847,11 +860,14 @@
 				84D3C01719B86F9E007455F9 /* Main_iPhone.storyboard in Resources */,
 				84D3C0BC19B886A7007455F9 /* logo.png in Resources */,
 				84D3C0BD19B886A7007455F9 /* Logout-32.png in Resources */,
+				84D2D46A19FFB493004C884C /* uncheckbox@2x.png in Resources */,
 				84D3C0C419B886A7007455F9 /* user_name_icon.png in Resources */,
 				84D3C0C019B886A7007455F9 /* password_icon@2x.png in Resources */,
 				84D3C0B819B886A7007455F9 /* Contacts-32.png in Resources */,
 				84D22D5E19F5516600131FA2 /* MNMPullToRefreshIcon.png in Resources */,
 				84D3C00E19B86F9E007455F9 /* InfoPlist.strings in Resources */,
+				84D2D46919FFB493004C884C /* checkbox@2x.png in Resources */,
+				84D2D46C19FFCD84004C884C /* Document.plist in Resources */,
 				84D22D5D19F5516600131FA2 /* MNMPullToRefresh.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1031,7 +1047,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "2B3A1967-CEBA-4988-A5A4-0B49E0C15FDF";
+				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1066,7 +1082,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PROVISIONING_PROFILE = "2B3A1967-CEBA-4988-A5A4-0B49E0C15FDF";
+				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
@@ -1083,7 +1099,7 @@
 				GCC_PREFIX_HEADER = "Leerink/Leerink-Prefix.pch";
 				INFOPLIST_FILE = "Leerink/Leerink-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "126222ef-0687-4738-be53-46bbd4978663";
+				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1099,7 +1115,7 @@
 				GCC_PREFIX_HEADER = "Leerink/Leerink-Prefix.pch";
 				INFOPLIST_FILE = "Leerink/Leerink-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "126222ef-0687-4738-be53-46bbd4978663";
+				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,25 +14,25 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="5no-B9-Ac9">
-                        <rect key="frame" x="8" y="8" width="260" height="29"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="5no-B9-Ac9">
+                        <rect key="frame" x="38" y="9" width="230" height="28"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="260" id="5v1-U4-oEI"/>
-                            <constraint firstAttribute="height" priority="500" constant="21" id="NQZ-vp-gOo"/>
+                            <constraint firstAttribute="width" constant="230" id="5v1-U4-oEI"/>
+                            <constraint firstAttribute="height" priority="500" constant="29" id="NQZ-vp-gOo"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowRightBlack.png" translatesAutoresizingMaskIntoConstraints="NO" id="51P-gi-1gI">
-                        <rect key="frame" x="285" y="24" width="22" height="22"/>
+                        <rect key="frame" x="285" y="25" width="22" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="5ez-3N-Swr"/>
                             <constraint firstAttribute="width" constant="22" id="BJJ-B8-qPc"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="26-08-2014" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWt-2h-vvT">
-                        <rect key="frame" x="8" y="45" width="87" height="21"/>
+                        <rect key="frame" x="38" y="45" width="87" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="itQ-2S-3eJ"/>
                             <constraint firstAttribute="width" constant="87" id="tOx-Zq-7Qf"/>
@@ -42,7 +42,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Antaffy, Daniel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEA-lA-nds">
-                        <rect key="frame" x="103" y="45" width="165" height="21"/>
+                        <rect key="frame" x="146" y="45" width="165" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="kEN-wY-rZ8"/>
                             <constraint firstAttribute="width" constant="165" id="qTu-jA-P9Q"/>
@@ -51,20 +51,32 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ks9-kY-zrZ">
+                        <rect key="frame" x="0.0" y="2" width="37" height="120"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="select_unselectDocument:" destination="XOq-iI-xY5" eventType="touchUpInside" id="YwW-fJ-32k"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="uncheckbox.png" translatesAutoresizingMaskIntoConstraints="NO" id="Q2b-nx-KV9">
+                        <rect key="frame" x="8" y="50" width="22" height="20"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="eEA-lA-nds" secondAttribute="bottom" constant="3" id="4Oy-qJ-TlM"/>
                     <constraint firstAttribute="trailing" secondItem="51P-gi-1gI" secondAttribute="trailing" constant="13" id="6RD-dy-kAt"/>
-                    <constraint firstItem="eEA-lA-nds" firstAttribute="leading" secondItem="xxb-oE-g4Q" secondAttribute="leading" constant="103" id="7ND-6p-Knq"/>
-                    <constraint firstItem="5no-B9-Ac9" firstAttribute="leading" secondItem="xxb-oE-g4Q" secondAttribute="leading" constant="8" id="7qR-RT-gB4"/>
-                    <constraint firstItem="5no-B9-Ac9" firstAttribute="top" secondItem="xxb-oE-g4Q" secondAttribute="top" constant="8" id="Du1-h0-HgU"/>
+                    <constraint firstItem="eEA-lA-nds" firstAttribute="leading" secondItem="xxb-oE-g4Q" secondAttribute="leading" constant="146" id="7ND-6p-Knq"/>
+                    <constraint firstItem="5no-B9-Ac9" firstAttribute="leading" secondItem="xxb-oE-g4Q" secondAttribute="leading" constant="38" id="7qR-RT-gB4"/>
+                    <constraint firstItem="5no-B9-Ac9" firstAttribute="top" secondItem="xxb-oE-g4Q" secondAttribute="top" constant="9" id="Du1-h0-HgU"/>
                     <constraint firstItem="dWt-2h-vvT" firstAttribute="top" secondItem="5no-B9-Ac9" secondAttribute="bottom" constant="8" id="Dw5-Nn-9C4"/>
-                    <constraint firstItem="5no-B9-Ac9" firstAttribute="trailing" secondItem="eEA-lA-nds" secondAttribute="trailing" id="FlC-3R-CVJ"/>
-                    <constraint firstAttribute="centerY" secondItem="51P-gi-1gI" secondAttribute="centerY" id="SHL-Qo-kou"/>
-                    <constraint firstAttribute="centerY" secondItem="51P-gi-1gI" secondAttribute="centerY" id="WQK-eX-0c4"/>
+                    <constraint firstItem="5no-B9-Ac9" firstAttribute="trailing" secondItem="eEA-lA-nds" secondAttribute="trailing" constant="-43" id="FlC-3R-CVJ"/>
+                    <constraint firstAttribute="centerY" secondItem="51P-gi-1gI" secondAttribute="centerY" constant="-1" id="SHL-Qo-kou"/>
+                    <constraint firstAttribute="centerY" secondItem="51P-gi-1gI" secondAttribute="centerY" constant="-1" id="WQK-eX-0c4"/>
                     <constraint firstItem="eEA-lA-nds" firstAttribute="top" secondItem="5no-B9-Ac9" secondAttribute="bottom" constant="8" id="Yli-F7-I0d"/>
                     <constraint firstAttribute="bottom" secondItem="dWt-2h-vvT" secondAttribute="bottom" constant="3" id="eee-6u-fAn"/>
-                    <constraint firstItem="dWt-2h-vvT" firstAttribute="leading" secondItem="xxb-oE-g4Q" secondAttribute="leading" constant="8" id="wy9-Le-B8U"/>
+                    <constraint firstItem="dWt-2h-vvT" firstAttribute="leading" secondItem="xxb-oE-g4Q" secondAttribute="leading" constant="38" id="wy9-Le-B8U"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -72,11 +84,14 @@
                 <outlet property="authorTitleLabel" destination="eEA-lA-nds" id="Pn0-ub-fl2"/>
                 <outlet property="dateLabel" destination="dWt-2h-vvT" id="mrt-EU-xeV"/>
                 <outlet property="documentTitleLabel" destination="5no-B9-Ac9" id="xeZ-3X-iy4"/>
+                <outlet property="selectDocumentImage" destination="Q2b-nx-KV9" id="Qdr-tg-pZR"/>
             </connections>
+            <point key="canvasLocation" x="140" y="149"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="arrowRightBlack.png" width="22" height="22"/>
+        <image name="uncheckbox.png" width="27" height="27"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

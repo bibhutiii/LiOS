@@ -77,6 +77,11 @@
 - (IBAction)logIn:(id)sender {
     
     // check if the username and password fields are not left empty.
+  //  self.userNameTextField.text = @"alex.calhoun@leerink.commedatest.com";
+  //  self.passwordTextField.text = @"TwinJet12";
+    
+  //  self.userNameTextField.text = @"cbrinzey@hqcm.commedatest.com";
+  //  self.passwordTextField.text = @"WolfRayet12";
     if([self.userNameTextField.text length] == 0) {
         UIAlertView *aUserNameAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
                                                                      message:[NSString stringWithFormat:@"Please enter a username"]
@@ -109,6 +114,7 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:self.userNameTextField.text forKey:@"UserName"];
 
+
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
     
     [[LRWebEngine defaultWebEngine] sendRequestToLoginWithParameters:aRequestDict andResponseBlock:^(NSString *responseString) {
@@ -122,6 +128,8 @@
                 if(aTempDictionary != (NSDictionary*)[NSNull null]) {
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
+                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"FirstName"] forKey:@"FirstName"];
+                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"LastName"] forKey:@"LastName"];
                     
                     [aStandardUserDefaults setObject:self.userNameTextField.text forKey:@"UserName"];
                     

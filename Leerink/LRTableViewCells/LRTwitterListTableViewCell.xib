@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -41,7 +41,7 @@
             <point key="canvasLocation" x="391" y="-69"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Hpl-sN-NfW" customClass="LRTwitterListTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hpl-sN-NfW" id="sQ3-mg-cnB">
                 <autoresizingMask key="autoresizingMask"/>
@@ -50,11 +50,11 @@
                         <rect key="frame" x="8" y="8" width="45" height="41"/>
                     </imageView>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="249" placeholderIntrinsicHeight="91" showsVerticalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oLN-5L-Hrs" customClass="AUIAutoGrowingTextView">
-                        <rect key="frame" x="63" y="21" width="249" height="91"/>
+                        <rect key="frame" x="63" y="38" width="249" height="101"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.090196080505847931" green="0.17647059261798859" blue="0.43529415130615234" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="91" id="FTi-WI-3fe"/>
+                            <constraint firstAttribute="height" constant="101" id="FTi-WI-3fe"/>
                             <constraint firstAttribute="width" constant="249" id="aB2-0D-3dL"/>
                         </constraints>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -66,24 +66,31 @@
                         </connections>
                     </textView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yd1-TV-fdc">
-                        <rect key="frame" x="68" y="10" width="182" height="18"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <rect key="frame" x="68" y="30" width="182" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khh-1s-URn">
+                        <rect key="frame" x="68" y="8" width="238" height="21"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="oLN-5L-Hrs" firstAttribute="leading" secondItem="sQ3-mg-cnB" secondAttribute="leading" constant="63" id="B6T-jF-6WU"/>
-                    <constraint firstItem="oLN-5L-Hrs" firstAttribute="top" secondItem="sQ3-mg-cnB" secondAttribute="top" constant="21" id="kWU-D7-vrJ"/>
+                    <constraint firstItem="oLN-5L-Hrs" firstAttribute="top" secondItem="sQ3-mg-cnB" secondAttribute="top" constant="38" id="kWU-D7-vrJ"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="aDateTimeLabel" destination="Yd1-TV-fdc" id="nCa-6C-PHa"/>
+                <outlet property="aUserNameLabel" destination="khh-1s-URn" id="ns0-SM-zXB"/>
                 <outlet property="tweetTextView" destination="oLN-5L-Hrs" id="Yp2-xE-c2f"/>
                 <outlet property="twitterListImageView" destination="cGQ-Af-JZI" id="5ju-EI-dSS"/>
             </connections>
-            <point key="canvasLocation" x="391" y="75"/>
+            <point key="canvasLocation" x="391" y="73"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="l9C-cX-n82" customClass="LRTwitterListTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

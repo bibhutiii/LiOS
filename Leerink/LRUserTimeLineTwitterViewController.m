@@ -61,9 +61,10 @@
     if(indexPath.row != self.userTweetsListArray.count - 1) {
         
         NSDictionary *aUserTweetDictinary = [self.userTweetsListArray objectAtIndex:indexPath.row];
+        NSDictionary *aUSerDetailsDictionary = [aUserTweetDictinary objectForKey:@"user"];
         cell.delegate = self;
         if(aUserTweetDictinary != (NSDictionary *)[NSNull class] || aUserTweetDictinary != nil) {
-            [cell fillDataForTweetCellWithTweet:[aUserTweetDictinary objectForKey:@"text"] andMemberImage:[self.aTweetDetailsDictionary objectForKey:@"aUserImage"] andDate:[aUserTweetDictinary objectForKey:@"created_at"]];
+            [cell fillDataForTweetCellWithTweet:[aUserTweetDictinary objectForKey:@"text"] andMemberImage:[self.aTweetDetailsDictionary objectForKey:@"aUserImage"] andDate:[aUserTweetDictinary objectForKey:@"created_at"] andUserName:[aUSerDetailsDictionary objectForKey:@"name"]];
         }
     }
     
@@ -98,7 +99,7 @@
         NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[aUserTweetDictinary objectForKey:@"text"] attributes:attributesDictionary];
         
         CGRect requiredHeight = [string boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin context:nil];
-        return requiredHeight.size.height + 50.0;
+        return requiredHeight.size.height + 80.0;
         
     }
     return 44;

@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *mainClientTable;
 @property (strong, nonatomic) NSMutableArray *aMainClientListArray;
 @property (weak, nonatomic) IBOutlet UILabel *aUserNameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *sendCartButton;
+- (IBAction)sendDocumentIdsFromCartToService:(id)sender;
 - (void)saveTwitterListDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray;
 - (void)saveTweetDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray;
 @end
@@ -39,6 +41,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -50,21 +53,27 @@
                                                                       }];
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:204/255.0 green:219/255.0 blue:230/255.0 alpha:1];
     self.navigationController.navigationBar.translucent = NO;
-    // split the user email and fetch the first name and last name of the user.
-    NSArray *user = [[[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"] componentsSeparatedByString:@"@"];
-    if(user.count > 0) {
-       NSArray *splitUserFirstNameArray = [[user objectAtIndex:0] componentsSeparatedByString:@"."];
-        if(splitUserFirstNameArray.count > 0) {
-            self.aUserNameLabel.text = [splitUserFirstNameArray objectAtIndex:0];
-        }
-        else {
-            self.aUserNameLabel.text = [user objectAtIndex:0];
-        }
+    if([[[NSUserDefaults standardUserDefaults] objectForKey:@"FirstName"] length] > 0){
+        self.aUserNameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"FirstName"];
     }
     else {
-        self.aUserNameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"];
+        // split the user email and fetch the first name and last name of the user.
+        NSArray *user = [[[NSUserDefaults standardUserDefaults] objectForKey:@"FirstName"] componentsSeparatedByString:@"@"];
+        if(user.count > 0) {
+            NSArray *splitUserFirstNameArray = [[user objectAtIndex:0] componentsSeparatedByString:@"."];
+            if(splitUserFirstNameArray.count > 0) {
+                self.aUserNameLabel.text = [splitUserFirstNameArray objectAtIndex:0];
+            }
+            else {
+                self.aUserNameLabel.text = [user objectAtIndex:0];
+            }
+        }
+        else {
+            self.aUserNameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"FirstName"];
+        }
     }
     
+    // add the logout button on the right side of the navigation bar
     SEL aLogoutButton = sel_registerName("logOut");
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:nil style:0 target:self action:aLogoutButton];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
@@ -73,9 +82,16 @@
     
     // since the landing page has a static list of items add them into the array for the tableview's data source.
     
-    self.aMainClientListArray = [[NSMutableArray alloc] initWithObjects:@"Today's Research",@"Symbol",@"Sector",@"Analyst", nil];
+    self.aMainClientListArray = [[NSMutableArray alloc] initWithObjects:@"List of lists",@"Symbol",@"Sector",@"Analyst", nil];
     [self.mainClientTable reloadData];
     self.mainClientTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    // fetch all the docids saved in the plsit to be sent to the cart.
+    NSArray *arr = [LRAppDelegate fetchDataFromPlist];
+        self.sendCartButton.hidden = TRUE;
+        if(arr.count > 0) {
+            self.sendCartButton.hidden = FALSE;
+    }
     
 }
 - (IBAction)fetchListsForTwitter:(id)sender {
@@ -219,6 +235,44 @@
     }
 }
 #pragma mark - Save twitter list data to core data
+- (IBAction)sendDocumentIdsFromCartToService:(id)sender {
+    
+        NSMutableDictionary *savedDocids = [[NSMutableDictionary alloc] initWithContentsOfFile:[LRAppDelegate fetchPathOfCustomPlist]];
+        
+        NSArray *arr = [LRAppDelegate fetchDataFromPlist];
+        if(arr.count > 0) {
+            ///
+            /*[[LRWebEngine defaultWebEngine] sendRequestToSendCartWithDocIdswithContextInfo:nil forResponseBlock:^(NSDictionary *responseDictionary) {
+                if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
+                }
+                
+            } errorHandler:^(NSError *errorString) {
+                UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                           message:[errorString description]
+                                                                          delegate:self
+                                                                 cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                 otherButtonTitles:nil, nil];
+                [aLogOutAlertView show];
+                
+            }];*/
+            
+            /////
+            self.sendCartButton.hidden = TRUE;
+            NSArray *aEmptyArray = [NSArray new];
+            NSLog(@"%@",arr);
+
+            [savedDocids setObject:aEmptyArray forKey:@"docIds"];
+            [savedDocids writeToFile:[LRAppDelegate fetchPathOfCustomPlist] atomically:TRUE];
+            
+            UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                       message:@"Cart sent successfully"
+                                                                      delegate:self
+                                                             cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                             otherButtonTitles:nil, nil];
+            [aLogOutAlertView show];
+        }
+}
+
 - (void)saveTwitterListDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray
 {
     LRTwitterList *aTweetList = nil;

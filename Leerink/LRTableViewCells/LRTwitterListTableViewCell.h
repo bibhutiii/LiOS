@@ -12,7 +12,7 @@
 
 @interface LRTwitterListTableViewCell : UITableViewCell
 - (void)fillDataForDocumentCellwithTwitterListMemberName:(NSString *)memberName andMemberImage:(id )image;
-- (void)fillDataForTweetCellWithTweet:(NSString *)iTweet andMemberImage:(id )image andDate:(NSString *)iDate;
+- (void)fillDataForTweetCellWithTweet:(NSString *)iTweet andMemberImage:(id )image andDate:(NSString *)iDate andUserName:(NSString *)iUserName;
 @property (nonatomic, assign) id <LRLoadURLDelegate> delegate;
 @end
 

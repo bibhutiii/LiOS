@@ -10,11 +10,19 @@
 @interface LRDocumentTypeTableViewCell ()
 @property (weak, nonatomic) IBOutlet UILabel *documentTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *selectDocumentImage;
 @property (weak, nonatomic) IBOutlet UILabel *authorTitleLabel;
 @end
 @implementation LRDocumentTypeTableViewCell
+- (IBAction)select_unselectDocument:(id)sender {
+    
+    NSLog(@"selected document tag %ld",(long)self.tag);
+    if([self.delegate respondsToSelector:@selector(selectDocumentForRowWithIndex:)]) {
+        [self.delegate selectDocumentForRowWithIndex:(int)self.tag];
+    }
+}
 
-- (void)fillDataForDocumentCellwithTitle:(NSString *)title andDateTime:(NSString *)date andAuthor:(NSString *)author
+- (void)fillDataForDocumentCellwithTitle:(NSString *)title andDateTime:(NSString *)date andAuthor:(NSString *)author andisDocumentSelected:(BOOL)isSelected
 {
     self.documentTitleLabel.text = title;
     self.dateLabel.text = date;
@@ -22,7 +30,14 @@
     
     self.documentTitleLabel.numberOfLines = 0;
     self.documentTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.documentTitleLabel.preferredMaxLayoutWidth = 260;
+    self.documentTitleLabel.preferredMaxLayoutWidth = 230;
+    
+    if(isSelected) {
+        self.selectDocumentImage.image = [UIImage imageNamed:@"checkbox"];
+    }
+    else {
+        self.selectDocumentImage.image = [UIImage imageNamed:@"uncheckbox"];
+    }
 }
 
 @end

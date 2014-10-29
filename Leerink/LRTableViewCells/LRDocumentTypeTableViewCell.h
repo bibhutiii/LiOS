@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LRLoadDataDelegate.h"
 
 @interface LRDocumentTypeTableViewCell : UITableViewCell
-- (void)fillDataForDocumentCellwithTitle:(NSString *)title andDateTime:(NSString *)date andAuthor:(NSString *)author;
+- (void)fillDataForDocumentCellwithTitle:(NSString *)title andDateTime:(NSString *)date andAuthor:(NSString *)author andisDocumentSelected:(BOOL)isSelected;
+@property (nonatomic, assign) id <LRLoadDataDelegate> delegate;
 @end

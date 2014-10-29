@@ -28,20 +28,23 @@
                 
                 NSArray *analysts = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRAnalyst" withPredicate:nil, nil];
                 
-                for (LRAnalyst *analyst in analysts) {
-                    [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:analyst];
+                if(![analysts isKindOfClass:([NSNull class])]) {
+                    for (LRAnalyst *analyst in analysts) {
+                        [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:analyst];
+                    }
                 }
-                
-                for (NSDictionary *analystDictionary in listOfAnalysts) {
-                    LRAnalyst *analyst = (LRAnalyst *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRAnalyst" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
-                    
-                    NSString *name = [analystDictionary objectForKey:@"DisplayName"];
-                    NSArray *array = [name componentsSeparatedByString:@","];
-                    analyst.firstName = [array objectAtIndex:1];
-                    analyst.lastName = [array objectAtIndex:0];
-                    analyst.userId = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"UserID"] intValue]];
+                if(![listOfAnalysts isKindOfClass:([NSNull class])]) {
+                    for (NSDictionary *analystDictionary in listOfAnalysts) {
+                        LRAnalyst *analyst = (LRAnalyst *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRAnalyst" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
+                        
+                        NSString *name = [analystDictionary objectForKey:@"DisplayName"];
+                        NSArray *array = [name componentsSeparatedByString:@","];
+                        analyst.firstName = [array objectAtIndex:1];
+                        analyst.lastName = [array objectAtIndex:0];
+                        analyst.userId = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"UserID"] intValue]];
+                    }
+                    [[LRCoreDataHelper sharedStorageManager] saveContext];
                 }
-                [[LRCoreDataHelper sharedStorageManager] saveContext];
             }
             // after the data has been loaded into the database, reload the table to compose the data in the tableview.
             
@@ -58,20 +61,23 @@
                 
                 NSArray *sectors = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRSector" withPredicate:nil, nil];
                 
-                for (LRAnalyst *analyst in sectors) {
-                    [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:analyst];
+                if(![sectors isKindOfClass:([NSNull class])]) {
+                    for (LRAnalyst *analyst in sectors) {
+                        [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:analyst];
+                    }
                 }
-                
-                for (NSDictionary *analystDictionary in listOfSectors) {
-                    LRSector *sector = (LRSector *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRSector" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
-                    
-                    sector.sectorName = [analystDictionary objectForKey:@"SectorName"];
-                    sector.researchID = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"ResearchID"] intValue]];
+                if(![listOfSectors isKindOfClass:([NSNull class])]) {
+                    for (NSDictionary *analystDictionary in listOfSectors) {
+                        LRSector *sector = (LRSector *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRSector" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
+                        
+                        sector.sectorName = [analystDictionary objectForKey:@"SectorName"];
+                        sector.researchID = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"ResearchID"] intValue]];
+                    }
+                    [[LRCoreDataHelper sharedStorageManager] saveContext];
                 }
-                [[LRCoreDataHelper sharedStorageManager] saveContext];
             }
             // after the data has been loaded into the database, reload the table to compose the data in the tableview.
-
+            
         }
             break;
         case eLRDocumentSymbol:
@@ -84,18 +90,21 @@
                 NSArray *listOfSymbols = [parsedContent objectForKey:@"DataList"];
                 
                 NSArray *symbols = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRSymbol" withPredicate:nil, nil];
-                
-                for (LRSymbol *symbol in symbols) {
-                    [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:symbol];
-                }
-                
-                for (NSDictionary *analystDictionary in listOfSymbols) {
-                    LRSymbol *symbol = (LRSymbol *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRSymbol" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
+                if(![symbols isKindOfClass:([NSNull class])]) {
+                    for (LRSymbol *symbol in symbols) {
+                        [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:symbol];
+                    }
                     
-                    symbol.nameSymbol = [analystDictionary objectForKey:@"NameSymbol"];
-                    symbol.tickerID = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"TickerID"] intValue]];
                 }
-                [[LRCoreDataHelper sharedStorageManager] saveContext];
+                if(![listOfSymbols isKindOfClass:([NSNull class])]) {
+                    for (NSDictionary *analystDictionary in listOfSymbols) {
+                        LRSymbol *symbol = (LRSymbol *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRSymbol" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
+                        
+                        symbol.nameSymbol = [analystDictionary objectForKey:@"NameSymbol"];
+                        symbol.tickerID = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"TickerID"] intValue]];
+                    }
+                    [[LRCoreDataHelper sharedStorageManager] saveContext];
+                }
             }
             // after the data has been loaded into the database, reload the table to compose the data in the tableview.
             
@@ -128,20 +137,22 @@
             
             parsedContent = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
             NSArray *listOfDocuments = [parsedContent objectForKey:@"DataList"];
-            
-            for (NSDictionary *aDocumentDictionary in listOfDocuments) {
-                
-                LRDocument *aDocument = (LRDocument *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRDocument" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
-                aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"Author"];
-                aDocument.documentTitle = [aDocumentDictionary objectForKey:@"DocumentTitle"];
-                aDocument.documentDate = [NSDate dateFromRFC1123:[aDocumentDictionary objectForKey:@"UpdateDate"]];
-                aDocument.documentID = [aDocumentDictionary objectForKey:@"DocumentID"];
-                aDocument.documentPath = [aDocumentDictionary objectForKey:@"Path"];
-                aDocument.analyst = analyst;
-                [analyst addAnalystDocumentsObject:aDocument];
-                
-                [[LRCoreDataHelper sharedStorageManager] saveContext];
+            if(![listOfDocuments isKindOfClass:([NSNull class])]) {
+                for (NSDictionary *aDocumentDictionary in listOfDocuments) {
+                    
+                    LRDocument *aDocument = (LRDocument *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRDocument" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
+                    aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"Author"];
+                    aDocument.documentTitle = [aDocumentDictionary objectForKey:@"DocumentTitle"];
+                    aDocument.documentDate = [NSDate dateFromRFC1123:[aDocumentDictionary objectForKey:@"UpdateDate"]];
+                    aDocument.documentID = [aDocumentDictionary objectForKey:@"DocumentID"];
+                    aDocument.documentPath = [aDocumentDictionary objectForKey:@"Path"];
+                    aDocument.analyst = analyst;
+                    [analyst addAnalystDocumentsObject:aDocument];
+                    
+                    [[LRCoreDataHelper sharedStorageManager] saveContext];
+                }
             }
+            
         }
             break;
         case eLRDocumentListSector:
@@ -160,20 +171,22 @@
             
             parsedContent = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
             NSArray *listOfDocuments = [parsedContent objectForKey:@"DataList"];
-            
-            for (NSDictionary *aDocumentDictionary in listOfDocuments) {
-                
-                LRDocument *aDocument = (LRDocument *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRDocument" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
-                aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"Author"];
-                aDocument.documentTitle = [aDocumentDictionary objectForKey:@"DocumentTitle"];
-                aDocument.documentDate = [NSDate dateFromRFC1123:[aDocumentDictionary objectForKey:@"UpdateDate"]];
-                aDocument.documentID = [aDocumentDictionary objectForKey:@"DocumentID"];
-                aDocument.documentPath = [aDocumentDictionary objectForKey:@"Path"];
-                aDocument.sector = sector;
-                [sector addSectorDocumentsObject:aDocument];
-                
-                [[LRCoreDataHelper sharedStorageManager] saveContext];
+            if(![listOfDocuments isKindOfClass:([NSNull class])]) {
+                for (NSDictionary *aDocumentDictionary in listOfDocuments) {
+                    
+                    LRDocument *aDocument = (LRDocument *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRDocument" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
+                    aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"Author"];
+                    aDocument.documentTitle = [aDocumentDictionary objectForKey:@"DocumentTitle"];
+                    aDocument.documentDate = [NSDate dateFromRFC1123:[aDocumentDictionary objectForKey:@"UpdateDate"]];
+                    aDocument.documentID = [aDocumentDictionary objectForKey:@"DocumentID"];
+                    aDocument.documentPath = [aDocumentDictionary objectForKey:@"Path"];
+                    aDocument.sector = sector;
+                    [sector addSectorDocumentsObject:aDocument];
+                    
+                    [[LRCoreDataHelper sharedStorageManager] saveContext];
+                }
             }
+            
         }
             break;
         case eLRDocumentListSymbol:
@@ -192,19 +205,20 @@
             
             parsedContent = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
             NSArray *listOfDocuments = [parsedContent objectForKey:@"DataList"];
-            
-            for (NSDictionary *aDocumentDictionary in listOfDocuments) {
-                
-                LRDocument *aDocument = (LRDocument *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRDocument" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
-                aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"Author"];
-                aDocument.documentTitle = [aDocumentDictionary objectForKey:@"DocumentTitle"];
-                aDocument.documentDate = [NSDate dateFromRFC1123:[aDocumentDictionary objectForKey:@"UpdateDate"]];
-                aDocument.documentID = [aDocumentDictionary objectForKey:@"DocumentID"];
-                aDocument.documentPath = [aDocumentDictionary objectForKey:@"Path"];
-                aDocument.symbol = symbol;
-                [symbol addSymbolDocumentsObject:aDocument];
-                
-                [[LRCoreDataHelper sharedStorageManager] saveContext];
+            if(![listOfDocuments isKindOfClass:([NSNull class])]) {
+                for (NSDictionary *aDocumentDictionary in listOfDocuments) {
+                    
+                    LRDocument *aDocument = (LRDocument *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRDocument" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
+                    aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"Author"];
+                    aDocument.documentTitle = [aDocumentDictionary objectForKey:@"DocumentTitle"];
+                    aDocument.documentDate = [NSDate dateFromRFC1123:[aDocumentDictionary objectForKey:@"UpdateDate"]];
+                    aDocument.documentID = [aDocumentDictionary objectForKey:@"DocumentID"];
+                    aDocument.documentPath = [aDocumentDictionary objectForKey:@"Path"];
+                    aDocument.symbol = symbol;
+                    [symbol addSymbolDocumentsObject:aDocument];
+                    
+                    [[LRCoreDataHelper sharedStorageManager] saveContext];
+                }
             }
         }
             break;

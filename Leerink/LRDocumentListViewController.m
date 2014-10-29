@@ -20,6 +20,8 @@
 }
 @property (weak, nonatomic) IBOutlet UITableView *documentsListTable;
 @property (strong, nonatomic) NSMutableArray *documentsListArray;
+@property (strong, nonatomic) NSMutableArray *selectedDocumentsArray;
+@property (strong, nonatomic) NSMutableArray *existingDocIdsArray;
 @end
 
 @implementation LRDocumentListViewController
@@ -37,6 +39,11 @@
 {
     [super viewDidLoad];
     NSMutableDictionary *aContextInfoDictionary = [NSMutableDictionary new];
+    self.selectedDocumentsArray = [NSMutableArray new];
+    
+    // fetch the existing docIds from plist
+    self.existingDocIdsArray = [NSMutableArray arrayWithArray:[LRAppDelegate fetchDataFromPlist]];
+    
     // do the navigation bar settings
     self.navigationItem.title = @"Documents";
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0f],
@@ -47,7 +54,7 @@
     
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
     self.delegate = [LRWebEngine defaultWebEngine];
-
+    
     switch (self.documentType) {
         case eLRDocumentAnalyst:
         {
@@ -66,10 +73,10 @@
                                                                cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                                otherButtonTitles:nil, nil];
                 [errorAlertView show];
-
+                
                 DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
                      [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
-
+                
             }];
             
         }
@@ -78,7 +85,7 @@
         {
             [aContextInfoDictionary setObject:self.contextInfo forKey:@"SectorDocumentList"];
             [aContextInfoDictionary setObject:[NSNumber numberWithInt:self.documentListType] forKey:@"DocumentTypeList"];
-
+            
             [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentListWithwithContextInfo:aContextInfoDictionary forResponseDataBlock:^(NSDictionary *responseDictionary) {
                 if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
                     [LRUtility stopActivityIndicatorFromView:self.view];
@@ -92,7 +99,7 @@
                                                                cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                                otherButtonTitles:nil, nil];
                 [errorAlertView show];
-
+                
                 DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
                      [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
                 
@@ -117,7 +124,7 @@
                                                                cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                                otherButtonTitles:nil, nil];
                 [errorAlertView show];
-
+                
                 DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
                      [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
                 
@@ -134,42 +141,42 @@
 - (void)didLoadData
 {
     
-        switch (self.documentType)
+    switch (self.documentType)
+    {
+        case eLRDocumentAnalyst:
         {
-            case eLRDocumentAnalyst:
-            {
-                self.documentsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"analyst.userId == %d",self.documentTypeId, nil];
-            }
-                break;
-            case eLRDocumentSector:
-            {
-                self.documentsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"sector.researchID == %d",self.documentTypeId, nil];
-            }
-                break;
-            case eLRDocumentSymbol:
-            {
-                self.documentsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"symbol.tickerID == %d",self.documentTypeId, nil];
-            }
-                break;
-                
-            default:
-                break;
+            self.documentsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"analyst.userId == %d",self.documentTypeId, nil];
         }
-        
-     //   NSSortDescriptor *zoneSegmentsDescriptor = [[NSSortDescriptor alloc]
-           //                                         initWithKey:@"documentTitle" ascending:YES selector:@selector(caseInsensitiveCompare:)];
-      //  NSArray *sortDescriptors = @[zoneSegmentsDescriptor];
-        
-      //  self.documentsListArray = (NSMutableArray *)[self.documentsListArray sortedArrayUsingDescriptors:sortDescriptors];
-        
-        [LRUtility stopActivityIndicatorFromView:self.view];
-        self.documentsListTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-        [self.searchDisplayController.searchResultsTableView setRowHeight:self.documentsListTable.rowHeight];
-        self.documentsListTable.bounces = TRUE;
-        //
-        [self.documentsListTable reloadData];
-        tableContentSize = self.documentsListTable.contentSize;
-        tableContentSize.height = tableContentSize.height + 150.0;
+            break;
+        case eLRDocumentSector:
+        {
+            self.documentsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"sector.researchID == %d",self.documentTypeId, nil];
+        }
+            break;
+        case eLRDocumentSymbol:
+        {
+            self.documentsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"symbol.tickerID == %d",self.documentTypeId, nil];
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    //   NSSortDescriptor *zoneSegmentsDescriptor = [[NSSortDescriptor alloc]
+    //                                         initWithKey:@"documentTitle" ascending:YES selector:@selector(caseInsensitiveCompare:)];
+    //  NSArray *sortDescriptors = @[zoneSegmentsDescriptor];
+    
+    //  self.documentsListArray = (NSMutableArray *)[self.documentsListArray sortedArrayUsingDescriptors:sortDescriptors];
+    
+    [LRUtility stopActivityIndicatorFromView:self.view];
+    self.documentsListTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.searchDisplayController.searchResultsTableView setRowHeight:self.documentsListTable.rowHeight];
+    self.documentsListTable.bounces = TRUE;
+    //
+    [self.documentsListTable reloadData];
+    tableContentSize = self.documentsListTable.contentSize;
+    tableContentSize.height = tableContentSize.height + 150.0;
     
 }
 #pragma mark - UITableViewDataSource
@@ -187,7 +194,7 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
-{    
+{
     NSString *CellIdentifier = NSStringFromClass([LRDocumentTypeTableViewCell class]);
     LRDocumentTypeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil)
@@ -197,13 +204,28 @@
     }
     
     LRDocument *aDocument = (LRDocument *)[self.documentsListArray objectAtIndex:indexPath.row];
-    [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor];
+    cell.delegate = self;
+    cell.tag = indexPath.row;
     
+    // check if the document hsa been selected and reload the table accordingly.
+    if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
+        [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+        
+    }
+    else {
+        if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
+            [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+        }
+        else {
+            [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
+        }
+        //   [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
+    }
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 120;
 }
 #pragma mark - UITableView delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -231,6 +253,61 @@
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
+}
+- (void)selectDocumentForRowWithIndex:(int )index
+{
+    LRDocument *aDocument = [self.documentsListArray objectAtIndex:index];
+    
+    if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
+        [self.selectedDocumentsArray removeObject:aDocument.documentID];
+    }
+    else {
+        if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
+            [self.existingDocIdsArray removeObject:aDocument.documentID];
+        }
+        else {
+            [self.selectedDocumentsArray addObject:aDocument.documentID];
+        }
+    }
+    
+    
+    
+    if([self.selectedDocumentsArray count] > 0) {
+        SEL addToCartButton = sel_registerName("AddToCart");
+        UIBarButtonItem *cartButton = [[UIBarButtonItem alloc] initWithImage:nil style:0 target:self action:addToCartButton];
+        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+        cartButton.title = @"Add to Cart";
+        self.navigationItem.rightBarButtonItem = cartButton;
+    }
+    else {
+        self.navigationItem.rightBarButtonItem = nil;
+        NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile:[LRAppDelegate fetchPathOfCustomPlist]];
+        
+        //here add elements to data file and write data to file
+        [data setObject:self.existingDocIdsArray forKey:@"docIds"];
+        
+        [data writeToFile:[LRAppDelegate fetchPathOfCustomPlist] atomically:YES];
+    }
+    [self.documentsListTable reloadData];
+}
+- (void)AddToCart
+{
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile: [LRAppDelegate fetchPathOfCustomPlist]];
+    
+    if(self.existingDocIdsArray.count > 0) {
+        [self.selectedDocumentsArray addObjectsFromArray:self.existingDocIdsArray];
+    }
+    //here add elements to data file and write data to file
+    [data setObject:self.selectedDocumentsArray forKey:@"docIds"];
+    
+    [data writeToFile:[LRAppDelegate fetchPathOfCustomPlist] atomically:YES];
+    
+    for (NSString *docId in self.existingDocIdsArray) {
+        if([self.selectedDocumentsArray containsObject:docId]) {
+            [self.selectedDocumentsArray removeObject:docId];
+        }
+    }
+    
 }
 - (NSUInteger)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskPortrait;

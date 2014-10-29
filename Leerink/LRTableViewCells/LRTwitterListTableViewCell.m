@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet AUIAutoGrowingTextView *tweetTextView;
 @property (weak, nonatomic) IBOutlet UILabel *aDateTimeLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *TextViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *aUserNameLabel;
 
 @end
 
@@ -25,7 +26,7 @@
     self.listUserNameLabel.text = memberName;
     self.twitterListImageView.image = image;
 }
-- (void)fillDataForTweetCellWithTweet:(NSString *)iTweet andMemberImage:(id )image andDate:(NSString *)iDate
+- (void)fillDataForTweetCellWithTweet:(NSString *)iTweet andMemberImage:(id )image andDate:(NSString *)iDate andUserName:(NSString *)iUserName
 {
     self.tweetTextView.text = iTweet;
     self.twitterListImageView.image = image;
@@ -47,18 +48,26 @@
     NSDate *aDateObj = [aDateFormatterObj dateFromString:iDate];
   //  NSLog(@"date--%@",aDateObj);
     
-    [aDateFormatterObj setDateFormat:@"yyyy-MMM-dd HH: d"];
+    [aDateFormatterObj setDateFormat:@"yyyy-MMM-dd HH:mm"];
     //2014-10-19 23:00:15 +0000
     self.aDateTimeLabel.text = [aDateFormatterObj stringFromDate:aDateObj];
- //   NSLog(@"dateString--%@",iDate);
     
-    ////
-    ////
-    if([aDateObj isEqualToDate:[NSDate date]]) {
+    
+    /*NSString *aDateTodayStr = [aDateFormatterObj stringFromDate:[NSDate date]];
+    
+    NSDate *aTodayDate = [aDateFormatterObj dateFromString:aDateTodayStr];
+    
+    if ([aDateObj compare:aTodayDate] == NSOrderedDescending) {
+        NSLog(@"date1 is later than date2");
+    } else if ([aDateObj compare:aTodayDate] == NSOrderedAscending) {
+        NSLog(@"date1 is earlier than date2");
+    } else {
+        NSLog(@"dates are the same");
         [aDateFormatterObj setDateFormat:@"HH:mm:ss"];
         aDateObj = [aDateFormatterObj dateFromString:iDate];
         self.aDateTimeLabel.text = [aDateFormatterObj stringFromDate:aDateObj];
-    }
+    }*/
+    self.aUserNameLabel.text = [NSString stringWithFormat:@"@%@",iUserName];
     self.tweetTextView.selectable=YES;
     self.tweetTextView.dataDetectorTypes = UIDataDetectorTypeLink;
     //self.tweetTextView.frame = CGRectMake(self.tweetTextView.frame.origin.x, self.tweetTextView.frame.origin.y, self.tweetTextView.frame.size.width, [self measureHeightOfUITextView:self.tweetTextView]);

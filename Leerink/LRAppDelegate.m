@@ -35,7 +35,30 @@
 {
     return [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
 }
-
++ (NSArray *)fetchDataFromPlist
+{
+    NSError *error;
+    NSString *path = [self fetchPathOfCustomPlist];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if (![fileManager fileExistsAtPath:path]) //4
+    {
+        NSString *bundle = [[NSBundle mainBundle] pathForResource:@"Document" ofType:@"plist"]; //5
+        
+        [fileManager copyItemAtPath:bundle toPath: path error:&error]; //6
+    }
+    NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
+    
+    return [data objectForKey:@"docIds"];
+}
++ (NSString *)fetchPathOfCustomPlist
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); //1
+    NSString *documentsDirectory = [paths objectAtIndex:0]; //2
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"Document.plist"]; //3
+  
+    return path;
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // direct the user to the main client page controller if already logged in.
@@ -234,13 +257,16 @@
 {
     if([[[NSUserDefaults standardUserDefaults] objectForKey:@"PrimaryRoleID"] intValue] == 6) {
         if([[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] length] != 0) {
+            [LRUtility startActivityIndicatorOnView:self.window withText:@"Please wait.."];
             [[LRWebEngine defaultWebEngine] sendRequestToLogOutWithwithContextInfo:nil forResponseBlock:^(NSDictionary *responseDictionary) {
-                
-                LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
-                [[LRAppDelegate myAppdelegate].window setRootViewController:loginVC];
-                
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SessionId"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
+                if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
+                    LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
+                    [[LRAppDelegate myAppdelegate].window setRootViewController:loginVC];
+                    
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SessionId"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [LRUtility stopActivityIndicatorFromView:self.window];
+                }
                 
             } errorHandler:^(NSError *error) {
                 DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],

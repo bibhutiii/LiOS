@@ -59,6 +59,16 @@
                     [LRUtility stopActivityIndicatorFromView:self.view];
                     [self didLoadData];
                 }
+                else {
+                    [LRUtility stopActivityIndicatorFromView:self.view];
+                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                             message:[responseDictionary objectForKey:@"Error"]
+                                                                            delegate:self
+                                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                   otherButtonTitles:nil, nil];
+                    [errorAlertView show];
+                    
+                }
                 
             } errorHandler:^(NSError *error) {
                 [LRUtility stopActivityIndicatorFromView:self.view];
@@ -82,6 +92,16 @@
                     [LRUtility stopActivityIndicatorFromView:self.view];
                     [self didLoadData];
                 }
+                else {
+                    [LRUtility stopActivityIndicatorFromView:self.view];
+                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                             message:[responseDictionary objectForKey:@"Error"]
+                                                                            delegate:self
+                                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                   otherButtonTitles:nil, nil];
+                    [errorAlertView show];
+                    
+                }
                 
             } errorHandler:^(NSError *error) {
                 [LRUtility stopActivityIndicatorFromView:self.view];
@@ -104,6 +124,16 @@
                 if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
                     [LRUtility stopActivityIndicatorFromView:self.view];
                     [self didLoadData];
+                }
+                else {
+                    [LRUtility stopActivityIndicatorFromView:self.view];
+                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                             message:[responseDictionary objectForKey:@"Error"]
+                                                                            delegate:self
+                                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                   otherButtonTitles:nil, nil];
+                    [errorAlertView show];
+
                 }
                 
             } errorHandler:^(NSError *error) {

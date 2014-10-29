@@ -15,4 +15,5 @@
 - (void)didLoadDocumentOnWebView:(NSData *)documentData;
 - (void)failedToParseTheDocumentWithErrorMessage:(NSString *)errorMessage;
 - (void)cancelaNetWorkOperation;
+- (void)selectDocumentForRowWithIndex:(int )index;
 @end
