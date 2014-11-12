@@ -159,8 +159,9 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0f],
                                                                       NSForegroundColorAttributeName : [UIColor whiteColor]
                                                                       }];
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:204/255.0 green:219/255.0 blue:230/255.0 alpha:1];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0/255.0 green:60.0/255.0 blue:113/255.0 alpha:1];
     self.navigationController.navigationBar.translucent = NO;
+     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     
 }
 #pragma mark - Load the data into the table
@@ -381,6 +382,7 @@
     
     LRDocumentListViewController *documentListViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentListViewController class])];
     documentListViewController.documentType = self.eDocumentType;
+    documentListViewController.isDocumentsFetchedForList = FALSE;
     switch (self.eDocumentType)
     {
         case eLRDocumentAnalyst:

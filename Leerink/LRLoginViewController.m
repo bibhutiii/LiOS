@@ -14,6 +14,8 @@
 #import "LRUser.h"
 #import "LRUserRoles.h"
 #import "LRLoginService.h"
+#import "LRDocumentViewController.h"
+#import "LROpenLinksInWebViewController.h"
 
 #define fontHelveticaNeueSize14 [UIFont systemFontOfSize:14.0]
 
@@ -25,6 +27,7 @@
 }
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+- (IBAction)termsOfUseLeerinkPartners:(id)sender;
 #pragma mark - Add the user roles to the database
 - (void) addTheUserRolesToDatabase;
 @end
@@ -70,19 +73,23 @@
     self.passwordTextField.tag = 2;
     
     prevNextArray = [[NSMutableArray alloc]initWithObjects:self.userNameTextField,self.passwordTextField, nil];
-    
+        
 }
 
 #pragma mark -
 - (IBAction)logIn:(id)sender {
     
-    // check if the username and password fields are not left empty.
-  //  self.userNameTextField.text = @"alex.calhoun@leerink.commedatest.com";
-  //  self.passwordTextField.text = @"TwinJet12";
     
-  //  self.userNameTextField.text = @"cbrinzey@hqcm.commedatest.com";
-  //  self.passwordTextField.text = @"WolfRayet12";
-    if([self.userNameTextField.text length] == 0) {
+    // check if the username and password fields are not left empty.
+    self.userNameTextField.text = @"alex.calhoun@leerink.commedatest.com";
+    self.passwordTextField.text = @"TwinJet12";
+    
+   // self.userNameTextField.text = @"cbrinzey@hqcm.commedatest.com";
+   // self.passwordTextField.text = @"WolfRayet12";
+
+    [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
+
+   /* if([self.userNameTextField.text length] == 0) {
         UIAlertView *aUserNameAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
                                                                      message:[NSString stringWithFormat:@"Please enter a username"]
                                                                     delegate:self
@@ -102,8 +109,7 @@
     }
     
     // based on the login add the static user roles to the database.
-    [self addTheUserRolesToDatabase];
-    /////
+    //[self addTheUserRolesToDatabase];
     
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
     [aRequestDict setObject:self.userNameTextField.text forKey:@"Username"];
@@ -111,9 +117,6 @@
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] != nil) {
         [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] forKey:@"DeviceId"];
     }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:self.userNameTextField.text forKey:@"UserName"];
-
 
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
     
@@ -125,17 +128,28 @@
             NSDictionary *aResponseDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
             if(![aResponseDictionary isKindOfClass:([NSNull class])]) {
                 NSDictionary *aTempDictionary = [aResponseDictionary objectForKey:@"Data"];
-                if(aTempDictionary != (NSDictionary*)[NSNull null]) {
+                if([[aResponseDictionary objectForKey:@"IsSuccess"] boolValue] == TRUE) {
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"FirstName"] forKey:@"FirstName"];
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"LastName"] forKey:@"LastName"];
-                    
+                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"DocList"] forKey:@"DocList"];
                     [aStandardUserDefaults setObject:self.userNameTextField.text forKey:@"UserName"];
+                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"UserId"] forKey:@"UserId"];
                     
                     [aStandardUserDefaults synchronize];
-                    
                     [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
+                    if([LRAppDelegate myAppdelegate].documentFetchedFromNotification == TRUE) {
+                        
+                        LRDocumentViewController *aDocumentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
+                        aDocumentViewController.documentId = @"51951";
+                        [LRAppDelegate myAppdelegate].documentFetchedFromNotification = FALSE;
+                        [[LRAppDelegate myAppdelegate].aBaseNavigationController pushViewController:aDocumentViewController animated:FALSE];
+
+                    }
+                    else {
+                        
+                    }
                     
                 }
                 else {
@@ -165,7 +179,7 @@
              [errorString localizedRecoveryOptions], [errorString localizedRecoverySuggestion]);
         
         
-    }];
+    }];*/
     
 }
 
@@ -280,4 +294,14 @@
  }
  */
 
+- (IBAction)termsOfUseLeerinkPartners:(id)sender {
+    
+    LROpenLinksInWebViewController *aOpenLinksInWebViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LROpenLinksInWebViewController class])];
+    aOpenLinksInWebViewController.linkURL = @"http://www.leerink.com/terms-of-use/";
+    aOpenLinksInWebViewController.isLinkFromLogin = TRUE;
+    [self presentViewController:aOpenLinksInWebViewController animated:TRUE completion:^{
+        
+    }];
+
+}
 @end

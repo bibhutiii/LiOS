@@ -29,5 +29,8 @@
 
 #endif
 
+// Macro to enable log files
+#define ENABLE_DEVICE_LOGS 1
+
 #define baseURLForService @"https://bos-portalqa-web.internal.leerink.com/iOS/iOS.IIRPIOSService.svc?singleWsdl"
 #define locationOfServiceURL @"https://10.140.217.20/iOS/iOS.IIRPIOSService.svc"

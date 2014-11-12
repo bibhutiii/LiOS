@@ -36,11 +36,20 @@
                                                                                                                           }];
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:204/255.0 green:219/255.0 blue:230/255.0 alpha:1];
     self.navigationController.navigationBar.translucent = NO;
-    [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
+
+    [self fetchDocument];
+   /* [aGetDocumentService getDocument:^(BOOL isDocumentFetched) {
+        NSLog(@"document fetched");
+    } withDocumentId:self.documentId withUserId:self.userId andPath:self.documentPath];
+    */
+}
+- (void)fetchDocument
+{
+    [LRUtility startActivityIndicatorOnView:nil withText:@"Please wait.."];
     
     self.delegate = [LRWebEngine defaultWebEngine];
     
-    [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentWithwithContextInfo:self.documentPath forResponseBlock:^(NSDictionary *responseDictionary) {
+    [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentWithwithContextInfo:self.documentId forResponseBlock:^(NSDictionary *responseDictionary) {
         
         if([[responseDictionary objectForKey:@"Error"] isKindOfClass:([NSNull class])]) {
             NSDictionary *aDocumentByteDictionary = [responseDictionary objectForKey:@"Data"];
@@ -50,9 +59,9 @@
             
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
             NSString *libraryDirectory = [paths objectAtIndex:0];
-           // self.documentTitleToBeSavedAsPdf = @"abc def fgt dasdsadasd dssdsd ererer 4535454dsfdf";
+            // self.documentTitleToBeSavedAsPdf = @"abc def fgt dasdsadasd dssdsd ererer 4535454dsfdf";
             self.documentTitleToBeSavedAsPdf = [self.documentTitleToBeSavedAsPdf stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
-           // self.documentTitleToBeSavedAsPdf = [self.documentTitleToBeSavedAsPdf stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+            // self.documentTitleToBeSavedAsPdf = [self.documentTitleToBeSavedAsPdf stringByReplacingOccurrencesOfString:@" " withString:@"_"];
             [decodedData writeToFile:[libraryDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.pdf",self.documentTitleToBeSavedAsPdf]] atomically:YES];
             
             [self.documentReaderWebView loadData:decodedData MIMEType:@"application/pdf" textEncodingName:@"utf-8" baseURL:nil];
@@ -61,32 +70,27 @@
             UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Share-black-32"] style:0 target:self action:aLogoutButton];
             self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
             self.navigationItem.rightBarButtonItem = backButton;
-
-
+             [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+            
+            [LRUtility stopActivityIndicatorFromView:nil];
+            
         }
         else {
-            [LRUtility stopActivityIndicatorFromView:self.view];
+            [LRUtility stopActivityIndicatorFromView:nil];
             UIAlertView *documentFailAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink" message:[responseDictionary objectForKey:@"Error"] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [documentFailAlertView show];
         }
         
     } errorHandler:^(NSError *errorString) {
-        [LRUtility stopActivityIndicatorFromView:self.view];
+        [LRUtility stopActivityIndicatorFromView:nil];
         UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
                                                                  message:[errorString description]
                                                                 delegate:self
                                                        cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                        otherButtonTitles:nil, nil];
         [errorAlertView show];
-
+        
     }];
-    
-
-    
-   /* [aGetDocumentService getDocument:^(BOOL isDocumentFetched) {
-        NSLog(@"document fetched");
-    } withDocumentId:self.documentId withUserId:self.userId andPath:self.documentPath];
-    */
 }
 - (void) iBooks
 {

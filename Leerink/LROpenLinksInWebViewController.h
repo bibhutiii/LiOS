@@ -11,4 +11,5 @@
 @interface LROpenLinksInWebViewController : UIViewController<UIActionSheetDelegate,UIWebViewDelegate>
 
 @property (nonatomic, strong) NSString *linkURL;
+@property (nonatomic, assign) BOOL isLinkFromLogin;
 @end

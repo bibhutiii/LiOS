@@ -144,7 +144,7 @@
                     aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"Author"];
                     aDocument.documentTitle = [aDocumentDictionary objectForKey:@"DocumentTitle"];
                     aDocument.documentDate = [NSDate dateFromRFC1123:[aDocumentDictionary objectForKey:@"UpdateDate"]];
-                    aDocument.documentID = [aDocumentDictionary objectForKey:@"DocumentID"];
+                    aDocument.documentID = [[aDocumentDictionary objectForKey:@"DocumentID"] stringValue];
                     aDocument.documentPath = [aDocumentDictionary objectForKey:@"Path"];
                     aDocument.analyst = analyst;
                     [analyst addAnalystDocumentsObject:aDocument];
@@ -178,7 +178,7 @@
                     aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"Author"];
                     aDocument.documentTitle = [aDocumentDictionary objectForKey:@"DocumentTitle"];
                     aDocument.documentDate = [NSDate dateFromRFC1123:[aDocumentDictionary objectForKey:@"UpdateDate"]];
-                    aDocument.documentID = [aDocumentDictionary objectForKey:@"DocumentID"];
+                    aDocument.documentID = [[aDocumentDictionary objectForKey:@"DocumentID"] stringValue];
                     aDocument.documentPath = [aDocumentDictionary objectForKey:@"Path"];
                     aDocument.sector = sector;
                     [sector addSectorDocumentsObject:aDocument];
@@ -212,7 +212,7 @@
                     aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"Author"];
                     aDocument.documentTitle = [aDocumentDictionary objectForKey:@"DocumentTitle"];
                     aDocument.documentDate = [NSDate dateFromRFC1123:[aDocumentDictionary objectForKey:@"UpdateDate"]];
-                    aDocument.documentID = [aDocumentDictionary objectForKey:@"DocumentID"];
+                    aDocument.documentID = [[aDocumentDictionary objectForKey:@"DocumentID"] stringValue];
                     aDocument.documentPath = [aDocumentDictionary objectForKey:@"Path"];
                     aDocument.symbol = symbol;
                     [symbol addSymbolDocumentsObject:aDocument];

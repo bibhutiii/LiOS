@@ -33,6 +33,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"Tweets";
+     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     self.tweetCount = 15;
     if(self.isTwitterListCountMoreThanOne == TRUE) {
         [self fetchTweetsForSpecifiedListCount:[NSString stringWithFormat:@"%d",self.tweetCount]];
@@ -268,6 +269,7 @@
 {
     LROpenLinksInWebViewController *aOpenLinkInsideWebViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:@"LROpenLinksInWebViewController"];
     aOpenLinkInsideWebViewController.linkURL = url;
+    aOpenLinkInsideWebViewController.isLinkFromLogin = FALSE;
     [self.navigationController pushViewController:aOpenLinkInsideWebViewController animated:TRUE];
 }
 - (void)didReceiveMemoryWarning {

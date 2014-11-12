@@ -16,6 +16,8 @@
 @property (strong, nonatomic) UINavigationController *aBaseNavigationController;
 // a core data helper class to avoid the methods to be written in appDelegate.
 @property (nonatomic, strong) LRCoreDataHelper *coreDataHelper;
+@property (nonatomic, assign) BOOL documentFetchedFromNotification;
+
 
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -27,6 +29,7 @@
 + (UIStoryboard *)myStoryBoard;
 + (NSArray *)fetchDataFromPlist;
 + (NSString *)fetchPathOfCustomPlist;
+- (BOOL) isUserLoggedIn;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

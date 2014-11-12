@@ -200,13 +200,43 @@ static LRWebEngine *sDefaultWebEngine = nil;
     return self.iOperation;
     
 }
+- (MKNetworkOperation *)sendRequestToGetDocumentListForListWithwithContextInfo:(id)iContextInfo forResponseDataBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
+{
+    NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
+    self.iOperation = nil;
+    
+    [aRequestDict setObject:iContextInfo forKey:@"ListId"];
+    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+
+    __block NSString *valueString = nil;
+    
+    
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        valueString = [completedOperation responseString];
+        NSLog(@"recieved currency -- %@",[completedOperation responseString]);
+        
+        NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSDictionary *the_parsedcontents = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
+        completion(the_parsedcontents);
+        
+        
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        errorBlock(error);
+    }];
+    [self enqueueOperation:self.iOperation];
+    return self.iOperation;
+    
+}
 - (MKNetworkOperation *)sendRequestToGetDocumentWithwithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
-    [aRequestDict setObject:iContextInfo forKey:@"Path"];
+    [aRequestDict setObject:iContextInfo forKey:@"DocumentID"];
     
     self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocument" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
     
@@ -265,12 +295,16 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/SendCartService" params:nil httpMethod:@"POST" ssl:TRUE];
+    NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
+    [aRequestDict setObject:@"55702" forKey:@"DocumentID"];
+    
+    
+    
+    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/SendDocumentList" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
-    //self.iOperation.documentListRequestType = eLRDocumentListAnalyst;
     
-   /* [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
         NSLog(@"recieved currency -- %@",[completedOperation responseString]);
         
@@ -282,7 +316,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
         
     } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
         errorBlock(error);
-    }];*/
+    }];
     [self enqueueOperation:self.iOperation];
     return self.iOperation;
 }

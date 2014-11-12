@@ -12,6 +12,7 @@
 
 @property (nonatomic, assign) id <LRLoadDataDelegate> delegate;
 @property (nonatomic, strong) NSString *documentTitleToBeSavedAsPdf;
-@property (nonatomic, strong) NSString *documentPath;
+@property (nonatomic, strong) NSString *documentId;
 
+- (void)fetchDocument;
 @end

@@ -19,6 +19,8 @@
 #import "LRMainClientPageViewController.h"
 #import <Parse/Parse.h>
 #import "LRWebEngine.h"
+#import "LRDocumentViewController.h"
+#import <Crashlytics/Crashlytics.h>
 
 @implementation LRAppDelegate
 @synthesize coreDataHelper;
@@ -56,8 +58,16 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); //1
     NSString *documentsDirectory = [paths objectAtIndex:0]; //2
     NSString *path = [documentsDirectory stringByAppendingPathComponent:@"Document.plist"]; //3
-  
+    
     return path;
+}
+
+- (BOOL) isUserLoggedIn
+{
+    if([self.window.rootViewController isKindOfClass:([LRLoginViewController class])]) {
+        return FALSE;
+    }
+    return TRUE;
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -77,9 +87,12 @@
     [self.window setRootViewController:loginVC];
     [self.window makeKeyAndVisible];
     
+    NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"]);
     ///
     [Parse setApplicationId:@"0921QnBasJhIv1cFQkxC8f4aJupFnUbIuCnq8qB6"
                   clientKey:@"CrXy8wSEnkuvmm67ebWMbEOpzFbUA55dI3MFtLjL"];
+    
+    [Crashlytics startWithAPIKey:@"538f8236cc2bab28cc8de91308000df9c232a03d"];
     
     // Let the device know we want to receive push notifications
     if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]){
@@ -97,8 +110,23 @@
         self.coreDataHelper = [LRCoreDataHelper new];
         [self.coreDataHelper setupCoreData];
     }
-  //  NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:@"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3", @"UserAgent", nil];
- //   [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+    /* Enabling device logs*/
+#if ENABLE_DEVICE_LOGS == 1
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    NSString *fileName =[NSString stringWithFormat:@"%@.log",[NSDate date]];
+    
+    NSString *logFilePath = [documentsDirectory stringByAppendingPathComponent:fileName];
+    
+    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+    
+#endif
+    
+    //  NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:@"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3", @"UserAgent", nil];
+    //   [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
     return YES;
 }
 #pragma mark - Orientation methods
@@ -129,15 +157,15 @@
 - (NSManagedObjectContext *) createManagedObjectContext
 {
     if (_persistentStoreCoordinator != nil)
-	{
+    {
         NSManagedObjectContext * moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [moc setMergePolicy:[[NSMergePolicy alloc] initWithMergeType:NSOverwriteMergePolicyType]];
         [moc performBlockAndWait:^{
             [moc setPersistentStoreCoordinator: self.persistentStoreCoordinator];
         }];		return moc;
     }
-	else
-		return nil;
+    else
+        return nil;
 }
 #pragma mark - Core Data stack
 
@@ -246,15 +274,67 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
-    [PFPush handlePush:userInfo];
+    //  [PFPush handlePush:userInfo];
+    // check if the user is already logged in or session has not expired yet.
+    if([[LRAppDelegate myAppdelegate] isUserLoggedIn] == TRUE) {
+        LRDocumentViewController *aDocumentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
+        UIApplicationState state = [application applicationState];
+        if (state == UIApplicationStateActive)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Leerink" message:@"alert inside the app" delegate:self cancelButtonTitle:@"ok" otherButtonTitles: @"cancel", nil];
+            if([self.aBaseNavigationController.visibleViewController isKindOfClass:([LRDocumentViewController class])]) {
+                NSLog(@"it is document view conroller");
+                alert.tag = 1000;
+            }
+            else {
+                alert.tag = 2000;
+            }
+            [alert show];
+        }
+        else {
+            // Push Notification received in the background
+            if([self.aBaseNavigationController.visibleViewController isKindOfClass:([LRDocumentViewController class])]) {
+                NSLog(@"it is document view conroller");
+                aDocumentViewController.documentId = @"51951";
+                [aDocumentViewController fetchDocument];
+            }
+            else {
+                aDocumentViewController.documentId = @"51951";
+                [self.aBaseNavigationController pushViewController:aDocumentViewController animated:TRUE];
+                
+            }
+        }
+    }
+    else {
+        LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
+        self.documentFetchedFromNotification = TRUE;
+        [self.window setRootViewController:loginVC];
+    }
+    
 }
-
+#pragma mark - Alert View delegate methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    LRDocumentViewController *aDocumentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
+    if(alertView.tag == 1000) {
+        if(buttonIndex == 0) {
+            aDocumentViewController.documentId = @"51951";
+            [aDocumentViewController fetchDocument];
+        }
+    }
+    if(alertView.tag == 2000) {
+        aDocumentViewController.documentId = @"51951";
+        [self.aBaseNavigationController pushViewController:aDocumentViewController animated:TRUE];
+    }
+}
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-	NSLog(@"Failed to get token, error: %@", error);
+    NSLog(@"Failed to get token, error: %@", error);
 }
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+    
+    NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"]);
     if([[[NSUserDefaults standardUserDefaults] objectForKey:@"PrimaryRoleID"] intValue] == 6) {
         if([[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] length] != 0) {
             [LRUtility startActivityIndicatorOnView:self.window withText:@"Please wait.."];
@@ -269,6 +349,9 @@
                 }
                 
             } errorHandler:^(NSError *error) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Leerink" message:[error description] delegate:self cancelButtonTitle:@"ok" otherButtonTitles: nil, nil];
+                [alert show];
+                 [LRUtility stopActivityIndicatorFromView:self.window];
                 DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
                      [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
             }];
@@ -301,6 +384,9 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [[self cdh] saveContext];
+   // [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SessionId"];
+    //[[NSUserDefaults standardUserDefaults] synchronize];
+
 }
 
 @end

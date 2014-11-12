@@ -54,88 +54,136 @@
     
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
     self.delegate = [LRWebEngine defaultWebEngine];
-    
-    switch (self.documentType) {
-        case eLRDocumentAnalyst:
-        {
-            [aContextInfoDictionary setObject:self.contextInfo forKey:@"AnalystDocumentList"];
-            [aContextInfoDictionary setObject:[NSNumber numberWithInt:self.documentListType] forKey:@"DocumentTypeList"];
-            [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentListWithwithContextInfo:aContextInfoDictionary forResponseDataBlock:^(NSDictionary *responseDictionary) {
-                if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
-                    [LRUtility stopActivityIndicatorFromView:self.view];
-                    [self didLoadData];
-                }
-            } errorHandler:^(NSError *error) {
+    if(self.isDocumentsFetchedForList == TRUE) {
+        
+        [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentListForListWithwithContextInfo:self.contextInfo forResponseDataBlock:^(NSDictionary *responseDictionary) {
+            if([[responseDictionary objectForKey:@"IsSuccess"] boolValue] == TRUE) {
                 [LRUtility stopActivityIndicatorFromView:self.view];
-                UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                         message:[error description]
-                                                                        delegate:self
-                                                               cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                                                               otherButtonTitles:nil, nil];
-                [errorAlertView show];
+                self.documentsListArray = [NSMutableArray new];
+                NSArray *listOfDocuments = [responseDictionary objectForKey:@"DataList"];
+                    for (NSDictionary *aDocumentDictionary in listOfDocuments) {
+                        [self.documentsListArray addObject:aDocumentDictionary];
+                    }
+                    self.documentsListTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+                    [self.searchDisplayController.searchResultsTableView setRowHeight:self.documentsListTable.rowHeight];
+                    self.documentsListTable.bounces = TRUE;
+                    //
+                    [self.documentsListTable reloadData];
+                    tableContentSize = self.documentsListTable.contentSize;
+                    tableContentSize.height = tableContentSize.height + 150.0;
                 
-                DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
-                     [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
                 
-            }];
-            
-        }
-            break;
-        case eLRDocumentSector:
-        {
-            [aContextInfoDictionary setObject:self.contextInfo forKey:@"SectorDocumentList"];
-            [aContextInfoDictionary setObject:[NSNumber numberWithInt:self.documentListType] forKey:@"DocumentTypeList"];
-            
-            [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentListWithwithContextInfo:aContextInfoDictionary forResponseDataBlock:^(NSDictionary *responseDictionary) {
-                if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
-                    [LRUtility stopActivityIndicatorFromView:self.view];
-                    [self didLoadData];
                 }
-            } errorHandler:^(NSError *error) {
+            else {
                 [LRUtility stopActivityIndicatorFromView:self.view];
-                UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                         message:[error description]
-                                                                        delegate:self
-                                                               cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                                                               otherButtonTitles:nil, nil];
-                [errorAlertView show];
+                UIAlertView *emptyDataAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                             message:[responseDictionary objectForKey:@"Error"]
+                                                                            delegate:self
+                                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                   otherButtonTitles:nil, nil];
+                [emptyDataAlertView show];
+
+            }
                 
-                DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
-                     [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
-                
-            }];
-        }
-            break;
-        case eLRDocumentSymbol:
-        {
-            [aContextInfoDictionary setObject:self.contextInfo forKey:@"SymbolDocumentList"];
-            [aContextInfoDictionary setObject:[NSNumber numberWithInt:self.documentListType] forKey:@"DocumentTypeList"];
+        } errorHandler:^(NSError *error) {
+            [LRUtility stopActivityIndicatorFromView:self.view];
+            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                     message:[error description]
+                                                                    delegate:self
+                                                           cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                           otherButtonTitles:nil, nil];
+            [errorAlertView show];
             
-            [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentListWithwithContextInfo:aContextInfoDictionary forResponseDataBlock:^(NSDictionary *responseDictionary) {
-                if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
+            DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
+                 [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
+            
+        }];
+    }
+    else {
+        
+        switch (self.documentType) {
+            case eLRDocumentAnalyst:
+            {
+                [aContextInfoDictionary setObject:self.contextInfo forKey:@"AnalystDocumentList"];
+                [aContextInfoDictionary setObject:[NSNumber numberWithInt:self.documentListType] forKey:@"DocumentTypeList"];
+                [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentListWithwithContextInfo:aContextInfoDictionary forResponseDataBlock:^(NSDictionary *responseDictionary) {
+                    if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
+                        [LRUtility stopActivityIndicatorFromView:self.view];
+                        [self didLoadData];
+                    }
+                } errorHandler:^(NSError *error) {
                     [LRUtility stopActivityIndicatorFromView:self.view];
-                    [self didLoadData];
-                }
-            } errorHandler:^(NSError *error) {
-                [LRUtility stopActivityIndicatorFromView:self.view];
-                UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                         message:[error description]
-                                                                        delegate:self
-                                                               cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                                                               otherButtonTitles:nil, nil];
-                [errorAlertView show];
+                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                             message:[error description]
+                                                                            delegate:self
+                                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                   otherButtonTitles:nil, nil];
+                    [errorAlertView show];
+                    
+                    DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
+                         [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
+                    
+                }];
                 
-                DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
-                     [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
+            }
+                break;
+            case eLRDocumentSector:
+            {
+                [aContextInfoDictionary setObject:self.contextInfo forKey:@"SectorDocumentList"];
+                [aContextInfoDictionary setObject:[NSNumber numberWithInt:self.documentListType] forKey:@"DocumentTypeList"];
                 
-            }];
+                [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentListWithwithContextInfo:aContextInfoDictionary forResponseDataBlock:^(NSDictionary *responseDictionary) {
+                    if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
+                        [LRUtility stopActivityIndicatorFromView:self.view];
+                        [self didLoadData];
+                    }
+                } errorHandler:^(NSError *error) {
+                    [LRUtility stopActivityIndicatorFromView:self.view];
+                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                             message:[error description]
+                                                                            delegate:self
+                                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                   otherButtonTitles:nil, nil];
+                    [errorAlertView show];
+                    
+                    DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
+                         [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
+                    
+                }];
+            }
+                break;
+            case eLRDocumentSymbol:
+            {
+                [aContextInfoDictionary setObject:self.contextInfo forKey:@"SymbolDocumentList"];
+                [aContextInfoDictionary setObject:[NSNumber numberWithInt:self.documentListType] forKey:@"DocumentTypeList"];
+                
+                [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentListWithwithContextInfo:aContextInfoDictionary forResponseDataBlock:^(NSDictionary *responseDictionary) {
+                    if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
+                        [LRUtility stopActivityIndicatorFromView:self.view];
+                        [self didLoadData];
+                    }
+                } errorHandler:^(NSError *error) {
+                    [LRUtility stopActivityIndicatorFromView:self.view];
+                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                             message:[error description]
+                                                                            delegate:self
+                                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                   otherButtonTitles:nil, nil];
+                    [errorAlertView show];
+                    
+                    DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
+                         [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
+                    
+                }];
+            }
+                break;
+                
+            default:
+                break;
         }
-            break;
-            
-        default:
-            break;
     }
     // Do any additional setup after loading the view.
+     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
 }
 #pragma mark - Load the data into the table
 - (void)didLoadData
@@ -202,25 +250,46 @@
         NSArray *bundle = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
         cell = (LRDocumentTypeTableViewCell *)[bundle objectAtIndex: 0];
     }
-    
-    LRDocument *aDocument = (LRDocument *)[self.documentsListArray objectAtIndex:indexPath.row];
-    cell.delegate = self;
-    cell.tag = indexPath.row;
-    
-    // check if the document hsa been selected and reload the table accordingly.
-    if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
-        [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+    if(self.isDocumentsFetchedForList == TRUE) {
         
-    }
-    else {
-        if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
-            [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+        NSDictionary *aDocumentDetailsDictionary = [self.documentsListArray objectAtIndex:indexPath.row];
+        cell.delegate = self;
+        cell.tag = indexPath.row;
+        
+        // check if the document hsa been selected and reload the table accordingly.
+        if([self.selectedDocumentsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
+            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:@"02-Sep-2014" andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE];
         }
         else {
-            [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
+            if([self.existingDocIdsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
+                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:@"02-Sep-2014" andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE];
+            }
+            else {
+                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:@"02-Sep-2014" andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:FALSE];
+            }
         }
-        //   [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
     }
+    else {
+        LRDocument *aDocument = (LRDocument *)[self.documentsListArray objectAtIndex:indexPath.row];
+        cell.delegate = self;
+        cell.tag = indexPath.row;
+        
+        // check if the document hsa been selected and reload the table accordingly.
+        if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
+            [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+            
+        }
+        else {
+            if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
+                [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+            }
+            else {
+                [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
+            }
+            //   [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
+        }
+    }
+    
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -230,13 +299,18 @@
 #pragma mark - UITableView delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LRDocument *aDocument = (LRDocument *)[self.documentsListArray objectAtIndex:indexPath.row];
-    
     LRDocumentViewController *documentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
-    //documentViewController.documentPath = @"D:\\Release\\test.txt";
-    documentViewController.documentTitleToBeSavedAsPdf = aDocument.documentTitle;
-    documentViewController.documentPath = aDocument.documentPath;
     
+    if(self.isDocumentsFetchedForList == TRUE) {
+        NSDictionary *aDocumentDetailsDictionary = [self.documentsListArray objectAtIndex:indexPath.row];
+        documentViewController.documentId = [aDocumentDetailsDictionary objectForKey:@"DocumentID"];
+    }
+    else {
+        LRDocument *aDocument = (LRDocument *)[self.documentsListArray objectAtIndex:indexPath.row];
+        //documentViewController.documentPath = @"D:\\Release\\test.txt";
+        documentViewController.documentTitleToBeSavedAsPdf = aDocument.documentTitle;
+        documentViewController.documentId = aDocument.documentID;
+    }
     [self.navigationController pushViewController:documentViewController animated:TRUE];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -256,22 +330,34 @@
 }
 - (void)selectDocumentForRowWithIndex:(int )index
 {
-    LRDocument *aDocument = [self.documentsListArray objectAtIndex:index];
-    
-    if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
-        [self.selectedDocumentsArray removeObject:aDocument.documentID];
-    }
-    else {
-        if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
-            [self.existingDocIdsArray removeObject:aDocument.documentID];
+    if(self.isDocumentsFetchedForList == TRUE) {
+        NSDictionary *aDocumentDetailsDictionary = [self.documentsListArray objectAtIndex:index];
+        if([self.selectedDocumentsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
+            [self.selectedDocumentsArray removeObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]];
         }
         else {
-            [self.selectedDocumentsArray addObject:aDocument.documentID];
+            if([self.existingDocIdsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
+                [self.existingDocIdsArray removeObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]];
+            }
+            else {
+                [self.selectedDocumentsArray addObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]];
+            }
         }
     }
-    
-    
-    
+    else {
+        LRDocument *aDocument = [self.documentsListArray objectAtIndex:index];
+        if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
+            [self.selectedDocumentsArray removeObject:aDocument.documentID];
+        }
+        else {
+            if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
+                [self.existingDocIdsArray removeObject:aDocument.documentID];
+            }
+            else {
+                [self.selectedDocumentsArray addObject:aDocument.documentID];
+            }
+        }
+    }
     if([self.selectedDocumentsArray count] > 0) {
         SEL addToCartButton = sel_registerName("AddToCart");
         UIBarButtonItem *cartButton = [[UIBarButtonItem alloc] initWithImage:nil style:0 target:self action:addToCartButton];
@@ -292,22 +378,38 @@
 }
 - (void)AddToCart
 {
-    NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile: [LRAppDelegate fetchPathOfCustomPlist]];
+    UIAlertView *itemsAddedToCartAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                             message:@"Items Added to Cart. Please Return to Home Screen to Send Cart to Yourself"
+                                                            delegate:self
+                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                   otherButtonTitles:nil, nil];
+    itemsAddedToCartAlertView.tag = 500;
     
-    if(self.existingDocIdsArray.count > 0) {
-        [self.selectedDocumentsArray addObjectsFromArray:self.existingDocIdsArray];
-    }
-    //here add elements to data file and write data to file
-    [data setObject:self.selectedDocumentsArray forKey:@"docIds"];
+    [itemsAddedToCartAlertView show];
     
-    [data writeToFile:[LRAppDelegate fetchPathOfCustomPlist] atomically:YES];
-    
-    for (NSString *docId in self.existingDocIdsArray) {
-        if([self.selectedDocumentsArray containsObject:docId]) {
-            [self.selectedDocumentsArray removeObject:docId];
+    //
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 500){
+        if(buttonIndex == 0) {
+            NSMutableDictionary *data = [[NSMutableDictionary alloc] initWithContentsOfFile: [LRAppDelegate fetchPathOfCustomPlist]];
+            
+            if(self.existingDocIdsArray.count > 0) {
+                [self.selectedDocumentsArray addObjectsFromArray:self.existingDocIdsArray];
+            }
+            //here add elements to data file and write data to file
+            [data setObject:self.selectedDocumentsArray forKey:@"docIds"];
+            
+            [data writeToFile:[LRAppDelegate fetchPathOfCustomPlist] atomically:YES];
+            
+            for (NSString *docId in self.existingDocIdsArray) {
+                if([self.selectedDocumentsArray containsObject:docId]) {
+                    [self.selectedDocumentsArray removeObject:docId];
+                }
+            }
         }
     }
-    
 }
 - (NSUInteger)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskPortrait;

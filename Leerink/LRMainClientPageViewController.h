@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LRMainClientPageViewController : UIViewController
+@interface LRMainClientPageViewController : UIViewController<UIActionSheetDelegate>
 
 @end

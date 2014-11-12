@@ -16,12 +16,16 @@
 #import "LRTweets.h"
 #import "LRWebEngine.h"
 #import "LRLoginViewController.h"
+#import "LRDocumentListViewController.h"
+#import "UIView+MGBadgeView.h"
+#import "FPPopoverController.h"
 
 @interface LRMainClientPageViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *mainClientTable;
 @property (strong, nonatomic) NSMutableArray *aMainClientListArray;
 @property (weak, nonatomic) IBOutlet UILabel *aUserNameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *sendCartButton;
+@property (strong, nonatomic) FPPopoverController *popover;
 - (IBAction)sendDocumentIdsFromCartToService:(id)sender;
 - (void)saveTwitterListDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray;
 - (void)saveTweetDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray;
@@ -47,11 +51,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:TRUE];
-    self.title = @"Document Library";
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0f],
                                                                       NSForegroundColorAttributeName : [UIColor whiteColor]
                                                                       }];
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:204/255.0 green:219/255.0 blue:230/255.0 alpha:1];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0/255.0 green:60.0/255.0 blue:113/255.0 alpha:1];
     self.navigationController.navigationBar.translucent = NO;
     if([[[NSUserDefaults standardUserDefaults] objectForKey:@"FirstName"] length] > 0){
         self.aUserNameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"FirstName"];
@@ -77,25 +80,37 @@
     SEL aLogoutButton = sel_registerName("logOut");
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:nil style:0 target:self action:aLogoutButton];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-    backButton.title = @"logout";
+    backButton.title = @"Logout";
     self.navigationItem.rightBarButtonItem = backButton;
     
-    // since the landing page has a static list of items add them into the array for the tableview's data source.
     
-    self.aMainClientListArray = [[NSMutableArray alloc] initWithObjects:@"List of lists",@"Symbol",@"Sector",@"Analyst", nil];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Leerink-White_320x44"] forBarMetrics:UIBarMetricsDefault];
+    
+    // since the landing page has a static list of items add them into the array for the tableview's data source.
+    NSArray *docListArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"DocList"];
+    self.aMainClientListArray = [NSMutableArray new];
+    
+    [self.aMainClientListArray addObjectsFromArray:docListArray];
+    [self.aMainClientListArray addObject:@"Symbol"];
+    [self.aMainClientListArray addObject:@"Sector"];
+    [self.aMainClientListArray addObject:@"Analyst"];
+    
     [self.mainClientTable reloadData];
     self.mainClientTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     // fetch all the docids saved in the plsit to be sent to the cart.
     NSArray *arr = [LRAppDelegate fetchDataFromPlist];
-        self.sendCartButton.hidden = TRUE;
-        if(arr.count > 0) {
-            self.sendCartButton.hidden = FALSE;
+    self.sendCartButton.hidden = TRUE;
+    if(arr.count > 0) {
+        self.sendCartButton.hidden = FALSE;
+        [self.sendCartButton.badgeView setPosition:MGBadgePositionTopRight];
+        [self.sendCartButton.badgeView setBadgeValue:arr.count];
+        [self.sendCartButton.badgeView setBadgeColor:[UIColor redColor]];
     }
     
 }
 - (IBAction)fetchListsForTwitter:(id)sender {
-
+    
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
     
     STTwitterAPI *twitter = [STTwitterAPI twitterAPIAppOnlyWithConsumerKey:@"f8KKQr7cJVlbeIcuL2z20h7Vw"
@@ -109,7 +124,7 @@
             
             if(lists.count <= 1) {
                 if(lists.count == 0) {
-                     [LRUtility stopActivityIndicatorFromView:self.view];
+                    [LRUtility stopActivityIndicatorFromView:self.view];
                     UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
                                                                              message:@"No lists available"
                                                                             delegate:self
@@ -165,7 +180,7 @@
                 
             }
         } errorBlock:^(NSError *error) {
-             [LRUtility stopActivityIndicatorFromView:self.view];
+            [LRUtility stopActivityIndicatorFromView:self.view];
             UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
                                                                      message:[error description]
                                                                     delegate:self
@@ -223,6 +238,7 @@
                 }
                 
             } errorHandler:^(NSError *errorString) {
+                [LRUtility stopActivityIndicatorFromView:self.view];
                 UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
                                                                            message:[errorString description]
                                                                           delegate:self
@@ -233,46 +249,140 @@
             }];
         }
     }
+    if(alertView.tag == 111) {
+        if(buttonIndex == 0) {
+            NSMutableDictionary *savedDocids = [[NSMutableDictionary alloc] initWithContentsOfFile:[LRAppDelegate fetchPathOfCustomPlist]];
+            NSArray *arr = [LRAppDelegate fetchDataFromPlist];
+            self.sendCartButton.hidden = TRUE;
+            NSArray *aEmptyArray = [NSArray new];
+            NSLog(@"%@",arr);
+            
+            [savedDocids setObject:aEmptyArray forKey:@"docIds"];
+            [savedDocids writeToFile:[LRAppDelegate fetchPathOfCustomPlist] atomically:TRUE];
+
+        }
+    }
 }
 #pragma mark - Save twitter list data to core data
 - (IBAction)sendDocumentIdsFromCartToService:(id)sender {
     
-        NSMutableDictionary *savedDocids = [[NSMutableDictionary alloc] initWithContentsOfFile:[LRAppDelegate fetchPathOfCustomPlist]];
-        
-        NSArray *arr = [LRAppDelegate fetchDataFromPlist];
-        if(arr.count > 0) {
-            ///
-            /*[[LRWebEngine defaultWebEngine] sendRequestToSendCartWithDocIdswithContextInfo:nil forResponseBlock:^(NSDictionary *responseDictionary) {
-                if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
-                }
+    //our popover
+ /*   UIViewController *aPopController = [[UIViewController alloc] init];
+    aPopController.view.frame = CGRectMake(0, 0, 200, 100);
+    aPopController.view.backgroundColor = [UIColor colorWithRed:73.0/255.0 green:111.0/255.0 blue:140.0/255.0 alpha:1.0];
+
+    self.popover = [[FPPopoverController alloc] initWithViewController:aPopController];
+    self.popover.arrowDirection = FPPopoverArrowDirectionRight;
+    self.popover.contentSize = CGSizeMake(200,120);
+    
+    UIButton *aSendToMeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    aSendToMeButton.frame = CGRectMake(5, 10, 150, 32);
+   // aSendToMeButton.backgroundColor = [UIColor whiteColor];
+    [aSendToMeButton setBackgroundImage:[UIImage imageNamed:@"login_button"] forState:UIControlStateNormal];
+    [aSendToMeButton setTitle:@"Email Cart to Me" forState:UIControlStateNormal];
+    [aSendToMeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [aSendToMeButton addTarget:self action:@selector(EmailCart) forControlEvents:UIControlEventTouchUpInside];
+    aSendToMeButton.layer.cornerRadius = 3.0;
+    aSendToMeButton.layer.borderWidth = 1.0;
+    [aPopController.view addSubview:aSendToMeButton];
+    
+    UIButton *aClearCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    aClearCartButton.frame = CGRectMake(5, 52, 150, 32);
+    // aSendToMeButton.backgroundColor = [UIColor whiteColor];
+    [aClearCartButton setBackgroundImage:[UIImage imageNamed:@"login_button"] forState:UIControlStateNormal];
+    [aClearCartButton setTitle:@"Clear Cart" forState:UIControlStateNormal];
+    [aClearCartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [aClearCartButton addTarget:self action:@selector(clearCart) forControlEvents:UIControlEventTouchUpInside];
+    aClearCartButton.layer.cornerRadius = 3.0;
+    aClearCartButton.layer.borderWidth = 1.0;
+    [aPopController.view addSubview:aClearCartButton];
+    
+
+      //the popover will be presented from the okButton view
+    [self.popover presentPopoverFromView:self.sendCartButton];*/
+    
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil otherButtonTitles: @"Email Cart to Me",@"Clear Cart", nil, nil];
+    
+    [actionSheet showInView:self.view];
+
+
+}
+- (void)actionSheet:(UIActionSheet *)modalView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex)
+    {
+        case 0:
+        {
+            NSMutableDictionary *savedDocids = [[NSMutableDictionary alloc] initWithContentsOfFile:[LRAppDelegate fetchPathOfCustomPlist]];
+            
+            NSArray *arr = [LRAppDelegate fetchDataFromPlist];
+            if(arr.count > 0) {
+                ///
+                NSMutableString *aDocIdsString = (NSMutableString *)[arr componentsJoinedByString:@","];
                 
-            } errorHandler:^(NSError *errorString) {
-                UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                           message:[errorString description]
+                [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
+                NSMutableDictionary *aRequestDictionary = [NSMutableDictionary new];
+                [aRequestDictionary setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserId"] forKey:@"UserId"];
+                [aRequestDictionary setObject:aDocIdsString forKey:@"DocumentIds"];
+                [[LRWebEngine defaultWebEngine] sendRequestToSendCartWithDocIdswithContextInfo:aRequestDictionary forResponseBlock:^(NSDictionary *responseDictionary) {
+                    if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
+                        
+                        [LRUtility stopActivityIndicatorFromView:self.view];
+                        self.sendCartButton.hidden = TRUE;
+                        NSArray *aEmptyArray = [NSArray new];
+                        NSLog(@"%@",arr);
+                        
+                        [savedDocids setObject:aEmptyArray forKey:@"docIds"];
+                        [savedDocids writeToFile:[LRAppDelegate fetchPathOfCustomPlist] atomically:TRUE];
+                        
+                        UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                                   message:@"Cart sent successfully"
+                                                                                  delegate:self
+                                                                         cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                         otherButtonTitles:nil, nil];
+                        [aLogOutAlertView show];
+                    }
+                    
+                } errorHandler:^(NSError *errorString) {
+                    [LRUtility stopActivityIndicatorFromView:self.view];
+                    UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                               message:[errorString description]
+                                                                              delegate:self
+                                                                     cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                     otherButtonTitles:nil, nil];
+                    [aLogOutAlertView show];
+                    
+                }];
+            }
+        }
+            break;
+            case 1:
+        {
+            UIAlertView *aCleartCartAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                           message:@"Items from the Cart will be cleared. Do you wish to continue?"
                                                                           delegate:self
                                                                  cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                                                                 otherButtonTitles:nil, nil];
-                [aLogOutAlertView show];
-                
-            }];*/
+                                                                 otherButtonTitles:@"Cancel", nil];
             
-            /////
-            self.sendCartButton.hidden = TRUE;
-            NSArray *aEmptyArray = [NSArray new];
-            NSLog(@"%@",arr);
-
-            [savedDocids setObject:aEmptyArray forKey:@"docIds"];
-            [savedDocids writeToFile:[LRAppDelegate fetchPathOfCustomPlist] atomically:TRUE];
-            
-            UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                       message:@"Cart sent successfully"
-                                                                      delegate:self
-                                                             cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                                                             otherButtonTitles:nil, nil];
-            [aLogOutAlertView show];
+            aCleartCartAlertView.tag = 111;
+            [aCleartCartAlertView show];
         }
+            break;
+    }
+    
 }
-
+/*- (void)EmailCart
+{
+    [self.popover dismissPopoverAnimated:TRUE];
+   
+}
+- (void)clearCart
+{
+    [self.popover dismissPopoverAnimated:TRUE];
+    
+}*/
 - (void)saveTwitterListDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray
 {
     LRTwitterList *aTweetList = nil;
@@ -321,7 +431,7 @@
             aTweetList.memberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[aUserDetailsDictionary objectForKey:@"profile_image_url"]]]];
             aTweetList.tweetScreenName = [aUserDetailsDictionary objectForKey:@"screen_name"];
             aTweetList.tweetDate = [aTweetDetailsDictionary objectForKey:@"created_at"];
-
+            
             [[LRCoreDataHelper sharedStorageManager] saveContext];
         }
     }
@@ -348,7 +458,13 @@
         NSArray *bundle = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
         cell = (LRContactListTableViewCell *)[bundle objectAtIndex: 0];
     }
-    [cell fillDataForContactCellwithName:[self.aMainClientListArray objectAtIndex:indexPath.row]];
+    if(indexPath.row >= self.aMainClientListArray.count - 3) {
+        [cell fillDataForContactCellwithName:[self.aMainClientListArray objectAtIndex:indexPath.row]];
+    }
+    else {
+        [cell fillDataForContactCellwithName:[[self.aMainClientListArray objectAtIndex:indexPath.row] objectForKey:@"ListDesc"]];
+        
+    }
     
     return cell;
 }
@@ -358,28 +474,32 @@
 {
     // based on the type of document selected, navigate to the documents list screen.
     
-    LRDocumentTypeListController *documentTypeListViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentTypeListController class])];
-    
-    switch (indexPath.row) {
-        case 0:
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            return;
-            break;
-        case 1:
+    if(indexPath.row >= self.aMainClientListArray.count - 3) {
+        
+        LRDocumentTypeListController *documentTypeListViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentTypeListController class])];
+        
+        if(indexPath.row == self.aMainClientListArray.count - 3)
+        {
             documentTypeListViewController.eDocumentType = eLRDocumentSymbol;
-            break;
-        case 2:
+        }
+        if(indexPath.row == self.aMainClientListArray.count - 2)
+        {
             documentTypeListViewController.eDocumentType = eLRDocumentSector;
-            break;
-        case 3:
-            documentTypeListViewController.eDocumentType = eLRDocumentAnalyst;
-            break;
             
-        default:
-            break;
+        } if(indexPath.row == self.aMainClientListArray.count - 1)
+        {
+            documentTypeListViewController.eDocumentType = eLRDocumentAnalyst;
+        }
+        documentTypeListViewController.titleHeader = [self.aMainClientListArray objectAtIndex:indexPath.row];
+        [self.navigationController pushViewController:documentTypeListViewController animated:TRUE];
     }
-    documentTypeListViewController.titleHeader = [self.aMainClientListArray objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:documentTypeListViewController animated:TRUE];
+    //Send the list id to fetch the list of documents
+    else {
+        LRDocumentListViewController *documentListViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentListViewController class])];
+        documentListViewController.isDocumentsFetchedForList = TRUE;
+        documentListViewController.contextInfo = [[self.aMainClientListArray objectAtIndex:indexPath.row] objectForKey:@"ListId"];
+        [self.navigationController pushViewController:documentListViewController animated:TRUE];
+    }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

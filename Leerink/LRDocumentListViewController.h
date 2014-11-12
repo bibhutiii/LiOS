@@ -16,4 +16,6 @@
 @property (nonatomic, assign) eLRDocumentListType documentListType;
 @property (nonatomic, assign) int documentTypeId;
 @property (nonatomic, strong) id contextInfo;
+
+@property (nonatomic,assign) BOOL isDocumentsFetchedForList;
 @end

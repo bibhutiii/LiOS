@@ -33,6 +33,8 @@
     self.twitterListsArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRTwitterList" withPredicate:nil, nil];
     [self.twitterListsTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
     
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    
 }
 
 #pragma mark - UITableViewDataSource

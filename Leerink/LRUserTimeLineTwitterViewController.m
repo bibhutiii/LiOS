@@ -27,6 +27,7 @@
     self.oneTimeTweetsArray = [NSArray new];
     self.userTweetsListArray = [NSMutableArray new];
     [self fetchTweetsForSpecifiedListCount:15];
+     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     // Do any additional setup after loading the view.
 }
 
@@ -176,6 +177,7 @@
 {
     LROpenLinksInWebViewController *aOpenLinkInsideWebViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:@"LROpenLinksInWebViewController"];
     aOpenLinkInsideWebViewController.linkURL = url;
+    aOpenLinkInsideWebViewController.isLinkFromLogin = FALSE;
     [self.navigationController pushViewController:aOpenLinkInsideWebViewController animated:TRUE];
 }
 - (NSUInteger)supportedInterfaceOrientations{
