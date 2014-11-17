@@ -79,17 +79,18 @@
 #pragma mark -
 - (IBAction)logIn:(id)sender {
     
-    
+  //  self.userNameTextField.text = @"rameshv@aditi.com";
+  //  self.passwordTextField.text = @"Leerink01*";
     // check if the username and password fields are not left empty.
-    self.userNameTextField.text = @"alex.calhoun@leerink.commedatest.com";
-    self.passwordTextField.text = @"TwinJet12";
+//    self.userNameTextField.text = @"alex.calhoun@leerink.commedatest.com";
+ //   self.passwordTextField.text = @"TwinJet12";
     
    // self.userNameTextField.text = @"cbrinzey@hqcm.commedatest.com";
    // self.passwordTextField.text = @"WolfRayet12";
 
-    [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
+   // [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
 
-   /* if([self.userNameTextField.text length] == 0) {
+    if([self.userNameTextField.text length] == 0) {
         UIAlertView *aUserNameAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
                                                                      message:[NSString stringWithFormat:@"Please enter a username"]
                                                                     delegate:self
@@ -117,7 +118,7 @@
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] != nil) {
         [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] forKey:@"DeviceId"];
     }
-
+    [aRequestDict setObject:@"1234" forKey:@"DeviceId"];
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
     
     [[LRWebEngine defaultWebEngine] sendRequestToLoginWithParameters:aRequestDict andResponseBlock:^(NSString *responseString) {
@@ -155,7 +156,7 @@
                 else {
                     [LRUtility stopActivityIndicatorFromView:self.view];
                     UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                             message:[aResponseDictionary objectForKey:@"Error"]
+                                                                             message:[aResponseDictionary objectForKey:@"Message"]
                                                                             delegate:self
                                                                    cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                                    otherButtonTitles:nil, nil];
@@ -179,7 +180,7 @@
              [errorString localizedRecoveryOptions], [errorString localizedRecoverySuggestion]);
         
         
-    }];*/
+    }];
     
 }
 

@@ -27,7 +27,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sDefaultWebEngine = [[self alloc] initWithHostName:@"iosqa.leerink.com"];
+        sDefaultWebEngine = [[self alloc] initWithHostName:@"portal.leerink.com"];
     });
     return sDefaultWebEngine;
 }
@@ -41,11 +41,11 @@ static LRWebEngine *sDefaultWebEngine = nil;
         //http://172.16.133.124/LeerinkWebServices/LeerinkServices.asmx?op=Login
         NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
         if ([aStandardUserDefaults objectForKey:@"SessionId"]) {
-            mnetworkEngine = [[MKNetworkEngine alloc] initWithHostName:@"iosqa.leerink.com"customHeaderFields:[NSDictionary dictionaryWithObject:[aStandardUserDefaults objectForKey:@"SessionId"] forKey:@"SessionId"]];
+            mnetworkEngine = [[MKNetworkEngine alloc] initWithHostName:@"portal.leerink.com"customHeaderFields:[NSDictionary dictionaryWithObject:[aStandardUserDefaults objectForKey:@"SessionId"] forKey:@"SessionId"]];
             
         }
         else {
-            mnetworkEngine = [[MKNetworkEngine alloc] initWithHostName:@"iosqa.leerink.com"];
+            mnetworkEngine = [[MKNetworkEngine alloc] initWithHostName:@"portal.leerink.com"];
         }
 	}
 	return self;

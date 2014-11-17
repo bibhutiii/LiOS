@@ -31,11 +31,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"Document";
-       [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0f],
-                                                                                                                          NSForegroundColorAttributeName : [UIColor whiteColor]
-                                                                                                                          }];
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:204/255.0 green:219/255.0 blue:230/255.0 alpha:1];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0f],
+                                                                      NSForegroundColorAttributeName : [UIColor whiteColor]
+                                                                      }];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0/255.0 green:60.0/255.0 blue:113/255.0 alpha:1];
     self.navigationController.navigationBar.translucent = NO;
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
 
     [self fetchDocument];
    /* [aGetDocumentService getDocument:^(BOOL isDocumentFetched) {
@@ -51,7 +52,7 @@
     
     [[LRWebEngine defaultWebEngine] sendRequestToGetDocumentWithwithContextInfo:self.documentId forResponseBlock:^(NSDictionary *responseDictionary) {
         
-        if([[responseDictionary objectForKey:@"Error"] isKindOfClass:([NSNull class])]) {
+        if(![[responseDictionary objectForKey:@"Error"] isKindOfClass:([NSNull class])]) {
             NSDictionary *aDocumentByteDictionary = [responseDictionary objectForKey:@"Data"];
             NSString *aDocumentEncodedString = [aDocumentByteDictionary objectForKey:@"DocumentByte"];
             

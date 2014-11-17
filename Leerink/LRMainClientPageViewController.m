@@ -18,14 +18,12 @@
 #import "LRLoginViewController.h"
 #import "LRDocumentListViewController.h"
 #import "UIView+MGBadgeView.h"
-#import "FPPopoverController.h"
 
 @interface LRMainClientPageViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *mainClientTable;
 @property (strong, nonatomic) NSMutableArray *aMainClientListArray;
 @property (weak, nonatomic) IBOutlet UILabel *aUserNameLabel;
 @property (weak, nonatomic) IBOutlet UIButton *sendCartButton;
-@property (strong, nonatomic) FPPopoverController *popover;
 - (IBAction)sendDocumentIdsFromCartToService:(id)sender;
 - (void)saveTwitterListDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray;
 - (void)saveTweetDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray;
@@ -51,6 +49,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:TRUE];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Leerink-White_320x44"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0f],
                                                                       NSForegroundColorAttributeName : [UIColor whiteColor]
                                                                       }];
@@ -77,14 +76,12 @@
     }
     
     // add the logout button on the right side of the navigation bar
-    SEL aLogoutButton = sel_registerName("logOut");
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:nil style:0 target:self action:aLogoutButton];
-    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-    backButton.title = @"Logout";
-    self.navigationItem.rightBarButtonItem = backButton;
+    SEL aLogoutButtonSelector = sel_registerName("logOut");
+    UIBarButtonItem *logOutButton = [[UIBarButtonItem alloc] initWithImage:nil style:0 target:self action:aLogoutButtonSelector];
+    logOutButton.title = @"Logout";
+    self.navigationItem.rightBarButtonItem = logOutButton;
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
     
-    
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Leerink-White_320x44"] forBarMetrics:UIBarMetricsDefault];
     
     // since the landing page has a static list of items add them into the array for the tableview's data source.
     NSArray *docListArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"DocList"];
@@ -266,42 +263,6 @@
 #pragma mark - Save twitter list data to core data
 - (IBAction)sendDocumentIdsFromCartToService:(id)sender {
     
-    //our popover
- /*   UIViewController *aPopController = [[UIViewController alloc] init];
-    aPopController.view.frame = CGRectMake(0, 0, 200, 100);
-    aPopController.view.backgroundColor = [UIColor colorWithRed:73.0/255.0 green:111.0/255.0 blue:140.0/255.0 alpha:1.0];
-
-    self.popover = [[FPPopoverController alloc] initWithViewController:aPopController];
-    self.popover.arrowDirection = FPPopoverArrowDirectionRight;
-    self.popover.contentSize = CGSizeMake(200,120);
-    
-    UIButton *aSendToMeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    aSendToMeButton.frame = CGRectMake(5, 10, 150, 32);
-   // aSendToMeButton.backgroundColor = [UIColor whiteColor];
-    [aSendToMeButton setBackgroundImage:[UIImage imageNamed:@"login_button"] forState:UIControlStateNormal];
-    [aSendToMeButton setTitle:@"Email Cart to Me" forState:UIControlStateNormal];
-    [aSendToMeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [aSendToMeButton addTarget:self action:@selector(EmailCart) forControlEvents:UIControlEventTouchUpInside];
-    aSendToMeButton.layer.cornerRadius = 3.0;
-    aSendToMeButton.layer.borderWidth = 1.0;
-    [aPopController.view addSubview:aSendToMeButton];
-    
-    UIButton *aClearCartButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    aClearCartButton.frame = CGRectMake(5, 52, 150, 32);
-    // aSendToMeButton.backgroundColor = [UIColor whiteColor];
-    [aClearCartButton setBackgroundImage:[UIImage imageNamed:@"login_button"] forState:UIControlStateNormal];
-    [aClearCartButton setTitle:@"Clear Cart" forState:UIControlStateNormal];
-    [aClearCartButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [aClearCartButton addTarget:self action:@selector(clearCart) forControlEvents:UIControlEventTouchUpInside];
-    aClearCartButton.layer.cornerRadius = 3.0;
-    aClearCartButton.layer.borderWidth = 1.0;
-    [aPopController.view addSubview:aClearCartButton];
-    
-
-      //the popover will be presented from the okButton view
-    [self.popover presentPopoverFromView:self.sendCartButton];*/
-    
-    
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel"
                                                destructiveButtonTitle:nil otherButtonTitles: @"Email Cart to Me",@"Clear Cart", nil, nil];
     
@@ -373,16 +334,7 @@
     }
     
 }
-/*- (void)EmailCart
-{
-    [self.popover dismissPopoverAnimated:TRUE];
-   
-}
-- (void)clearCart
-{
-    [self.popover dismissPopoverAnimated:TRUE];
-    
-}*/
+
 - (void)saveTwitterListDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray
 {
     LRTwitterList *aTweetList = nil;

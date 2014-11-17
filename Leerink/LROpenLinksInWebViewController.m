@@ -35,6 +35,7 @@
 
         UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Close-32"] style:UIBarButtonItemStyleBordered target:self action:aCloseButtonAction];
         self.actionBarButtonItem = button;
+        [self.actionBarButtonItem setTintColor:[UIColor blackColor]];
        // self.actionBarButtonItem = nil;
         
         self.toolBar.items = [NSArray arrayWithObject:button];

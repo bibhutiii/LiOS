@@ -18,9 +18,6 @@
 		848495171A03902A003CC384 /* Close-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 848495161A03902A003CC384 /* Close-32.png */; };
 		8484951A1A0395AC003CC384 /* UIView+MGBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 848495191A0395AC003CC384 /* UIView+MGBadgeView.m */; };
 		8484951C1A0396E8003CC384 /* Shoping-Cart-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 8484951B1A0396E8003CC384 /* Shoping-Cart-32.png */; };
-		848495241A039871003CC384 /* FPPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8484951F1A039871003CC384 /* FPPopoverController.m */; };
-		848495251A039871003CC384 /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 848495211A039871003CC384 /* FPPopoverView.m */; };
-		848495261A039871003CC384 /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 848495231A039871003CC384 /* FPTouchView.m */; };
 		8484952F1A08BB34003CC384 /* Leerink-App-Icon-120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 8484952E1A08BB34003CC384 /* Leerink-App-Icon-120x120.png */; };
 		84BED43619D55B00005C80F3 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84BED43519D55B00005C80F3 /* Accounts.framework */; };
 		84BED45519D5988C005C80F3 /* NSDateFormatter+STTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED43919D5988C005C80F3 /* NSDateFormatter+STTwitter.m */; };
@@ -46,9 +43,10 @@
 		84D22D5F19F5516600131FA2 /* MNMPullToRefreshIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D22D5719F5516600131FA2 /* MNMPullToRefreshIcon@2x.png */; };
 		84D22D6019F5516600131FA2 /* MNMPullToRefreshManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D22D5919F5516600131FA2 /* MNMPullToRefreshManager.m */; };
 		84D22D6119F5516600131FA2 /* MNMPullToRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D22D5B19F5516600131FA2 /* MNMPullToRefreshView.m */; };
-		84D286ED1A137B3F00917ECD /* Leerink-White_320x88.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D286EC1A137B3F00917ECD /* Leerink-White_320x88.png */; };
-		84D286EF1A137C2400917ECD /* Leerink-White_320x44.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D286EE1A137C2400917ECD /* Leerink-White_320x44.png */; };
 		84D286F11A137E9000917ECD /* Leerink-White_200x44.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D286F01A137E9000917ECD /* Leerink-White_200x44.png */; };
+		84D286F31A1A018E00917ECD /* new_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D286F21A1A018E00917ECD /* new_background.png */; };
+		84D286F91A1A22EA00917ECD /* Leerink-White_320x44.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D286F71A1A22EA00917ECD /* Leerink-White_320x44.png */; };
+		84D286FA1A1A22EA00917ECD /* Leerink-White_320x88.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D286F81A1A22EA00917ECD /* Leerink-White_320x88.png */; };
 		84D2D46619FFB21B004C884C /* Check_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2D46519FFB21B004C884C /* Check_32.png */; };
 		84D2D46919FFB493004C884C /* checkbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2D46719FFB493004C884C /* checkbox@2x.png */; };
 		84D2D46A19FFB493004C884C /* uncheckbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D2D46819FFB493004C884C /* uncheckbox@2x.png */; };
@@ -134,7 +132,6 @@
 		84D3C10A19B88994007455F9 /* LRUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C10919B88994007455F9 /* LRUtility.m */; };
 		84D3C11019B88A77007455F9 /* RTCustomTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C10D19B88A77007455F9 /* RTCustomTextField.m */; };
 		84D3C11119B88A77007455F9 /* UITextField+previousNextToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C10F19B88A77007455F9 /* UITextField+previousNextToolBar.m */; };
-		84D3C11519B8A36C007455F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C11419B8A36C007455F9 /* StoreKit.framework */; };
 		84D3C11C19B8A487007455F9 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C11A19B8A487007455F9 /* Bolts.framework */; };
 		84D3C11D19B8A487007455F9 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84D3C11B19B8A487007455F9 /* Parse.framework */; };
 		84D3C12319BEF96C007455F9 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C12019BEF96C007455F9 /* GTMNSString+HTML.m */; };
@@ -176,13 +173,6 @@
 		848495181A0395AC003CC384 /* UIView+MGBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MGBadgeView.h"; sourceTree = "<group>"; };
 		848495191A0395AC003CC384 /* UIView+MGBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MGBadgeView.m"; sourceTree = "<group>"; };
 		8484951B1A0396E8003CC384 /* Shoping-Cart-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shoping-Cart-32.png"; sourceTree = "<group>"; };
-		8484951E1A039871003CC384 /* FPPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverController.h; sourceTree = "<group>"; };
-		8484951F1A039871003CC384 /* FPPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverController.m; sourceTree = "<group>"; };
-		848495201A039871003CC384 /* FPPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverView.h; sourceTree = "<group>"; };
-		848495211A039871003CC384 /* FPPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverView.m; sourceTree = "<group>"; };
-		848495221A039871003CC384 /* FPTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPTouchView.h; sourceTree = "<group>"; };
-		848495231A039871003CC384 /* FPTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPTouchView.m; sourceTree = "<group>"; };
-		848495271A0398D5003CC384 /* ARCMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARCMacros.h; sourceTree = "<group>"; };
 		8484952E1A08BB34003CC384 /* Leerink-App-Icon-120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Leerink-App-Icon-120x120.png"; sourceTree = "<group>"; };
 		84BED43519D55B00005C80F3 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		84BED43819D5988C005C80F3 /* NSDateFormatter+STTwitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+STTwitter.h"; sourceTree = "<group>"; };
@@ -230,9 +220,10 @@
 		84D22D5A19F5516600131FA2 /* MNMPullToRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNMPullToRefreshView.h; sourceTree = "<group>"; };
 		84D22D5B19F5516600131FA2 /* MNMPullToRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMPullToRefreshView.m; sourceTree = "<group>"; };
 		84D22D5C19F5516600131FA2 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/MNMPullToRefresh.strings; sourceTree = "<group>"; };
-		84D286EC1A137B3F00917ECD /* Leerink-White_320x88.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Leerink-White_320x88.png"; sourceTree = "<group>"; };
-		84D286EE1A137C2400917ECD /* Leerink-White_320x44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Leerink-White_320x44.png"; sourceTree = "<group>"; };
 		84D286F01A137E9000917ECD /* Leerink-White_200x44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Leerink-White_200x44.png"; sourceTree = "<group>"; };
+		84D286F21A1A018E00917ECD /* new_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new_background.png; sourceTree = "<group>"; };
+		84D286F71A1A22EA00917ECD /* Leerink-White_320x44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Leerink-White_320x44.png"; sourceTree = "<group>"; };
+		84D286F81A1A22EA00917ECD /* Leerink-White_320x88.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Leerink-White_320x88.png"; sourceTree = "<group>"; };
 		84D2D46519FFB21B004C884C /* Check_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Check_32.png; sourceTree = "<group>"; };
 		84D2D46719FFB493004C884C /* checkbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox@2x.png"; sourceTree = "<group>"; };
 		84D2D46819FFB493004C884C /* uncheckbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uncheckbox@2x.png"; sourceTree = "<group>"; };
@@ -356,7 +347,6 @@
 		84D3C10D19B88A77007455F9 /* RTCustomTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTCustomTextField.m; sourceTree = "<group>"; };
 		84D3C10E19B88A77007455F9 /* UITextField+previousNextToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+previousNextToolBar.h"; sourceTree = "<group>"; };
 		84D3C10F19B88A77007455F9 /* UITextField+previousNextToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+previousNextToolBar.m"; sourceTree = "<group>"; };
-		84D3C11419B8A36C007455F9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		84D3C11A19B8A487007455F9 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		84D3C11B19B8A487007455F9 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		84D3C11F19BEF96C007455F9 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
@@ -383,7 +373,6 @@
 			files = (
 				84BED43619D55B00005C80F3 /* Accounts.framework in Frameworks */,
 				84D3C0EC19B88868007455F9 /* Social.framework in Frameworks */,
-				84D3C11519B8A36C007455F9 /* StoreKit.framework in Frameworks */,
 				84D3C0F619B888A6007455F9 /* Security.framework in Frameworks */,
 				84D3C0F419B888A2007455F9 /* ImageIO.framework in Frameworks */,
 				84D3C0F219B88881007455F9 /* SystemConfiguration.framework in Frameworks */,
@@ -422,20 +411,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8484951D1A039871003CC384 /* FPPopOVer */ = {
-			isa = PBXGroup;
-			children = (
-				8484951E1A039871003CC384 /* FPPopoverController.h */,
-				8484951F1A039871003CC384 /* FPPopoverController.m */,
-				848495201A039871003CC384 /* FPPopoverView.h */,
-				848495211A039871003CC384 /* FPPopoverView.m */,
-				848495221A039871003CC384 /* FPTouchView.h */,
-				848495231A039871003CC384 /* FPTouchView.m */,
-				848495271A0398D5003CC384 /* ARCMacros.h */,
-			);
-			path = FPPopOVer;
-			sourceTree = "<group>";
-		};
 		84BED43719D5988C005C80F3 /* STTwitter */ = {
 			isa = PBXGroup;
 			children = (
@@ -519,7 +494,6 @@
 				84BED43519D55B00005C80F3 /* Accounts.framework */,
 				84D3C11A19B8A487007455F9 /* Bolts.framework */,
 				84D3C11B19B8A487007455F9 /* Parse.framework */,
-				84D3C11419B8A36C007455F9 /* StoreKit.framework */,
 				84D3C0F519B888A6007455F9 /* Security.framework */,
 				84D3C0F319B888A2007455F9 /* ImageIO.framework */,
 				84D3C0F119B88881007455F9 /* SystemConfiguration.framework */,
@@ -569,7 +543,6 @@
 				84E0226619F4F0C80057DA6D /* LROpenLinksInWebViewController.h */,
 				84E0226719F4F0C80057DA6D /* LROpenLinksInWebViewController.m */,
 				84D3C01519B86F9E007455F9 /* Main_iPhone.storyboard */,
-				8484951D1A039871003CC384 /* FPPopOVer */,
 				84D22D5219F5516600131FA2 /* MNMPullToRefresh */,
 				84BED43719D5988C005C80F3 /* STTwitter */,
 				84D3C05619B886A7007455F9 /* LRCoreDataClasses */,
@@ -766,9 +739,9 @@
 		84D3C08C19B886A7007455F9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				84D286F71A1A22EA00917ECD /* Leerink-White_320x44.png */,
+				84D286F81A1A22EA00917ECD /* Leerink-White_320x88.png */,
 				84D286F01A137E9000917ECD /* Leerink-White_200x44.png */,
-				84D286EE1A137C2400917ECD /* Leerink-White_320x44.png */,
-				84D286EC1A137B3F00917ECD /* Leerink-White_320x88.png */,
 				8484952E1A08BB34003CC384 /* Leerink-App-Icon-120x120.png */,
 				8484951B1A0396E8003CC384 /* Shoping-Cart-32.png */,
 				848495161A03902A003CC384 /* Close-32.png */,
@@ -795,6 +768,7 @@
 				84BED46219D59E0A005C80F3 /* Twitter-32.png */,
 				84093CB619ED01FF00D20D19 /* logoutBtn1@2x.png */,
 				84093CBB19ED5ABA00D20D19 /* Share-black-32.png */,
+				84D286F21A1A018E00917ECD /* new_background.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -858,6 +832,14 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = leerink;
 				TargetAttributes = {
+					84D3BFFF19B86F9E007455F9 = {
+						DevelopmentTeam = C62C6496NL;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
+					};
 					84D3C02319B86F9E007455F9 = {
 						TestTargetID = 84D3BFFF19B86F9E007455F9;
 					};
@@ -895,9 +877,7 @@
 				848495171A03902A003CC384 /* Close-32.png in Resources */,
 				84D286F11A137E9000917ECD /* Leerink-White_200x44.png in Resources */,
 				84D3C0AB19B886A7007455F9 /* LRDocumentTypeTableViewCell.xib in Resources */,
-				84D286EF1A137C2400917ECD /* Leerink-White_320x44.png in Resources */,
 				84D3C0BE19B886A7007455F9 /* password.png in Resources */,
-				84D286ED1A137B3F00917ECD /* Leerink-White_320x88.png in Resources */,
 				84D2D46619FFB21B004C884C /* Check_32.png in Resources */,
 				84D3C0C319B886A7007455F9 /* User-48.png in Resources */,
 				84D3C0C119B886A7007455F9 /* text_field.png in Resources */,
@@ -906,11 +886,13 @@
 				84093CB719ED01FF00D20D19 /* logoutBtn1@2x.png in Resources */,
 				84D3C0BA19B886A7007455F9 /* login_button.png in Resources */,
 				84D3C01F19B86F9E007455F9 /* Images.xcassets in Resources */,
+				84D286F91A1A22EA00917ECD /* Leerink-White_320x44.png in Resources */,
 				84D3C0C519B886A7007455F9 /* user_name_icon@2x.png in Resources */,
 				84D3C0A919B886A7007455F9 /* LRContactListTableViewCell.xib in Resources */,
 				84D3C0B919B886A7007455F9 /* Documents_32.png in Resources */,
 				84D3C0BF19B886A7007455F9 /* password_icon.png in Resources */,
 				84D3C0B619B886A7007455F9 /* arrowRightBlack@2x.png in Resources */,
+				84D286F31A1A018E00917ECD /* new_background.png in Resources */,
 				84BED46319D59E0A005C80F3 /* Twitter-32.png in Resources */,
 				84D3C0C219B886A7007455F9 /* text_field@2x.png in Resources */,
 				84D3C0B519B886A7007455F9 /* About-32.png in Resources */,
@@ -920,6 +902,7 @@
 				84D3C0BC19B886A7007455F9 /* logo.png in Resources */,
 				84D3C0BD19B886A7007455F9 /* Logout-32.png in Resources */,
 				84D2D46A19FFB493004C884C /* uncheckbox@2x.png in Resources */,
+				84D286FA1A1A22EA00917ECD /* Leerink-White_320x88.png in Resources */,
 				84D3C0C419B886A7007455F9 /* user_name_icon.png in Resources */,
 				84D3C0C019B886A7007455F9 /* password_icon@2x.png in Resources */,
 				84D3C0B819B886A7007455F9 /* Contacts-32.png in Resources */,
@@ -972,8 +955,6 @@
 				84D3C0A619B886A7007455F9 /* LRGetSectorService.m in Sources */,
 				84BED46619D59EE3005C80F3 /* LRTwitterListsViewController.m in Sources */,
 				84D3C05219B88657007455F9 /* LRDocumentTypeListController.m in Sources */,
-				848495261A039871003CC384 /* FPTouchView.m in Sources */,
-				848495251A039871003CC384 /* FPPopoverView.m in Sources */,
 				84BED45C19D5988C005C80F3 /* STTwitterOAuth.m in Sources */,
 				84D3C0A119B886A7007455F9 /* LRSector.m in Sources */,
 				84D3C05319B88657007455F9 /* LRLoginViewController.m in Sources */,
@@ -1029,7 +1010,6 @@
 				84BED45619D5988C005C80F3 /* NSError+STTwitter.m in Sources */,
 				84D3C0C819B88741007455F9 /* leerink.xcdatamodeld in Sources */,
 				8467DD9919D17BCB00BFA20F /* NSDate+RTConvenience.m in Sources */,
-				848495241A039871003CC384 /* FPPopoverController.m in Sources */,
 				84D3C0D319B887B4007455F9 /* LRGetAnalystService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

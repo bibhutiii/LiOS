@@ -75,13 +75,10 @@
     
     LRMainClientPageViewController *aMainClientPAgeController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRMainClientPageViewController class])];
     self.aBaseNavigationController = [[UINavigationController alloc] initWithRootViewController:aMainClientPAgeController];
+    [self.aBaseNavigationController.navigationBar setTranslucent:NO];
     
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
-        // Load resources for iOS 6.1 or earlier
-    } else {
-        // Load resources for iOS 7 or later
-        self.window.tintColor = [UIColor blackColor];
-    }
+    // Load resources for iOS 7 or later
+        self.window.tintColor = [UIColor whiteColor];
     //Add the login view controller as the root controller of the app window
     LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
     [self.window setRootViewController:loginVC];
@@ -125,8 +122,7 @@
     
 #endif
     
-    //  NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:@"Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3", @"UserAgent", nil];
-    //   [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     return YES;
 }
 #pragma mark - Orientation methods
@@ -276,12 +272,16 @@
     
     //  [PFPush handlePush:userInfo];
     // check if the user is already logged in or session has not expired yet.
+    NSDictionary *aNotificationDetailsDictionary = [userInfo objectForKey:@"aps"];
     if([[LRAppDelegate myAppdelegate] isUserLoggedIn] == TRUE) {
         LRDocumentViewController *aDocumentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
         UIApplicationState state = [application applicationState];
         if (state == UIApplicationStateActive)
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Leerink" message:@"alert inside the app" delegate:self cancelButtonTitle:@"ok" otherButtonTitles: @"cancel", nil];
+            [[NSUserDefaults standardUserDefaults] setObject:[userInfo objectForKey:@"DId"] forKey:@"NotificationDocId"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Leerink" message:[aNotificationDetailsDictionary objectForKey:@"alert"] delegate:self cancelButtonTitle:@"ok" otherButtonTitles: @"cancel", nil];
             if([self.aBaseNavigationController.visibleViewController isKindOfClass:([LRDocumentViewController class])]) {
                 NSLog(@"it is document view conroller");
                 alert.tag = 1000;
@@ -295,11 +295,11 @@
             // Push Notification received in the background
             if([self.aBaseNavigationController.visibleViewController isKindOfClass:([LRDocumentViewController class])]) {
                 NSLog(@"it is document view conroller");
-                aDocumentViewController.documentId = @"51951";
+                aDocumentViewController.documentId = [userInfo objectForKey:@"DId"];
                 [aDocumentViewController fetchDocument];
             }
             else {
-                aDocumentViewController.documentId = @"51951";
+                aDocumentViewController.documentId = [userInfo objectForKey:@"DId"];
                 [self.aBaseNavigationController pushViewController:aDocumentViewController animated:TRUE];
                 
             }
@@ -318,14 +318,16 @@
     LRDocumentViewController *aDocumentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
     if(alertView.tag == 1000) {
         if(buttonIndex == 0) {
-            aDocumentViewController.documentId = @"51951";
+            aDocumentViewController.documentId = [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDocId"];
             [aDocumentViewController fetchDocument];
         }
     }
     if(alertView.tag == 2000) {
-        aDocumentViewController.documentId = @"51951";
-        [self.aBaseNavigationController pushViewController:aDocumentViewController animated:TRUE];
-    }
+        if(buttonIndex == 0) {
+            aDocumentViewController.documentId = [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDocId"];
+            [self.aBaseNavigationController pushViewController:aDocumentViewController animated:TRUE];
+        }
+          }
 }
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {

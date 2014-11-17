@@ -20,6 +20,7 @@
 @property (assign, nonatomic) int tweetCount;
 @property (nonatomic, readwrite, strong) MNMPullToRefreshManager *pullToRefreshManager;
 @property (nonatomic, readwrite, assign) NSUInteger reloads;
+@property (strong, nonatomic) IBOutlet NSObject *topBar;
 
 
 @end
@@ -31,8 +32,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    
     // Do any additional setup after loading the view.
     self.title = @"Tweets";
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0f],
+                                                                      NSForegroundColorAttributeName : [UIColor whiteColor]
+                                                                      }];
+    
      [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     self.tweetCount = 15;
     if(self.isTwitterListCountMoreThanOne == TRUE) {
@@ -49,6 +57,8 @@
     }
     
 }
+
+
 - (void)fetchTweetsForSpecifiedListCount:(NSString *)iCount
 {
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
