@@ -18,7 +18,6 @@
                         <rect key="frame" x="38" y="9" width="230" height="28"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="230" id="5v1-U4-oEI"/>
-                            <constraint firstAttribute="height" priority="500" constant="29" id="NQZ-vp-gOo"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -61,7 +60,7 @@
                         </connections>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="uncheckbox.png" translatesAutoresizingMaskIntoConstraints="NO" id="Q2b-nx-KV9">
-                        <rect key="frame" x="8" y="50" width="22" height="20"/>
+                        <rect key="frame" x="8" y="16" width="22" height="20"/>
                     </imageView>
                 </subviews>
                 <constraints>
@@ -79,7 +78,7 @@
                     <constraint firstItem="dWt-2h-vvT" firstAttribute="leading" secondItem="xxb-oE-g4Q" secondAttribute="leading" constant="38" id="wy9-Le-B8U"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.15686274509803921" green="0.55294117647058827" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="authorTitleLabel" destination="eEA-lA-nds" id="Pn0-ub-fl2"/>
                 <outlet property="dateLabel" destination="dWt-2h-vvT" id="mrt-EU-xeV"/>

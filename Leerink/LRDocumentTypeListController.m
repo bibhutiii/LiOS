@@ -159,7 +159,7 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0f],
                                                                       NSForegroundColorAttributeName : [UIColor whiteColor]
                                                                       }];
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0/255.0 green:60.0/255.0 blue:113/255.0 alpha:1];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:9.0/255.0 green:60.0/255.0 blue:113/255.0 alpha:1];
     self.navigationController.navigationBar.translucent = NO;
      [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     self.navigationItem.backBarButtonItem.tintColor = [UIColor whiteColor];
@@ -285,7 +285,7 @@
     
     tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    tableView.backgroundColor = [UIColor colorWithRed:73.0/255.0 green:111.0/255.0 blue:140.0/255.0 alpha:1.0];
+    tableView.backgroundColor = [UIColor colorWithRed:40.0/255.0 green:141.0/255.0 blue:192.0/255.0 alpha:1.0];
     
     
 }
@@ -295,6 +295,8 @@
         UITableView *tableView = [[self searchDisplayController] searchResultsTableView];
         
         tableView.frame = CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.size.width, tableView.frame.size.height + 44);
+        
+        tableView.backgroundColor = [UIColor colorWithRed:40.0/255.0 green:141.0/255.0 blue:192.0/255.0 alpha:1.0];
     }
     
 }

@@ -18,6 +18,13 @@
 #import "LROpenLinksInWebViewController.h"
 
 #define fontHelveticaNeueSize14 [UIFont systemFontOfSize:14.0]
+static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
+static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2;
+static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8;
+static const CGFloat PORTRAIT_KEYBOARD_HEIGHT = 216;
+static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
+
+CGFloat animatedDistance;
 
 @interface LRLoginViewController ()
 {
@@ -73,23 +80,23 @@
     self.passwordTextField.tag = 2;
     
     prevNextArray = [[NSMutableArray alloc]initWithObjects:self.userNameTextField,self.passwordTextField, nil];
-        
+    
 }
 
 #pragma mark -
 - (IBAction)logIn:(id)sender {
     
   //  self.userNameTextField.text = @"rameshv@aditi.com";
-  //  self.passwordTextField.text = @"Leerink01*";
+   // self.passwordTextField.text = @"Leerink02*";
     // check if the username and password fields are not left empty.
-//    self.userNameTextField.text = @"alex.calhoun@leerink.commedatest.com";
- //   self.passwordTextField.text = @"TwinJet12";
+    //    self.userNameTextField.text = @"alex.calhoun@leerink.commedatest.com";
+    //   self.passwordTextField.text = @"TwinJet12";
     
-   // self.userNameTextField.text = @"cbrinzey@hqcm.commedatest.com";
-   // self.passwordTextField.text = @"WolfRayet12";
-
-   // [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
-
+    // self.userNameTextField.text = @"cbrinzey@hqcm.commedatest.com";
+    // self.passwordTextField.text = @"WolfRayet12";
+    
+    // [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
+    
     if([self.userNameTextField.text length] == 0) {
         UIAlertView *aUserNameAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
                                                                      message:[NSString stringWithFormat:@"Please enter a username"]
@@ -118,7 +125,9 @@
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] != nil) {
         [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] forKey:@"DeviceId"];
     }
-    [aRequestDict setObject:@"1234" forKey:@"DeviceId"];
+    else {
+        [aRequestDict setObject:@"1234" forKey:@"DeviceId"];
+    }
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
     
     [[LRWebEngine defaultWebEngine] sendRequestToLoginWithParameters:aRequestDict andResponseBlock:^(NSString *responseString) {
@@ -143,10 +152,10 @@
                     if([LRAppDelegate myAppdelegate].documentFetchedFromNotification == TRUE) {
                         
                         LRDocumentViewController *aDocumentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
-                        aDocumentViewController.documentId = @"51951";
+                        aDocumentViewController.documentId = [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDocId"];
                         [LRAppDelegate myAppdelegate].documentFetchedFromNotification = FALSE;
                         [[LRAppDelegate myAppdelegate].aBaseNavigationController pushViewController:aDocumentViewController animated:FALSE];
-
+                        
                     }
                     else {
                         
@@ -155,8 +164,15 @@
                 }
                 else {
                     [LRUtility stopActivityIndicatorFromView:self.view];
+                    NSString *aMsgStr = nil;
+                    if(![[aResponseDictionary objectForKey:@"Message"] isKindOfClass:([NSNull class])]) {
+                        aMsgStr = [aResponseDictionary objectForKey:@"Message"];
+                    }
+                    else if(![[aResponseDictionary objectForKey:@"Error"] isKindOfClass:([NSNull class])]) {
+                        aMsgStr = [aResponseDictionary objectForKey:@"Error"];
+                    }
                     UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                             message:[aResponseDictionary objectForKey:@"Message"]
+                                                                             message:aMsgStr
                                                                             delegate:self
                                                                    cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                                    otherButtonTitles:nil, nil];
@@ -219,11 +235,61 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     _refTextField = textField;
+    CGRect textFieldRect =
+    [self.view.window convertRect:textField.bounds fromView:textField];
+    CGRect viewRect =
+    [self.view.window convertRect:self.view.bounds fromView:self.view];
+    CGFloat midline = textFieldRect.origin.y + 0.5 * textFieldRect.size.height;
+    CGFloat numerator =
+    midline - viewRect.origin.y
+    - MINIMUM_SCROLL_FRACTION * viewRect.size.height;
+    CGFloat denominator =
+    (MAXIMUM_SCROLL_FRACTION - MINIMUM_SCROLL_FRACTION)
+    * viewRect.size.height;
+    CGFloat heightFraction = numerator / denominator;
+    if (heightFraction < 0.0)
+    {
+        heightFraction = 0.0;
+    }
+    else if (heightFraction > 1.0)
+    {
+        heightFraction = 1.0;
+    }
+    UIInterfaceOrientation orientation =
+    [[UIApplication sharedApplication] statusBarOrientation];
+    if (orientation == UIInterfaceOrientationPortrait ||
+        orientation == UIInterfaceOrientationPortraitUpsideDown)
+    {
+        animatedDistance = floor(PORTRAIT_KEYBOARD_HEIGHT * heightFraction);
+    }
+    else
+    {
+        animatedDistance = floor(LANDSCAPE_KEYBOARD_HEIGHT * heightFraction);
+    }
+    CGRect viewFrame = self.view.frame;
+    viewFrame.origin.y -= animatedDistance;
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:KEYBOARD_ANIMATION_DURATION];
+    
+    [self.view setFrame:viewFrame];
+    
+    [UIView commitAnimations];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    CGRect viewFrame = self.view.frame;
+    viewFrame.origin.y += animatedDistance;
     
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:KEYBOARD_ANIMATION_DURATION];
+    
+    [self.view setFrame:viewFrame];
+    
+    [UIView commitAnimations];
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
@@ -303,6 +369,6 @@
     [self presentViewController:aOpenLinksInWebViewController animated:TRUE completion:^{
         
     }];
-
+    
 }
 @end

@@ -75,7 +75,7 @@
                                 <rect key="frame" x="0.0" y="20" width="320" height="88"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.28627450980392155" green="0.43529411764705883" blue="0.5490196078431373" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.15686274509803921" green="0.55294117647058827" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="cBi-RJ-y7p" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="16" id="5zK-YF-5mg"/>
                             <constraint firstItem="hvE-wp-uWJ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="Hkf-Ey-xtr"/>
@@ -106,18 +106,18 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Yrt-IQ-xMX">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="AvZ-es-h4N"/>
                                 </constraints>
-                                <color key="sectionIndexBackgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexBackgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="YWe-lC-x6h" id="Aom-yk-5yS"/>
                                     <outlet property="delegate" destination="YWe-lC-x6h" id="b6P-p3-OfS"/>
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Yrt-IQ-xMX" secondAttribute="bottom" id="AYe-i8-HRb"/>
                             <constraint firstItem="Yrt-IQ-xMX" firstAttribute="top" secondItem="8M5-WX-zLH" secondAttribute="top" id="cpd-aa-he2"/>
@@ -146,12 +146,12 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="lqJ-kn-ay8">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="1AP-gI-5zZ"/>
                                 </constraints>
-                                <color key="sectionIndexBackgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexBackgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="LgK-3w-Vgp" id="Lot-0q-szk"/>
                                     <outlet property="delegate" destination="LgK-3w-Vgp" id="4gy-7h-AtD"/>
@@ -241,12 +241,12 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5ih-c1-Gux">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="ed4-jl-e0T"/>
                                 </constraints>
-                                <color key="sectionIndexBackgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexBackgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="LAA-0a-l7u" id="UFK-zY-oCK"/>
                                     <outlet property="delegate" destination="LAA-0a-l7u" id="MQT-rb-3qD"/>
@@ -282,11 +282,11 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="lZ9-MB-SfW">
                                 <rect key="frame" x="0.0" y="44" width="320" height="524"/>
-                                <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="fWi-e2-g3x"/>
                                 </constraints>
-                                <color key="sectionIndexBackgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexBackgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="bLG-fe-sYQ" id="nGD-Ey-pO0"/>
                                     <outlet property="delegate" destination="bLG-fe-sYQ" id="Wcl-ez-kmq"/>
@@ -294,14 +294,14 @@
                             </tableView>
                             <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d7k-JV-aK0">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <color key="barTintColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="0.15686274509803921" green="0.55294117647058827" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="bLG-fe-sYQ" id="Q1g-gD-tbd"/>
                                 </connections>
                             </searchBar>
                         </subviews>
-                        <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="lZ9-MB-SfW" firstAttribute="leading" secondItem="hhd-nY-PX1" secondAttribute="leading" id="1vn-Vs-Gyb"/>
                             <constraint firstItem="lZ9-MB-SfW" firstAttribute="top" secondItem="hhd-nY-PX1" secondAttribute="top" constant="44" id="Hzp-Bu-U55"/>
@@ -341,11 +341,11 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="n5I-wG-CU7">
                                 <rect key="frame" x="0.0" y="93" width="320" height="324"/>
-                                <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="3cu-DY-RwZ"/>
                                 </constraints>
-                                <color key="sectionIndexBackgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexBackgroundColor" red="0.15686274509803921" green="0.55294117647058827" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="hfM-cl-r7y" id="o2u-Pa-AFk"/>
                                     <outlet property="delegate" destination="hfM-cl-r7y" id="hVC-yd-UwJ"/>
@@ -401,7 +401,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.15686274509803921" green="0.55294117647058827" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="b23-1o-byb" secondAttribute="bottom" constant="34" id="6Ig-qv-eQx"/>
                             <constraint firstItem="n5I-wG-CU7" firstAttribute="top" secondItem="hBf-Bl-ldx" secondAttribute="top" constant="93" id="6TX-1B-PPa"/>
@@ -474,13 +474,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cSS-lc-H37">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <color key="barTintColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="lsW-gC-y5C" id="bXK-dy-f3w"/>
+                                </connections>
+                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KF0-9c-EJF">
-                                <rect key="frame" x="-1" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                                <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="w4r-Eu-thA"/>
                                 </constraints>
-                                <color key="sectionIndexBackgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexBackgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="lsW-gC-y5C" id="Ff7-ff-WOn"/>
                                     <outlet property="delegate" destination="lsW-gC-y5C" id="4a8-WT-bCN"/>
@@ -490,15 +498,25 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="KF0-9c-EJF" secondAttribute="bottom" id="LV3-CR-bso"/>
-                            <constraint firstItem="KF0-9c-EJF" firstAttribute="leading" secondItem="B8e-mT-0HZ" secondAttribute="leading" constant="-1" id="NYD-XW-bQo"/>
-                            <constraint firstItem="KF0-9c-EJF" firstAttribute="top" secondItem="B8e-mT-0HZ" secondAttribute="top" id="jDa-8m-qNJ"/>
+                            <constraint firstItem="KF0-9c-EJF" firstAttribute="leading" secondItem="B8e-mT-0HZ" secondAttribute="leading" id="NYD-XW-bQo"/>
+                            <constraint firstItem="KF0-9c-EJF" firstAttribute="top" secondItem="B8e-mT-0HZ" secondAttribute="top" constant="44" id="jDa-8m-qNJ"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="documentsListTable" destination="KF0-9c-EJF" id="KVa-zY-FS4"/>
+                        <outlet property="searchDisplayController" destination="Bmd-BM-ogY" id="Zbc-Xi-0Xa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JTN-pg-OH5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="Bmd-BM-ogY">
+                    <connections>
+                        <outlet property="delegate" destination="lsW-gC-y5C" id="UV5-FU-Z3e"/>
+                        <outlet property="searchBar" destination="cSS-lc-H37" id="eZZ-yr-j0K"/>
+                        <outlet property="searchContentsController" destination="lsW-gC-y5C" id="IZv-Gu-iXe"/>
+                        <outlet property="searchResultsDataSource" destination="lsW-gC-y5C" id="jWE-Wx-8RP"/>
+                        <outlet property="searchResultsDelegate" destination="lsW-gC-y5C" id="OAR-Gd-exi"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="-1196" y="-1272"/>
         </scene>

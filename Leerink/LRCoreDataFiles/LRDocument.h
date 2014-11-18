@@ -2,7 +2,7 @@
 //  LRDocument.h
 //  Leerink
 //
-//  Created by Ashish on 30/10/2014.
+//  Created by Ashish on 18/11/2014.
 //  Copyright (c) 2014 leerink. All rights reserved.
 //
 
@@ -14,7 +14,7 @@
 @interface LRDocument : NSManagedObject
 
 @property (nonatomic, retain) NSString * documentAuthor;
-@property (nonatomic, retain) NSDate * documentDate;
+@property (nonatomic, retain) NSString * documentDate;
 @property (nonatomic, retain) NSString * documentID;
 @property (nonatomic, retain) NSString * documentPath;
 @property (nonatomic, retain) NSString * documentTitle;

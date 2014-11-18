@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -32,7 +32,7 @@
                     <constraint firstAttribute="trailing" secondItem="STD-wL-Bd4" secondAttribute="trailing" constant="18" id="Zlg-oE-hsn"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="TextViewHeightConstraint" destination="FTi-WI-3fe" id="EMo-mj-1oR"/>
                 <outlet property="listUserNameLabel" destination="STD-wL-Bd4" id="yFz-Hn-knC"/>
@@ -83,7 +83,7 @@
                     <constraint firstItem="oLN-5L-Hrs" firstAttribute="top" secondItem="sQ3-mg-cnB" secondAttribute="top" constant="38" id="kWU-D7-vrJ"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="aDateTimeLabel" destination="Yd1-TV-fdc" id="nCa-6C-PHa"/>
                 <outlet property="aUserNameLabel" destination="khh-1s-URn" id="ns0-SM-zXB"/>
@@ -114,7 +114,7 @@
                     <constraint firstItem="Dkc-sw-4NQ" firstAttribute="top" secondItem="IhA-lh-1rH" secondAttribute="top" constant="14" id="dWE-f8-Ifh"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="0.28627450980000002" green="0.43529411759999997" blue="0.54901960780000003" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
             <point key="canvasLocation" x="391" y="225"/>
         </tableViewCell>
     </objects>

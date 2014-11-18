@@ -11,6 +11,7 @@
 #import "LRSector.h"
 #import "LRDocument.h"
 #import "LRSymbol.h"
+#import "NSDate+Helper.h"
 
 @implementation LRSaveDataToDatabase
 + (NSMutableDictionary *)getparsedJSONDataForString:(NSString*)inresponsedata forOperation:(MKNetworkOperation*)inOperation withContextInfo:(id)iContextInfo
@@ -143,7 +144,12 @@
                     LRDocument *aDocument = (LRDocument *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRDocument" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
                     aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"Author"];
                     aDocument.documentTitle = [aDocumentDictionary objectForKey:@"DocumentTitle"];
-                    aDocument.documentDate = [NSDate dateFromRFC1123:[aDocumentDictionary objectForKey:@"UpdateDate"]];
+                    
+                    NSArray *arr = [[aDocumentDictionary objectForKey:@"UpdateDate"] componentsSeparatedByString:@"T"];
+                    if(arr.count > 0) {
+                        aDocument.documentDate = [arr objectAtIndex:0];
+                    }
+                    
                     aDocument.documentID = [[aDocumentDictionary objectForKey:@"DocumentID"] stringValue];
                     aDocument.documentPath = [aDocumentDictionary objectForKey:@"Path"];
                     aDocument.analyst = analyst;
@@ -177,7 +183,10 @@
                     LRDocument *aDocument = (LRDocument *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRDocument" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
                     aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"Author"];
                     aDocument.documentTitle = [aDocumentDictionary objectForKey:@"DocumentTitle"];
-                    aDocument.documentDate = [NSDate dateFromRFC1123:[aDocumentDictionary objectForKey:@"UpdateDate"]];
+                    NSArray *arr = [[aDocumentDictionary objectForKey:@"UpdateDate"] componentsSeparatedByString:@"T"];
+                    if(arr.count > 0) {
+                        aDocument.documentDate = [arr objectAtIndex:0];
+                    }
                     aDocument.documentID = [[aDocumentDictionary objectForKey:@"DocumentID"] stringValue];
                     aDocument.documentPath = [aDocumentDictionary objectForKey:@"Path"];
                     aDocument.sector = sector;
@@ -211,7 +220,10 @@
                     LRDocument *aDocument = (LRDocument *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRDocument" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
                     aDocument.documentAuthor = [aDocumentDictionary objectForKey:@"Author"];
                     aDocument.documentTitle = [aDocumentDictionary objectForKey:@"DocumentTitle"];
-                    aDocument.documentDate = [NSDate dateFromRFC1123:[aDocumentDictionary objectForKey:@"UpdateDate"]];
+                    NSArray *arr = [[aDocumentDictionary objectForKey:@"UpdateDate"] componentsSeparatedByString:@"T"];
+                    if(arr.count > 0) {
+                        aDocument.documentDate = [arr objectAtIndex:0];
+                    }
                     aDocument.documentID = [[aDocumentDictionary objectForKey:@"DocumentID"] stringValue];
                     aDocument.documentPath = [aDocumentDictionary objectForKey:@"Path"];
                     aDocument.symbol = symbol;

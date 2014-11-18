@@ -16,12 +16,14 @@
 
 @interface LRDocumentListViewController ()
 {
+    NSArray *searchResults;
     CGSize tableContentSize;
 }
 @property (weak, nonatomic) IBOutlet UITableView *documentsListTable;
 @property (strong, nonatomic) NSMutableArray *documentsListArray;
 @property (strong, nonatomic) NSMutableArray *selectedDocumentsArray;
 @property (strong, nonatomic) NSMutableArray *existingDocIdsArray;
+@property (nonatomic, assign) BOOL isSearching;
 @end
 
 @implementation LRDocumentListViewController
@@ -39,6 +41,7 @@
 {
     [super viewDidLoad];
     NSMutableDictionary *aContextInfoDictionary = [NSMutableDictionary new];
+    self.isSearching = FALSE;
     self.selectedDocumentsArray = [NSMutableArray new];
     
     // fetch the existing docIds from plist
@@ -183,9 +186,10 @@
         }
     }
     // Do any additional setup after loading the view.
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0/255.0 green:60.0/255.0 blue:113/255.0 alpha:1];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:9.0/255.0 green:60.0/255.0 blue:113/255.0 alpha:1];
     self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 #pragma mark - Load the data into the table
 - (void)didLoadData
@@ -226,8 +230,77 @@
     //
     [self.documentsListTable reloadData];
     tableContentSize = self.documentsListTable.contentSize;
-    tableContentSize.height = tableContentSize.height + 150.0;
+    tableContentSize.height = tableContentSize.height + 350.0;
     
+}
+#pragma mark - search display controller delegate methods
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    self.documentsListTable.hidden = FALSE;
+    self.isSearching = FALSE;
+    [self.documentsListTable reloadData];
+}
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    NSPredicate *resultPredicate = nil;
+    resultPredicate = [NSPredicate predicateWithFormat:@"DocumentTitle contains[c] %@", searchText];
+    searchResults = [self.documentsListArray filteredArrayUsingPredicate:resultPredicate];
+}
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    self.isSearching = TRUE;
+    [self filterContentForSearchText:searchString
+                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
+                                      objectAtIndex:[self.searchDisplayController.searchBar
+                                                     selectedScopeButtonIndex]]];
+    
+    return YES;
+}
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if([searchText length] == 0) {
+        if(self.documentsListTable.hidden == TRUE) {
+            self.documentsListTable.hidden = FALSE;
+        }
+    }
+    else
+    {
+        self.documentsListTable.hidden = TRUE;
+    }
+}
+- (void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView
+{
+    tableView = [[self searchDisplayController] searchResultsTableView];
+    
+    [tableView setContentInset:UIEdgeInsetsZero];
+    
+    [tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
+    
+    // tableView.contentSize = tableContentSize;
+    
+    tableView.frame = CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.size.width, tableView.frame.size.height );
+    
+    tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    tableView.backgroundColor = [UIColor colorWithRed:40.0/255.0 green:141.0/255.0 blue:192.0/255.0 alpha:1.0];
+    
+    
+}
+- (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
+{
+    if([controller.searchBar.text length] > 0) {
+        UITableView *tableView = [[self searchDisplayController] searchResultsTableView];
+        
+        tableView.frame = CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.size.width, tableView.frame.size.height + 44);
+        tableView.backgroundColor = [UIColor colorWithRed:40.0/255.0 green:141.0/255.0 blue:192.0/255.0 alpha:1.0];
+    }
+    
+}
+- (void) searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
+{
+    self.documentsListTable.hidden = FALSE;
+    self.isSearching = FALSE;
+    [self.documentsListTable reloadData];
 }
 #pragma mark - UITableViewDataSource
 
@@ -240,7 +313,12 @@
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSLog(@"row count--%d",(unsigned)self.documentsListArray.count);
-    return self.documentsListArray.count;
+    if (tableView == [[self searchDisplayController] searchResultsTableView]) {
+        return [searchResults count];
+        
+    } else {
+        return self.documentsListArray.count;
+    }
 }
 
 -(UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
@@ -252,69 +330,214 @@
         NSArray *bundle = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
         cell = (LRDocumentTypeTableViewCell *)[bundle objectAtIndex: 0];
     }
-    if(self.isDocumentsFetchedForList == TRUE) {
-        
-        NSDictionary *aDocumentDetailsDictionary = [self.documentsListArray objectAtIndex:indexPath.row];
-        cell.delegate = self;
-        cell.tag = indexPath.row;
-        
-        // check if the document hsa been selected and reload the table accordingly.
-        if([self.selectedDocumentsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
-            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:@"02-Sep-2014" andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE];
-        }
-        else {
-            if([self.existingDocIdsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
-                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:@"02-Sep-2014" andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE];
+    if(self.isSearching) {
+        if(self.isDocumentsFetchedForList == TRUE) {
+            
+            NSDictionary *aDocumentDetailsDictionary = [searchResults objectAtIndex:indexPath.row];
+            cell.delegate = self;
+            cell.tag = indexPath.row;
+            
+            // check if the document hsa been selected and reload the table accordingly.
+            NSArray *dateArray = [[aDocumentDetailsDictionary objectForKey:@"UpdateDate"] componentsSeparatedByString:@"T"];
+            NSString *dateString = nil;
+            if(dateArray.count > 0) {
+                dateString = [dateArray objectAtIndex:0];
             }
             else {
-                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:@"02-Sep-2014" andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:FALSE];
+                dateString = @" ";
+            }
+            if([self.selectedDocumentsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
+                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE];
+            }
+            else {
+                if([self.existingDocIdsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
+                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE];
+                }
+                else {
+                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:FALSE];
+                }
+            }
+        }
+        else {
+            LRDocument *aDocument = (LRDocument *)[searchResults objectAtIndex:indexPath.row];
+            cell.delegate = self;
+            cell.tag = indexPath.row;
+            
+            // check if the document hsa been selected and reload the table accordingly.
+            if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
+                [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+                
+            }
+            else {
+                if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
+                    [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+                }
+                else {
+                    [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
+                }
+                //   [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
             }
         }
     }
     else {
-        LRDocument *aDocument = (LRDocument *)[self.documentsListArray objectAtIndex:indexPath.row];
-        cell.delegate = self;
-        cell.tag = indexPath.row;
-        
-        // check if the document hsa been selected and reload the table accordingly.
-        if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
-            [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+        if(self.isDocumentsFetchedForList == TRUE) {
             
-        }
-        else {
-            if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
-                [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+            NSDictionary *aDocumentDetailsDictionary = [self.documentsListArray objectAtIndex:indexPath.row];
+            cell.delegate = self;
+            cell.tag = indexPath.row;
+            
+            // check if the document hsa been selected and reload the table accordingly.
+            NSArray *dateArray = [[aDocumentDetailsDictionary objectForKey:@"UpdateDate"] componentsSeparatedByString:@"T"];
+            NSString *dateString = nil;
+            if(dateArray.count > 0) {
+                dateString = [dateArray objectAtIndex:0];
             }
             else {
-                [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
+                dateString = @" ";
             }
-            //   [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
+            if([self.selectedDocumentsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
+                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE];
+            }
+            else {
+                if([self.existingDocIdsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
+                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE];
+                }
+                else {
+                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:FALSE];
+                }
+            }
+        }
+        else {
+            LRDocument *aDocument = (LRDocument *)[self.documentsListArray objectAtIndex:indexPath.row];
+            cell.delegate = self;
+            cell.tag = indexPath.row;
+            
+            // check if the document hsa been selected and reload the table accordingly.
+            if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
+                [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+                
+            }
+            else {
+                if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
+                    [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+                }
+                else {
+                    [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
+                }
+                //   [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
+            }
         }
     }
+
     
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 120;
+    if(self.isSearching) {
+        if(self.isDocumentsFetchedForList == TRUE) {
+            NSDictionary *aDocumentDetailsDictionary = [searchResults objectAtIndex:indexPath.row];
+            return [LRDocumentListViewController heightOfCellWithIngredientLine:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] withSuperviewWidth:230.0];
+        }
+        else {
+            LRDocument *aDocument = (LRDocument *)[searchResults objectAtIndex:indexPath.row];
+            return [LRDocumentListViewController heightOfCellWithIngredientLine:aDocument.documentTitle withSuperviewWidth:230.0];
+        }
+    }
+    else {
+        if(self.isDocumentsFetchedForList == TRUE) {
+            NSDictionary *aDocumentDetailsDictionary = [self.documentsListArray objectAtIndex:indexPath.row];
+            return [LRDocumentListViewController heightOfCellWithIngredientLine:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] withSuperviewWidth:230.0];
+        }
+        else {
+            LRDocument *aDocument = (LRDocument *)[self.documentsListArray objectAtIndex:indexPath.row];
+            return [LRDocumentListViewController heightOfCellWithIngredientLine:aDocument.documentTitle withSuperviewWidth:230.0];
+        }
+
+    }
+}
++ (CGFloat)heightOfCellWithIngredientLine:(NSString *)ingredientLine
+                       withSuperviewWidth:(CGFloat)superviewWidth
+{
+    CGFloat labelWidth                  = superviewWidth - 30.0f;
+    //    use the known label width with a maximum height of 100 points
+    CGSize labelContraints              = CGSizeMake(labelWidth, 100.0f);
+    
+    NSStringDrawingContext *context     = [[NSStringDrawingContext alloc] init];
+    
+    CGRect labelRect                    = [ingredientLine boundingRectWithSize:labelContraints
+                                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                                    attributes:nil
+                                                                       context:context];
+    
+    //    return the calculated required height of the cell considering the label
+    return labelRect.size.height + 50;
 }
 #pragma mark - UITableView delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LRDocumentViewController *documentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
-    
-    if(self.isDocumentsFetchedForList == TRUE) {
-        NSDictionary *aDocumentDetailsDictionary = [self.documentsListArray objectAtIndex:indexPath.row];
-        documentViewController.documentId = [aDocumentDetailsDictionary objectForKey:@"DocumentID"];
+    NSString *aFileTypeExtension = nil;
+
+    if(tableView == [[self searchDisplayController] searchResultsTableView]) {
+        if(self.isDocumentsFetchedForList == TRUE) {
+            NSDictionary *aDocumentDetailsDictionary = [searchResults objectAtIndex:indexPath.row];
+            documentViewController.documentId = [aDocumentDetailsDictionary objectForKey:@"DocumentID"];
+            documentViewController.documentTitleToBeSavedAsPdf = [aDocumentDetailsDictionary objectForKey:@"DocumentTitle"];
+            aFileTypeExtension = [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
+        }
+        else {
+            LRDocument *aDocument = (LRDocument *)[searchResults objectAtIndex:indexPath.row];
+            aFileTypeExtension = [aDocument.documentPath pathExtension];
+            //documentViewController.documentPath = @"D:\\Release\\test.txt";
+            documentViewController.documentTitleToBeSavedAsPdf = aDocument.documentTitle;
+            documentViewController.documentId = aDocument.documentID;
+        }
+        if([aFileTypeExtension isEqualToString:@"pdf"] || [aFileTypeExtension isEqualToString:@"WAV"]) {
+            [self.navigationController pushViewController:documentViewController animated:TRUE];
+        }
+        else {
+            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                     message:@"Please email the link to Self"
+                                                                    delegate:self
+                                                           cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                           otherButtonTitles:nil, nil];
+            [errorAlertView show];
+            
+        }
+        
     }
     else {
-        LRDocument *aDocument = (LRDocument *)[self.documentsListArray objectAtIndex:indexPath.row];
-        //documentViewController.documentPath = @"D:\\Release\\test.txt";
-        documentViewController.documentTitleToBeSavedAsPdf = aDocument.documentTitle;
-        documentViewController.documentId = aDocument.documentID;
+        if(self.isDocumentsFetchedForList == TRUE) {
+            NSDictionary *aDocumentDetailsDictionary = [self.documentsListArray objectAtIndex:indexPath.row];
+            documentViewController.documentId = [aDocumentDetailsDictionary objectForKey:@"DocumentID"];
+            documentViewController.documentTitleToBeSavedAsPdf = [aDocumentDetailsDictionary objectForKey:@"DocumentTitle"];
+            aFileTypeExtension = [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
+        }
+        else {
+            LRDocument *aDocument = (LRDocument *)[self.documentsListArray objectAtIndex:indexPath.row];
+            aFileTypeExtension = [aDocument.documentPath pathExtension];
+            //documentViewController.documentPath = @"D:\\Release\\test.txt";
+            documentViewController.documentTitleToBeSavedAsPdf = aDocument.documentTitle;
+            documentViewController.documentId = aDocument.documentID;
+        }
+        if([aFileTypeExtension isEqualToString:@"pdf"] || [aFileTypeExtension isEqualToString:@"WAV"]) {
+            [self.navigationController pushViewController:documentViewController animated:TRUE];
+        }
+        else {
+            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                     message:@"Please email the link to Self"
+                                                                    delegate:self
+                                                           cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                           otherButtonTitles:nil, nil];
+            [errorAlertView show];
+            
+        }
     }
-    [self.navigationController pushViewController:documentViewController animated:TRUE];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    
+       [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -332,35 +555,69 @@
 }
 - (void)selectDocumentForRowWithIndex:(int )index
 {
-    if(self.isDocumentsFetchedForList == TRUE) {
-        NSDictionary *aDocumentDetailsDictionary = [self.documentsListArray objectAtIndex:index];
-        if([self.selectedDocumentsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
-            [self.selectedDocumentsArray removeObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]];
-        }
-        else {
-            if([self.existingDocIdsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
-                [self.existingDocIdsArray removeObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]];
+    if(self.isSearching == TRUE) {
+        if(self.isDocumentsFetchedForList == TRUE) {
+            NSDictionary *aDocumentDetailsDictionary = [searchResults objectAtIndex:index];
+            if([self.selectedDocumentsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
+                [self.selectedDocumentsArray removeObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]];
             }
             else {
-                [self.selectedDocumentsArray addObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]];
+                if([self.existingDocIdsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
+                    [self.existingDocIdsArray removeObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]];
+                }
+                else {
+                    [self.selectedDocumentsArray addObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]];
+                }
             }
         }
+        else {
+            LRDocument *aDocument = [searchResults objectAtIndex:index];
+            if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
+                [self.selectedDocumentsArray removeObject:aDocument.documentID];
+            }
+            else {
+                if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
+                    [self.existingDocIdsArray removeObject:aDocument.documentID];
+                }
+                else {
+                    [self.selectedDocumentsArray addObject:aDocument.documentID];
+                }
+            }
+        }
+        [[[self searchDisplayController] searchResultsTableView] reloadData];
     }
     else {
-        LRDocument *aDocument = [self.documentsListArray objectAtIndex:index];
-        if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
-            [self.selectedDocumentsArray removeObject:aDocument.documentID];
-        }
-        else {
-            if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
-                [self.existingDocIdsArray removeObject:aDocument.documentID];
+        if(self.isDocumentsFetchedForList == TRUE) {
+            NSDictionary *aDocumentDetailsDictionary = [self.documentsListArray objectAtIndex:index];
+            if([self.selectedDocumentsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
+                [self.selectedDocumentsArray removeObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]];
             }
             else {
-                [self.selectedDocumentsArray addObject:aDocument.documentID];
+                if([self.existingDocIdsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
+                    [self.existingDocIdsArray removeObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]];
+                }
+                else {
+                    [self.selectedDocumentsArray addObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]];
+                }
             }
         }
+        else {
+            LRDocument *aDocument = [self.documentsListArray objectAtIndex:index];
+            if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
+                [self.selectedDocumentsArray removeObject:aDocument.documentID];
+            }
+            else {
+                if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
+                    [self.existingDocIdsArray removeObject:aDocument.documentID];
+                }
+                else {
+                    [self.selectedDocumentsArray addObject:aDocument.documentID];
+                }
+            }
+        }
+        [self.documentsListTable reloadData];
     }
-    if([self.selectedDocumentsArray count] > 0) {
+        if([self.selectedDocumentsArray count] > 0) {
         SEL addToCartButton = sel_registerName("AddToCart");
         UIBarButtonItem *cartButton = [[UIBarButtonItem alloc] initWithImage:nil style:0 target:self action:addToCartButton];
         self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
@@ -376,7 +633,6 @@
         
         [data writeToFile:[LRAppDelegate fetchPathOfCustomPlist] atomically:YES];
     }
-    [self.documentsListTable reloadData];
 }
 - (void)AddToCart
 {

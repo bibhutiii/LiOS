@@ -335,7 +335,17 @@
 }
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[self cdh] saveContext];
     
+    //
     NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"]);
     if([[[NSUserDefaults standardUserDefaults] objectForKey:@"PrimaryRoleID"] intValue] == 6) {
         if([[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] length] != 0) {
@@ -353,21 +363,13 @@
             } errorHandler:^(NSError *error) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Leerink" message:[error description] delegate:self cancelButtonTitle:@"ok" otherButtonTitles: nil, nil];
                 [alert show];
-                 [LRUtility stopActivityIndicatorFromView:self.window];
+                [LRUtility stopActivityIndicatorFromView:self.window];
                 DLog(@"%@\t%@\t%@\t%@", [error localizedDescription], [error localizedFailureReason],
                      [error localizedRecoveryOptions], [error localizedRecoverySuggestion]);
             }];
         }
     }
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    [[self cdh] saveContext];
     
 }
 

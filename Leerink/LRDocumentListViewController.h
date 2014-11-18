@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LRLoadDataDelegate.h"
 
-@interface LRDocumentListViewController : UIViewController<LRLoadDataDelegate,UIWebViewDelegate>
+@interface LRDocumentListViewController : UIViewController<LRLoadDataDelegate,UIWebViewDelegate,UISearchControllerDelegate,UISearchBarDelegate>
 
 @property (nonatomic, assign) id <LRLoadDataDelegate> delegate;
 @property (nonatomic, assign) eLRDocumentType documentType;

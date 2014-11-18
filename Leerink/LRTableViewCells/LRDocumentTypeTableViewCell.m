@@ -38,6 +38,9 @@
     else {
         self.selectDocumentImage.image = [UIImage imageNamed:@"uncheckbox"];
     }
+
+    CGFloat heightForImage = self.frame.size.height/2;
+    self.selectDocumentImage.frame = CGRectMake(8, heightForImage, 22.0, 20.0);
 }
 
 @end
