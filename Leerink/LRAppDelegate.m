@@ -74,12 +74,12 @@
     
     // Let the device know we want to receive push notifications
     if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]){
-        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:nil]];
         [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
     else{
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-         (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
+         (UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
     }
     // initialise the core data helper singleton class
     if (!self.coreDataHelper) {
@@ -150,8 +150,8 @@
     [self.window makeKeyAndVisible];
     
     
-    [Parse setApplicationId:@"0921QnBasJhIv1cFQkxC8f4aJupFnUbIuCnq8qB6"
-                  clientKey:@"CrXy8wSEnkuvmm67ebWMbEOpzFbUA55dI3MFtLjL"];
+   // [Parse setApplicationId:@"0921QnBasJhIv1cFQkxC8f4aJupFnUbIuCnq8qB6"
+       //           clientKey:@"CrXy8wSEnkuvmm67ebWMbEOpzFbUA55dI3MFtLjL"];
     
     [Crashlytics startWithAPIKey:@"538f8236cc2bab28cc8de91308000df9c232a03d"];
     
@@ -169,7 +169,8 @@
     freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
     
 #endif
-    
+    application.applicationIconBadgeNumber = 0;
+
     return YES;
 }
 
@@ -308,9 +309,9 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     // Store the deviceToken in the current installation and save it to Parse.
-    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    [currentInstallation setDeviceTokenFromData:deviceToken];
-    [currentInstallation saveInBackground];
+ //   PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+ //   [currentInstallation setDeviceTokenFromData:deviceToken];
+ //   [currentInstallation saveInBackground];
     
     [[NSUserDefaults standardUserDefaults] setObject:deviceToken forKey:@"DeviceId"];
     [[NSUserDefaults standardUserDefaults] synchronize];

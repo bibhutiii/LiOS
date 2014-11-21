@@ -88,6 +88,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     // [self.openLinkInsideApplicationWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@" "]]];
+    [super viewWillDisappear:TRUE];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

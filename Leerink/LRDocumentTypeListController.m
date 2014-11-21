@@ -7,12 +7,9 @@
 //
 
 #import "LRDocumentTypeListController.h"
-#import "LRGetAnalystService.h"
 #import "LRContactListTableViewCell.h"
 #import "LRAnalyst.h"
-#import "LRGetSymbolService.h"
 #import "LRSymbol.h"
-#import "LRGetSectorService.h"
 #import "LRSector.h"
 #import "LRDocumentTypeTableViewCell.h"
 #import "LRDocumentListViewController.h"
@@ -469,6 +466,7 @@
     if([self.delegate respondsToSelector:@selector(cancelaNetWorkOperation)]) {
         [self.delegate cancelaNetWorkOperation];
     }
+    [super viewWillDisappear:TRUE];
 }
 - (void)didReceiveMemoryWarning
 {

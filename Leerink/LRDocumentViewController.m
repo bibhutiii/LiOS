@@ -7,7 +7,6 @@
 //
 
 #import "LRDocumentViewController.h"
-#import "LRGetDocumentService.h"
 #import "LRWebEngine.h"
 
 @interface LRDocumentViewController ()
@@ -160,6 +159,7 @@
     if([self.delegate respondsToSelector:@selector(cancelaNetWorkOperation)]) {
         [self.delegate cancelaNetWorkOperation];
     }
+    [super viewWillDisappear:TRUE];
 }
 - (void)didReceiveMemoryWarning
 {

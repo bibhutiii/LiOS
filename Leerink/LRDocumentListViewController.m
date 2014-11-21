@@ -9,7 +9,6 @@
 #import "LRDocumentListViewController.h"
 #import "LRLoginViewController.h"
 #import "LRDocumentTypeTableViewCell.h"
-#import "LRGetDocumentListService.h"
 #import "LRDocument.h"
 #import "LRDocumentViewController.h"
 #import "LRWebEngine.h"
@@ -315,7 +314,7 @@
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSLog(@"row count--%d",(unsigned)self.documentsListArray.count);
-    if (tableView == [[self searchDisplayController] searchResultsTableView]) {
+    if (self.isSearching) {
         return [searchResults count];
         
     } else {
@@ -793,6 +792,7 @@
     if([self.delegate respondsToSelector:@selector(cancelaNetWorkOperation)]) {
         [self.delegate cancelaNetWorkOperation];
     }
+    [super viewWillDisappear:TRUE];
 }
 - (void)didReceiveMemoryWarning
 {

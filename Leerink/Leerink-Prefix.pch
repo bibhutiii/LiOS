@@ -19,11 +19,9 @@
 #import "LRCoreDataHelper.h"
 #import "LRAppDelegate.h"
 #import "NSString+HTML.h"
-#import "LRGetAnalystService.h"
 #import "LRLoadDataDelegate.h"
 #import "LREnums.h"
 #import "NSDate+RFC1123.h"
-#import "NSDate+RTConvenience.h"
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
 #import "NSDate+Helper.h"
@@ -32,5 +30,3 @@
 // Macro to enable log files
 #define ENABLE_DEVICE_LOGS 0
 
-#define baseURLForService @"https://bos-portalqa-web.internal.leerink.com/iOS/iOS.IIRPIOSService.svc?singleWsdl"
-#define locationOfServiceURL @"https://10.140.217.20/iOS/iOS.IIRPIOSService.svc"

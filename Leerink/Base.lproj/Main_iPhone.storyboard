@@ -49,16 +49,17 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="password.png" translatesAutoresizingMaskIntoConstraints="NO" id="pxY-Lm-tLS">
                                 <rect key="frame" x="20" y="216" width="40" height="40"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright 2014, Leerink Partners LLC, All Rights Reserved. Member FINRA/SIPC Terms of Service" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cBi-RJ-y7p">
-                                <rect key="frame" x="16" y="525" width="293" height="35"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text=" Copyright 2014, Leerink Partners LLC, All Rights Reserved. Member FINRA/SIPC Terms of Service" translatesAutoresizingMaskIntoConstraints="NO" id="4H0-Vn-JYs">
+                                <rect key="frame" x="31" y="521" width="269" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="E2d-fg-aCc"/>
-                                    <constraint firstAttribute="width" constant="293" id="YBM-LK-eN7"/>
+                                    <constraint firstAttribute="width" constant="269" id="oYC-0G-ytL"/>
+                                    <constraint firstAttribute="height" constant="40" id="qxW-fd-q90"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="11"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hvE-wp-uWJ">
                                 <rect key="frame" x="20" y="528" width="284" height="30"/>
                                 <constraints>
@@ -77,9 +78,9 @@
                         </subviews>
                         <color key="backgroundColor" red="0.15686274509803921" green="0.55294117647058827" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="cBi-RJ-y7p" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="16" id="5zK-YF-5mg"/>
+                            <constraint firstItem="4H0-Vn-JYs" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="31" id="HB5-C7-4UL"/>
                             <constraint firstItem="hvE-wp-uWJ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="Hkf-Ey-xtr"/>
-                            <constraint firstAttribute="bottom" secondItem="cBi-RJ-y7p" secondAttribute="bottom" constant="8" id="dZT-Da-zN7"/>
+                            <constraint firstAttribute="bottom" secondItem="4H0-Vn-JYs" secondAttribute="bottom" constant="7" id="fbL-ZI-lfY"/>
                             <constraint firstAttribute="bottom" secondItem="hvE-wp-uWJ" secondAttribute="bottom" constant="10" id="xpl-Oj-eKb"/>
                         </constraints>
                     </view>

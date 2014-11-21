@@ -13,7 +13,6 @@
 #import "LRAppDelegate.h"
 #import "LRUser.h"
 #import "LRUserRoles.h"
-#import "LRLoginService.h"
 #import "LRDocumentViewController.h"
 #import "LROpenLinksInWebViewController.h"
 
@@ -93,8 +92,8 @@ CGFloat animatedDistance;
 #pragma mark -
 - (IBAction)logIn:(id)sender {
     
-    self.userNameTextField.text = @"rameshv@aditi.com";
-    self.passwordTextField.text = @"Leerink02*";
+    //self.userNameTextField.text = @"rameshv@aditi.com";
+    //self.passwordTextField.text = @"Leerink02*";
     // check if the username and password fields are not left empty.
     //    self.userNameTextField.text = @"alex.calhoun@leerink.commedatest.com";
     //   self.passwordTextField.text = @"TwinJet12";

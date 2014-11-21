@@ -7,7 +7,6 @@
 //
 
 #import "LRTwitterListTableViewCell.h"
-#import "NSDate+RTConvenience.h"
 #import "AUIAutoGrowingTextView.h"
 
 @interface LRTwitterListTableViewCell ()
