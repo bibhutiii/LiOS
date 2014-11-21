@@ -31,6 +31,14 @@
     self.title = @"Lists";
     
     self.twitterListsArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRTwitterList" withPredicate:nil, nil];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"listCreatedDate"
+                                                                  ascending:NO];
+    NSArray *sortDescriptors = @[sortDescriptor];
+    
+    self.twitterListsArray = [self.twitterListsArray sortedArrayUsingDescriptors:sortDescriptors];
+    
+    
     [self.twitterListsTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0f],

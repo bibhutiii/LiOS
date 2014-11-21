@@ -13,6 +13,7 @@
 #import "LRDocument.h"
 #import "LRDocumentViewController.h"
 #import "LRWebEngine.h"
+#import "FPPopoverController.h"
 
 @interface LRDocumentListViewController ()
 {
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) NSMutableArray *selectedDocumentsArray;
 @property (strong, nonatomic) NSMutableArray *existingDocIdsArray;
 @property (nonatomic, assign) BOOL isSearching;
+@property (strong, nonatomic) FPPopoverController *popover;
 @end
 
 @implementation LRDocumentListViewController
@@ -347,14 +349,44 @@
                 dateString = @" ";
             }
             if([self.selectedDocumentsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
-                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE];
+                if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
+                    if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] == 1) {
+                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE];
+                    }
+                    else {
+                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:TRUE hasMultipleAuthors:TRUE];
+                    }
+                }
+                else {
+                     [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE];
+                }
             }
             else {
                 if([self.existingDocIdsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
-                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE];
+                    if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
+                        if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] == 1) {
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE];
+                        }
+                        else {
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:TRUE hasMultipleAuthors:TRUE];
+                        }
+                    }
+                    else {
+                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE];
+                    }
                 }
                 else {
-                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:FALSE];
+                    if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
+                        if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] == 1) {
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:FALSE hasMultipleAuthors:FALSE];
+                        }
+                        else {
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:FALSE hasMultipleAuthors:TRUE];
+                        }
+                    }
+                    else {
+                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:FALSE hasMultipleAuthors:FALSE];
+                    }
                 }
             }
         }
@@ -365,15 +397,19 @@
             
             // check if the document hsa been selected and reload the table accordingly.
             if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
-                [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+               // [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+                [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE hasMultipleAuthors:FALSE];
                 
             }
             else {
                 if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
-                    [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+                    //[cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+                    [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE hasMultipleAuthors:FALSE];
                 }
                 else {
-                    [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
+                   // [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
+                    [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE hasMultipleAuthors:FALSE];
+                    
                 }
                 //   [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
             }
@@ -396,14 +432,44 @@
                 dateString = @" ";
             }
             if([self.selectedDocumentsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
-                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE];
+                if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
+                    if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] == 1) {
+                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE];
+                    }
+                    else {
+                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:TRUE hasMultipleAuthors:TRUE];
+                    }
+                }
+                else {
+                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE];
+                }
             }
             else {
                 if([self.existingDocIdsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
-                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE];
+                    if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
+                        if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] == 1) {
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE];
+                        }
+                        else {
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:TRUE hasMultipleAuthors:TRUE];
+                        }
+                    }
+                    else {
+                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE];
+                    }
                 }
                 else {
-                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:FALSE];
+                    if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
+                        if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] == 1) {
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:FALSE hasMultipleAuthors:FALSE];
+                        }
+                        else {
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:FALSE hasMultipleAuthors:TRUE];
+                        }
+                    }
+                    else {
+                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:FALSE hasMultipleAuthors:FALSE];
+                    }
                 }
             }
         }
@@ -414,15 +480,19 @@
             
             // check if the document hsa been selected and reload the table accordingly.
             if([self.selectedDocumentsArray containsObject:aDocument.documentID]) {
-                [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+              //  [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+                [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE hasMultipleAuthors:FALSE];
                 
             }
             else {
                 if([self.existingDocIdsArray containsObject:aDocument.documentID]) {
-                    [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+                   // [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE];
+                    [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:TRUE hasMultipleAuthors:FALSE];
+                    
                 }
                 else {
-                    [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
+                    [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE hasMultipleAuthors:FALSE];
+                  //  [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:aDocument.documentDate andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
                 }
                 //   [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
             }
@@ -431,6 +501,52 @@
 
     
     return cell;
+}
+- (void)infoForAuthorsSelected:(id)sender withTag:(int)iTag
+{
+    if(self.isDocumentsFetchedForList) {
+        CGFloat scrollViewContentSize = 0.0;
+        UIViewController *aPopController = [[UIViewController alloc] init];
+        aPopController.view.frame = CGRectMake(0, 0, 300, 100);
+        aPopController.view.backgroundColor = [UIColor colorWithRed:73.0/255.0 green:111.0/255.0 blue:140.0/255.0 alpha:1.0];
+        
+        
+        UIScrollView *aSCrolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, aPopController.view.frame.size.width, 75)];
+        aSCrolView.scrollEnabled = TRUE;
+        aSCrolView.backgroundColor = [UIColor clearColor];
+        
+        self.popover = [[FPPopoverController alloc] initWithViewController:aPopController];
+        self.popover.arrowDirection = FPPopoverArrowDirectionRight;
+        self.popover.contentSize = CGSizeMake(300,120);
+        self.popover.arrowDirection = FPPopoverArrowDirectionDown;
+        
+        UILabel *aTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 5, 200, 21)];
+        aTitleLabel.text = @"Authors";
+        aTitleLabel.textColor = [UIColor whiteColor];
+        [aSCrolView addSubview:aTitleLabel];
+        scrollViewContentSize = scrollViewContentSize + aTitleLabel.frame.size.height;
+        
+        NSDictionary *aDocumentDetailsDictionary = [self.documentsListArray objectAtIndex:iTag];
+        NSArray *authorsArray = [aDocumentDetailsDictionary objectForKey:@"Authors"];
+        
+        CGFloat height = aTitleLabel.frame.size.height;
+        for (NSDictionary *authorDetails in authorsArray) {
+            
+            UILabel *authorLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, height + 10, 200, 21)];
+            authorLabel.text = [authorDetails objectForKey:@"AuthorName"];
+            authorLabel.textColor = [UIColor whiteColor];
+            [aSCrolView addSubview:authorLabel];
+            height = height + authorLabel.frame.size.height;
+            scrollViewContentSize = scrollViewContentSize + authorLabel.frame.size.height + 5;
+            //[authorDetails objectForKey:@"AuthorName"];
+        }
+        aSCrolView.contentSize = CGSizeMake(300, scrollViewContentSize);
+        [aPopController.view addSubview:aSCrolView];
+        
+        //the popover will be presented from the okButton view
+        [self.popover presentPopoverFromView:sender];
+    }
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -526,7 +642,7 @@
         }
         else {
             UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                     message:@"Please email the link to Self"
+                                                                     message:@"This type of Document cannot be viewed in iOS. Please Email it to yourself to view."
                                                                     delegate:self
                                                            cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                            otherButtonTitles:nil, nil];

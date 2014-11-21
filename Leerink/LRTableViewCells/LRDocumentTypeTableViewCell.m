@@ -11,6 +11,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *documentTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *selectDocumentImage;
+@property (weak, nonatomic) IBOutlet UIButton *infoForAuthorsButton;
 @property (weak, nonatomic) IBOutlet UILabel *authorTitleLabel;
 @end
 @implementation LRDocumentTypeTableViewCell
@@ -21,8 +22,13 @@
         [self.delegate selectDocumentForRowWithIndex:(int)self.tag];
     }
 }
+- (IBAction)infoForAuthorClicked:(id)sender {
+    if([self.delegate respondsToSelector:@selector(infoForAuthorsSelected:withTag:)]) {
+        [self.delegate infoForAuthorsSelected:sender withTag:(int)self.tag];
+    }
+}
 
-- (void)fillDataForDocumentCellwithTitle:(NSString *)title andDateTime:(NSString *)date andAuthor:(NSString *)author andisDocumentSelected:(BOOL)isSelected
+- (void)fillDataForDocumentCellwithTitle:(NSString *)title andDateTime:(NSString *)date andAuthor:(NSString *)author andisDocumentSelected:(BOOL)isSelected hasMultipleAuthors:(BOOL)hasMultipleAuthors
 {
     self.documentTitleLabel.text = title;
     self.dateLabel.text = date;
@@ -41,6 +47,13 @@
 
     CGFloat heightForImage = self.frame.size.height/2;
     self.selectDocumentImage.frame = CGRectMake(8, heightForImage, 22.0, 20.0);
+    
+    if(hasMultipleAuthors == FALSE) {
+        self.infoForAuthorsButton.hidden = TRUE;
+    }
+    else {
+        self.infoForAuthorsButton.hidden = FALSE;
+    }
 }
 
 @end

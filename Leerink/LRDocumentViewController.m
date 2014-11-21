@@ -46,7 +46,9 @@
 }
 - (void)fetchDocument
 {
-    [LRUtility startActivityIndicatorOnView:nil withText:@"Please wait.."];
+    NSLog(@"notification working");
+    
+    [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
     
     self.delegate = [LRWebEngine defaultWebEngine];
     
@@ -73,7 +75,7 @@
             self.navigationItem.rightBarButtonItem = backButton;
              [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
             
-            [LRUtility stopActivityIndicatorFromView:nil];
+            [LRUtility stopActivityIndicatorFromView:self.view];
             
         }
         else {

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		84093CA919E68B3300D20D19 /* LRTwitterListTweetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84093CA819E68B3300D20D19 /* LRTwitterListTweetsViewController.m */; };
-		84093CB519E6A83D00D20D19 /* LRTwitterList.m in Sources */ = {isa = PBXBuildFile; fileRef = 84093CB419E6A83D00D20D19 /* LRTwitterList.m */; };
 		84093CB719ED01FF00D20D19 /* logoutBtn1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84093CB619ED01FF00D20D19 /* logoutBtn1@2x.png */; };
 		84093CBC19ED5ABA00D20D19 /* Share-black-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 84093CBB19ED5ABA00D20D19 /* Share-black-32.png */; };
 		8467DD9019C32EEB00BFA20F /* LRAnalyst.m in Sources */ = {isa = PBXBuildFile; fileRef = 8467DD8F19C32EEB00BFA20F /* LRAnalyst.m */; };
@@ -140,6 +139,11 @@
 		84DC10C31A1B4C63005CE54D /* Leerink-White_320x64.png in Resources */ = {isa = PBXBuildFile; fileRef = 84DC10C21A1B4C63005CE54D /* Leerink-White_320x64.png */; };
 		84DC10C61A1B5A8D005CE54D /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DC10C51A1B5A8D005CE54D /* NSDate+Helper.m */; };
 		84DC10C91A1B5B8B005CE54D /* LRDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DC10C81A1B5B8B005CE54D /* LRDocument.m */; };
+		84DC10CF1A1CA191005CE54D /* LRTwitterList.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DC10CE1A1CA191005CE54D /* LRTwitterList.m */; };
+		84DC159D1A1E1EE9005CE54D /* FPPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DC15981A1E1EE9005CE54D /* FPPopoverController.m */; };
+		84DC159E1A1E1EE9005CE54D /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DC159A1A1E1EE9005CE54D /* FPPopoverView.m */; };
+		84DC159F1A1E1EE9005CE54D /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DC159C1A1E1EE9005CE54D /* FPTouchView.m */; };
+		84DC15A11A1E1F98005CE54D /* Info-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 84DC15A01A1E1F98005CE54D /* Info-32.png */; };
 		84E0226819F4F0C80057DA6D /* LROpenLinksInWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E0226719F4F0C80057DA6D /* LROpenLinksInWebViewController.m */; };
 		84E0226B19F50AE80057DA6D /* LRUserTimeLineTwitterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E0226A19F50AE80057DA6D /* LRUserTimeLineTwitterViewController.m */; };
 		84E0226E19F5129F0057DA6D /* LRTweets.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E0226D19F5129F0057DA6D /* LRTweets.m */; };
@@ -159,8 +163,6 @@
 /* Begin PBXFileReference section */
 		84093CA719E68B3300D20D19 /* LRTwitterListTweetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRTwitterListTweetsViewController.h; sourceTree = "<group>"; };
 		84093CA819E68B3300D20D19 /* LRTwitterListTweetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRTwitterListTweetsViewController.m; sourceTree = "<group>"; };
-		84093CB319E6A83D00D20D19 /* LRTwitterList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRTwitterList.h; sourceTree = "<group>"; };
-		84093CB419E6A83D00D20D19 /* LRTwitterList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRTwitterList.m; sourceTree = "<group>"; };
 		84093CB619ED01FF00D20D19 /* logoutBtn1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logoutBtn1@2x.png"; sourceTree = "<group>"; };
 		84093CBB19ED5ABA00D20D19 /* Share-black-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Share-black-32.png"; sourceTree = "<group>"; };
 		8467DD8E19C32EEB00BFA20F /* LRAnalyst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRAnalyst.h; sourceTree = "<group>"; };
@@ -362,6 +364,16 @@
 		84DC10C51A1B5A8D005CE54D /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
 		84DC10C71A1B5B8B005CE54D /* LRDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDocument.h; sourceTree = "<group>"; };
 		84DC10C81A1B5B8B005CE54D /* LRDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRDocument.m; sourceTree = "<group>"; };
+		84DC10CD1A1CA191005CE54D /* LRTwitterList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRTwitterList.h; sourceTree = "<group>"; };
+		84DC10CE1A1CA191005CE54D /* LRTwitterList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRTwitterList.m; sourceTree = "<group>"; };
+		84DC15961A1E1EE9005CE54D /* ARCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCMacros.h; sourceTree = "<group>"; };
+		84DC15971A1E1EE9005CE54D /* FPPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverController.h; sourceTree = "<group>"; };
+		84DC15981A1E1EE9005CE54D /* FPPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverController.m; sourceTree = "<group>"; };
+		84DC15991A1E1EE9005CE54D /* FPPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverView.h; sourceTree = "<group>"; };
+		84DC159A1A1E1EE9005CE54D /* FPPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverView.m; sourceTree = "<group>"; };
+		84DC159B1A1E1EE9005CE54D /* FPTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPTouchView.h; sourceTree = "<group>"; };
+		84DC159C1A1E1EE9005CE54D /* FPTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPTouchView.m; sourceTree = "<group>"; };
+		84DC15A01A1E1F98005CE54D /* Info-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Info-32.png"; sourceTree = "<group>"; };
 		84E0226619F4F0C80057DA6D /* LROpenLinksInWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LROpenLinksInWebViewController.h; sourceTree = "<group>"; };
 		84E0226719F4F0C80057DA6D /* LROpenLinksInWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LROpenLinksInWebViewController.m; sourceTree = "<group>"; };
 		84E0226919F50AE80057DA6D /* LRUserTimeLineTwitterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRUserTimeLineTwitterViewController.h; sourceTree = "<group>"; };
@@ -548,6 +560,13 @@
 				84E0226619F4F0C80057DA6D /* LROpenLinksInWebViewController.h */,
 				84E0226719F4F0C80057DA6D /* LROpenLinksInWebViewController.m */,
 				84D3C01519B86F9E007455F9 /* Main_iPhone.storyboard */,
+				84DC15961A1E1EE9005CE54D /* ARCMacros.h */,
+				84DC15971A1E1EE9005CE54D /* FPPopoverController.h */,
+				84DC15981A1E1EE9005CE54D /* FPPopoverController.m */,
+				84DC15991A1E1EE9005CE54D /* FPPopoverView.h */,
+				84DC159A1A1E1EE9005CE54D /* FPPopoverView.m */,
+				84DC159B1A1E1EE9005CE54D /* FPTouchView.h */,
+				84DC159C1A1E1EE9005CE54D /* FPTouchView.m */,
 				84D22D5219F5516600131FA2 /* MNMPullToRefresh */,
 				84BED43719D5988C005C80F3 /* STTwitter */,
 				84D3C05619B886A7007455F9 /* LRCoreDataClasses */,
@@ -617,12 +636,12 @@
 				84D3C06419B886A7007455F9 /* LRUserRoles.m */,
 				8467DD8E19C32EEB00BFA20F /* LRAnalyst.h */,
 				8467DD8F19C32EEB00BFA20F /* LRAnalyst.m */,
-				84093CB319E6A83D00D20D19 /* LRTwitterList.h */,
-				84093CB419E6A83D00D20D19 /* LRTwitterList.m */,
 				84E0226C19F5129F0057DA6D /* LRTweets.h */,
 				84E0226D19F5129F0057DA6D /* LRTweets.m */,
 				84DC10C71A1B5B8B005CE54D /* LRDocument.h */,
 				84DC10C81A1B5B8B005CE54D /* LRDocument.m */,
+				84DC10CD1A1CA191005CE54D /* LRTwitterList.h */,
+				84DC10CE1A1CA191005CE54D /* LRTwitterList.m */,
 			);
 			path = LRCoreDataFiles;
 			sourceTree = "<group>";
@@ -777,6 +796,7 @@
 				84093CB619ED01FF00D20D19 /* logoutBtn1@2x.png */,
 				84093CBB19ED5ABA00D20D19 /* Share-black-32.png */,
 				84D286F21A1A018E00917ECD /* new_background.png */,
+				84DC15A01A1E1F98005CE54D /* Info-32.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -885,6 +905,7 @@
 				848495171A03902A003CC384 /* Close-32.png in Resources */,
 				84D286F11A137E9000917ECD /* Leerink-White_200x44.png in Resources */,
 				84D3C0AB19B886A7007455F9 /* LRDocumentTypeTableViewCell.xib in Resources */,
+				84DC15A11A1E1F98005CE54D /* Info-32.png in Resources */,
 				84D3C0BE19B886A7007455F9 /* password.png in Resources */,
 				84D2D46619FFB21B004C884C /* Check_32.png in Resources */,
 				84D3C0C319B886A7007455F9 /* User-48.png in Resources */,
@@ -969,7 +990,7 @@
 				84D3C12719C1CB8C007455F9 /* LRGetDocumentService.m in Sources */,
 				84D22D5119F548E700131FA2 /* AUIAutoGrowingTextView.m in Sources */,
 				84D3C0A219B886A7007455F9 /* LRSymbol.m in Sources */,
-				84093CB519E6A83D00D20D19 /* LRTwitterList.m in Sources */,
+				84DC10CF1A1CA191005CE54D /* LRTwitterList.m in Sources */,
 				84D3C0A419B886A7007455F9 /* LRUserRoles.m in Sources */,
 				84DC10C61A1B5A8D005CE54D /* NSDate+Helper.m in Sources */,
 				84BED45919D5988C005C80F3 /* STTwitterAPI.m in Sources */,
@@ -1002,6 +1023,7 @@
 				84BED46019D5988C005C80F3 /* JSONSyntaxHighlight.m in Sources */,
 				84D3C11019B88A77007455F9 /* RTCustomTextField.m in Sources */,
 				84D3C0D419B887B4007455F9 /* LRLoginService.m in Sources */,
+				84DC159E1A1E1EE9005CE54D /* FPPopoverView.m in Sources */,
 				84D3C05419B88657007455F9 /* LRMainClientPageViewController.m in Sources */,
 				84D3C12A19C1CCFC007455F9 /* LRDocumentViewController.m in Sources */,
 				84D3C0A819B886A7007455F9 /* LRContactListTableViewCell.m in Sources */,
@@ -1019,6 +1041,8 @@
 				84D3C0B019B886A7007455F9 /* UIAlertView+MKNetworkKitAdditions.m in Sources */,
 				84BED45619D5988C005C80F3 /* NSError+STTwitter.m in Sources */,
 				84D3C0C819B88741007455F9 /* leerink.xcdatamodeld in Sources */,
+				84DC159F1A1E1EE9005CE54D /* FPTouchView.m in Sources */,
+				84DC159D1A1E1EE9005CE54D /* FPPopoverController.m in Sources */,
 				8467DD9919D17BCB00BFA20F /* NSDate+RTConvenience.m in Sources */,
 				84D3C0D319B887B4007455F9 /* LRGetAnalystService.m in Sources */,
 			);

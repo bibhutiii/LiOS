@@ -62,8 +62,22 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="uncheckbox.png" translatesAutoresizingMaskIntoConstraints="NO" id="Q2b-nx-KV9">
                         <rect key="frame" x="8" y="16" width="22" height="20"/>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SNM-au-OzI">
+                        <rect key="frame" x="253" y="40" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="FSS-DP-ozX"/>
+                            <constraint firstAttribute="height" constant="25" id="SsJ-MA-kF1"/>
+                        </constraints>
+                        <state key="normal" image="Info-32.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="infoForAuthorClicked:" destination="XOq-iI-xY5" eventType="touchUpInside" id="7Tw-ZY-lIK"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="SNM-au-OzI" firstAttribute="top" secondItem="5no-B9-Ac9" secondAttribute="bottom" constant="3" id="33n-On-7kZ"/>
                     <constraint firstAttribute="bottom" secondItem="eEA-lA-nds" secondAttribute="bottom" constant="3" id="4Oy-qJ-TlM"/>
                     <constraint firstAttribute="trailing" secondItem="51P-gi-1gI" secondAttribute="trailing" constant="13" id="6RD-dy-kAt"/>
                     <constraint firstItem="eEA-lA-nds" firstAttribute="leading" secondItem="xxb-oE-g4Q" secondAttribute="leading" constant="146" id="7ND-6p-Knq"/>
@@ -74,6 +88,7 @@
                     <constraint firstAttribute="centerY" secondItem="51P-gi-1gI" secondAttribute="centerY" constant="-1" id="SHL-Qo-kou"/>
                     <constraint firstAttribute="centerY" secondItem="51P-gi-1gI" secondAttribute="centerY" constant="-1" id="WQK-eX-0c4"/>
                     <constraint firstItem="eEA-lA-nds" firstAttribute="top" secondItem="5no-B9-Ac9" secondAttribute="bottom" constant="8" id="Yli-F7-I0d"/>
+                    <constraint firstAttribute="trailing" secondItem="SNM-au-OzI" secondAttribute="trailing" constant="42" id="Z8U-MT-bRN"/>
                     <constraint firstAttribute="bottom" secondItem="dWt-2h-vvT" secondAttribute="bottom" constant="3" id="eee-6u-fAn"/>
                     <constraint firstItem="dWt-2h-vvT" firstAttribute="leading" secondItem="xxb-oE-g4Q" secondAttribute="leading" constant="38" id="wy9-Le-B8U"/>
                 </constraints>
@@ -83,12 +98,14 @@
                 <outlet property="authorTitleLabel" destination="eEA-lA-nds" id="Pn0-ub-fl2"/>
                 <outlet property="dateLabel" destination="dWt-2h-vvT" id="mrt-EU-xeV"/>
                 <outlet property="documentTitleLabel" destination="5no-B9-Ac9" id="xeZ-3X-iy4"/>
+                <outlet property="infoForAuthorsButton" destination="SNM-au-OzI" id="A1G-hE-lDl"/>
                 <outlet property="selectDocumentImage" destination="Q2b-nx-KV9" id="Qdr-tg-pZR"/>
             </connections>
             <point key="canvasLocation" x="140" y="149"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="Info-32.png" width="32" height="32"/>
         <image name="arrowRightBlack.png" width="22" height="22"/>
         <image name="uncheckbox.png" width="27" height="27"/>
     </resources>

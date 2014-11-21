@@ -66,6 +66,7 @@ CGFloat animatedDistance;
     self.userNameTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.userNameTextField.delegate = self;
     self.userNameTextField.tag = 1;
+     [self.userNameTextField setTintColor:[UIColor blackColor]];
     
     self.passwordTextField.frame = CGRectMake(45.0, 209.0, 206.0, 32.0);
     self.passwordTextField.textColor = [UIColor colorWithRed:65.0/255.0 green:65.0/255.0 blue:65.0/255.0 alpha:1.0];
@@ -78,16 +79,22 @@ CGFloat animatedDistance;
     self.passwordTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.passwordTextField.delegate = self;
     self.passwordTextField.tag = 2;
+    self.passwordTextField.tintColor = [UIColor blackColor];
     
     prevNextArray = [[NSMutableArray alloc]initWithObjects:self.userNameTextField,self.passwordTextField, nil];
     
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] != nil)
+    {
+        self.userNameTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"];
+        self.passwordTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"PassWord"];
+    }
 }
 
 #pragma mark -
 - (IBAction)logIn:(id)sender {
     
-  //  self.userNameTextField.text = @"rameshv@aditi.com";
-   // self.passwordTextField.text = @"Leerink02*";
+    self.userNameTextField.text = @"rameshv@aditi.com";
+    self.passwordTextField.text = @"Leerink02*";
     // check if the username and password fields are not left empty.
     //    self.userNameTextField.text = @"alex.calhoun@leerink.commedatest.com";
     //   self.passwordTextField.text = @"TwinJet12";
@@ -126,7 +133,7 @@ CGFloat animatedDistance;
         [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] forKey:@"DeviceId"];
     }
     else {
-        [aRequestDict setObject:@"1234" forKey:@"DeviceId"];
+        [aRequestDict setObject:@"12345" forKey:@"DeviceId"];
     }
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
     
@@ -140,21 +147,25 @@ CGFloat animatedDistance;
                 NSDictionary *aTempDictionary = [aResponseDictionary objectForKey:@"Data"];
                 if([[aResponseDictionary objectForKey:@"IsSuccess"] boolValue] == TRUE) {
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
-                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
+                 //   [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"FirstName"] forKey:@"FirstName"];
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"LastName"] forKey:@"LastName"];
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"DocList"] forKey:@"DocList"];
                     [aStandardUserDefaults setObject:self.userNameTextField.text forKey:@"UserName"];
+                    [aStandardUserDefaults setObject:self.passwordTextField.text forKey:@"PassWord"];
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"UserId"] forKey:@"UserId"];
+                    [aStandardUserDefaults setObject:[NSNumber numberWithBool:[[aTempDictionary objectForKey:@"IsInternalUser"] boolValue]] forKey:@"IsInternalUser"];
                     
                     [aStandardUserDefaults synchronize];
                     [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
-                    if([LRAppDelegate myAppdelegate].documentFetchedFromNotification == TRUE) {
+                    if(self.isDocumentFromNotification == TRUE) {
                         
                         LRDocumentViewController *aDocumentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
                         aDocumentViewController.documentId = [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDocId"];
-                        [LRAppDelegate myAppdelegate].documentFetchedFromNotification = FALSE;
+                        self.isDocumentFromNotification = FALSE;
                         [[LRAppDelegate myAppdelegate].aBaseNavigationController pushViewController:aDocumentViewController animated:FALSE];
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"NotificationDocId"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
                         
                     }
                     else {
@@ -232,6 +243,7 @@ CGFloat animatedDistance;
     [textField resignFirstResponder];
     return YES;
 }
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     _refTextField = textField;
@@ -239,7 +251,7 @@ CGFloat animatedDistance;
     [self.view.window convertRect:textField.bounds fromView:textField];
     CGRect viewRect =
     [self.view.window convertRect:self.view.bounds fromView:self.view];
-    CGFloat midline = textFieldRect.origin.y + 0.5 * textFieldRect.size.height;
+    CGFloat midline = textFieldRect.origin.y + 3.5 * textFieldRect.size.height;
     CGFloat numerator =
     midline - viewRect.origin.y
     - MINIMUM_SCROLL_FRACTION * viewRect.size.height;

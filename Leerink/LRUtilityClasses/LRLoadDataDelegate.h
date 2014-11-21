@@ -16,4 +16,5 @@
 - (void)failedToParseTheDocumentWithErrorMessage:(NSString *)errorMessage;
 - (void)cancelaNetWorkOperation;
 - (void)selectDocumentForRowWithIndex:(int )index;
+- (void)infoForAuthorsSelected:(id)sender withTag:(int)iTag;
 @end

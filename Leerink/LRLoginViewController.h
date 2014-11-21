@@ -10,4 +10,5 @@
 #import "LRLoadDataDelegate.h"
 @interface LRLoginViewController : UIViewController<UITextFieldDelegate,LRLoadDataDelegate>
 
+@property (nonatomic, assign) BOOL isDocumentFromNotification;
 @end

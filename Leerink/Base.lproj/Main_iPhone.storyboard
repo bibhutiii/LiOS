@@ -340,7 +340,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="n5I-wG-CU7">
-                                <rect key="frame" x="0.0" y="93" width="320" height="324"/>
+                                <rect key="frame" x="0.0" y="93" width="320" height="374"/>
                                 <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="3cu-DY-RwZ"/>
@@ -405,7 +405,7 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="b23-1o-byb" secondAttribute="bottom" constant="34" id="6Ig-qv-eQx"/>
                             <constraint firstItem="n5I-wG-CU7" firstAttribute="top" secondItem="hBf-Bl-ldx" secondAttribute="top" constant="93" id="6TX-1B-PPa"/>
-                            <constraint firstAttribute="bottom" secondItem="n5I-wG-CU7" secondAttribute="bottom" constant="151" id="8g1-rZ-oj8"/>
+                            <constraint firstAttribute="bottom" secondItem="n5I-wG-CU7" secondAttribute="bottom" constant="101" id="8g1-rZ-oj8"/>
                             <constraint firstItem="47c-ad-cbH" firstAttribute="top" secondItem="hBf-Bl-ldx" secondAttribute="top" constant="28" id="Hgw-Ga-0sF"/>
                             <constraint firstAttribute="trailing" secondItem="W2I-tC-NWz" secondAttribute="trailing" constant="1" id="WyL-oI-TG5"/>
                             <constraint firstAttribute="trailing" secondItem="47c-ad-cbH" secondAttribute="trailing" constant="15" id="aRk-eg-28E"/>

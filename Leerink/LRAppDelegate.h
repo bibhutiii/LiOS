@@ -30,6 +30,7 @@
 + (NSArray *)fetchDataFromPlist;
 + (NSString *)fetchPathOfCustomPlist;
 - (BOOL) isUserLoggedIn;
+- (void)resetUserDefaultValues;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

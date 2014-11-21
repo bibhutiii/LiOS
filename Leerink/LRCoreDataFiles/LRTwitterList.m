@@ -2,7 +2,7 @@
 //  LRTwitterList.m
 //  Leerink
 //
-//  Created by Ashish on 9/10/2014.
+//  Created by Ashish on 19/11/2014.
 //  Copyright (c) 2014 leerink. All rights reserved.
 //
 
@@ -11,10 +11,12 @@
 
 @implementation LRTwitterList
 
-@dynamic listName;
-@dynamic listScreenName;
-@dynamic listOwnerId;
-@dynamic listSlug;
 @dynamic listImage;
+@dynamic listName;
+@dynamic listOwnerId;
+@dynamic listScreenName;
+@dynamic listSlug;
+@dynamic listCreatedDate;
+@dynamic listDate;
 
 @end

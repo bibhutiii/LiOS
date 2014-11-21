@@ -88,9 +88,9 @@
     self.aMainClientListArray = [NSMutableArray new];
     
     [self.aMainClientListArray addObjectsFromArray:docListArray];
+    [self.aMainClientListArray addObject:@"Analyst"];
     [self.aMainClientListArray addObject:@"Symbol"];
     [self.aMainClientListArray addObject:@"Sector"];
-    [self.aMainClientListArray addObject:@"Analyst"];
     
     [self.mainClientTable reloadData];
     self.mainClientTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -216,12 +216,15 @@
             [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
             [[LRWebEngine defaultWebEngine] sendRequestToLogOutWithwithContextInfo:nil forResponseBlock:^(NSDictionary *responseDictionary) {
                 if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
-                    if(![[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] isKindOfClass:([NSNull class])]) {
-                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SessionId"];
-                    }
-                    if(![[[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"] isKindOfClass:([NSNull class])]) {
-                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserName"];
-                    }
+                    
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SessionId"];
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"PrimaryRoleID"];
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"FirstName"];
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LastName"];
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DocList"];
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserId"];
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsInternalUser"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
                     
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     [LRUtility stopActivityIndicatorFromView:self.view];
@@ -358,6 +361,24 @@
             aTweetList.listScreenName = [aUserDetailsDictionary objectForKey:@"name"];
             aTweetList.listImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[aUserDetailsDictionary objectForKey:@"profile_image_url"]]]];
             aTweetList.listSlug = [aTweetDetailsDictionary objectForKey:@"slug"];
+           // aTweetList.listCreatedDate = [aTweetDetailsDictionary objectForKey:@"created_at"];
+            NSDateFormatter *aDateFormatterObj = [[NSDateFormatter alloc] init];
+            
+            
+            //Mon Oct 20 00:20:36 +0000 2014
+            // [aDateFormatterObj setDateFormat:@"EE LLLL d HH:mm:ss Z yyyy"];
+            [aDateFormatterObj setDateFormat:@"EEE MMM d HH:mm:ss Z y"];
+            
+            // "Tue, 25 May 2010 12:53:58 +0000";
+            //    [aDateFormatterObj setDateFormat:@"EE, d LLLL yyyy HH:mm:ss Z"];
+            
+            NSDate *aDateObj = [aDateFormatterObj dateFromString:[aTweetDetailsDictionary objectForKey:@"created_at"]];
+            //  NSLog(@"date--%@",aDateObj);
+            
+            [aDateFormatterObj setDateFormat:@"yyyy-MMM-dd HH:mm"];
+            //2014-10-19 23:00:15 +0000
+            aTweetList.listCreatedDate = [aDateFormatterObj stringFromDate:aDateObj];
+            aTweetList.listDate = aDateObj;
             
             [[LRCoreDataHelper sharedStorageManager] saveContext];
         }
@@ -432,15 +453,15 @@
         
         if(indexPath.row == self.aMainClientListArray.count - 3)
         {
-            documentTypeListViewController.eDocumentType = eLRDocumentSymbol;
+            documentTypeListViewController.eDocumentType = eLRDocumentAnalyst;
         }
         if(indexPath.row == self.aMainClientListArray.count - 2)
         {
-            documentTypeListViewController.eDocumentType = eLRDocumentSector;
+            documentTypeListViewController.eDocumentType = eLRDocumentSymbol;
             
         } if(indexPath.row == self.aMainClientListArray.count - 1)
         {
-            documentTypeListViewController.eDocumentType = eLRDocumentAnalyst;
+            documentTypeListViewController.eDocumentType = eLRDocumentSector;
         }
         documentTypeListViewController.titleHeader = [self.aMainClientListArray objectAtIndex:indexPath.row];
         [self.navigationController pushViewController:documentTypeListViewController animated:TRUE];
