@@ -25,4 +25,12 @@ typedef enum
     
 }eLRDocumentListType;
 
-
+typedef enum
+{
+    eLRDocumentTypePdf = 3000,
+    eLRDocumentTypeExcel,
+    eLRDocumentTypeWav,
+    eLRDocumentTypePpt,
+    eLRDocumentTypeDoc
+    
+}eLRDocumentTypeWebView;

@@ -20,38 +20,55 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
     // NSString *encodedString=[[self.linkURL relativeString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //  NSURL *weburl = [NSURL URLWithString:encodedString];
-    // self.linkURL = [NSURL URLWithString:@"http://www.google.com"];
-    NSURLRequest *aUrlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.linkURL]];
+    //self.linkURL = @"http://www.google.com";
     
     
-    [self.openLinkInsideApplicationWebView loadRequest:aUrlRequest];
-    if(self.isLinkFromLogin == TRUE) {
-        
-        SEL aCloseButtonAction = sel_registerName("Close");
-
-        UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Close-32"] style:UIBarButtonItemStyleBordered target:self action:aCloseButtonAction];
-        self.actionBarButtonItem = button;
-        [self.actionBarButtonItem setTintColor:[UIColor blackColor]];
-       // self.actionBarButtonItem = nil;
-        
-        self.toolBar.items = [NSArray arrayWithObject:button];
+   
+    if(self.isHtmlStringLoaded) {
+        self.toolBar.hidden = TRUE;
+        [self.openLinkInsideApplicationWebView loadHTMLString:self.linkURL baseURL:nil];
     }
     else {
-        SEL aLogoutButton = sel_registerName("openInSafari");
         
-        self.actionBarButtonItem.action = aLogoutButton;
+        if(self.isLinkFromLogin == TRUE) {
+            
+            SEL aCloseButtonAction = sel_registerName("Close");
+            
+            UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Close-32"] style:UIBarButtonItemStyleBordered target:self action:aCloseButtonAction];
+            self.actionBarButtonItem = button;
+            [self.actionBarButtonItem setTintColor:[UIColor blackColor]];
+            // self.actionBarButtonItem = nil;
+            
+            self.toolBar.items = [NSArray arrayWithObject:button];
+        }
+        else {
+            SEL aLogoutButton = sel_registerName("openInSafari");
+            
+            self.actionBarButtonItem.action = aLogoutButton;
+        }
+        
+        NSURLRequest *aUrlRequest = nil;
+        
+        /*if (![self.linkURL hasPrefix:@"http://"]) {
+         NSURL *aRequestUrl = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@",self.linkURL]];
+         NSURLRequest *aUrlRequest = [NSURLRequest requestWithURL:aRequestUrl];
+         [self.openLinkInsideApplicationWebView loadRequest:aUrlRequest];
+         
+         }
+         else {
+         aUrlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.linkURL]];
+         
+         }*/
+        aUrlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.linkURL]];
+        [self.openLinkInsideApplicationWebView loadRequest:aUrlRequest];
+
     }
-    
-    
-    //  UIWebView *aEWbivew = [[UIWebView alloc] initWithFrame:self.openLinkInsideApplicationWebView.bounds];
-    //   [aEWbivew loadRequest:[NSURLRequest requestWithURL:self.linkURL]];
-    // [self.view addSubview:aEWbivew];
-    //aEWbivew.delegate = self;
 }
+
 - (void)Close
 {
     [self dismissViewControllerAnimated:TRUE completion:^{
@@ -80,6 +97,13 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     NSLog(@"error--%@",error);
+    [LRUtility stopActivityIndicatorFromView:self.view];
+    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                             message:[error localizedDescription]
+                                                            delegate:self
+                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                   otherButtonTitles:nil, nil];
+    [errorAlertView show];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
@@ -88,6 +112,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     // [self.openLinkInsideApplicationWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@" "]]];
+     [self.openLinkInsideApplicationWebView stopLoading];
+    self.openLinkInsideApplicationWebView.delegate = nil;
     [super viewWillDisappear:TRUE];
 }
 - (void)didReceiveMemoryWarning {

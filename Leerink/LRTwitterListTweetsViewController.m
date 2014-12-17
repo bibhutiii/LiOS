@@ -33,8 +33,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    
     // Do any additional setup after loading the view.
     self.title = @"Tweets";
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0f],
@@ -70,13 +68,17 @@
         
         [twitter getListsStatusesForSlug:self.aTwitterList.listSlug screenName:self.aTwitterList.listScreenName ownerID:self.aTwitterList.listOwnerId sinceID:nil maxID:nil count:iCount includeEntities:[NSNumber numberWithBool:1] includeRetweets:[NSNumber numberWithBool:1] successBlock:^(NSArray *statuses) {
             [self saveTweetDetailsToCoreDataForArray:statuses];
+            pullToRefreshManager_ = [[MNMPullToRefreshManager alloc] initWithPullToRefreshViewHeight:60.0f
+                                                                                           tableView:self.tweetsListViewTable
+                                                                                          withClient:self];
+
              [pullToRefreshManager_ tableViewReloadFinishedAnimated:YES];
             
         } errorBlock:^(NSError *error) {
             
             [LRUtility stopActivityIndicatorFromView:self.view];
             UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                     message:[error description]
+                                                                     message:[error localizedDescription]
                                                                     delegate:self
                                                            cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                            otherButtonTitles:nil, nil];
@@ -88,7 +90,7 @@
         // ...
         [LRUtility stopActivityIndicatorFromView:self.view];
         UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                 message:[error description]
+                                                                 message:[error localizedDescription]
                                                                 delegate:self
                                                        cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                        otherButtonTitles:nil, nil];

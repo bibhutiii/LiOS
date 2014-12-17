@@ -17,4 +17,7 @@
 - (void)cancelaNetWorkOperation;
 - (void)selectDocumentForRowWithIndex:(int )index;
 - (void)infoForAuthorsSelected:(id)sender withTag:(int)iTag;
+- (void)showBioInformationForSelectedAnalystwithTag:(int)iTag;
+- (void)showTextOnlyVersionOfTheDocumentWithTag:(int)iTag;
+- (void)showPDFOnlyVersionOfTheDocumentWithTag:(int)iTag;
 @end

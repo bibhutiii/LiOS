@@ -15,6 +15,7 @@
 #import "LRUserRoles.h"
 #import "LRDocumentViewController.h"
 #import "LROpenLinksInWebViewController.h"
+#import "LRPasswordResetViewController.h"
 
 #define fontHelveticaNeueSize14 [UIFont systemFontOfSize:14.0]
 static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
@@ -34,6 +35,7 @@ CGFloat animatedDistance;
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 - (IBAction)termsOfUseLeerinkPartners:(id)sender;
+- (IBAction)forgotPasswordClicked:(id)sender;
 #pragma mark - Add the user roles to the database
 - (void) addTheUserRolesToDatabase;
 @end
@@ -92,14 +94,14 @@ CGFloat animatedDistance;
 #pragma mark -
 - (IBAction)logIn:(id)sender {
     
-    //self.userNameTextField.text = @"rameshv@aditi.com";
-    //self.passwordTextField.text = @"Leerink02*";
+    self.userNameTextField.text = @"rameshv@aditi.com";
+    self.passwordTextField.text = @"Leerink03*";
     // check if the username and password fields are not left empty.
     //    self.userNameTextField.text = @"alex.calhoun@leerink.commedatest.com";
     //   self.passwordTextField.text = @"TwinJet12";
     
-    // self.userNameTextField.text = @"cbrinzey@hqcm.commedatest.com";
-    // self.passwordTextField.text = @"WolfRayet12";
+     //self.userNameTextField.text = @"cbrinzey@hqcm.commedatest.com";
+     //self.passwordTextField.text = @"WolfRayet12";
     
     // [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
     
@@ -128,11 +130,11 @@ CGFloat animatedDistance;
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
     [aRequestDict setObject:self.userNameTextField.text forKey:@"Username"];
     [aRequestDict setObject:self.passwordTextField.text forKey:@"Password"];
-    if([[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] != nil) {
+    if(([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"DeviceId"])) {
         [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] forKey:@"DeviceId"];
     }
     else {
-        [aRequestDict setObject:@"12345" forKey:@"DeviceId"];
+        [aRequestDict setObject:@"<9f829b9b 4ed9eaaf b070e85a def45657 169394da eb3d483e 14301960 c420bbc4>" forKey:@"DeviceId"];
     }
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
     
@@ -156,21 +158,7 @@ CGFloat animatedDistance;
                     [aStandardUserDefaults setObject:[NSNumber numberWithBool:[[aTempDictionary objectForKey:@"IsInternalUser"] boolValue]] forKey:@"IsInternalUser"];
                     
                     [aStandardUserDefaults synchronize];
-                    [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
-                    if(self.isDocumentFromNotification == TRUE) {
-                        
-                        LRDocumentViewController *aDocumentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
-                        aDocumentViewController.documentId = [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDocId"];
-                        self.isDocumentFromNotification = FALSE;
-                        [[LRAppDelegate myAppdelegate].aBaseNavigationController pushViewController:aDocumentViewController animated:FALSE];
-                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"NotificationDocId"];
-                        [[NSUserDefaults standardUserDefaults] synchronize];
-                        
-                    }
-                    else {
-                        
-                    }
-                    
+                    [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];                    
                 }
                 else {
                     [LRUtility stopActivityIndicatorFromView:self.view];
@@ -197,7 +185,7 @@ CGFloat animatedDistance;
         
         [LRUtility stopActivityIndicatorFromView:self.view];
         UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                 message:[errorString description]
+                                                                 message:[errorString localizedDescription]
                                                                 delegate:self
                                                        cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                        otherButtonTitles:nil, nil];
@@ -377,9 +365,19 @@ CGFloat animatedDistance;
     LROpenLinksInWebViewController *aOpenLinksInWebViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LROpenLinksInWebViewController class])];
     aOpenLinksInWebViewController.linkURL = @"http://www.leerink.com/terms-of-use/";
     aOpenLinksInWebViewController.isLinkFromLogin = TRUE;
+    aOpenLinksInWebViewController.isHtmlStringLoaded = FALSE;
     [self presentViewController:aOpenLinksInWebViewController animated:TRUE completion:^{
         
     }];
     
+}
+
+- (IBAction)forgotPasswordClicked:(id)sender {
+    
+    LRPasswordResetViewController *aPasswordResetController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRPasswordResetViewController class])];
+    [self presentViewController:aPasswordResetController animated:TRUE completion:^{
+        
+    }];
+
 }
 @end

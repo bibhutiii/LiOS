@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LRLoadDataDelegate.h"
 
 @interface LRContactListTableViewCell : UITableViewCell
 - (void)fillDataForContactCellwithName:(NSString *)contactName;
+- (void)fillDataForMenuCellWithDisplayName:(NSString *)displayName andIconImage:(UIImage *)image;
+
+@property (nonatomic, assign) id <LRLoadDataDelegate> delegate;
 @end

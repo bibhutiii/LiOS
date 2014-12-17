@@ -43,6 +43,7 @@
                         analyst.firstName = [array objectAtIndex:1];
                         analyst.lastName = [array objectAtIndex:0];
                         analyst.userId = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"UserID"] intValue]];
+                        analyst.analystInfo = [analystDictionary objectForKey:@"BioProfile"];
                     }
                     [[LRCoreDataHelper sharedStorageManager] saveContext];
                 }
@@ -126,7 +127,7 @@
         {
             LRAnalyst *analyst = (LRAnalyst *)[iContextInfo objectForKey:@"AnalystDocumentList"];
             
-            NSArray *documentsForAnalyst = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"analyst.userId == %d",analyst.userId, nil];
+            NSArray *documentsForAnalyst = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:nil, nil];
             if(documentsForAnalyst && documentsForAnalyst.count > 0) {
                 for (LRDocument *aDocument in documentsForAnalyst) {
                     [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:aDocument];
@@ -165,7 +166,7 @@
         {
             LRSector *sector = (LRSector *)[iContextInfo objectForKey:@"SectorDocumentList"];
             
-            NSArray *documentsForSector = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"sector.researchID == %d",sector.researchID, nil];
+            NSArray *documentsForSector = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:nil, nil];
             if(documentsForSector && documentsForSector.count > 0) {
                 for (LRDocument *aDocument in documentsForSector) {
                     [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:aDocument];
@@ -202,7 +203,7 @@
         {
             LRSymbol *symbol = (LRSymbol *)[iContextInfo objectForKey:@"SymbolDocumentList"];
             
-            NSArray *documentsForSector = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:@"symbol.tickerID == %d",symbol.tickerID, nil];
+            NSArray *documentsForSector = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRDocument" withPredicate:nil, nil];
             if(documentsForSector && documentsForSector.count > 0) {
                 for (LRDocument *aDocument in documentsForSector) {
                     [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:aDocument];

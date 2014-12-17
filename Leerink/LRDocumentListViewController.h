@@ -16,6 +16,12 @@
 @property (nonatomic, assign) eLRDocumentListType documentListType;
 @property (nonatomic, assign) int documentTypeId;
 @property (nonatomic, strong) id contextInfo;
+@property (strong, nonatomic) NSMutableArray *documentsListArray;
+@property (strong, nonatomic) NSString *returnTypeForMenu;
+@property (strong, nonatomic) NSString *menuItemId;
+@property (strong, nonatomic) NSString *parentMenuItemId;
+@property (nonatomic, assign) BOOL showMoreForSearchResults;
+
 
 @property (nonatomic,assign) BOOL isDocumentsFetchedForList;
 @end

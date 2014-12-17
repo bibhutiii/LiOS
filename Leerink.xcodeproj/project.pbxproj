@@ -10,7 +10,17 @@
 		84093CA919E68B3300D20D19 /* LRTwitterListTweetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84093CA819E68B3300D20D19 /* LRTwitterListTweetsViewController.m */; };
 		84093CB719ED01FF00D20D19 /* logoutBtn1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84093CB619ED01FF00D20D19 /* logoutBtn1@2x.png */; };
 		84093CBC19ED5ABA00D20D19 /* Share-black-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 84093CBB19ED5ABA00D20D19 /* Share-black-32.png */; };
-		8467DD9019C32EEB00BFA20F /* LRAnalyst.m in Sources */ = {isa = PBXBuildFile; fileRef = 8467DD8F19C32EEB00BFA20F /* LRAnalyst.m */; };
+		841BE6D71A3F03060084F1FD /* text_only.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6D61A3F03060084F1FD /* text_only.png */; };
+		841BE6D91A3F043D0084F1FD /* File-text-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6D81A3F043D0084F1FD /* File-text-32.png */; };
+		841BE6DB1A3F04F70084F1FD /* Edit Text_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6DA1A3F04F70084F1FD /* Edit Text_32x32.png */; };
+		841BE6DD1A3F086F0084F1FD /* Acrobat-blue-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6DC1A3F086F0084F1FD /* Acrobat-blue-32.png */; };
+		841BE6E01A40604E0084F1FD /* Cancel-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6DE1A40604E0084F1FD /* Cancel-32.png */; };
+		841BE6E11A40604E0084F1FD /* Ok-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6DF1A40604E0084F1FD /* Ok-32.png */; };
+		841BE6E31A4097100084F1FD /* Arrow Circle Left-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6E21A4097100084F1FD /* Arrow Circle Left-32.png */; };
+		841BE6E71A40A1230084F1FD /* Arrow Circle Right-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6E61A40A1230084F1FD /* Arrow Circle Right-32.png */; };
+		845F09591A23275600C66E27 /* simsg355q.wav in Resources */ = {isa = PBXBuildFile; fileRef = 845F09581A23275600C66E27 /* simsg355q.wav */; };
+		845F095B1A23276C00C66E27 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F095A1A23276C00C66E27 /* AVFoundation.framework */; };
+		845F095E1A24769600C66E27 /* LRPasswordResetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845F095D1A24769600C66E27 /* LRPasswordResetViewController.m */; };
 		8467DD9319D032B300BFA20F /* LRSaveDataToDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8467DD9219D032B300BFA20F /* LRSaveDataToDatabase.m */; };
 		848495171A03902A003CC384 /* Close-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 848495161A03902A003CC384 /* Close-32.png */; };
 		8484951A1A0395AC003CC384 /* UIView+MGBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 848495191A0395AC003CC384 /* UIView+MGBadgeView.m */; };
@@ -62,7 +72,7 @@
 		84D3C03019B86F9E007455F9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84D3C02E19B86F9E007455F9 /* InfoPlist.strings */; };
 		84D3C03219B86F9E007455F9 /* LeerinkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C03119B86F9E007455F9 /* LeerinkTests.m */; };
 		84D3C05119B88657007455F9 /* LRDocumentListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C04419B88657007455F9 /* LRDocumentListViewController.m */; };
-		84D3C05219B88657007455F9 /* LRDocumentTypeListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C04619B88657007455F9 /* LRDocumentTypeListController.m */; };
+		84D3C05219B88657007455F9 /* LRSubMenuListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C04619B88657007455F9 /* LRSubMenuListController.m */; };
 		84D3C05319B88657007455F9 /* LRLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C04819B88657007455F9 /* LRLoginViewController.m */; };
 		84D3C05419B88657007455F9 /* LRMainClientPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C04A19B88657007455F9 /* LRMainClientPageViewController.m */; };
 		84D3C0A119B886A7007455F9 /* LRSector.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D3C05E19B886A7007455F9 /* LRSector.m */; };
@@ -139,6 +149,10 @@
 		84E0226819F4F0C80057DA6D /* LROpenLinksInWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E0226719F4F0C80057DA6D /* LROpenLinksInWebViewController.m */; };
 		84E0226B19F50AE80057DA6D /* LRUserTimeLineTwitterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E0226A19F50AE80057DA6D /* LRUserTimeLineTwitterViewController.m */; };
 		84E0226E19F5129F0057DA6D /* LRTweets.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E0226D19F5129F0057DA6D /* LRTweets.m */; };
+		84EA0DB21A2C72CC00B1B6BA /* User_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EA0DB11A2C72CC00B1B6BA /* User_32.png */; };
+		84EA0DB51A2C74A400B1B6BA /* LRAuthorBioInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EA0DB41A2C74A400B1B6BA /* LRAuthorBioInfoViewController.m */; };
+		84EA0DB81A2CB76100B1B6BA /* LRAnalyst.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EA0DB71A2CB76100B1B6BA /* LRAnalyst.m */; };
+		84EA0DC01A2E22D200B1B6BA /* Search-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EA0DBF1A2E22D200B1B6BA /* Search-32.png */; };
 		84EC89901A0CF89C0057C9BB /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EC898F1A0CF89C0057C9BB /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
 
@@ -157,8 +171,18 @@
 		84093CA819E68B3300D20D19 /* LRTwitterListTweetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRTwitterListTweetsViewController.m; sourceTree = "<group>"; };
 		84093CB619ED01FF00D20D19 /* logoutBtn1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logoutBtn1@2x.png"; sourceTree = "<group>"; };
 		84093CBB19ED5ABA00D20D19 /* Share-black-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Share-black-32.png"; sourceTree = "<group>"; };
-		8467DD8E19C32EEB00BFA20F /* LRAnalyst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRAnalyst.h; sourceTree = "<group>"; };
-		8467DD8F19C32EEB00BFA20F /* LRAnalyst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRAnalyst.m; sourceTree = "<group>"; };
+		841BE6D61A3F03060084F1FD /* text_only.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = text_only.png; sourceTree = "<group>"; };
+		841BE6D81A3F043D0084F1FD /* File-text-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "File-text-32.png"; sourceTree = "<group>"; };
+		841BE6DA1A3F04F70084F1FD /* Edit Text_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Edit Text_32x32.png"; sourceTree = "<group>"; };
+		841BE6DC1A3F086F0084F1FD /* Acrobat-blue-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Acrobat-blue-32.png"; sourceTree = "<group>"; };
+		841BE6DE1A40604E0084F1FD /* Cancel-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel-32.png"; sourceTree = "<group>"; };
+		841BE6DF1A40604E0084F1FD /* Ok-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ok-32.png"; sourceTree = "<group>"; };
+		841BE6E21A4097100084F1FD /* Arrow Circle Left-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow Circle Left-32.png"; sourceTree = "<group>"; };
+		841BE6E61A40A1230084F1FD /* Arrow Circle Right-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow Circle Right-32.png"; sourceTree = "<group>"; };
+		845F09581A23275600C66E27 /* simsg355q.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = simsg355q.wav; sourceTree = "<group>"; };
+		845F095A1A23276C00C66E27 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		845F095C1A24769600C66E27 /* LRPasswordResetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRPasswordResetViewController.h; sourceTree = "<group>"; };
+		845F095D1A24769600C66E27 /* LRPasswordResetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRPasswordResetViewController.m; sourceTree = "<group>"; };
 		8467DD9119D032B300BFA20F /* LRSaveDataToDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSaveDataToDatabase.h; sourceTree = "<group>"; };
 		8467DD9219D032B300BFA20F /* LRSaveDataToDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSaveDataToDatabase.m; sourceTree = "<group>"; };
 		848495161A03902A003CC384 /* Close-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Close-32.png"; sourceTree = "<group>"; };
@@ -239,8 +263,8 @@
 		84D3C03119B86F9E007455F9 /* LeerinkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LeerinkTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D3C04319B88657007455F9 /* LRDocumentListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDocumentListViewController.h; sourceTree = "<group>"; };
 		84D3C04419B88657007455F9 /* LRDocumentListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRDocumentListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		84D3C04519B88657007455F9 /* LRDocumentTypeListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRDocumentTypeListController.h; sourceTree = "<group>"; };
-		84D3C04619B88657007455F9 /* LRDocumentTypeListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRDocumentTypeListController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		84D3C04519B88657007455F9 /* LRSubMenuListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSubMenuListController.h; sourceTree = "<group>"; };
+		84D3C04619B88657007455F9 /* LRSubMenuListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRSubMenuListController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D3C04719B88657007455F9 /* LRLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRLoginViewController.h; sourceTree = "<group>"; };
 		84D3C04819B88657007455F9 /* LRLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LRLoginViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84D3C04919B88657007455F9 /* LRMainClientPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRMainClientPageViewController.h; sourceTree = "<group>"; };
@@ -356,6 +380,12 @@
 		84E0226A19F50AE80057DA6D /* LRUserTimeLineTwitterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRUserTimeLineTwitterViewController.m; sourceTree = "<group>"; };
 		84E0226C19F5129F0057DA6D /* LRTweets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRTweets.h; sourceTree = "<group>"; };
 		84E0226D19F5129F0057DA6D /* LRTweets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRTweets.m; sourceTree = "<group>"; };
+		84EA0DB11A2C72CC00B1B6BA /* User_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = User_32.png; sourceTree = "<group>"; };
+		84EA0DB31A2C74A400B1B6BA /* LRAuthorBioInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRAuthorBioInfoViewController.h; sourceTree = "<group>"; };
+		84EA0DB41A2C74A400B1B6BA /* LRAuthorBioInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRAuthorBioInfoViewController.m; sourceTree = "<group>"; };
+		84EA0DB61A2CB76100B1B6BA /* LRAnalyst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRAnalyst.h; sourceTree = "<group>"; };
+		84EA0DB71A2CB76100B1B6BA /* LRAnalyst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRAnalyst.m; sourceTree = "<group>"; };
+		84EA0DBF1A2E22D200B1B6BA /* Search-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search-32.png"; sourceTree = "<group>"; };
 		84EC898F1A0CF89C0057C9BB /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -364,6 +394,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				845F095B1A23276C00C66E27 /* AVFoundation.framework in Frameworks */,
 				84BED43619D55B00005C80F3 /* Accounts.framework in Frameworks */,
 				84D3C0EC19B88868007455F9 /* Social.framework in Frameworks */,
 				84D3C0F619B888A6007455F9 /* Security.framework in Frameworks */,
@@ -484,6 +515,7 @@
 		84D3C00219B86F9E007455F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				845F095A1A23276C00C66E27 /* AVFoundation.framework */,
 				84BED43519D55B00005C80F3 /* Accounts.framework */,
 				84D3C11A19B8A487007455F9 /* Bolts.framework */,
 				84D3C11B19B8A487007455F9 /* Parse.framework */,
@@ -521,8 +553,8 @@
 				84D3C04819B88657007455F9 /* LRLoginViewController.m */,
 				84D3C04919B88657007455F9 /* LRMainClientPageViewController.h */,
 				84D3C04A19B88657007455F9 /* LRMainClientPageViewController.m */,
-				84D3C04519B88657007455F9 /* LRDocumentTypeListController.h */,
-				84D3C04619B88657007455F9 /* LRDocumentTypeListController.m */,
+				84D3C04519B88657007455F9 /* LRSubMenuListController.h */,
+				84D3C04619B88657007455F9 /* LRSubMenuListController.m */,
 				84D3C04319B88657007455F9 /* LRDocumentListViewController.h */,
 				84D3C04419B88657007455F9 /* LRDocumentListViewController.m */,
 				84D3C12819C1CCFC007455F9 /* LRDocumentViewController.h */,
@@ -535,6 +567,10 @@
 				84E0226A19F50AE80057DA6D /* LRUserTimeLineTwitterViewController.m */,
 				84E0226619F4F0C80057DA6D /* LROpenLinksInWebViewController.h */,
 				84E0226719F4F0C80057DA6D /* LROpenLinksInWebViewController.m */,
+				845F095C1A24769600C66E27 /* LRPasswordResetViewController.h */,
+				845F095D1A24769600C66E27 /* LRPasswordResetViewController.m */,
+				84EA0DB31A2C74A400B1B6BA /* LRAuthorBioInfoViewController.h */,
+				84EA0DB41A2C74A400B1B6BA /* LRAuthorBioInfoViewController.m */,
 				84D3C01519B86F9E007455F9 /* Main_iPhone.storyboard */,
 				84DC15961A1E1EE9005CE54D /* ARCMacros.h */,
 				84DC15971A1E1EE9005CE54D /* FPPopoverController.h */,
@@ -609,14 +645,14 @@
 				84D3C06219B886A7007455F9 /* LRUser.m */,
 				84D3C06319B886A7007455F9 /* LRUserRoles.h */,
 				84D3C06419B886A7007455F9 /* LRUserRoles.m */,
-				8467DD8E19C32EEB00BFA20F /* LRAnalyst.h */,
-				8467DD8F19C32EEB00BFA20F /* LRAnalyst.m */,
 				84E0226C19F5129F0057DA6D /* LRTweets.h */,
 				84E0226D19F5129F0057DA6D /* LRTweets.m */,
 				84DC10C71A1B5B8B005CE54D /* LRDocument.h */,
 				84DC10C81A1B5B8B005CE54D /* LRDocument.m */,
 				84DC10CD1A1CA191005CE54D /* LRTwitterList.h */,
 				84DC10CE1A1CA191005CE54D /* LRTwitterList.m */,
+				84EA0DB61A2CB76100B1B6BA /* LRAnalyst.h */,
+				84EA0DB71A2CB76100B1B6BA /* LRAnalyst.m */,
 			);
 			path = LRCoreDataFiles;
 			sourceTree = "<group>";
@@ -717,6 +753,8 @@
 		84D3C08C19B886A7007455F9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				84EA0DBF1A2E22D200B1B6BA /* Search-32.png */,
+				845F09581A23275600C66E27 /* simsg355q.wav */,
 				84DC10C21A1B4C63005CE54D /* Leerink-White_320x64.png */,
 				84D286F71A1A22EA00917ECD /* Leerink-White_320x44.png */,
 				84D286F81A1A22EA00917ECD /* Leerink-White_320x88.png */,
@@ -749,6 +787,15 @@
 				84093CBB19ED5ABA00D20D19 /* Share-black-32.png */,
 				84D286F21A1A018E00917ECD /* new_background.png */,
 				84DC15A01A1E1F98005CE54D /* Info-32.png */,
+				84EA0DB11A2C72CC00B1B6BA /* User_32.png */,
+				841BE6D61A3F03060084F1FD /* text_only.png */,
+				841BE6D81A3F043D0084F1FD /* File-text-32.png */,
+				841BE6DA1A3F04F70084F1FD /* Edit Text_32x32.png */,
+				841BE6DC1A3F086F0084F1FD /* Acrobat-blue-32.png */,
+				841BE6DE1A40604E0084F1FD /* Cancel-32.png */,
+				841BE6DF1A40604E0084F1FD /* Ok-32.png */,
+				841BE6E21A4097100084F1FD /* Arrow Circle Left-32.png */,
+				841BE6E61A40A1230084F1FD /* Arrow Circle Right-32.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -855,12 +902,14 @@
 				84D3C0BB19B886A7007455F9 /* login_button@2x.png in Resources */,
 				84D3C0B719B886A7007455F9 /* Cloud Contacts Silver-32.png in Resources */,
 				848495171A03902A003CC384 /* Close-32.png in Resources */,
+				841BE6E01A40604E0084F1FD /* Cancel-32.png in Resources */,
 				84D286F11A137E9000917ECD /* Leerink-White_200x44.png in Resources */,
 				84D3C0AB19B886A7007455F9 /* LRDocumentTypeTableViewCell.xib in Resources */,
 				84DC15A11A1E1F98005CE54D /* Info-32.png in Resources */,
 				84D3C0BE19B886A7007455F9 /* password.png in Resources */,
 				84D2D46619FFB21B004C884C /* Check_32.png in Resources */,
 				84D3C0C319B886A7007455F9 /* User-48.png in Resources */,
+				841BE6E11A40604E0084F1FD /* Ok-32.png in Resources */,
 				84D3C0C119B886A7007455F9 /* text_field.png in Resources */,
 				84DC10C31A1B4C63005CE54D /* Leerink-White_320x64.png in Resources */,
 				8484951C1A0396E8003CC384 /* Shoping-Cart-32.png in Resources */,
@@ -869,29 +918,38 @@
 				84D3C0BA19B886A7007455F9 /* login_button.png in Resources */,
 				84D3C01F19B86F9E007455F9 /* Images.xcassets in Resources */,
 				84D286F91A1A22EA00917ECD /* Leerink-White_320x44.png in Resources */,
+				841BE6DB1A3F04F70084F1FD /* Edit Text_32x32.png in Resources */,
 				84D3C0C519B886A7007455F9 /* user_name_icon@2x.png in Resources */,
 				84D3C0A919B886A7007455F9 /* LRContactListTableViewCell.xib in Resources */,
 				84D3C0B919B886A7007455F9 /* Documents_32.png in Resources */,
 				84D3C0BF19B886A7007455F9 /* password_icon.png in Resources */,
 				84D3C0B619B886A7007455F9 /* arrowRightBlack@2x.png in Resources */,
+				841BE6E71A40A1230084F1FD /* Arrow Circle Right-32.png in Resources */,
 				84D286F31A1A018E00917ECD /* new_background.png in Resources */,
 				84BED46319D59E0A005C80F3 /* Twitter-32.png in Resources */,
+				84EA0DB21A2C72CC00B1B6BA /* User_32.png in Resources */,
 				84D3C0C219B886A7007455F9 /* text_field@2x.png in Resources */,
+				841BE6D71A3F03060084F1FD /* text_only.png in Resources */,
 				84D3C0B519B886A7007455F9 /* About-32.png in Resources */,
 				84BED46B19D5A189005C80F3 /* LRTwitterListTableViewCell.xib in Resources */,
+				841BE6E31A4097100084F1FD /* Arrow Circle Left-32.png in Resources */,
 				84D3C01719B86F9E007455F9 /* Main_iPhone.storyboard in Resources */,
 				8484952F1A08BB34003CC384 /* Leerink-App-Icon-120x120.png in Resources */,
 				84D3C0BC19B886A7007455F9 /* logo.png in Resources */,
 				84D3C0BD19B886A7007455F9 /* Logout-32.png in Resources */,
+				841BE6D91A3F043D0084F1FD /* File-text-32.png in Resources */,
 				84D2D46A19FFB493004C884C /* uncheckbox@2x.png in Resources */,
 				84D286FA1A1A22EA00917ECD /* Leerink-White_320x88.png in Resources */,
 				84D3C0C419B886A7007455F9 /* user_name_icon.png in Resources */,
+				841BE6DD1A3F086F0084F1FD /* Acrobat-blue-32.png in Resources */,
 				84D3C0C019B886A7007455F9 /* password_icon@2x.png in Resources */,
+				84EA0DC01A2E22D200B1B6BA /* Search-32.png in Resources */,
 				84D3C0B819B886A7007455F9 /* Contacts-32.png in Resources */,
 				84D22D5E19F5516600131FA2 /* MNMPullToRefreshIcon.png in Resources */,
 				84D3C00E19B86F9E007455F9 /* InfoPlist.strings in Resources */,
 				84D2D46919FFB493004C884C /* checkbox@2x.png in Resources */,
 				84D2D46C19FFCD84004C884C /* Document.plist in Resources */,
+				845F09591A23275600C66E27 /* simsg355q.wav in Resources */,
 				84D22D5D19F5516600131FA2 /* MNMPullToRefresh.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -929,12 +987,12 @@
 			files = (
 				84D3C0B119B886A7007455F9 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
 				84D3C05119B88657007455F9 /* LRDocumentListViewController.m in Sources */,
-				8467DD9019C32EEB00BFA20F /* LRAnalyst.m in Sources */,
+				845F095E1A24769600C66E27 /* LRPasswordResetViewController.m in Sources */,
 				84BED45A19D5988C005C80F3 /* STTwitterAppOnly.m in Sources */,
 				84E0226B19F50AE80057DA6D /* LRUserTimeLineTwitterViewController.m in Sources */,
 				84BED45E19D5988C005C80F3 /* STTwitterOSRequest.m in Sources */,
 				84BED46619D59EE3005C80F3 /* LRTwitterListsViewController.m in Sources */,
-				84D3C05219B88657007455F9 /* LRDocumentTypeListController.m in Sources */,
+				84D3C05219B88657007455F9 /* LRSubMenuListController.m in Sources */,
 				84BED45C19D5988C005C80F3 /* STTwitterOAuth.m in Sources */,
 				84D3C0A119B886A7007455F9 /* LRSector.m in Sources */,
 				84D3C05319B88657007455F9 /* LRLoginViewController.m in Sources */,
@@ -959,6 +1017,7 @@
 				84D3C0A319B886A7007455F9 /* LRUser.m in Sources */,
 				84D3C12419BEF96C007455F9 /* NSString+HTML.m in Sources */,
 				84BED46919D5A17D005C80F3 /* LRTwitterListTableViewCell.m in Sources */,
+				84EA0DB81A2CB76100B1B6BA /* LRAnalyst.m in Sources */,
 				84D3C0AF19B886A7007455F9 /* NSString+MKNetworkKitAdditions.m in Sources */,
 				84BED45819D5988C005C80F3 /* STHTTPRequest+STTwitter.m in Sources */,
 				84D3C11119B88A77007455F9 /* UITextField+previousNextToolBar.m in Sources */,
@@ -974,6 +1033,7 @@
 				84DC159E1A1E1EE9005CE54D /* FPPopoverView.m in Sources */,
 				84D3C05419B88657007455F9 /* LRMainClientPageViewController.m in Sources */,
 				84D3C12A19C1CCFC007455F9 /* LRDocumentViewController.m in Sources */,
+				84EA0DB51A2C74A400B1B6BA /* LRAuthorBioInfoViewController.m in Sources */,
 				84D3C0A819B886A7007455F9 /* LRContactListTableViewCell.m in Sources */,
 				84BED45F19D5988C005C80F3 /* BAVPlistNode.m in Sources */,
 				84D3C0B419B886A7007455F9 /* Reachability.m in Sources */,
@@ -1084,7 +1144,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "dd81411c-a64d-4b53-9563-f1c2a1a27b69";
+				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1119,7 +1179,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PROVISIONING_PROFILE = "dd81411c-a64d-4b53-9563-f1c2a1a27b69";
+				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
@@ -1137,7 +1197,7 @@
 				INFOPLIST_FILE = "Leerink/Leerink-Info.plist";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dd81411c-a64d-4b53-9563-f1c2a1a27b69";
+				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1154,7 +1214,7 @@
 				INFOPLIST_FILE = "Leerink/Leerink-Info.plist";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dd81411c-a64d-4b53-9563-f1c2a1a27b69";
+				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1164,6 +1224,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Leerink.app/Leerink";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sam Storer (9T33NF3537)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1177,6 +1238,7 @@
 				);
 				INFOPLIST_FILE = "LeerinkTests/LeerinkTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -1186,6 +1248,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Leerink.app/Leerink";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sam Storer (9T33NF3537)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1195,6 +1258,7 @@
 				GCC_PREFIX_HEADER = "Leerink/Leerink-Prefix.pch";
 				INFOPLIST_FILE = "LeerinkTests/LeerinkTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};

@@ -155,7 +155,7 @@
         } errorBlock:^(NSError *error) {
             [LRUtility stopActivityIndicatorFromView:self.view];
             UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                     message:[error description]
+                                                                     message:[error localizedDescription]
                                                                     delegate:self
                                                            cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                            otherButtonTitles:nil, nil];
@@ -166,7 +166,7 @@
         // ...
         [LRUtility stopActivityIndicatorFromView:self.view];
         UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                 message:[error description]
+                                                                 message:[error localizedDescription]
                                                                 delegate:self
                                                        cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                        otherButtonTitles:nil, nil];

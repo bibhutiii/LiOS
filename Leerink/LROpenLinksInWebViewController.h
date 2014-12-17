@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) NSString *linkURL;
 @property (nonatomic, assign) BOOL isLinkFromLogin;
+@property (nonatomic, assign) BOOL isHtmlStringLoaded;
+
 @end

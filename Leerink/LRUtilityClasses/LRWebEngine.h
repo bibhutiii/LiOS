@@ -31,4 +31,8 @@ typedef void (^LRErrorBlock)(NSError *errorString);
 - (MKNetworkOperation *)sendRequestToLogOutWithwithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock;
 - (MKNetworkOperation *)sendRequestToSendCartWithDocIdswithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock;
 - (MKNetworkOperation *)sendRequestToCheckSessionIsValidforResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock;
+- (MKNetworkOperation *)sendRequestToSendInstructionsToResetPasswordForEmailAddress:(NSMutableDictionary *)aEmailIdDetails withResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock;
+- (MKNetworkOperation *)sendRequestToGetMainMenuItemsWithResponseDataBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock;
+- (MKNetworkOperation *)sendRequestToGetSubMenuItemsWithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock;
+- (MKNetworkOperation *)sendRequestToSearchForDocumentsForKeyWordsWithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock;
 @end

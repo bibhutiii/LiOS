@@ -27,7 +27,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sDefaultWebEngine = [[self alloc] initWithHostName:@"portal.leerink.com"];
+        sDefaultWebEngine = [[self alloc] initWithHostName:SERVICE_URL_BASE];
     });
     return sDefaultWebEngine;
 }
@@ -41,11 +41,11 @@ static LRWebEngine *sDefaultWebEngine = nil;
         //http://172.16.133.124/LeerinkWebServices/LeerinkServices.asmx?op=Login
         NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
         if ([aStandardUserDefaults objectForKey:@"SessionId"]) {
-            mnetworkEngine = [[MKNetworkEngine alloc] initWithHostName:@"portal.leerink.com"customHeaderFields:[NSDictionary dictionaryWithObject:[aStandardUserDefaults objectForKey:@"SessionId"] forKey:@"SessionId"]];
+            mnetworkEngine = [[MKNetworkEngine alloc] initWithHostName:SERVICE_URL_BASE customHeaderFields:[NSDictionary dictionaryWithObject:[aStandardUserDefaults objectForKey:@"SessionId"] forKey:@"SessionId"]];
             
         }
         else {
-            mnetworkEngine = [[MKNetworkEngine alloc] initWithHostName:@"portal.leerink.com"];
+            mnetworkEngine = [[MKNetworkEngine alloc] initWithHostName:SERVICE_URL_BASE];
         }
 	}
 	return self;
@@ -58,11 +58,11 @@ static LRWebEngine *sDefaultWebEngine = nil;
     [aRequestDict setObject:@"cbrinzey@hqcm.commedatest.com" forKey:@"Username"];
     [aRequestDict setObject:@"WolfRayet12" forKey:@"Password"];
     
-    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/Login/Login" params:aRequestDictionary httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/Login" params:aRequestDictionary httpMethod:@"POST" ssl:TRUE];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
-        NSLog(@"recieved currency -- %@",[completedOperation responseString]);
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
         completion(valueString);
         
     } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
@@ -76,13 +76,13 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetAnalysts" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetAnalysts" params:nil httpMethod:@"POST" ssl:TRUE];
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     self.iOperation.documentType = eLRDocumentAnalyst;
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
-        NSLog(@"recieved currency -- %@",[completedOperation responseString]);
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
         
         NSDictionary *the_parsedcontents = [LRSaveDataToDatabase getparsedJSONDataForString:valueString forOperation:completedOperation withContextInfo:nil];
         completion(the_parsedcontents);
@@ -100,14 +100,14 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetSectors" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetSectors" params:nil httpMethod:@"POST" ssl:TRUE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     self.iOperation.documentType = eLRDocumentSector;
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
-        NSLog(@"recieved currency -- %@",[completedOperation responseString]);
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
         
         NSDictionary *the_parsedcontents = [LRSaveDataToDatabase getparsedJSONDataForString:valueString forOperation:completedOperation withContextInfo:nil];
         completion(the_parsedcontents);
@@ -124,14 +124,14 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetSymbols" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetSymbols" params:nil httpMethod:@"POST" ssl:TRUE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     self.iOperation.documentType = eLRDocumentSymbol;
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
-        NSLog(@"recieved currency -- %@",[completedOperation responseString]);
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
         
         NSDictionary *the_parsedcontents = [LRSaveDataToDatabase getparsedJSONDataForString:valueString forOperation:completedOperation withContextInfo:nil];
         completion(the_parsedcontents);
@@ -151,27 +151,27 @@ static LRWebEngine *sDefaultWebEngine = nil;
     switch ([[aContecxtInfoDictionary objectForKey:@"DocumentTypeList"] intValue]) {
         case eLRDocumentListAnalyst:
         {
-            LRAnalyst *analyst = (LRAnalyst *)[iContextInfo objectForKey:@"AnalystDocumentList"];
-            [aRequestDict setObject:[NSNumber numberWithInt:[analyst.userId intValue]] forKey:@"AuthorID"];
-            self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+            [aRequestDict setObject:[iContextInfo objectForKey:@"TopCount"] forKey:@"TopCount"];
+            [aRequestDict setObject:[iContextInfo objectForKey:@"AuthorID"] forKey:@"AuthorID"];
+            self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
             self.iOperation.documentListType = eLRDocumentListAnalyst;
 
         }
             break;
             case eLRDocumentListSector:
         {
-            LRSector *sector = (LRSector *)[iContextInfo objectForKey:@"SectorDocumentList"];
-            [aRequestDict setObject:[NSNumber numberWithInt:[sector.researchID intValue]] forKey:@"ResearchID"];
-            self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+            [aRequestDict setObject:[iContextInfo objectForKey:@"TopCount"] forKey:@"TopCount"];
+            [aRequestDict setObject:[iContextInfo objectForKey:@"ResearchID"] forKey:@"ResearchID"];
+            self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
             self.iOperation.documentListType = eLRDocumentListSector;
 
         }
             break;
         case eLRDocumentListSymbol:
         {
-            LRSymbol *symbol = (LRSymbol *)[iContextInfo objectForKey:@"SymbolDocumentList"];
-            [aRequestDict setObject:[NSNumber numberWithInt:[symbol.tickerID intValue]] forKey:@"tickerID"];
-            self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+            [aRequestDict setObject:[iContextInfo objectForKey:@"TopCount"] forKey:@"TopCount"];
+            [aRequestDict setObject:[iContextInfo objectForKey:@"tickerID"] forKey:@"tickerID"];
+            self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
             self.iOperation.documentListType = eLRDocumentListSymbol;
             
         }
@@ -187,9 +187,11 @@ static LRWebEngine *sDefaultWebEngine = nil;
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
-        NSLog(@"recieved currency -- %@",[completedOperation responseString]);
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
         
-        NSDictionary *the_parsedcontents = [LRSaveDataToDatabase getDocumentListJSONDataForString:valueString forOperation:completedOperation withContextInfo:iContextInfo];
+        NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSDictionary *the_parsedcontents = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
         completion(the_parsedcontents);
         
         
@@ -205,8 +207,9 @@ static LRWebEngine *sDefaultWebEngine = nil;
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
     self.iOperation = nil;
     
-    [aRequestDict setObject:iContextInfo forKey:@"ListId"];
-    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+    [aRequestDict setObject:[iContextInfo objectForKey:@"ListId"] forKey:@"ListId"];
+    [aRequestDict setObject:[iContextInfo objectForKey:@"TopCount"] forKey:@"TopCount"];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
 
     __block NSString *valueString = nil;
     
@@ -215,7 +218,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
-        NSLog(@"recieved currency -- %@",[completedOperation responseString]);
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
         
         NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
         
@@ -237,14 +240,15 @@ static LRWebEngine *sDefaultWebEngine = nil;
     
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
     [aRequestDict setObject:iContextInfo forKey:@"DocumentID"];
+    [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserId"] forKey:@"UserId"];
     
-    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/GetDocument" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocument" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
-        NSLog(@"recieved currency -- %@",[completedOperation responseString]);
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
         
         NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
         
@@ -268,14 +272,14 @@ static LRWebEngine *sDefaultWebEngine = nil;
     [aRequestDict setObject:@"abc" forKey:@"Guid"];
     [aRequestDict setObject:[aStandardUserDefaults objectForKey:@"SessionId"] forKey:@"sessionId"];
 
-    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/Login/logout" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/logout" params:nil httpMethod:@"POST" ssl:TRUE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     //self.iOperation.documentListRequestType = eLRDocumentListAnalyst;
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
-        NSLog(@"recieved currency -- %@",[completedOperation responseString]);
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
         
         NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
         
@@ -298,15 +302,13 @@ static LRWebEngine *sDefaultWebEngine = nil;
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
     [aRequestDict setObject:@"55702" forKey:@"DocumentID"];
     
-    
-    
-    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/IOS/SendDocumentList" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/SendDocumentList" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
-        NSLog(@"recieved currency -- %@",[completedOperation responseString]);
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
         
         NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
         
@@ -325,13 +327,13 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.iOperation = [self operationWithPath:@"/LeerinkApi/api/Login/IsSessionExpired" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/IsSessionExpired" params:nil httpMethod:@"POST" ssl:TRUE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
-        NSLog(@"recieved currency -- %@",[completedOperation responseString]);
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
         
         NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
         
@@ -345,7 +347,103 @@ static LRWebEngine *sDefaultWebEngine = nil;
     [self enqueueOperation:self.iOperation];
     return self.iOperation;
 }
+- (MKNetworkOperation *)sendRequestToSendInstructionsToResetPasswordForEmailAddress:(NSMutableDictionary *)aEmailIdDetails withResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
+{
+    __block NSString *valueString = nil;
+    
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/ResetPassword" params:aEmailIdDetails httpMethod:@"POST" ssl:TRUE];
+    
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        valueString = [completedOperation responseString];
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
+        
+        NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSDictionary *the_parsedcontents = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
+        completion(the_parsedcontents);
+        
+        
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        errorBlock(error);
+    }];
+    [self enqueueOperation:self.iOperation];
+    return self.iOperation;
+}
+- (MKNetworkOperation *)sendRequestToGetMainMenuItemsWithResponseDataBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
+{
+    __block NSString *valueString = nil;
+    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetHomePageMenus" params:nil httpMethod:@"POST" ssl:TRUE];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        valueString = [completedOperation responseString];
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
+        
+        NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
 
+        NSDictionary *the_parsedcontents = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
+        completion(the_parsedcontents);
+        
+        
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        errorBlock(error);
+    }];
+    [self enqueueOperation:self.iOperation];
+    
+    return self.iOperation;
+}
+- (MKNetworkOperation *)sendRequestToGetSubMenuItemsWithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
+{
+    __block NSString *valueString = nil;
+    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetSubMenus" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        valueString = [completedOperation responseString];
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
+        
+        NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSDictionary *the_parsedcontents = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
+        completion(the_parsedcontents);
+        
+        
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        errorBlock(error);
+    }];
+    [self enqueueOperation:self.iOperation];
+    
+    return self.iOperation;
+}
+- (MKNetworkOperation *)sendRequestToSearchForDocumentsForKeyWordsWithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
+{
+    __block NSString *valueString = nil;
+    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentSearch" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        valueString = [completedOperation responseString];
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
+        
+        NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSDictionary *the_parsedcontents = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
+        completion(the_parsedcontents);
+        
+        
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        errorBlock(error);
+    }];
+    [self enqueueOperation:self.iOperation];
+    
+    return self.iOperation;
+}
 #pragma mark - Cancel Network operations
 - (void)cancelaNetWorkOperation
 {

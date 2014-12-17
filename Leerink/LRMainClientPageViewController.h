@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MNMPullToRefreshManager.h"
+#import "LRLoadDataDelegate.h"
 
-@interface LRMainClientPageViewController : UIViewController<UIActionSheetDelegate>
+@interface LRMainClientPageViewController : UIViewController<UIActionSheetDelegate,MNMPullToRefreshManagerClient,LRLoadDataDelegate,UITextFieldDelegate>
 
 @end

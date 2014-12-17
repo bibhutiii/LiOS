@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LRDocumentTypeListController : UIViewController<LRLoadDataDelegate,UISearchBarDelegate>
+@interface LRSubMenuListController : UIViewController<LRLoadDataDelegate,UISearchBarDelegate>
 
 @property (strong, nonatomic) NSString *titleHeader;
 @property (assign, nonatomic) eLRDocumentType eDocumentType;
 @property (nonatomic, assign) id <LRLoadDataDelegate> delegate;
-
+@property (strong, nonatomic) NSMutableArray *subMenuItemsArray;
+@property (strong, nonatomic) NSString *returnTypeForMenu;
 - (void)didLoadData;
 @end

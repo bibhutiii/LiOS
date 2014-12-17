@@ -7,12 +7,16 @@
 //
 
 #import "LRLoadDataDelegate.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface LRDocumentViewController : UIViewController<LRLoadDataDelegate,UIDocumentInteractionControllerDelegate>
+@interface LRDocumentViewController : UIViewController<LRLoadDataDelegate,UIDocumentInteractionControllerDelegate,NSURLSessionDataDelegate,UIWebViewDelegate,AVAudioPlayerDelegate>
 
 @property (nonatomic, assign) id <LRLoadDataDelegate> delegate;
 @property (nonatomic, strong) NSString *documentTitleToBeSavedAsPdf;
 @property (nonatomic, strong) NSString *documentId;
-
+@property (nonatomic, assign) BOOL isAudioFilePlayed;
+@property (nonatomic, assign) eLRDocumentTypeWebView documentTypeWebView;
+@property (nonatomic, strong) NSString *documentType;
+@property (nonatomic, strong) NSString *documentPath;
 - (void)fetchDocument;
 @end

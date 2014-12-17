@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -75,6 +75,21 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Leerink-White_320x88.png" translatesAutoresizingMaskIntoConstraints="NO" id="je6-Wl-r5k">
                                 <rect key="frame" x="0.0" y="20" width="320" height="88"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oMz-qw-1zH">
+                                <rect key="frame" x="89" y="404" width="139" height="30"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="forgotPasswordClicked:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="NxZ-jb-LM5"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Forgot your password?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sk0-jG-trz">
+                                <rect key="frame" x="97" y="405" width="139" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.15686274509803921" green="0.55294117647058827" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -228,6 +243,86 @@
             </objects>
             <point key="canvasLocation" x="-786" y="-586"/>
         </scene>
+        <!--Password Reset View Controller-->
+        <scene sceneID="IZD-w8-dfS">
+            <objects>
+                <viewController storyboardIdentifier="LRPasswordResetViewController" id="HaY-EW-U7r" customClass="LRPasswordResetViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IZB-q4-TD1"/>
+                        <viewControllerLayoutGuide type="bottom" id="VbN-ij-Wif"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="e8j-5r-VNa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="muV-Ye-4ed">
+                                <rect key="frame" x="38" y="66" width="245" height="146"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="146" id="nK7-xi-zVk"/>
+                                    <constraint firstAttribute="width" constant="245" id="oqm-UN-4VK"/>
+                                </constraints>
+                                <string key="text">Enter your email address, then click Send. We will send you an email with instructions to reset your password. If your email address recently changed, please speak with your Leerink contact to have it updated.</string>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5WP-6i-atR">
+                                <rect key="frame" x="0.0" y="17" width="320" height="44"/>
+                                <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Password Reset" id="viD-r5-sq8">
+                                        <barButtonItem key="leftBarButtonItem" image="Close-32.png" id="GCu-pk-dHQ">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <action selector="closePasswordResetPage:" destination="HaY-EW-U7r" id="caB-PU-6r3"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AwI-oR-nsv">
+                                <rect key="frame" x="10" y="225" width="301" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="HaY-EW-U7r" id="AMY-Km-13N"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8aw-lm-7dO">
+                                <rect key="frame" x="214" y="268" width="97" height="32"/>
+                                <state key="normal" image="login_button.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendPasswordResetInstructionsToMail:" destination="HaY-EW-U7r" eventType="touchUpInside" id="fOA-N0-4pG"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Send" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pan-Uq-lBa">
+                                <rect key="frame" x="241" y="273" width="40" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="muV-Ye-4ed" firstAttribute="leading" secondItem="e8j-5r-VNa" secondAttribute="leading" constant="38" id="XX9-mI-O6v"/>
+                            <constraint firstItem="muV-Ye-4ed" firstAttribute="top" secondItem="e8j-5r-VNa" secondAttribute="top" constant="66" id="jHm-R7-3hp"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="AwI-oR-nsv" id="9K9-a1-fp0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nLQ-jr-9hj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-762" y="-1277"/>
+        </scene>
         <!--User Time Line Twitter View Controller-->
         <scene sceneID="pcp-4p-xTc">
             <objects>
@@ -269,10 +364,10 @@
             </objects>
             <point key="canvasLocation" x="-320" y="-586"/>
         </scene>
-        <!--Document Type List Controller-->
+        <!--Sub Menu List Controller-->
         <scene sceneID="Dyk-Pq-BZ0">
             <objects>
-                <viewController storyboardIdentifier="LRDocumentTypeListController" id="bLG-fe-sYQ" customClass="LRDocumentTypeListController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LRSubMenuListController" id="bLG-fe-sYQ" customClass="LRSubMenuListController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9AS-6g-3Qd"/>
                         <viewControllerLayoutGuide type="bottom" id="fmv-Mo-OS5"/>
@@ -389,10 +484,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="47c-ad-cbH">
-                                <rect key="frame" x="255" y="28" width="50" height="32"/>
+                                <rect key="frame" x="205" y="28" width="100" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="c5e-DC-qrF"/>
+                                    <constraint firstAttribute="width" constant="100" id="c5e-DC-qrF"/>
                                 </constraints>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="-50" maxY="0.0"/>
                                 <state key="normal" image="Shoping-Cart-32.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -425,6 +521,45 @@
             </objects>
             <point key="canvasLocation" x="-2171" y="-1272"/>
         </scene>
+        <!--Author Bio Info View Controller-->
+        <scene sceneID="sjs-Ys-rkp">
+            <objects>
+                <viewController storyboardIdentifier="LRAuthorBioInfoViewController" id="4TU-rS-yfN" customClass="LRAuthorBioInfoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hyD-JS-cGc"/>
+                        <viewControllerLayoutGuide type="bottom" id="mxu-L2-e9b"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="QKa-WH-L0y">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nog-CH-ocJ">
+                                <rect key="frame" x="12" y="44" width="296" height="451"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <string key="text">Ms. Antalffy covers stocks in Medical Supplies and Devices for Leerink Partners and has a focus on companies in cardiology, diabetes and emerging medical technologies. In 2013, Institutional Investor named her a “Rising Star of Wall Street Research.” 
+
+
+She joined Leerink in 2008. Prior to that, she had worked as an associate at the Bear Stearns Institutional Investor ranked Medical Supplies and Devices research team. Her coverage responsibilities included Large-Cap diversifieds, cardiology and hospital supply MedTech companies. Prior to Bear Stearns, Ms. Antalffy worked as an associate at Janney Montgomery Scott on the Medical Supplies and Devices equity research team. Ms. Antalffy started her career at Janney Montgomery Scott as an investment banking analyst focusing on healthcare and IT.
+
+Ms. Antalffy holds a B.S.E in bioengineering from the University of Pennsylvania.</string>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="4TU-rS-yfN" id="lfR-vm-U0g"/>
+                                </connections>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="authorInfoTextView" destination="Nog-CH-ocJ" id="LIi-Rm-Lcc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ks1-tr-iZR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2178" y="-560"/>
+        </scene>
         <!--Document View Controller-->
         <scene sceneID="6RX-ox-f0P">
             <objects>
@@ -447,16 +582,108 @@
                                     <outlet property="delegate" destination="Tse-6U-LMq" id="rp8-WC-7Ld"/>
                                 </connections>
                             </webView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="49A-t0-qhl">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.10000000000000001" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="QHN-3k-crd">
+                                        <rect key="frame" x="20" y="150" width="250" height="31"/>
+                                        <color key="minimumTrackTintColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="maximumTrackTintColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="thumbTintColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="sliderValueChanged:" destination="Tse-6U-LMq" eventType="valueChanged" id="5BT-5Y-TIV"/>
+                                        </connections>
+                                    </slider>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nx6-F4-V37">
+                                        <rect key="frame" x="27" y="299" width="43" height="30"/>
+                                        <state key="normal" title="Pause">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GYt-7I-vtS">
+                                        <rect key="frame" x="253" y="299" width="33" height="30"/>
+                                        <state key="normal" title="Stop">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o7z-FL-6aB">
+                                        <rect key="frame" x="145" y="299" width="30" height="30"/>
+                                        <state key="normal" title="Play">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8tN-Dn-5kL">
+                                <rect key="frame" x="16" y="165" width="288" height="120"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Pe-C0-x2j">
+                                        <rect key="frame" x="4" y="8" width="36" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="5W3-yz-wjq"/>
+                                            <constraint firstAttribute="width" constant="36" id="vuG-EO-7V8"/>
+                                        </constraints>
+                                        <state key="normal" image="Close-32.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="closeProgressView:" destination="Tse-6U-LMq" eventType="touchUpInside" id="ved-Bt-Su8"/>
+                                        </connections>
+                                    </button>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EAG-kn-VIo">
+                                        <rect key="frame" x="22" y="51" width="244" height="2"/>
+                                        <color key="progressTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="trackTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </progressView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File download in Progress.." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3On-SD-VzB">
+                                        <rect key="frame" x="8" y="85" width="265" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="265" id="Q8f-IE-pEX"/>
+                                            <constraint firstAttribute="height" constant="21" id="jgB-hR-Mj0"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="6Pe-C0-x2j" firstAttribute="leading" secondItem="8tN-Dn-5kL" secondAttribute="leading" constant="4" id="At3-wk-5vL"/>
+                                    <constraint firstItem="EAG-kn-VIo" firstAttribute="top" secondItem="8tN-Dn-5kL" secondAttribute="top" constant="51" id="FmH-hr-INi"/>
+                                    <constraint firstAttribute="height" constant="120" id="TsD-jI-cH1"/>
+                                    <constraint firstItem="3On-SD-VzB" firstAttribute="leading" secondItem="8tN-Dn-5kL" secondAttribute="leading" constant="8" id="bO1-jF-ZID"/>
+                                    <constraint firstItem="EAG-kn-VIo" firstAttribute="leading" secondItem="8tN-Dn-5kL" secondAttribute="leading" constant="22" id="h86-Ko-N0H"/>
+                                    <constraint firstAttribute="bottom" secondItem="3On-SD-VzB" secondAttribute="bottom" constant="14" id="ikG-IA-HPP"/>
+                                    <constraint firstAttribute="trailing" secondItem="EAG-kn-VIo" secondAttribute="trailing" constant="22" id="phI-Iy-3gt"/>
+                                    <constraint firstItem="6Pe-C0-x2j" firstAttribute="top" secondItem="8tN-Dn-5kL" secondAttribute="top" constant="8" id="snL-mc-Sbg"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="49A-t0-qhl" secondAttribute="trailing" id="7UL-O1-603"/>
+                            <constraint firstItem="49A-t0-qhl" firstAttribute="top" secondItem="LEb-tI-Wx2" secondAttribute="top" id="D2z-Sg-4eP"/>
+                            <constraint firstItem="8tN-Dn-5kL" firstAttribute="top" secondItem="LEb-tI-Wx2" secondAttribute="top" constant="165" id="MaL-PN-K1L"/>
                             <constraint firstItem="CXJ-Bi-hdu" firstAttribute="leading" secondItem="LEb-tI-Wx2" secondAttribute="leading" id="ORc-Pg-uSg"/>
+                            <constraint firstAttribute="bottom" secondItem="49A-t0-qhl" secondAttribute="bottom" id="axG-yd-s0y"/>
+                            <constraint firstItem="49A-t0-qhl" firstAttribute="leading" secondItem="LEb-tI-Wx2" secondAttribute="leading" id="dmc-os-EsD"/>
                             <constraint firstAttribute="trailing" secondItem="CXJ-Bi-hdu" secondAttribute="trailing" id="r9J-e1-YaU"/>
                             <constraint firstItem="CXJ-Bi-hdu" firstAttribute="top" secondItem="LEb-tI-Wx2" secondAttribute="top" constant="1" id="rVH-CD-2q0"/>
+                            <constraint firstItem="8tN-Dn-5kL" firstAttribute="leading" secondItem="LEb-tI-Wx2" secondAttribute="leading" constant="16" id="rer-RC-zUb"/>
+                            <constraint firstAttribute="trailing" secondItem="8tN-Dn-5kL" secondAttribute="trailing" constant="16" id="w0M-Ir-MaS"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="aProgressView" destination="EAG-kn-VIo" id="U3s-85-cE9"/>
+                        <outlet property="audioPlayerSlider" destination="QHN-3k-crd" id="SXm-u9-atr"/>
+                        <outlet property="audioPlayerView" destination="49A-t0-qhl" id="M3s-dD-X5a"/>
                         <outlet property="documentReaderWebView" destination="CXJ-Bi-hdu" id="1Ym-Xs-2g6"/>
+                        <outlet property="progressSuperView" destination="8tN-Dn-5kL" id="dlb-6A-8fU"/>
+                        <outlet property="progressSuperViewCloseButton" destination="6Pe-C0-x2j" id="AxR-gr-uxo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A6F-fr-6YG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -523,6 +750,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Close-32.png" width="32" height="32"/>
         <image name="Leerink-White_320x88.png" width="320" height="88"/>
         <image name="Shoping-Cart-32.png" width="32" height="32"/>
         <image name="Twitter-32.png" width="32" height="32"/>

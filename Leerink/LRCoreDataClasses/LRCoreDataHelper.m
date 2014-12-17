@@ -196,7 +196,7 @@ NSString *storeFilename = @"leerink.sqlite";
     
     if (error != nil)
     {
-        [NSException raise:NSGenericException format: @"%@", [error description]];
+        [NSException raise:NSGenericException format: @"%@", [error localizedDescription]];
     }
     
     return results;
@@ -233,7 +233,7 @@ NSString *storeFilename = @"leerink.sqlite";
         NSArray *results = [weakManagedObjectContext executeFetchRequest:request error:&error];
         if (error != nil)
         {
-            [NSException raise:NSGenericException format: @"%@", [error description]];
+            [NSException raise:NSGenericException format: @"%@", [error localizedDescription]];
         }
         inCompletionBlock(results);
     }];
