@@ -20,7 +20,6 @@
 @property (strong, nonatomic) NSString *returnTypeForMenu;
 @property (strong, nonatomic) NSString *menuItemId;
 @property (strong, nonatomic) NSString *parentMenuItemId;
-@property (nonatomic, assign) BOOL showMoreForSearchResults;
 
 
 @property (nonatomic,assign) BOOL isDocumentsFetchedForList;

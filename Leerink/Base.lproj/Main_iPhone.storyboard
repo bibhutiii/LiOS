@@ -323,6 +323,72 @@
             </objects>
             <point key="canvasLocation" x="-762" y="-1277"/>
         </scene>
+        <!--Global Search Documents List View Controller-->
+        <scene sceneID="eqC-Nl-Dv3">
+            <objects>
+                <viewController storyboardIdentifier="LRGlobalSearchDocumentsListViewController" id="GF8-a4-vWU" customClass="LRGlobalSearchDocumentsListViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YtW-i9-QLI"/>
+                        <viewControllerLayoutGuide type="bottom" id="Zxz-0h-toA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MtY-nW-mj2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KHL-9x-Qsm">
+                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                                <color key="backgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="3Zr-Xu-4wg"/>
+                                </constraints>
+                                <color key="sectionIndexBackgroundColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="GF8-a4-vWU" id="uae-R7-2pA"/>
+                                    <outlet property="delegate" destination="GF8-a4-vWU" id="B2c-Jk-8gv"/>
+                                </connections>
+                            </tableView>
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pyK-G7-g83">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <color key="barTintColor" red="0.15686274510000001" green="0.55294117649999996" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="GF8-a4-vWU" id="BP3-6W-EEc"/>
+                                </connections>
+                            </searchBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="KHL-9x-Qsm" secondAttribute="bottom" id="3Bv-yg-pof"/>
+                            <constraint firstItem="KHL-9x-Qsm" firstAttribute="top" secondItem="MtY-nW-mj2" secondAttribute="top" constant="44" id="eCD-nl-Mek"/>
+                            <constraint firstItem="KHL-9x-Qsm" firstAttribute="leading" secondItem="MtY-nW-mj2" secondAttribute="leading" id="naT-v3-9S9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="globalSearchDocumentListTable" destination="KHL-9x-Qsm" id="o0Q-hp-GgS"/>
+                        <outlet property="searchDisplayController" destination="HyW-hS-Ecj" id="PBE-fi-Pr4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gg4-ma-ebB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchBar contentMode="redraw" id="jRN-kU-ZwT">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="GF8-a4-vWU" id="c4t-Qg-CUh"/>
+                    </connections>
+                </searchBar>
+                <searchDisplayController id="HyW-hS-Ecj">
+                    <connections>
+                        <outlet property="delegate" destination="GF8-a4-vWU" id="E7M-au-Bw9"/>
+                        <outlet property="searchBar" destination="pyK-G7-g83" id="rqr-t0-C0Z"/>
+                        <outlet property="searchContentsController" destination="GF8-a4-vWU" id="sbT-WQ-CVH"/>
+                        <outlet property="searchResultsDataSource" destination="GF8-a4-vWU" id="5rs-zB-QDK"/>
+                        <outlet property="searchResultsDelegate" destination="GF8-a4-vWU" id="54c-DQ-GOV"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="-360" y="-1283"/>
+        </scene>
         <!--User Time Line Twitter View Controller-->
         <scene sceneID="pcp-4p-xTc">
             <objects>

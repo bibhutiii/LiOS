@@ -20,7 +20,8 @@
 #import <Parse/Parse.h>
 #import "LRWebEngine.h"
 #import "LRDocumentViewController.h"
-#import <Crashlytics/Crashlytics.h>
+#import <CrashReporter/CrashReporter.h>
+#import "CrashHelper.h"
 
 @implementation LRAppDelegate
 @synthesize coreDataHelper;
@@ -69,40 +70,72 @@
     }
     return TRUE;
 }
+- (void) handleCrashReport {
+    PLCrashReporter *crashReporter = [PLCrashReporter sharedReporter];
+    NSData *crashData;
+    NSError *error;
+    
+    // Try loading the crash report
+    crashData = [crashReporter loadPendingCrashReportDataAndReturnError: &error];
+    
+    // We could send the report from here, but we'll just print out
+    // some debugging info instead
+    if (crashData == nil) {
+        NSLog(@"Could not load crash report: %@", error);
+        [crashReporter purgePendingCrashReport];
+        return;
+    }
+    PLCrashReport *report = [[PLCrashReport alloc] initWithData: crashData error: &error] ;
+    if (report == nil) {
+        NSLog(@"Could not parse crash report");
+        goto finish;
+    }
+    
+    
+    NSLog(@"Crashed on %@", report.systemInfo.timestamp);
+    NSLog(@"Crashed with signal %@ (code %@, address=0x%" PRIx64 ")", report.signalInfo.name,
+          report.signalInfo.code, report.signalInfo.address);
+    
+    // Purge the report
+    finish:
+        [crashReporter purgePendingCrashReport];
+    return;
+}
 //DExt
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[CrashHelper sharedCrashHelper] checkForCrashes];
     
     // Let the device know we want to receive push notifications
-   /* if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]){
-        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:nil]];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-        
-        NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-        if (RemoteNoti) {
-            //your methods to process notification
-            [[NSUserDefaults standardUserDefaults] setObject:@"pdf" forKey:@"DocumentPathForNotification"];
-            [[NSUserDefaults standardUserDefaults] setObject:@"123" forKey:@"NotificationDocId"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-        
-    }
-    else{
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-         (UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
-        
-        NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-        if (RemoteNoti) {
-            //your methods to process notification
-            [[NSUserDefaults standardUserDefaults] setObject:@"pdf" forKey:@"DocumentPathForNotification"];
-            [[NSUserDefaults standardUserDefaults] setObject:@"123" forKey:@"NotificationDocId"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-
-    }
-    [Parse setApplicationId:@"0921QnBasJhIv1cFQkxC8f4aJupFnUbIuCnq8qB6"
-    clientKey:@"CrXy8wSEnkuvmm67ebWMbEOpzFbUA55dI3MFtLjL"];
-*/
+    /* if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]){
+     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:nil]];
+     [[UIApplication sharedApplication] registerForRemoteNotifications];
+     
+     NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+     if (RemoteNoti) {
+     //your methods to process notification
+     [[NSUserDefaults standardUserDefaults] setObject:@"pdf" forKey:@"DocumentPathForNotification"];
+     [[NSUserDefaults standardUserDefaults] setObject:@"123" forKey:@"NotificationDocId"];
+     [[NSUserDefaults standardUserDefaults] synchronize];
+     }
+     
+     }
+     else{
+     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
+     
+     NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+     if (RemoteNoti) {
+     //your methods to process notification
+     [[NSUserDefaults standardUserDefaults] setObject:@"pdf" forKey:@"DocumentPathForNotification"];
+     [[NSUserDefaults standardUserDefaults] setObject:@"123" forKey:@"NotificationDocId"];
+     [[NSUserDefaults standardUserDefaults] synchronize];
+     }
+     
+     }
+     [Parse setApplicationId:@"0921QnBasJhIv1cFQkxC8f4aJupFnUbIuCnq8qB6"
+     clientKey:@"CrXy8wSEnkuvmm67ebWMbEOpzFbUA55dI3MFtLjL"];
+     */
     // initialise the core data helper singleton class
     if (!self.coreDataHelper) {
         self.coreDataHelper = [LRCoreDataHelper new];
@@ -188,8 +221,8 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     self.window.tintColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-
-    [Crashlytics startWithAPIKey:@"538f8236cc2bab28cc8de91308000df9c232a03d"];
+    
+    //   [Crashlytics startWithAPIKey:@"538f8236cc2bab28cc8de91308000df9c232a03d"];
     
     /* Enabling device logs*/
 #if ENABLE_DEVICE_LOGS == 1
@@ -455,7 +488,7 @@
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DocumentPathForNotification"];
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
-
+    
     /*  NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"]);
      if([[[NSUserDefaults standardUserDefaults] objectForKey:@"IsInternalUser"] boolValue] == TRUE) {
      [LRUtility startActivityIndicatorOnView:self.window withText:@"Please wait.."];

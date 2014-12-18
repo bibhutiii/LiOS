@@ -15,6 +15,7 @@
 #import "LRDocumentListViewController.h"
 #import "LRWebEngine.h"
 #import "LRAuthorBioInfoViewController.h"
+#import "LROpenLinksInWebViewController.h"
 
 @interface LRSubMenuListController ()
 {
@@ -69,7 +70,7 @@
     //
     [self.analystsListTableView reloadData];
     tableContentSize = self.analystsListTableView.contentSize;
-    tableContentSize.height = tableContentSize.height + 350.0;
+    tableContentSize.height = tableContentSize.height + 150.0;
 }
 #pragma mark - search display controller delegate methods
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
@@ -112,20 +113,13 @@
 }
 - (void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView
 {
-    tableView = [[self searchDisplayController] searchResultsTableView];
+    tableView.backgroundColor = [UIColor colorWithRed:40.0/255.0 green:141.0/255.0 blue:192.0/255.0 alpha:1.0];
+}
+- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
     
     [tableView setContentInset:UIEdgeInsetsZero];
     
-    [tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
-    
-    // tableView.contentSize = tableContentSize;
-    
-    tableView.frame = CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.size.width, tableView.frame.size.height);
-    
     tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
-    tableView.backgroundColor = [UIColor colorWithRed:40.0/255.0 green:141.0/255.0 blue:192.0/255.0 alpha:1.0];
-    
     
 }
 - (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
@@ -133,7 +127,7 @@
     if([controller.searchBar.text length] > 0) {
         UITableView *tableView = [[self searchDisplayController] searchResultsTableView];
         
-        tableView.frame = CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.size.width, tableView.frame.size.height + 44);
+        tableView.frame = CGRectMake(tableView.frame.origin.x, self.analystsListTableView.frame.origin.y - 44, tableView.frame.size.width, self.analystsListTableView.frame.size.height);
         
         tableView.backgroundColor = [UIColor colorWithRed:40.0/255.0 green:141.0/255.0 blue:192.0/255.0 alpha:1.0];
     }
@@ -156,7 +150,6 @@
 {
     return 1;
 }
-
 
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -205,8 +198,6 @@
     NSString *aDocumentEncodedString = [aSubMenuDetailsDictionary objectForKey:@"IconByte"];
     
     NSData *data = [[NSData alloc] initWithBase64EncodedString:aDocumentEncodedString options:NSDataBase64DecodingIgnoreUnknownCharacters];
-
-    //NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:aDocumentEncodedString options:0];
     
     UIImage *iconImage = [UIImage imageWithData:data];
 
@@ -253,6 +244,20 @@
                                 documentListViewController.documentsListArray = [[responseDictionary objectForKey:@"Data"] objectForKey:@"DocLists"];
                             }
                             [self.navigationController pushViewController:documentListViewController animated:TRUE];
+                        }
+                        else if([[[responseDictionary objectForKey:@"Data"] objectForKey:@"ReturnType"] isEqualToString:@"URL"]){
+                            LROpenLinksInWebViewController *aOpenLinksInWebViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LROpenLinksInWebViewController class])];
+                            aOpenLinksInWebViewController.linkURL = [[responseDictionary objectForKey:@"Data"] objectForKey:@"URL"];
+                            aOpenLinksInWebViewController.isLinkFromLogin = FALSE;
+                            aOpenLinksInWebViewController.isHtmlStringLoaded = FALSE;
+                            [self.navigationController pushViewController:aOpenLinksInWebViewController animated:TRUE];
+                        }
+                        else if([[[responseDictionary objectForKey:@"Data"] objectForKey:@"ReturnType"] isEqualToString:@"HTML"]){
+                            LROpenLinksInWebViewController *aOpenLinksInWebViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LROpenLinksInWebViewController class])];
+                            aOpenLinksInWebViewController.linkURL = [[responseDictionary objectForKey:@"Data"] objectForKey:@"HTML"];
+                            aOpenLinksInWebViewController.isLinkFromLogin = FALSE;
+                            aOpenLinksInWebViewController.isHtmlStringLoaded = TRUE;
+                            [self.navigationController pushViewController:aOpenLinksInWebViewController animated:TRUE];
                         }
                     }
                 }

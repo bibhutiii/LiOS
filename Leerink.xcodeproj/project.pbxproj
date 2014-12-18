@@ -22,6 +22,9 @@
 		845F095B1A23276C00C66E27 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F095A1A23276C00C66E27 /* AVFoundation.framework */; };
 		845F095E1A24769600C66E27 /* LRPasswordResetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845F095D1A24769600C66E27 /* LRPasswordResetViewController.m */; };
 		8467DD9319D032B300BFA20F /* LRSaveDataToDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8467DD9219D032B300BFA20F /* LRSaveDataToDatabase.m */; };
+		84799DC01A42CD2100EAC683 /* LRAnalyst.m in Sources */ = {isa = PBXBuildFile; fileRef = 84799DBF1A42CD2100EAC683 /* LRAnalyst.m */; };
+		84799DC61A42D8ED00EAC683 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84799DC51A42D8ED00EAC683 /* CrashReporter.framework */; };
+		84799DC91A42E02E00EAC683 /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84799DC81A42E02E00EAC683 /* CrashHelper.m */; };
 		848495171A03902A003CC384 /* Close-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 848495161A03902A003CC384 /* Close-32.png */; };
 		8484951A1A0395AC003CC384 /* UIView+MGBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 848495191A0395AC003CC384 /* UIView+MGBadgeView.m */; };
 		8484951C1A0396E8003CC384 /* Shoping-Cart-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 8484951B1A0396E8003CC384 /* Shoping-Cart-32.png */; };
@@ -44,6 +47,7 @@
 		84BED46619D59EE3005C80F3 /* LRTwitterListsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED46519D59EE3005C80F3 /* LRTwitterListsViewController.m */; };
 		84BED46919D5A17D005C80F3 /* LRTwitterListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BED46819D5A17D005C80F3 /* LRTwitterListTableViewCell.m */; };
 		84BED46B19D5A189005C80F3 /* LRTwitterListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BED46A19D5A189005C80F3 /* LRTwitterListTableViewCell.xib */; };
+		84C655871A41858E00E791B2 /* LRGlobalSearchDocumentsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C655861A41858E00E791B2 /* LRGlobalSearchDocumentsListViewController.m */; };
 		84D22D5119F548E700131FA2 /* AUIAutoGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 84D22D5019F548E700131FA2 /* AUIAutoGrowingTextView.m */; };
 		84D22D5D19F5516600131FA2 /* MNMPullToRefresh.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84D22D5319F5516600131FA2 /* MNMPullToRefresh.strings */; };
 		84D22D5E19F5516600131FA2 /* MNMPullToRefreshIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84D22D5619F5516600131FA2 /* MNMPullToRefreshIcon.png */; };
@@ -151,9 +155,7 @@
 		84E0226E19F5129F0057DA6D /* LRTweets.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E0226D19F5129F0057DA6D /* LRTweets.m */; };
 		84EA0DB21A2C72CC00B1B6BA /* User_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EA0DB11A2C72CC00B1B6BA /* User_32.png */; };
 		84EA0DB51A2C74A400B1B6BA /* LRAuthorBioInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EA0DB41A2C74A400B1B6BA /* LRAuthorBioInfoViewController.m */; };
-		84EA0DB81A2CB76100B1B6BA /* LRAnalyst.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EA0DB71A2CB76100B1B6BA /* LRAnalyst.m */; };
 		84EA0DC01A2E22D200B1B6BA /* Search-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 84EA0DBF1A2E22D200B1B6BA /* Search-32.png */; };
-		84EC89901A0CF89C0057C9BB /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EC898F1A0CF89C0057C9BB /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +187,11 @@
 		845F095D1A24769600C66E27 /* LRPasswordResetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRPasswordResetViewController.m; sourceTree = "<group>"; };
 		8467DD9119D032B300BFA20F /* LRSaveDataToDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRSaveDataToDatabase.h; sourceTree = "<group>"; };
 		8467DD9219D032B300BFA20F /* LRSaveDataToDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRSaveDataToDatabase.m; sourceTree = "<group>"; };
+		84799DBE1A42CD2100EAC683 /* LRAnalyst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRAnalyst.h; sourceTree = "<group>"; };
+		84799DBF1A42CD2100EAC683 /* LRAnalyst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRAnalyst.m; sourceTree = "<group>"; };
+		84799DC51A42D8ED00EAC683 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
+		84799DC71A42E02E00EAC683 /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
+		84799DC81A42E02E00EAC683 /* CrashHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashHelper.m; sourceTree = "<group>"; };
 		848495161A03902A003CC384 /* Close-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Close-32.png"; sourceTree = "<group>"; };
 		848495181A0395AC003CC384 /* UIView+MGBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MGBadgeView.h"; sourceTree = "<group>"; };
 		848495191A0395AC003CC384 /* UIView+MGBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MGBadgeView.m"; sourceTree = "<group>"; };
@@ -225,6 +232,8 @@
 		84BED46719D5A17D005C80F3 /* LRTwitterListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRTwitterListTableViewCell.h; sourceTree = "<group>"; };
 		84BED46819D5A17D005C80F3 /* LRTwitterListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRTwitterListTableViewCell.m; sourceTree = "<group>"; };
 		84BED46A19D5A189005C80F3 /* LRTwitterListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LRTwitterListTableViewCell.xib; sourceTree = "<group>"; };
+		84C655851A41858E00E791B2 /* LRGlobalSearchDocumentsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRGlobalSearchDocumentsListViewController.h; sourceTree = "<group>"; };
+		84C655861A41858E00E791B2 /* LRGlobalSearchDocumentsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRGlobalSearchDocumentsListViewController.m; sourceTree = "<group>"; };
 		84D22D4F19F548E700131FA2 /* AUIAutoGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AUIAutoGrowingTextView.h; sourceTree = "<group>"; };
 		84D22D5019F548E700131FA2 /* AUIAutoGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AUIAutoGrowingTextView.m; sourceTree = "<group>"; };
 		84D22D5419F5516600131FA2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MNMPullToRefresh.strings; sourceTree = "<group>"; };
@@ -383,10 +392,7 @@
 		84EA0DB11A2C72CC00B1B6BA /* User_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = User_32.png; sourceTree = "<group>"; };
 		84EA0DB31A2C74A400B1B6BA /* LRAuthorBioInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRAuthorBioInfoViewController.h; sourceTree = "<group>"; };
 		84EA0DB41A2C74A400B1B6BA /* LRAuthorBioInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRAuthorBioInfoViewController.m; sourceTree = "<group>"; };
-		84EA0DB61A2CB76100B1B6BA /* LRAnalyst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRAnalyst.h; sourceTree = "<group>"; };
-		84EA0DB71A2CB76100B1B6BA /* LRAnalyst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRAnalyst.m; sourceTree = "<group>"; };
 		84EA0DBF1A2E22D200B1B6BA /* Search-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search-32.png"; sourceTree = "<group>"; };
-		84EC898F1A0CF89C0057C9BB /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -394,6 +400,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84799DC61A42D8ED00EAC683 /* CrashReporter.framework in Frameworks */,
 				845F095B1A23276C00C66E27 /* AVFoundation.framework in Frameworks */,
 				84BED43619D55B00005C80F3 /* Accounts.framework in Frameworks */,
 				84D3C0EC19B88868007455F9 /* Social.framework in Frameworks */,
@@ -415,7 +422,6 @@
 				84D3C00619B86F9E007455F9 /* CoreGraphics.framework in Frameworks */,
 				84D3C0D719B88811007455F9 /* libxml2.2.dylib in Frameworks */,
 				84D3C0D819B88811007455F9 /* libxml2.dylib in Frameworks */,
-				84EC89901A0CF89C0057C9BB /* Crashlytics.framework in Frameworks */,
 				84D3C11C19B8A487007455F9 /* Bolts.framework in Frameworks */,
 				84D3C00819B86F9E007455F9 /* UIKit.framework in Frameworks */,
 				84D3C00419B86F9E007455F9 /* Foundation.framework in Frameworks */,
@@ -495,7 +501,6 @@
 		84D3BFF719B86F9E007455F9 = {
 			isa = PBXGroup;
 			children = (
-				84EC898F1A0CF89C0057C9BB /* Crashlytics.framework */,
 				84D3C00919B86F9E007455F9 /* Leerink */,
 				84D3C02B19B86F9E007455F9 /* LeerinkTests */,
 				84D3C00219B86F9E007455F9 /* Frameworks */,
@@ -515,6 +520,7 @@
 		84D3C00219B86F9E007455F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84799DC51A42D8ED00EAC683 /* CrashReporter.framework */,
 				845F095A1A23276C00C66E27 /* AVFoundation.framework */,
 				84BED43519D55B00005C80F3 /* Accounts.framework */,
 				84D3C11A19B8A487007455F9 /* Bolts.framework */,
@@ -555,6 +561,8 @@
 				84D3C04A19B88657007455F9 /* LRMainClientPageViewController.m */,
 				84D3C04519B88657007455F9 /* LRSubMenuListController.h */,
 				84D3C04619B88657007455F9 /* LRSubMenuListController.m */,
+				84C655851A41858E00E791B2 /* LRGlobalSearchDocumentsListViewController.h */,
+				84C655861A41858E00E791B2 /* LRGlobalSearchDocumentsListViewController.m */,
 				84D3C04319B88657007455F9 /* LRDocumentListViewController.h */,
 				84D3C04419B88657007455F9 /* LRDocumentListViewController.m */,
 				84D3C12819C1CCFC007455F9 /* LRDocumentViewController.h */,
@@ -579,6 +587,8 @@
 				84DC159A1A1E1EE9005CE54D /* FPPopoverView.m */,
 				84DC159B1A1E1EE9005CE54D /* FPTouchView.h */,
 				84DC159C1A1E1EE9005CE54D /* FPTouchView.m */,
+				84799DC71A42E02E00EAC683 /* CrashHelper.h */,
+				84799DC81A42E02E00EAC683 /* CrashHelper.m */,
 				84D22D5219F5516600131FA2 /* MNMPullToRefresh */,
 				84BED43719D5988C005C80F3 /* STTwitter */,
 				84D3C05619B886A7007455F9 /* LRCoreDataClasses */,
@@ -651,8 +661,8 @@
 				84DC10C81A1B5B8B005CE54D /* LRDocument.m */,
 				84DC10CD1A1CA191005CE54D /* LRTwitterList.h */,
 				84DC10CE1A1CA191005CE54D /* LRTwitterList.m */,
-				84EA0DB61A2CB76100B1B6BA /* LRAnalyst.h */,
-				84EA0DB71A2CB76100B1B6BA /* LRAnalyst.m */,
+				84799DBE1A42CD2100EAC683 /* LRAnalyst.h */,
+				84799DBF1A42CD2100EAC683 /* LRAnalyst.m */,
 			);
 			path = LRCoreDataFiles;
 			sourceTree = "<group>";
@@ -976,7 +986,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run 538f8236cc2bab28cc8de91308000df9c232a03d b15e049479dc6d1be64ae53e15a4466effd3b061d848938eda2fb0dad84a9cee";
+			shellScript = "";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -989,6 +999,7 @@
 				84D3C05119B88657007455F9 /* LRDocumentListViewController.m in Sources */,
 				845F095E1A24769600C66E27 /* LRPasswordResetViewController.m in Sources */,
 				84BED45A19D5988C005C80F3 /* STTwitterAppOnly.m in Sources */,
+				84C655871A41858E00E791B2 /* LRGlobalSearchDocumentsListViewController.m in Sources */,
 				84E0226B19F50AE80057DA6D /* LRUserTimeLineTwitterViewController.m in Sources */,
 				84BED45E19D5988C005C80F3 /* STTwitterOSRequest.m in Sources */,
 				84BED46619D59EE3005C80F3 /* LRTwitterListsViewController.m in Sources */,
@@ -1017,7 +1028,6 @@
 				84D3C0A319B886A7007455F9 /* LRUser.m in Sources */,
 				84D3C12419BEF96C007455F9 /* NSString+HTML.m in Sources */,
 				84BED46919D5A17D005C80F3 /* LRTwitterListTableViewCell.m in Sources */,
-				84EA0DB81A2CB76100B1B6BA /* LRAnalyst.m in Sources */,
 				84D3C0AF19B886A7007455F9 /* NSString+MKNetworkKitAdditions.m in Sources */,
 				84BED45819D5988C005C80F3 /* STHTTPRequest+STTwitter.m in Sources */,
 				84D3C11119B88A77007455F9 /* UITextField+previousNextToolBar.m in Sources */,
@@ -1032,6 +1042,7 @@
 				84D3C11019B88A77007455F9 /* RTCustomTextField.m in Sources */,
 				84DC159E1A1E1EE9005CE54D /* FPPopoverView.m in Sources */,
 				84D3C05419B88657007455F9 /* LRMainClientPageViewController.m in Sources */,
+				84799DC91A42E02E00EAC683 /* CrashHelper.m in Sources */,
 				84D3C12A19C1CCFC007455F9 /* LRDocumentViewController.m in Sources */,
 				84EA0DB51A2C74A400B1B6BA /* LRAuthorBioInfoViewController.m in Sources */,
 				84D3C0A819B886A7007455F9 /* LRContactListTableViewCell.m in Sources */,
@@ -1039,6 +1050,7 @@
 				84D3C0B419B886A7007455F9 /* Reachability.m in Sources */,
 				84BED45719D5988C005C80F3 /* NSString+STTwitter.m in Sources */,
 				84D22D6119F5516600131FA2 /* MNMPullToRefreshView.m in Sources */,
+				84799DC01A42CD2100EAC683 /* LRAnalyst.m in Sources */,
 				84D3C01019B86F9E007455F9 /* main.m in Sources */,
 				84D3C10419B88914007455F9 /* LRWebEngine.m in Sources */,
 				84D3C12319BEF96C007455F9 /* GTMNSString+HTML.m in Sources */,
@@ -1191,7 +1203,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)",
+					"/Volumes/PLCrashReporter-1.2/iOS",
+					Framework,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Leerink/Leerink-Prefix.pch";
 				INFOPLIST_FILE = "Leerink/Leerink-Info.plist";
@@ -1208,7 +1224,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)",
+					"/Volumes/PLCrashReporter-1.2/iOS",
+					Framework,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Leerink/Leerink-Prefix.pch";
 				INFOPLIST_FILE = "Leerink/Leerink-Info.plist";

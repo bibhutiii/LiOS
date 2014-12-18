@@ -38,10 +38,7 @@
                     for (NSDictionary *analystDictionary in listOfAnalysts) {
                         LRAnalyst *analyst = (LRAnalyst *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRAnalyst" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
                         
-                        NSString *name = [analystDictionary objectForKey:@"DisplayName"];
-                        NSArray *array = [name componentsSeparatedByString:@","];
-                        analyst.firstName = [array objectAtIndex:1];
-                        analyst.lastName = [array objectAtIndex:0];
+                        analyst.displayName = [analystDictionary objectForKey:@"DisplayName"];
                         analyst.userId = [NSNumber numberWithInt:[[analystDictionary objectForKey:@"UserID"] intValue]];
                         analyst.analystInfo = [analystDictionary objectForKey:@"BioProfile"];
                     }

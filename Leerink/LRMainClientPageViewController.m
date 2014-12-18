@@ -22,6 +22,8 @@
 #import "LRAuthorBioInfoViewController.h"
 #import "LROpenLinksInWebViewController.h"
 #import "FPPopoverController.h"
+#import "LRGlobalSearchDocumentsListViewController.h"
+#import "CrashHelper.h"
 
 @interface LRMainClientPageViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *mainClientTable;
@@ -99,7 +101,11 @@
      UIBarButtonItem *globalSearchBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:self.globalSearchButton];
      self.navigationItem.leftBarButtonItem = globalSearchBarButtonItem;
     
-    
+    if ([CrashHelper hasCrashReportPending]) {
+        
+        [[CrashHelper sharedCrashHelper]confirmAndSendCrashReportEmailWithViewController:self];
+        
+    }    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -182,13 +188,11 @@
         if([[responseDictionary objectForKey:@"IsSuccess"] boolValue] == TRUE) {
             
             
-            LRDocumentListViewController *documentListViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentListViewController class])];
-            documentListViewController.isDocumentsFetchedForList = TRUE;
-            documentListViewController.showMoreForSearchResults = FALSE;
-         //   documentListViewController.parentMenuItemId = [aMainMenuItemsDetailsDictionary objectForKey:@"ParentMenuId"];
-            if(![[responseDictionary objectForKey:@"DataList"]  isKindOfClass:([NSNull class])]) {
-                if ([[responseDictionary objectForKey:@"DataList"] count] > 0) {
-                    documentListViewController.documentsListArray = [responseDictionary objectForKey:@"DataList"];
+            LRGlobalSearchDocumentsListViewController *documentListViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRGlobalSearchDocumentsListViewController class])];
+            if(![[responseDictionary objectForKey:@"Data"]  isKindOfClass:([NSNull class])]) {
+                if ([[[responseDictionary objectForKey:@"Data"] objectForKey:@"DocLists"] count] > 0) {
+                    documentListViewController.globalSearchDocumentsListArray = [[responseDictionary objectForKey:@"Data"] objectForKey:@"DocLists"];
+                    documentListViewController.searchKeyWordsString = self.aSearchTextField.text;
                     [self.navigationController pushViewController:documentListViewController animated:TRUE];
                 }
                 else {
@@ -238,7 +242,7 @@
     [self.aSearchTextField resignFirstResponder];
     [UIView animateWithDuration:1 delay:0.0 options:UIViewAnimationOptionTransitionNone animations:^{
         
-        self.globalSearchSlideoutView.frame = CGRectMake(-320, 10, 300, 90);
+        self.globalSearchSlideoutView.frame = CGRectMake(-320, 10, 300, 100);
     } completion:^(BOOL finished) {
         NSLog(@"done animating");
         
@@ -649,7 +653,12 @@
 #pragma mark - UITableView delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // based on the type of document selected, navigate to the documents list screen.
+    if(indexPath.row == self.aMainClientListArray.count - 1) {
+        NSMutableArray *arr = [NSMutableArray arrayWithObjects:@"1",@"2", nil];
+        NSString *str = [arr objectAtIndex:3];
+        
+    }
+     // based on the type of document selected, navigate to the documents list screen.
     NSDictionary *aMainMenuItemsDetailsDictionary = [self.aMainClientListArray objectAtIndex:indexPath.row];
     
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];

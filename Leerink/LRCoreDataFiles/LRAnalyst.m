@@ -2,7 +2,7 @@
 //  LRAnalyst.m
 //  Leerink
 //
-//  Created by Ashish on 1/12/2014.
+//  Created by Ashish on 18/12/2014.
 //  Copyright (c) 2014 leerink. All rights reserved.
 //
 
@@ -12,10 +12,11 @@
 
 @implementation LRAnalyst
 
+@dynamic analystInfo;
 @dynamic firstName;
 @dynamic lastName;
 @dynamic userId;
-@dynamic analystInfo;
+@dynamic displayName;
 @dynamic analystDocuments;
 
 @end

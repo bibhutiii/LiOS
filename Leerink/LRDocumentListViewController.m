@@ -7,13 +7,12 @@
 //
 
 #import "LRDocumentListViewController.h"
-#import "LRLoginViewController.h"
 #import "LRDocumentTypeTableViewCell.h"
-#import "LRDocument.h"
 #import "LRDocumentViewController.h"
 #import "LRWebEngine.h"
 #import "FPPopoverController.h"
 #import "LROpenLinksInWebViewController.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 
 @interface LRDocumentListViewController ()
 {
@@ -146,32 +145,20 @@
     if([controller.searchBar.text length] > 0) {
         UITableView *tableView = [[self searchDisplayController] searchResultsTableView];
         
-        tableView.frame = CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.size.width, tableView.frame.size.height + 44);
+        tableView.frame = CGRectMake(tableView.frame.origin.x, self.documentsListTable.frame.origin.y - 44, tableView.frame.size.width, self.documentsListTable.frame.size.height);
         tableView.backgroundColor = [UIColor colorWithRed:40.0/255.0 green:141.0/255.0 blue:192.0/255.0 alpha:1.0];
     }
     
 }
-- (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView {
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    
-}
+
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide) name:UIKeyboardWillHideNotification object:nil];
-    
-}
--  (void) keyboardWillHide {
-    
-    UITableView *tableView = [[self searchDisplayController] searchResultsTableView];
-    
     [tableView setContentInset:UIEdgeInsetsZero];
-    
-    [tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
     
     tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
 }
+
 - (void) searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
 {
     self.documentsListTable.hidden = FALSE;
@@ -196,7 +183,7 @@
         return [searchResults count];
         
     } else {
-        if(self.showMoreOption == TRUE || self.showMoreForSearchResults ==FALSE)
+        if(self.showMoreOption == TRUE)
             return self.documentsListArray.count + 1;
         return self.documentsListArray.count;
     }
@@ -231,8 +218,7 @@
             return ccell;
         }
         NSDictionary *aDocumentDetailsDictionary = [searchResults objectAtIndex:indexPath.row];
-        NSString *pdfURL = [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
-        BOOL showTextOnlyIcon = ([pdfURL isEqualToString:@"pdf"]) ? TRUE : FALSE;
+        BOOL showTextOnlyIcon = ([[aDocumentDetailsDictionary objectForKey:@"PlainTextURL"] length] > 0) ? TRUE : FALSE;
         
         cell.delegate = self;
         cell.tag = indexPath.row;
@@ -246,22 +232,30 @@
         else {
             dateString = @" ";
         }
+        //simsg355qs
+        CFStringRef fileExtension = (__bridge CFStringRef) [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
+        CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
         
+        BOOL isFileTypeAudio = FALSE;
+        if (UTTypeConformsTo(fileUTI, kUTTypeAudio)) {
+            NSLog(@"It's Audio");
+            isFileTypeAudio = TRUE;
+        }
         // check if the document hsa been selected and reload the table accordingly.
         if([self.selectedDocumentsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
             if(![[aDocumentDetailsDictionary objectForKey:@"Authors"] isKindOfClass:([NSNull class])]) {
                 if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
                     if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] == 1) {
-                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon];
+                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                     }
                     else {
-                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:TRUE hasMultipleAuthors:TRUE showTextOnlyIcon:showTextOnlyIcon];
+                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:TRUE hasMultipleAuthors:TRUE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                     }
                 }
                 
             }
             else {
-                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon];
+                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
             }
             
         }
@@ -270,30 +264,30 @@
                 if(![[aDocumentDetailsDictionary objectForKey:@"Authors"] isKindOfClass:([NSNull class])]) {
                     if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
                         if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] == 1) {
-                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon];
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                         }
                         else {
-                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:TRUE hasMultipleAuthors:TRUE showTextOnlyIcon:showTextOnlyIcon];
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:TRUE hasMultipleAuthors:TRUE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                         }
                     }
                 }
                 else {
-                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon];
+                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                 }
             }
             else {
                 if(![[aDocumentDetailsDictionary objectForKey:@"Authors"] isKindOfClass:([NSNull class])]) {
                     if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
                         if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] == 1) {
-                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:FALSE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon];
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:FALSE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                         }
                         else {
-                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:FALSE hasMultipleAuthors:TRUE showTextOnlyIcon:showTextOnlyIcon];
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:FALSE hasMultipleAuthors:TRUE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                         }
                     }
                 }
                 else {
-                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:FALSE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon];
+                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:FALSE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                 }
             }
             //   [cell fillDataForDocumentCellwithTitle:aDocument.documentTitle andDateTime:@"02-Sep-2014" andAuthor:aDocument.documentAuthor andisDocumentSelected:FALSE];
@@ -302,8 +296,7 @@
     else {
         if(indexPath.row != self.documentsListArray.count) {
             NSDictionary *aDocumentDetailsDictionary = [self.documentsListArray objectAtIndex:indexPath.row];
-            NSString *pdfURL = [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
-            BOOL showTextOnlyIcon = ([pdfURL isEqualToString:@"pdf"]) ? TRUE : FALSE;
+            BOOL showTextOnlyIcon = ([[aDocumentDetailsDictionary objectForKey:@"PlainTextURL"] length] > 0) ? TRUE : FALSE;
             NSArray *dateArray = [[aDocumentDetailsDictionary objectForKey:@"UpdateDate"] componentsSeparatedByString:@"T"];
             NSString *dateString = nil;
             if(dateArray.count > 0) {
@@ -315,21 +308,30 @@
             cell.delegate = self;
             cell.tag = indexPath.row;
             
+            CFStringRef fileExtension = (__bridge CFStringRef) [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
+            CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
+            
+            BOOL isFileTypeAudio = FALSE;
+            if (UTTypeConformsTo(fileUTI, kUTTypeAudio)) {
+                NSLog(@"It's Audio");
+                isFileTypeAudio = TRUE;
+            }
+
             // check if the document hsa been selected and reload the table accordingly.
             if([self.selectedDocumentsArray containsObject:[aDocumentDetailsDictionary objectForKey:@"DocumentID"]]) {
                 if(![[aDocumentDetailsDictionary objectForKey:@"Authors"] isKindOfClass:([NSNull class])]) {
                     if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
                         if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] == 1) {
-                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon];
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                         }
                         else {
-                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:TRUE hasMultipleAuthors:TRUE showTextOnlyIcon:showTextOnlyIcon];
+                            [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:TRUE hasMultipleAuthors:TRUE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                         }
                     }
                     
                 }
                 else {
-                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon];
+                    [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                 }
                 
             }
@@ -338,30 +340,30 @@
                     if(![[aDocumentDetailsDictionary objectForKey:@"Authors"] isKindOfClass:([NSNull class])]) {
                         if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
                             if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] == 1) {
-                                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon];
+                                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                             }
                             else {
-                                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:TRUE hasMultipleAuthors:TRUE showTextOnlyIcon:showTextOnlyIcon];
+                                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:TRUE hasMultipleAuthors:TRUE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                             }
                         }
                     }
                     else {
-                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon];
+                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:TRUE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                     }
                 }
                 else {
                     if(![[aDocumentDetailsDictionary objectForKey:@"Authors"] isKindOfClass:([NSNull class])]) {
                         if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
                             if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] == 1) {
-                                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:FALSE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon];
+                                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"] andisDocumentSelected:FALSE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                             }
                             else {
-                                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:FALSE hasMultipleAuthors:TRUE showTextOnlyIcon:showTextOnlyIcon];
+                                [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:@"" andisDocumentSelected:FALSE hasMultipleAuthors:TRUE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                             }
                         }
                     }
                     else {
-                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:FALSE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon];
+                        [cell fillDataForDocumentCellwithTitle:[aDocumentDetailsDictionary objectForKey:@"DocumentTitle"] andDateTime:dateString andAuthor:[aDocumentDetailsDictionary objectForKey:@"Author"] andisDocumentSelected:FALSE hasMultipleAuthors:FALSE showTextOnlyIcon:showTextOnlyIcon isFileTypeAudio:isFileTypeAudio];
                     }
                 }
             }

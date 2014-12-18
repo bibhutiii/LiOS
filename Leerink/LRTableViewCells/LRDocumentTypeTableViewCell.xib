@@ -76,14 +76,17 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JMk-SM-CpM">
-                        <rect key="frame" x="286" y="2" width="25" height="25"/>
-                        <state key="normal" image="Edit Text_32x32.png">
+                        <rect key="frame" x="271" y="2" width="45" height="30"/>
+                        <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
                             <action selector="show_text_only_version_of_document:" destination="XOq-iI-xY5" eventType="touchUpInside" id="IEG-qk-JF6"/>
                         </connections>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Edit Text_32x32.png" translatesAutoresizingMaskIntoConstraints="NO" id="ceV-z4-mxT">
+                        <rect key="frame" x="286" y="2" width="25" height="25"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="SNM-au-OzI" firstAttribute="top" secondItem="5no-B9-Ac9" secondAttribute="bottom" constant="10" id="33n-On-7kZ"/>
@@ -104,12 +107,14 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.15686274509803921" green="0.55294117647058827" blue="0.75294117647058822" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="addToCartSelectDocumentButton" destination="Ks9-kY-zrZ" id="XZL-Hv-Z76"/>
                 <outlet property="authorTitleLabel" destination="eEA-lA-nds" id="Pn0-ub-fl2"/>
                 <outlet property="dateLabel" destination="dWt-2h-vvT" id="mrt-EU-xeV"/>
                 <outlet property="documentTitleLabel" destination="5no-B9-Ac9" id="xeZ-3X-iy4"/>
                 <outlet property="infoForAuthorsButton" destination="SNM-au-OzI" id="A1G-hE-lDl"/>
                 <outlet property="selectDocumentImage" destination="Q2b-nx-KV9" id="Qdr-tg-pZR"/>
                 <outlet property="text_only_Button" destination="JMk-SM-CpM" id="wa5-QE-gLh"/>
+                <outlet property="text_only_image" destination="ceV-z4-mxT" id="tcF-n5-y5l"/>
             </connections>
             <point key="canvasLocation" x="140" y="149"/>
         </tableViewCell>

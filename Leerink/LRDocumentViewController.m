@@ -207,10 +207,11 @@
             [aLogOutAlertView show];
         }
         
-        
     }
     else {
         NSLog(@"Error %@",[error localizedDescription]);
+        if([[error localizedDescription] isEqualToString:@"cancelled"])
+            return;
         UIAlertView *documentFailAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink" message:[error localizedDescription] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [documentFailAlertView show];
     }
@@ -293,6 +294,8 @@
 {
     NSLog(@"error--%@",error);
     [LRUtility stopActivityIndicatorFromView:self.view];
+    if([[error localizedDescription] isEqualToString:@"Plug-in handled load"])
+        return;
     UIAlertView *documentFailAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink" message:[error localizedDescription] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     [documentFailAlertView show];
 }

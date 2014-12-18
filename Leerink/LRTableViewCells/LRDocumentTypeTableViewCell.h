@@ -10,6 +10,6 @@
 #import "LRLoadDataDelegate.h"
 
 @interface LRDocumentTypeTableViewCell : UITableViewCell
-- (void)fillDataForDocumentCellwithTitle:(NSString *)title andDateTime:(NSString *)date andAuthor:(NSString *)author andisDocumentSelected:(BOOL)isSelected hasMultipleAuthors:(BOOL)hasMultipleAuthors showTextOnlyIcon:(BOOL)showTextOnlyIcon;
+- (void)fillDataForDocumentCellwithTitle:(NSString *)title andDateTime:(NSString *)date andAuthor:(NSString *)author andisDocumentSelected:(BOOL)isSelected hasMultipleAuthors:(BOOL)hasMultipleAuthors showTextOnlyIcon:(BOOL)showTextOnlyIcon isFileTypeAudio:(BOOL)isFleTypeAudio;
 @property (nonatomic, assign) id <LRLoadDataDelegate> delegate;
 @end
