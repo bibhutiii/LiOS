@@ -39,6 +39,7 @@
 @property (strong, nonatomic) IBOutlet NSObject *topBar;
 @property (strong, nonatomic) UIView *globalSearchSlideoutView;
 @property (strong, nonatomic) UITextField *aSearchTextField;
+@property (nonatomic, assign) BOOL hasIconContent;
 
 - (IBAction)sendDocumentIdsFromCartToService:(id)sender;
 - (void)saveTwitterListDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray;
@@ -82,6 +83,7 @@
         }
     }
     
+    self.hasIconContent = FALSE;
     // add the logout button on the right side of the navigation bar
     SEL aLogoutButtonSelector = sel_registerName("logOut");
     UIBarButtonItem *logOutButton = [[UIBarButtonItem alloc] initWithImage:nil style:0 target:self action:aLogoutButtonSelector];
@@ -90,22 +92,74 @@
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
     
     // add the logout button on the right side of the navigation bar
-     SEL aGlobalSearchButton = sel_registerName("globalSearch:");
-     
-     self.globalSearchButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 25, 25)];
-     [self.globalSearchButton setBackgroundImage:[UIImage imageNamed:@"Search-32"] forState:UIControlStateNormal];
-     [self.globalSearchButton addTarget:self action:aGlobalSearchButton
-     forControlEvents:UIControlEventTouchUpInside];
-     [self.globalSearchButton setShowsTouchWhenHighlighted:YES];
-     
-     UIBarButtonItem *globalSearchBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:self.globalSearchButton];
-     self.navigationItem.leftBarButtonItem = globalSearchBarButtonItem;
+    SEL aGlobalSearchButton = sel_registerName("globalSearch:");
+    
+    self.globalSearchButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 25, 25)];
+    [self.globalSearchButton setBackgroundImage:[UIImage imageNamed:@"Search-32"] forState:UIControlStateNormal];
+    [self.globalSearchButton addTarget:self action:aGlobalSearchButton
+                      forControlEvents:UIControlEventTouchUpInside];
+    [self.globalSearchButton setShowsTouchWhenHighlighted:YES];
+    
+    UIBarButtonItem *globalSearchBarButtonItem =[[UIBarButtonItem alloc] initWithCustomView:self.globalSearchButton];
+    self.navigationItem.leftBarButtonItem = globalSearchBarButtonItem;
     
     if ([CrashHelper hasCrashReportPending]) {
         
-        [[CrashHelper sharedCrashHelper]confirmAndSendCrashReportEmailWithViewController:self];
+        [CrashHelper sharedCrashHelper].delegate = self;
         
-    }    
+        [[CrashHelper sharedCrashHelper]confirmAndSendCrashReportEmailWithViewController:self];
+    }
+}
+- (void)sendCrashReportToServiceWithByteConvertedString:(NSString *)byteString
+{
+    NSMutableDictionary *aRequestDictionary = [NSMutableDictionary new];
+    [aRequestDictionary setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"FirstName"] forKey:@"UserName"];
+    [aRequestDictionary setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserId"] forKey:@"UserId"];
+    [aRequestDictionary setObject:byteString forKey:@"CrashReport"];
+    
+    [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
+    [[LRWebEngine defaultWebEngine] sendCrashReportToServiceWithContextInfo:aRequestDictionary forResponseBlock:^(NSDictionary *responseDictionary) {
+        if([[responseDictionary objectForKey:@"IsSuccess"] boolValue] == TRUE) {
+            [LRUtility stopActivityIndicatorFromView:self.view];
+
+            UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                       message:@"Crash Report Sent"
+                                                                      delegate:self
+                                                             cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                             otherButtonTitles:nil, nil];
+            [aLogOutAlertView show];
+
+        }
+        else {
+            [LRUtility stopActivityIndicatorFromView:self.view];
+            UIAlertView *aLogOutAlertView = nil;
+            NSString *aMsgStr = nil;
+            if(![[responseDictionary objectForKey:@"Message"] isKindOfClass:([NSNull class])]) {
+                aMsgStr = [responseDictionary objectForKey:@"Message"];
+            }
+            
+            if(![[responseDictionary objectForKey:@"Error"] isKindOfClass:([NSNull class])]) {
+                aMsgStr = [responseDictionary objectForKey:@"Error"];
+            }
+            aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                          message:[NSString stringWithFormat:@"%@,%@",aMsgStr,[responseDictionary objectForKey:@"StatusCode"]]
+                                                         delegate:self
+                                                cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                otherButtonTitles:nil, nil];
+            
+            [aLogOutAlertView show];
+        }
+        
+    } errorHandler:^(NSError *errorString) {
+        [LRUtility stopActivityIndicatorFromView:self.view];
+        UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                   message:[errorString localizedDescription]
+                                                                  delegate:self
+                                                         cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                         otherButtonTitles:nil, nil];
+        [aLogOutAlertView show];
+        
+    }];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -160,7 +214,7 @@
         SEL aGlobalSearchButton = sel_registerName("globalSearchText");
         [aOKButton addTarget:self action:aGlobalSearchButton forControlEvents:UIControlEventTouchUpInside];
         [aOKButton setImage:[UIImage imageNamed:@"Ok-32"] forState:UIControlStateNormal];
-
+        
         [self.globalSearchSlideoutView addSubview:aOKButton];
         
         UIButton *aCancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -168,7 +222,7 @@
         [aCancelButton setImage:[UIImage imageNamed:@"Cancel-32"] forState:UIControlStateNormal];
         SEL aGlobalSearchCancelButton = sel_registerName("globalSearchTextCancel");
         [aCancelButton addTarget:self action:aGlobalSearchCancelButton forControlEvents:UIControlEventTouchUpInside];
-
+        
         [self.globalSearchSlideoutView addSubview:aCancelButton];
     }
     [self.view addSubview:self.globalSearchSlideoutView];
@@ -177,11 +231,11 @@
 - (void)globalSearchText {
     
     [self.aSearchTextField resignFirstResponder];
-
+    
     NSMutableDictionary *aRequestDictionary = [NSMutableDictionary new];
     [aRequestDictionary setObject:self.aSearchTextField.text forKey:@"SearchKeyword"];
     [aRequestDictionary setObject:@"50" forKey:@"TopCount"];
-
+    
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
     
     [[LRWebEngine defaultWebEngine] sendRequestToSearchForDocumentsForKeyWordsWithContextInfo:aRequestDictionary forResponseBlock:^(NSDictionary *responseDictionary) {
@@ -191,16 +245,17 @@
             LRGlobalSearchDocumentsListViewController *documentListViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRGlobalSearchDocumentsListViewController class])];
             if(![[responseDictionary objectForKey:@"Data"]  isKindOfClass:([NSNull class])]) {
                 if ([[[responseDictionary objectForKey:@"Data"] objectForKey:@"DocLists"] count] > 0) {
+                    [self.aSearchTextField setText:@""];
                     documentListViewController.globalSearchDocumentsListArray = [[responseDictionary objectForKey:@"Data"] objectForKey:@"DocLists"];
                     documentListViewController.searchKeyWordsString = self.aSearchTextField.text;
                     [self.navigationController pushViewController:documentListViewController animated:TRUE];
                 }
                 else {
                     UIAlertView *aLogOutAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                  message:@"No Results"
-                                                                 delegate:self
-                                                        cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                                                        otherButtonTitles:nil, nil];
+                                                                               message:@"No Results"
+                                                                              delegate:self
+                                                                     cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                     otherButtonTitles:nil, nil];
                     
                     [aLogOutAlertView show];
                 }
@@ -253,7 +308,7 @@
         
         self.globalSearchSlideoutView.frame = CGRectMake(10, self.globalSearchSlideoutView.frame.origin.y, self.globalSearchSlideoutView.frame.size.width, self.globalSearchSlideoutView.frame.size.height);
         [self.view bringSubviewToFront:self.globalSearchSlideoutView];
-
+        
     } completion:^(BOOL finished) {
         NSLog(@"done animating");
         [self.aSearchTextField becomeFirstResponder];
@@ -265,6 +320,18 @@
     [[LRWebEngine defaultWebEngine] sendRequestToGetMainMenuItemsWithResponseDataBlock:^(NSDictionary *responseDictionary) {
         if([[responseDictionary objectForKey:@"IsSuccess"] boolValue] == TRUE) {
             self.aMainClientListArray = [responseDictionary objectForKey:@"DataList"];
+            for (NSDictionary *aDict in self.aMainClientListArray) {
+                NSString *aDocumentEncodedString = [aDict objectForKey:@"IconByte"];
+                
+                NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:aDocumentEncodedString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+                
+                UIImage *iconImage = [UIImage imageWithData:decodedData];
+                if(iconImage != nil)
+                {
+                    self.hasIconContent = TRUE;
+                    break;
+                }
+            }
             [self.mainClientTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
             
             self.mainClientTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -631,18 +698,25 @@
 {
     NSString *CellIdentifier = NSStringFromClass([LRContactListTableViewCell class]);
     LRContactListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    NSDictionary *aMainMenuItemsDetailsDictionary = [self.aMainClientListArray objectAtIndex:indexPath.row];
+    
     if(cell == nil)
     {
         NSArray *bundle = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
-        cell = (LRContactListTableViewCell *)[bundle objectAtIndex: 1];
+        if(self.hasIconContent == TRUE)
+            cell = (LRContactListTableViewCell *)[bundle objectAtIndex: 1];
+        else
+            cell = (LRContactListTableViewCell *)[bundle objectAtIndex: 0];
+        
     }
-    NSDictionary *aMainMenuItemsDetailsDictionary = [self.aMainClientListArray objectAtIndex:indexPath.row];
+    
     NSString *aDocumentEncodedString = [aMainMenuItemsDetailsDictionary objectForKey:@"IconByte"];
     
     NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:aDocumentEncodedString options:NSDataBase64DecodingIgnoreUnknownCharacters];
     
     UIImage *iconImage = [UIImage imageWithData:decodedData];
-    
+
     cell.delegate = self;
     cell.tag = indexPath.row;
     [cell fillDataForMenuCellWithDisplayName:[aMainMenuItemsDetailsDictionary objectForKey:@"DisplayName"] andIconImage:iconImage];
@@ -653,12 +727,15 @@
 #pragma mark - UITableView delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // code to delibaretly crash the application.
     if(indexPath.row == self.aMainClientListArray.count - 1) {
-        NSMutableArray *arr = [NSMutableArray arrayWithObjects:@"1",@"2", nil];
-        NSString *str = [arr objectAtIndex:3];
+       // NSMutableArray *arr = [NSMutableArray arrayWithObjects:@"1",@"2", nil];
+        // NSString *str = [arr objectAtIndex:3];
         
     }
-     // based on the type of document selected, navigate to the documents list screen.
+    if([self.aSearchTextField isFirstResponder])
+        [self.aSearchTextField resignFirstResponder];
+    // based on the type of document selected, navigate to the documents list screen.
     NSDictionary *aMainMenuItemsDetailsDictionary = [self.aMainClientListArray objectAtIndex:indexPath.row];
     
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
@@ -761,7 +838,9 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 64;
+    if(self.hasIconContent == TRUE)
+        return 64;
+    return 44;
 }
 - (NSUInteger)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskPortrait;

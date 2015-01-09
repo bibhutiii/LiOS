@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "LRLoadDataDelegate.h"
 @interface LRLoginViewController : UIViewController<UITextFieldDelegate,LRLoadDataDelegate>
-
+@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @end

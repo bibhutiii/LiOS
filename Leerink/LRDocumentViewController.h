@@ -18,5 +18,7 @@
 @property (nonatomic, assign) eLRDocumentTypeWebView documentTypeWebView;
 @property (nonatomic, strong) NSString *documentType;
 @property (nonatomic, strong) NSString *documentPath;
+@property (nonatomic, strong) NSString *mp3Content;
 - (void)fetchDocument;
+- (void)setAudioToPause;
 @end

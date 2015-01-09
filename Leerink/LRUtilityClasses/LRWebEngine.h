@@ -35,4 +35,7 @@ typedef void (^LRErrorBlock)(NSError *errorString);
 - (MKNetworkOperation *)sendRequestToGetMainMenuItemsWithResponseDataBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock;
 - (MKNetworkOperation *)sendRequestToGetSubMenuItemsWithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock;
 - (MKNetworkOperation *)sendRequestToSearchForDocumentsForKeyWordsWithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock;
+- (MKNetworkOperation *)sendRequestToAcceptTermsAndConditions:(NSDictionary *)aRequestDictionary andResponseBlock:(LRResponseBlock) completion errorHandler:(LRErrorBlock) errorBlock;
+- (MKNetworkOperation *)sendRequestToChangePassWord:(NSDictionary *)aRequestDictionary andResponseBlock:(LRResponseBlock) completion errorHandler:(LRErrorBlock) errorBlock;
+- (MKNetworkOperation *)sendCrashReportToServiceWithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock;
 @end

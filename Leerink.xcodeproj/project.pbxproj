@@ -10,6 +10,7 @@
 		84093CA919E68B3300D20D19 /* LRTwitterListTweetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84093CA819E68B3300D20D19 /* LRTwitterListTweetsViewController.m */; };
 		84093CB719ED01FF00D20D19 /* logoutBtn1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84093CB619ED01FF00D20D19 /* logoutBtn1@2x.png */; };
 		84093CBC19ED5ABA00D20D19 /* Share-black-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 84093CBB19ED5ABA00D20D19 /* Share-black-32.png */; };
+		8413D7BD1A5A9BBC0053C5D4 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84799DC51A42D8ED00EAC683 /* CrashReporter.framework */; };
 		841BE6D71A3F03060084F1FD /* text_only.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6D61A3F03060084F1FD /* text_only.png */; };
 		841BE6D91A3F043D0084F1FD /* File-text-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6D81A3F043D0084F1FD /* File-text-32.png */; };
 		841BE6DB1A3F04F70084F1FD /* Edit Text_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6DA1A3F04F70084F1FD /* Edit Text_32x32.png */; };
@@ -18,13 +19,18 @@
 		841BE6E11A40604E0084F1FD /* Ok-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6DF1A40604E0084F1FD /* Ok-32.png */; };
 		841BE6E31A4097100084F1FD /* Arrow Circle Left-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6E21A4097100084F1FD /* Arrow Circle Left-32.png */; };
 		841BE6E71A40A1230084F1FD /* Arrow Circle Right-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 841BE6E61A40A1230084F1FD /* Arrow Circle Right-32.png */; };
+		8448B3AA1A4ABC0000EBBB86 /* Button_Pause_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 8448B3A71A4ABC0000EBBB86 /* Button_Pause_32.png */; };
+		8448B3AB1A4ABC0000EBBB86 /* Button_Play_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 8448B3A81A4ABC0000EBBB86 /* Button_Play_32.png */; };
+		8448B3AC1A4ABC0000EBBB86 /* Button_Stop_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 8448B3A91A4ABC0000EBBB86 /* Button_Stop_32.png */; };
 		845F09591A23275600C66E27 /* simsg355q.wav in Resources */ = {isa = PBXBuildFile; fileRef = 845F09581A23275600C66E27 /* simsg355q.wav */; };
 		845F095B1A23276C00C66E27 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F095A1A23276C00C66E27 /* AVFoundation.framework */; };
 		845F095E1A24769600C66E27 /* LRPasswordResetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845F095D1A24769600C66E27 /* LRPasswordResetViewController.m */; };
 		8467DD9319D032B300BFA20F /* LRSaveDataToDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8467DD9219D032B300BFA20F /* LRSaveDataToDatabase.m */; };
 		84799DC01A42CD2100EAC683 /* LRAnalyst.m in Sources */ = {isa = PBXBuildFile; fileRef = 84799DBF1A42CD2100EAC683 /* LRAnalyst.m */; };
-		84799DC61A42D8ED00EAC683 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84799DC51A42D8ED00EAC683 /* CrashReporter.framework */; };
 		84799DC91A42E02E00EAC683 /* CrashHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 84799DC81A42E02E00EAC683 /* CrashHelper.m */; };
+		84799DCC1A495ABD00EAC683 /* LRTermsAndConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84799DCB1A495ABD00EAC683 /* LRTermsAndConditionsViewController.m */; };
+		84799DCE1A496D2F00EAC683 /* blueBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84799DCD1A496D2F00EAC683 /* blueBtn@2x.png */; };
+		84799DD11A496F7400EAC683 /* LRChangePaswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84799DD01A496F7400EAC683 /* LRChangePaswordViewController.m */; };
 		848495171A03902A003CC384 /* Close-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 848495161A03902A003CC384 /* Close-32.png */; };
 		8484951A1A0395AC003CC384 /* UIView+MGBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 848495191A0395AC003CC384 /* UIView+MGBadgeView.m */; };
 		8484951C1A0396E8003CC384 /* Shoping-Cart-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 8484951B1A0396E8003CC384 /* Shoping-Cart-32.png */; };
@@ -181,6 +187,9 @@
 		841BE6DF1A40604E0084F1FD /* Ok-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ok-32.png"; sourceTree = "<group>"; };
 		841BE6E21A4097100084F1FD /* Arrow Circle Left-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow Circle Left-32.png"; sourceTree = "<group>"; };
 		841BE6E61A40A1230084F1FD /* Arrow Circle Right-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Arrow Circle Right-32.png"; sourceTree = "<group>"; };
+		8448B3A71A4ABC0000EBBB86 /* Button_Pause_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Pause_32.png; sourceTree = "<group>"; };
+		8448B3A81A4ABC0000EBBB86 /* Button_Play_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Play_32.png; sourceTree = "<group>"; };
+		8448B3A91A4ABC0000EBBB86 /* Button_Stop_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Button_Stop_32.png; sourceTree = "<group>"; };
 		845F09581A23275600C66E27 /* simsg355q.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = simsg355q.wav; sourceTree = "<group>"; };
 		845F095A1A23276C00C66E27 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		845F095C1A24769600C66E27 /* LRPasswordResetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRPasswordResetViewController.h; sourceTree = "<group>"; };
@@ -192,6 +201,11 @@
 		84799DC51A42D8ED00EAC683 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CrashReporter.framework; sourceTree = "<group>"; };
 		84799DC71A42E02E00EAC683 /* CrashHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashHelper.h; sourceTree = "<group>"; };
 		84799DC81A42E02E00EAC683 /* CrashHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashHelper.m; sourceTree = "<group>"; };
+		84799DCA1A495ABD00EAC683 /* LRTermsAndConditionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRTermsAndConditionsViewController.h; sourceTree = "<group>"; };
+		84799DCB1A495ABD00EAC683 /* LRTermsAndConditionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRTermsAndConditionsViewController.m; sourceTree = "<group>"; };
+		84799DCD1A496D2F00EAC683 /* blueBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueBtn@2x.png"; sourceTree = "<group>"; };
+		84799DCF1A496F7300EAC683 /* LRChangePaswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRChangePaswordViewController.h; sourceTree = "<group>"; };
+		84799DD01A496F7400EAC683 /* LRChangePaswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRChangePaswordViewController.m; sourceTree = "<group>"; };
 		848495161A03902A003CC384 /* Close-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Close-32.png"; sourceTree = "<group>"; };
 		848495181A0395AC003CC384 /* UIView+MGBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MGBadgeView.h"; sourceTree = "<group>"; };
 		848495191A0395AC003CC384 /* UIView+MGBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MGBadgeView.m"; sourceTree = "<group>"; };
@@ -400,7 +414,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84799DC61A42D8ED00EAC683 /* CrashReporter.framework in Frameworks */,
+				8413D7BD1A5A9BBC0053C5D4 /* CrashReporter.framework in Frameworks */,
 				845F095B1A23276C00C66E27 /* AVFoundation.framework in Frameworks */,
 				84BED43619D55B00005C80F3 /* Accounts.framework in Frameworks */,
 				84D3C0EC19B88868007455F9 /* Social.framework in Frameworks */,
@@ -579,6 +593,10 @@
 				845F095D1A24769600C66E27 /* LRPasswordResetViewController.m */,
 				84EA0DB31A2C74A400B1B6BA /* LRAuthorBioInfoViewController.h */,
 				84EA0DB41A2C74A400B1B6BA /* LRAuthorBioInfoViewController.m */,
+				84799DCA1A495ABD00EAC683 /* LRTermsAndConditionsViewController.h */,
+				84799DCB1A495ABD00EAC683 /* LRTermsAndConditionsViewController.m */,
+				84799DCF1A496F7300EAC683 /* LRChangePaswordViewController.h */,
+				84799DD01A496F7400EAC683 /* LRChangePaswordViewController.m */,
 				84D3C01519B86F9E007455F9 /* Main_iPhone.storyboard */,
 				84DC15961A1E1EE9005CE54D /* ARCMacros.h */,
 				84DC15971A1E1EE9005CE54D /* FPPopoverController.h */,
@@ -763,6 +781,10 @@
 		84D3C08C19B886A7007455F9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8448B3A71A4ABC0000EBBB86 /* Button_Pause_32.png */,
+				8448B3A81A4ABC0000EBBB86 /* Button_Play_32.png */,
+				8448B3A91A4ABC0000EBBB86 /* Button_Stop_32.png */,
+				84799DCD1A496D2F00EAC683 /* blueBtn@2x.png */,
 				84EA0DBF1A2E22D200B1B6BA /* Search-32.png */,
 				845F09581A23275600C66E27 /* simsg355q.wav */,
 				84DC10C21A1B4C63005CE54D /* Leerink-White_320x64.png */,
@@ -913,6 +935,7 @@
 				84D3C0B719B886A7007455F9 /* Cloud Contacts Silver-32.png in Resources */,
 				848495171A03902A003CC384 /* Close-32.png in Resources */,
 				841BE6E01A40604E0084F1FD /* Cancel-32.png in Resources */,
+				8448B3AC1A4ABC0000EBBB86 /* Button_Stop_32.png in Resources */,
 				84D286F11A137E9000917ECD /* Leerink-White_200x44.png in Resources */,
 				84D3C0AB19B886A7007455F9 /* LRDocumentTypeTableViewCell.xib in Resources */,
 				84DC15A11A1E1F98005CE54D /* Info-32.png in Resources */,
@@ -949,7 +972,9 @@
 				84D3C0BD19B886A7007455F9 /* Logout-32.png in Resources */,
 				841BE6D91A3F043D0084F1FD /* File-text-32.png in Resources */,
 				84D2D46A19FFB493004C884C /* uncheckbox@2x.png in Resources */,
+				84799DCE1A496D2F00EAC683 /* blueBtn@2x.png in Resources */,
 				84D286FA1A1A22EA00917ECD /* Leerink-White_320x88.png in Resources */,
+				8448B3AB1A4ABC0000EBBB86 /* Button_Play_32.png in Resources */,
 				84D3C0C419B886A7007455F9 /* user_name_icon.png in Resources */,
 				841BE6DD1A3F086F0084F1FD /* Acrobat-blue-32.png in Resources */,
 				84D3C0C019B886A7007455F9 /* password_icon@2x.png in Resources */,
@@ -958,6 +983,7 @@
 				84D22D5E19F5516600131FA2 /* MNMPullToRefreshIcon.png in Resources */,
 				84D3C00E19B86F9E007455F9 /* InfoPlist.strings in Resources */,
 				84D2D46919FFB493004C884C /* checkbox@2x.png in Resources */,
+				8448B3AA1A4ABC0000EBBB86 /* Button_Pause_32.png in Resources */,
 				84D2D46C19FFCD84004C884C /* Document.plist in Resources */,
 				845F09591A23275600C66E27 /* simsg355q.wav in Resources */,
 				84D22D5D19F5516600131FA2 /* MNMPullToRefresh.strings in Resources */,
@@ -995,6 +1021,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84799DCC1A495ABD00EAC683 /* LRTermsAndConditionsViewController.m in Sources */,
 				84D3C0B119B886A7007455F9 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
 				84D3C05119B88657007455F9 /* LRDocumentListViewController.m in Sources */,
 				845F095E1A24769600C66E27 /* LRPasswordResetViewController.m in Sources */,
@@ -1043,6 +1070,7 @@
 				84DC159E1A1E1EE9005CE54D /* FPPopoverView.m in Sources */,
 				84D3C05419B88657007455F9 /* LRMainClientPageViewController.m in Sources */,
 				84799DC91A42E02E00EAC683 /* CrashHelper.m in Sources */,
+				84799DD11A496F7400EAC683 /* LRChangePaswordViewController.m in Sources */,
 				84D3C12A19C1CCFC007455F9 /* LRDocumentViewController.m in Sources */,
 				84EA0DB51A2C74A400B1B6BA /* LRAuthorBioInfoViewController.m in Sources */,
 				84D3C0A819B886A7007455F9 /* LRContactListTableViewCell.m in Sources */,
@@ -1136,8 +1164,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Sam Storer (9T33NF3537)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sam Storer (9T33NF3537)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Leerink Swann LLC (C62C6496NL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Leerink Swann LLC (C62C6496NL)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1156,7 +1184,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
+				PROVISIONING_PROFILE = "0e3d8178-156e-43a9-a350-3b51d77cbd4f";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1178,8 +1206,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Sam Storer (9T33NF3537)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Sam Storer (9T33NF3537)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Leerink Swann LLC (C62C6496NL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Leerink Swann LLC (C62C6496NL)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -1191,7 +1219,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
+				PROVISIONING_PROFILE = "0e3d8178-156e-43a9-a350-3b51d77cbd4f";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
@@ -1205,7 +1233,6 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
-					"/Volumes/PLCrashReporter-1.2/iOS",
 					Framework,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1213,7 +1240,7 @@
 				INFOPLIST_FILE = "Leerink/Leerink-Info.plist";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
+				PROVISIONING_PROFILE = "0e3d8178-156e-43a9-a350-3b51d77cbd4f";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1226,7 +1253,6 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
-					"/Volumes/PLCrashReporter-1.2/iOS",
 					Framework,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1234,7 +1260,7 @@
 				INFOPLIST_FILE = "Leerink/Leerink-Info.plist";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d5593b22-5b17-48b4-ba7e-66f83a8d40ba";
+				PROVISIONING_PROFILE = "0e3d8178-156e-43a9-a350-3b51d77cbd4f";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

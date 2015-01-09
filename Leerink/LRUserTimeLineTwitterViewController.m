@@ -27,10 +27,13 @@
     self.oneTimeTweetsArray = [NSArray new];
     self.userTweetsListArray = [NSMutableArray new];
     [self fetchTweetsForSpecifiedListCount:15];
-     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     // Do any additional setup after loading the view.
 }
-
+ - (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:TRUE];
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+}
 #pragma mark - UITableViewDataSource
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView

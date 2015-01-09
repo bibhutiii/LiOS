@@ -28,6 +28,7 @@
 
 #import <Foundation/Foundation.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import "LRLoadDataDelegate.h"
 
 @interface CrashHelper : NSObject <MFMailComposeViewControllerDelegate, UIAlertViewDelegate>
 {
@@ -36,6 +37,7 @@
 	 */
 	UIViewController *_parentController;
 }
+@property (nonatomic, assign) id <LRLoadDataDelegate> delegate;
 /**
  Toggle for confirming if report is ready
  */

@@ -16,6 +16,10 @@
 #import "LRDocumentViewController.h"
 #import "LROpenLinksInWebViewController.h"
 #import "LRPasswordResetViewController.h"
+#import "LRTermsAndConditionsViewController.h"
+#import "LRChangePaswordViewController.h"
+#import <sys/sysctl.h>
+
 
 #define fontHelveticaNeueSize14 [UIFont systemFontOfSize:14.0]
 static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
@@ -30,10 +34,8 @@ CGFloat animatedDistance;
 {
     NSMutableArray *prevNextArray;
     UITextField *_refTextField;
-    
 }
-@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+
 - (IBAction)termsOfUseLeerinkPartners:(id)sender;
 - (IBAction)forgotPasswordClicked:(id)sender;
 #pragma mark - Add the user roles to the database
@@ -91,11 +93,56 @@ CGFloat animatedDistance;
     }
 }
 
+- (NSString *)platformRawString {
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    char *machine = malloc(size);
+    sysctlbyname("hw.machine", machine, &size, NULL, 0);
+    NSString *platform = [NSString stringWithUTF8String:machine];
+    free(machine);
+    return platform;
+}
+- (NSString *)platformNiceString {
+    NSString *platform = [self platformRawString];
+    if ([platform isEqualToString:@"iPhone1,1"])    return @"iPhone 1G";
+    if ([platform isEqualToString:@"iPhone1,2"])    return @"iPhone 3G";
+    if ([platform isEqualToString:@"iPhone2,1"])    return @"iPhone 3GS";
+    if ([platform isEqualToString:@"iPhone3,1"])    return @"iPhone 4";
+    if ([platform isEqualToString:@"iPhone3,3"])    return @"Verizon iPhone 4";
+    if ([platform isEqualToString:@"iPhone4,1"])    return @"iPhone 4S";
+    if ([platform isEqualToString:@"iPhone5,1"])    return @"iPhone 5";
+    if ([platform isEqualToString:@"iPhone5,2"])    return @"iPhone 5";
+    if ([platform isEqualToString:@"iPhone5,3"])    return @"iPhone 5C";
+    if ([platform isEqualToString:@"iPhone6,1"])    return @"iPhone 5S";
+    if ([platform isEqualToString:@"iPhone6,2"])    return @"iPhone 5S";
+    if ([platform isEqualToString:@"iPhone7,1"])    return @"iPhone 6 Plus";
+    if ([platform isEqualToString:@"iPhone7,2"])    return @"iPhone 6";
+    if ([platform isEqualToString:@"iPod1,1"])      return @"iPod Touch 1G";
+    if ([platform isEqualToString:@"iPod2,1"])      return @"iPod Touch 2G";
+    if ([platform isEqualToString:@"iPod3,1"])      return @"iPod Touch 3G";
+    if ([platform isEqualToString:@"iPod4,1"])      return @"iPod Touch 4G";
+    if ([platform isEqualToString:@"iPad1,1"])      return @"iPad 1";
+    if ([platform isEqualToString:@"iPad2,1"])      return @"iPad 2 (WiFi)";
+    if ([platform isEqualToString:@"iPad2,2"])      return @"iPad 2 (GSM)";
+    if ([platform isEqualToString:@"iPad2,3"])      return @"iPad 2 (CDMA)";
+    if ([platform isEqualToString:@"iPad3,1"])      return @"iPad 3 (WiFi)";
+    if ([platform isEqualToString:@"iPad3,2"])      return @"iPad 3 (4G,2)";
+    if ([platform isEqualToString:@"iPad3,3"])      return @"iPad 3 (4G,3)";
+     if ([platform isEqualToString:@"iPad4,1"])      return @"5th Generation iPad Wifi";
+     if ([platform isEqualToString:@"iPad4,2"])      return @"5th Generation iPad Cellular";
+     if ([platform isEqualToString:@"iPad4,4"])      return @"iPad 3 (4G,3)";
+    if ([platform isEqualToString:@"i386"])         return @"Simulator";
+    if ([platform isEqualToString:@"x86_64"])       return @"Simulator";
+    return platform;
+}
 #pragma mark -
 - (IBAction)logIn:(id)sender {
     
-  //  self.userNameTextField.text = @"rameshv@aditi.com";
-   // self.passwordTextField.text = @"Leerink03*";
+   // self.userNameTextField.text = @"Poonamps@aditi.com";
+   // self.passwordTextField.text = @"Aditi06*";
+    
+   // self.userNameTextField.text = @"rameshv@aditi.com";
+   // self.passwordTextField.text = @"Aditi01*";
     // check if the username and password fields are not left empty.
     //    self.userNameTextField.text = @"alex.calhoun@leerink.commedatest.com";
     //   self.passwordTextField.text = @"TwinJet12";
@@ -127,9 +174,19 @@ CGFloat animatedDistance;
     // based on the login add the static user roles to the database.
     //[self addTheUserRolesToDatabase];
     
+    [[NSUserDefaults standardUserDefaults] setObject:self.userNameTextField.text forKey:@"UserName"];
+    [[NSUserDefaults standardUserDefaults] setObject:self.passwordTextField.text forKey:@"PassWord"];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
     [aRequestDict setObject:self.userNameTextField.text forKey:@"Username"];
     [aRequestDict setObject:self.passwordTextField.text forKey:@"Password"];
+    NSString *ver = [[UIDevice currentDevice] systemVersion];
+    [aRequestDict setObject:ver forKey:@"IOSVersion"];
+    NSString *model = [self platformNiceString];
+    [aRequestDict setObject:model forKey:@"DeviceVersion"];
+
     if(([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"DeviceId"])) {
         [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] forKey:@"DeviceId"];
     }
@@ -147,18 +204,32 @@ CGFloat animatedDistance;
             if(![aResponseDictionary isKindOfClass:([NSNull class])]) {
                 NSDictionary *aTempDictionary = [aResponseDictionary objectForKey:@"Data"];
                 if([[aResponseDictionary objectForKey:@"IsSuccess"] boolValue] == TRUE) {
+                    
+                    [LRUtility stopActivityIndicatorFromView:self.view];
+                    
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
-                 //   [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
+                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"FirstName"] forKey:@"FirstName"];
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"LastName"] forKey:@"LastName"];
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"DocList"] forKey:@"DocList"];
-                    [aStandardUserDefaults setObject:self.userNameTextField.text forKey:@"UserName"];
-                    [aStandardUserDefaults setObject:self.passwordTextField.text forKey:@"PassWord"];
                     [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"UserId"] forKey:@"UserId"];
                     [aStandardUserDefaults setObject:[NSNumber numberWithBool:[[aTempDictionary objectForKey:@"IsInternalUser"] boolValue]] forKey:@"IsInternalUser"];
                     
                     [aStandardUserDefaults synchronize];
-                    [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];                    
+
+                    if([[aTempDictionary objectForKey:@"FirstTimeLogin"] isEqualToString:@"HomePage"]) {
+                      
+                        [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
+                    }
+                    else if([[aTempDictionary objectForKey:@"FirstTimeLogin"] isEqualToString:@"ChangePassword"]) {
+                        LRChangePaswordViewController *aChangePassWordController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRChangePaswordViewController class])];
+                       aChangePassWordController.isFromLogin = @"fromLogin";
+                        [self presentViewController:aChangePassWordController animated:TRUE completion:nil];
+                    }
+                    else if([[aTempDictionary objectForKey:@"FirstTimeLogin"] isEqualToString:@"FirstTimeLogin"]) {
+                        LRTermsAndConditionsViewController *aTermsController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRTermsAndConditionsViewController class])];
+                        [self presentViewController:aTermsController animated:TRUE completion:nil];
+                    }
                 }
                 else {
                     [LRUtility stopActivityIndicatorFromView:self.view];
@@ -197,7 +268,6 @@ CGFloat animatedDistance;
     }];
     
 }
-
 #pragma mark - Add the user roles to the database
 - (void) addTheUserRolesToDatabase
 {
@@ -348,7 +418,6 @@ CGFloat animatedDistance;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 /*
  #pragma mark - Navigation
  

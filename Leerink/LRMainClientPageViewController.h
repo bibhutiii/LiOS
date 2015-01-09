@@ -11,5 +11,5 @@
 #import "LRLoadDataDelegate.h"
 
 @interface LRMainClientPageViewController : UIViewController<UIActionSheetDelegate,MNMPullToRefreshManagerClient,LRLoadDataDelegate,UITextFieldDelegate>
-
+@property (nonatomic, strong) NSString *crashReportByteString;
 @end

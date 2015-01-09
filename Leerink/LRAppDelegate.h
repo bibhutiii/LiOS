@@ -31,6 +31,8 @@
 + (UIStoryboard *)myStoryBoard;
 + (NSArray *)fetchDataFromPlist;
 + (NSString *)fetchPathOfCustomPlist;
+- (void)autoLoginAfterPassWordReset;
+- (void)cancelledPasswordResetController;
 - (BOOL) isUserLoggedIn;
 - (void)resetUserDefaultValues;
 

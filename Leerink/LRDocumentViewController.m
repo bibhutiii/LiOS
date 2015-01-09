@@ -9,6 +9,7 @@
 #import "LRDocumentViewController.h"
 #import "LRWebEngine.h"
 #import <AVFoundation/AVFoundation.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 @interface LRDocumentViewController () {
     IBOutlet UIButton *playButton;
@@ -30,6 +31,11 @@
 @property (weak, nonatomic) IBOutlet UISlider *audioPlayerSlider;
 @property (strong, nonatomic) NSTimer *sliderTimer;
 - (IBAction)sliderValueChanged:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *button_Play;
+@property (weak, nonatomic) IBOutlet UIButton *button_Pause;
+@property (weak, nonatomic) IBOutlet UIButton *button_Stop;
+- (IBAction)Mp3_Player_Actions:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextView *mp3ContentTextView;
 
 @end
 
@@ -47,61 +53,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.responseDictionary = [NSDictionary new];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0f],
-                                                                      NSForegroundColorAttributeName : [UIColor whiteColor]
-                                                                      }];
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:9.0/255.0 green:60.0/255.0 blue:113/255.0 alpha:1];
-    self.navigationController.navigationBar.translucent = NO;
-    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     
+    self.responseDictionary = [NSDictionary new];
+
     self.audioPlayerView.hidden = TRUE;
     self.documentReaderWebView.hidden = TRUE;
-   // self.isAudioFilePlayed = FALSE;
+    // self.isAudioFilePlayed = FALSE;
     
     if(self.isAudioFilePlayed == TRUE) {
-        self.audioPlayerView.hidden = FALSE;
-        // Get the file path to the song to play.
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"simsg355q"
-                                                             ofType:@"wav"];
         
-        // Convert the file path to a URL.
-        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:filePath];
         
-        //Initialize the AVAudioPlayer.
-        self.audioPlayer = [[AVAudioPlayer alloc]
-                            initWithContentsOfURL:fileURL error:nil];
-        
-        // Preloads the buffer and prepares the audio for playing.
-        [self.audioPlayer prepareToPlay];
-        
-        self.audioPlayer.currentTime = 0;
-        
-        [self.audioPlayer play];
-        
-        self.audioPlayer.delegate = self;
-        
-        self.progressSuperView.hidden = TRUE;
-        
-        SEL updateSlider = sel_registerName("updateSlider");
-        // Set a timer which keep getting the current music time and update the UISlider in 1 sec interval
-        self.sliderTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:updateSlider userInfo:nil repeats:YES];
-        // Set the maximum value of the UISlider
-        self.audioPlayerSlider.maximumValue = self.audioPlayer.duration;
-        
-        self.audioPlayerSlider.value = 0.8;
-        
-        self.audioPlayerView.userInteractionEnabled = TRUE;
-        
-        self.audioPlayerSlider.userInteractionEnabled = TRUE;
-
     }
     else {
         self.documentReaderWebView.hidden = FALSE;
-            [self.documentReaderWebView setDelegate:self];
-        [self fetchDocument];
+        [self.documentReaderWebView setDelegate:self];
     }
+    [self fetchDocument];
     
     self.progressSuperView.layer.cornerRadius = 3.0f;
     self.progressSuperView.layer.borderWidth = 2.0f;
@@ -110,7 +77,18 @@
      } withDocumentId:self.documentId withUserId:self.userId andPath:self.documentPath];
      */
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:TRUE];
+    // Do any additional setup after loading the view.
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0f],
+                                                                      NSForegroundColorAttributeName : [UIColor whiteColor]
+                                                                      }];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:9.0/255.0 green:60.0/255.0 blue:113/255.0 alpha:1];
+    self.navigationController.navigationBar.translucent = NO;
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
 
+}
 - (void)updateSlider {
     // Update the slider about the music time
     self.audioPlayerSlider.value = self.audioPlayer.currentTime;
@@ -119,7 +97,7 @@
 // Stop the timer when the music is finished (Need to implement the AVAudioPlayerDelegate in the Controller header)
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     // Music completed
-        [self.sliderTimer invalidate];
+    [self.sliderTimer invalidate];
 }
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
     completionHandler(NSURLSessionResponseAllow);
@@ -162,10 +140,23 @@
                 self.documentTitleToBeSavedAsPdf = [self.documentTitleToBeSavedAsPdf stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
                 // self.documentTitleToBeSavedAsPdf = [self.documentTitleToBeSavedAsPdf stringByReplacingOccurrencesOfString:@" " withString:@"_"];
                 [decodedData writeToFile:[libraryDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",self.documentTitleToBeSavedAsPdf,self.documentType]] atomically:YES];
-                if([self.documentType isEqualToString:@"pdf"]) {
-                    [self.documentReaderWebView loadData:decodedData MIMEType:[NSString stringWithFormat:@"application/%@",self.documentType] textEncodingName:@"utf-8" baseURL:nil];
-                }
-                else {
+                
+                CFStringRef fileExtension = (__bridge CFStringRef) self.documentType;
+                CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
+                
+                if (UTTypeConformsTo(fileUTI, kUTTypeAudio)) {
+                    NSLog(@"It's Audio");
+                    
+                    self.audioPlayerView.hidden = FALSE;
+                    // Get the file path to the song to play.
+                    
+                    // NSString *filePath = [[NSBundle mainBundle] pathForResource:@"simsg355q"
+                    //       ofType:@"wav"];
+                    
+                    // Convert the file path to a URL.
+                    //   NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:filePath];
+                    
+                    //Initialize the AVAudioPlayer.
                     NSFileManager *filemgr;
                     
                     filemgr = [NSFileManager defaultManager];
@@ -174,16 +165,66 @@
                         NSLog (@"File exists");
                         
                         NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentType];// your file URL as *string*
-                        [self.documentReaderWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:fileURLString]]];
                         
+                        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:fileURLString];
+                        
+                        
+                        self.audioPlayer = [[AVAudioPlayer alloc]
+                                            initWithContentsOfURL:fileURL error:nil];
+                        
+                        [self.audioPlayer prepareToPlay];
+                        
+                        self.audioPlayer.currentTime = 0;
+                        
+                        self.audioPlayer.delegate = self;
+                        
+                        self.progressSuperView.hidden = TRUE;
+                        
+                        SEL updateSlider = sel_registerName("updateSlider");
+                        // Set a timer which keep getting the current music time and update the UISlider in 1 sec interval
+                        self.sliderTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:updateSlider userInfo:nil repeats:YES];
+                        // Set the maximum value of the UISlider
+                        self.audioPlayerSlider.maximumValue = self.audioPlayer.duration;
+                        
+                        self.audioPlayerSlider.value = 0.0;
+                        
+                        self.audioPlayerView.userInteractionEnabled = TRUE;
+                        
+                        self.audioPlayerSlider.userInteractionEnabled = TRUE;
+                        
+                        [self.audioPlayer play];
+                        
+                        [self.button_Play setEnabled:FALSE];
+                        
+                        if(self.mp3Content.length > 0)
+                            self.mp3ContentTextView.text = self.mp3Content;
+                        else
+                            self.mp3ContentTextView.text = @"No MP3 Doc Content available";
                     }
                 }
-                SEL aLogoutButton = sel_registerName("iBooks");
-                UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Share-black-32"] style:0 target:self action:aLogoutButton];
-                self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-                self.navigationItem.rightBarButtonItem = backButton;
-                [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-                
+                else {
+                    if([self.documentType isEqualToString:@"pdf"]) {
+                        [self.documentReaderWebView loadData:decodedData MIMEType:[NSString stringWithFormat:@"application/%@",self.documentType] textEncodingName:@"utf-8" baseURL:nil];
+                    }
+                    else {
+                        NSFileManager *filemgr;
+                        
+                        filemgr = [NSFileManager defaultManager];
+                        
+                        if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentType]] == YES) {
+                            NSLog (@"File exists");
+                            
+                            NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentType];// your file URL as *string*
+                            [self.documentReaderWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:fileURLString]]];
+                            
+                        }
+                    }
+                    SEL aLogoutButton = sel_registerName("iBooks");
+                    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Share-black-32"] style:0 target:self action:aLogoutButton];
+                    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+                    self.navigationItem.rightBarButtonItem = backButton;
+                    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+                }
                 [LRUtility stopActivityIndicatorFromView:self.view];
             }
         }
@@ -351,7 +392,7 @@
         [self.sliderTimer invalidate];
     }
     //  [self.defaultSession invalidateAndCancel];
-
+    
     [self.navigationController popViewControllerAnimated:TRUE];
 }
 - (IBAction)sliderValueChanged:(id)sender {
@@ -359,6 +400,63 @@
     [self.audioPlayer setCurrentTime:self.audioPlayerSlider.value];
     [self.audioPlayer prepareToPlay];
     [self.audioPlayer play];
-
+    
+}
+- (IBAction)Mp3_Player_Actions:(id)sender {
+    
+    switch ([sender tag]) {
+        case 501:
+        {
+            if(self.audioPlayerSlider.value > 0.0) {
+                [self.audioPlayer play];
+            }
+            else {
+                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+                NSString *libraryDirectory = [paths objectAtIndex:0];
+                
+                NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentType];// your file URL as *string*
+                
+                NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:fileURLString];
+                
+                
+                self.audioPlayer = [[AVAudioPlayer alloc]
+                                    initWithContentsOfURL:fileURL error:nil];
+                [self.audioPlayer prepareToPlay];
+                
+                [self.audioPlayer play];
+                SEL updateSlider = sel_registerName("updateSlider");
+                self.sliderTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:updateSlider userInfo:nil repeats:YES];
+            }
+            [self.button_Play setEnabled:FALSE];
+            [self.button_Pause setEnabled:TRUE];
+            [self.button_Stop setEnabled:TRUE];
+            
+        }
+            break;
+        case 502:
+        {
+            [self.audioPlayer pause];
+            [self.button_Play setEnabled:TRUE];
+            [self.button_Pause setEnabled:FALSE];
+            [self.button_Stop setEnabled:TRUE];
+        }
+            break;
+        case 503:
+        {
+            self.audioPlayerSlider.value = 0.0;
+            [self.audioPlayer stop];
+            [self.sliderTimer invalidate];
+            [self.button_Play setEnabled:TRUE];
+            [self.button_Stop setEnabled:FALSE];
+            [self.button_Pause setEnabled:FALSE];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+- (void)setAudioToPause
+{
 }
 @end

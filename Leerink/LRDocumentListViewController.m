@@ -53,6 +53,12 @@
     // fetch the existing docIds from plist
     self.existingDocIdsArray = [NSMutableArray arrayWithArray:[LRAppDelegate fetchDataFromPlist]];
     
+    
+    [self didLoadData];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:TRUE];
     // do the navigation bar settings
     self.navigationItem.title = @"Documents";
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0f],
@@ -66,8 +72,7 @@
     self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    [self didLoadData];
+
 }
 #pragma mark - Load the data into the table
 - (void)didLoadData
@@ -526,7 +531,17 @@
             documentViewController.documentTitleToBeSavedAsPdf = [aDocumentDetailsDictionary objectForKey:@"DocumentTitle"];
             documentViewController.documentId = [aDocumentDetailsDictionary objectForKey:@"DocumentID"];
             documentViewController.isAudioFilePlayed = FALSE;
+            documentViewController.documentType = aFileTypeExtension;
         }
+        CFStringRef fileExtension = (__bridge CFStringRef) [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
+        CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
+        
+        if (UTTypeConformsTo(fileUTI, kUTTypeAudio)) {
+            NSLog(@"It's Audio");
+            documentViewController.isAudioFilePlayed = TRUE;
+            documentViewController.mp3Content = [aDocumentDetailsDictionary objectForKey:@"DocContent"];
+        }
+
         [self.navigationController pushViewController:documentViewController animated:TRUE];
         /*if([aFileTypeExtension isEqualToString:@"pdf"]) {
          documentViewController.isAudioFilePlayed = FALSE;
@@ -570,6 +585,15 @@
             documentViewController.isAudioFilePlayed = FALSE;
             documentViewController.documentType = aFileTypeExtension;
         }
+        CFStringRef fileExtension = (__bridge CFStringRef) [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
+        CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
+        
+        if (UTTypeConformsTo(fileUTI, kUTTypeAudio)) {
+            NSLog(@"It's Audio");
+            documentViewController.isAudioFilePlayed = TRUE;
+             documentViewController.mp3Content = [aDocumentDetailsDictionary objectForKey:@"DocContent"];
+        }
+
         [self.navigationController pushViewController:documentViewController animated:TRUE];
         /*if([aFileTypeExtension isEqualToString:@"pdf"]) {
          documentViewController.isAudioFilePlayed = FALSE;

@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentListViewController.m"
-            timestampString = "440585682.063998"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "819"
-            endingLineNumber = "819"
+            startingLineNumber = "843"
+            endingLineNumber = "843"
             landmarkName = "-selectDocumentForRowWithIndex:"
             landmarkType = "5">
          </BreakpointContent>
@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRAppDelegate.m"
-            timestampString = "440590716.384698"
+            timestampString = "442392149.825421"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "527"
-            endingLineNumber = "527"
+            startingLineNumber = "599"
+            endingLineNumber = "599"
             landmarkName = "-applicationWillEnterForeground:"
             landmarkType = "5">
          </BreakpointContent>
@@ -68,11 +68,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRPasswordResetViewController.m"
-            timestampString = "438603209.974599"
+            timestampString = "442141412.893373"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
             landmarkName = "-sendPasswordResetInstructionsToMail:"
             landmarkType = "5">
          </BreakpointContent>
@@ -84,7 +84,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRUtilityClasses/LRWebEngine.m"
-            timestampString = "439383877.583749"
+            timestampString = "442135090.406866"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "356"
@@ -99,7 +99,7 @@
                   symbolName = "-[LRWebEngine sendRequestToSendInstructionsToResetPasswordForEmailAddress:withResponseBlock:errorHandler:]"
                   moduleName = "Leerink"
                   urlString = "file:///Users/admin/Desktop/leeRink_app/Leerink/LRUtilityClasses/LRWebEngine.m"
-                  timestampString = "440592864.416396"
+                  timestampString = "442396069.628658"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "356"
@@ -113,7 +113,7 @@
                   symbolName = "__106-[LRWebEngine sendRequestToSendInstructionsToResetPasswordForEmailAddress:withResponseBlock:errorHandler:]_block_invoke"
                   moduleName = "Leerink"
                   urlString = "file:///Users/admin/Desktop/leeRink_app/Leerink/LRUtilityClasses/LRWebEngine.m"
-                  timestampString = "440592864.416583"
+                  timestampString = "442396069.628843"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "356"
@@ -130,7 +130,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRUtilityClasses/LRWebEngine.m"
-            timestampString = "439383877.583749"
+            timestampString = "442135090.406866"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "357"
@@ -146,11 +146,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRPasswordResetViewController.m"
-            timestampString = "438610306.162455"
+            timestampString = "442141412.893373"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "-textFieldDidBeginEditing:"
             landmarkType = "5">
          </BreakpointContent>
@@ -162,11 +162,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentListViewController.m"
-            timestampString = "440585682.063998"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
+            startingLineNumber = "396"
+            endingLineNumber = "396"
             landmarkName = "-infoForAuthorsSelected:withTag:"
             landmarkType = "5">
          </BreakpointContent>
@@ -178,11 +178,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentListViewController.m"
-            timestampString = "440579934.646662"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "-filterContentForSearchText:scope:"
             landmarkType = "5">
          </BreakpointContent>
@@ -194,11 +194,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentListViewController.m"
-            timestampString = "440579934.646662"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "-searchDisplayControllerDidEndSearch:"
             landmarkType = "5">
          </BreakpointContent>
@@ -210,11 +210,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentListViewController.m"
-            timestampString = "440579934.646662"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
             landmarkName = "-searchDisplayController:shouldReloadTableForSearchString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -226,28 +226,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRSubMenuListController.m"
-            timestampString = "440500889.955524"
+            timestampString = "442225411.927883"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "-filterContentForSearchText:scope:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Leerink/LRAppDelegate.m"
-            timestampString = "440590716.384698"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "541"
-            endingLineNumber = "541"
-            landmarkName = "-applicationWillEnterForeground:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -274,43 +258,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentViewController.m"
-            timestampString = "440593045.77001"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "229"
-            endingLineNumber = "229"
-            landmarkName = "-fetchDocument"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Leerink/LRDocumentViewController.m"
-            timestampString = "440593045.77001"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
-            landmarkName = "-fetchDocument"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Leerink/LRDocumentViewController.m"
-            timestampString = "440593045.77001"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "343"
-            endingLineNumber = "343"
+            startingLineNumber = "382"
+            endingLineNumber = "382"
             landmarkName = "-closeProgressView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -338,11 +290,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentViewController.m"
-            timestampString = "440593045.77001"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
             landmarkName = "-iBooks"
             landmarkType = "5">
          </BreakpointContent>
@@ -353,44 +305,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Leerink/LRDocumentViewController.m"
-            timestampString = "440593045.77001"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "285"
-            endingLineNumber = "285"
-            landmarkName = "-documentInteractionControllerDidDismissOpenInMenu:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Leerink/LRDocumentViewController.m"
-            timestampString = "440419597.858734"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
-            landmarkName = "-URLSession:task:didCompleteWithError:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Leerink/LRSubMenuListController.m"
-            timestampString = "440500889.955524"
+            timestampString = "441102248.344266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -402,7 +322,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRUtilityClasses/LRWebEngine.m"
-            timestampString = "439731205.859061"
+            timestampString = "442135090.406866"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "381"
@@ -418,7 +338,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRUtilityClasses/LRWebEngine.m"
-            timestampString = "439731188.239811"
+            timestampString = "442135090.406866"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "377"
@@ -434,7 +354,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRUtilityClasses/LRWebEngine.m"
-            timestampString = "439732072.14246"
+            timestampString = "442135090.406866"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "406"
@@ -450,7 +370,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRUtilityClasses/LRWebEngine.m"
-            timestampString = "439732623.249972"
+            timestampString = "442135090.406866"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "402"
@@ -466,11 +386,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRSubMenuListController.m"
-            timestampString = "440587418.819455"
+            timestampString = "442225411.927883"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
+            startingLineNumber = "243"
+            endingLineNumber = "243"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -482,11 +402,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRSubMenuListController.m"
-            timestampString = "440587418.819455"
+            timestampString = "442225411.927883"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -498,11 +418,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentListViewController.m"
-            timestampString = "440585682.063998"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "597"
-            endingLineNumber = "597"
+            startingLineNumber = "621"
+            endingLineNumber = "621"
             landmarkName = "-fetchMoreDocumentsWithDocumentCount:"
             landmarkType = "5">
          </BreakpointContent>
@@ -514,11 +434,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentListViewController.m"
-            timestampString = "440585682.063998"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "610"
-            endingLineNumber = "610"
+            startingLineNumber = "634"
+            endingLineNumber = "634"
             landmarkName = "-fetchMoreDocumentsWithDocumentCount:"
             landmarkType = "5">
          </BreakpointContent>
@@ -530,11 +450,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentListViewController.m"
-            timestampString = "440579934.646662"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
             landmarkName = "-searchDisplayControllerDidBeginSearch:"
             landmarkType = "5">
          </BreakpointContent>
@@ -546,11 +466,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentListViewController.m"
-            timestampString = "440579934.646662"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
             landmarkName = "-searchDisplayController:willShowSearchResultsTableView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -562,11 +482,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRAppDelegate.m"
-            timestampString = "440590716.384698"
+            timestampString = "442392149.825421"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "378"
-            endingLineNumber = "378"
+            startingLineNumber = "449"
+            endingLineNumber = "449"
             landmarkName = "-application:didRegisterForRemoteNotificationsWithDeviceToken:"
             landmarkType = "5">
          </BreakpointContent>
@@ -594,11 +514,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRMainClientPageViewController.m"
-            timestampString = "440591300.833332"
+            timestampString = "442490995.492354"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "772"
-            endingLineNumber = "772"
+            startingLineNumber = "851"
+            endingLineNumber = "851"
             landmarkName = "-showBioInformationForSelectedAnalystwithTag:"
             landmarkType = "5">
          </BreakpointContent>
@@ -610,11 +530,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRSubMenuListController.m"
-            timestampString = "440587418.819455"
+            timestampString = "442225411.927883"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -626,44 +546,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentViewController.m"
-            timestampString = "440593045.77001"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "358"
-            endingLineNumber = "358"
-            landmarkName = "-sliderValueChanged:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Leerink/LRDocumentViewController.m"
-            timestampString = "440419597.858734"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
-            landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Leerink/LRDocumentViewController.m"
-            timestampString = "440419597.858734"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
+            landmarkName = "-closeProgressView:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -674,11 +562,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRMainClientPageViewController.m"
-            timestampString = "440591329.240523"
+            timestampString = "442490995.492354"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "656"
-            endingLineNumber = "656"
+            startingLineNumber = "736"
+            endingLineNumber = "736"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -690,11 +578,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LROpenLinksInWebViewController.m"
-            timestampString = "440515895.138847"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -706,12 +594,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentViewController.m"
-            timestampString = "440593045.77001"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "294"
-            endingLineNumber = "294"
-            landmarkName = "-webView:didFailLoadWithError:"
+            startingLineNumber = "333"
+            endingLineNumber = "333"
+            landmarkName = "-failedToParseTheDocumentWithErrorMessage:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -722,11 +610,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LROpenLinksInWebViewController.m"
-            timestampString = "440515895.138847"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "-webView:didFailLoadWithError:"
             landmarkType = "5">
          </BreakpointContent>
@@ -738,11 +626,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRMainClientPageViewController.m"
-            timestampString = "440590869.865552"
+            timestampString = "442488758.551337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
             landmarkName = "-globalSearchText"
             landmarkType = "5">
          </BreakpointContent>
@@ -753,28 +641,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Leerink/LRUtilityClasses/LRWebEngine.m"
-            timestampString = "440427235.685625"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "431"
-            endingLineNumber = "431"
-            landmarkName = "-sendRequestToSearchForDocumentsForKeyWordsWithContextInfo:forResponseBlock:errorHandler:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Leerink/LRMainClientPageViewController.m"
-            timestampString = "440590869.865552"
+            timestampString = "442488721.085867"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "242"
-            endingLineNumber = "242"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
             landmarkName = "-globalSearchTextCancel"
             landmarkType = "5">
          </BreakpointContent>
@@ -786,11 +658,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentListViewController.m"
-            timestampString = "440585682.063998"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "428"
-            endingLineNumber = "428"
+            startingLineNumber = "433"
+            endingLineNumber = "433"
             landmarkName = "-showTextOnlyVersionOfTheDocumentWithTag:"
             landmarkType = "5">
          </BreakpointContent>
@@ -802,11 +674,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentListViewController.m"
-            timestampString = "440585682.063998"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "443"
-            endingLineNumber = "443"
+            startingLineNumber = "448"
+            endingLineNumber = "448"
             landmarkName = "-showPDFOnlyVersionOfTheDocumentWithTag:"
             landmarkType = "5">
          </BreakpointContent>
@@ -818,11 +690,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRTableViewCells/LRDocumentTypeTableViewCell.m"
-            timestampString = "440583311.620279"
+            timestampString = "440935476.453067"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84">
+            startingLineNumber = "86"
+            endingLineNumber = "86">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -832,11 +704,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRDocumentListViewController.m"
-            timestampString = "440585682.063998"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "297"
-            endingLineNumber = "297"
+            startingLineNumber = "302"
+            endingLineNumber = "302"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -848,11 +720,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRGlobalSearchDocumentsListViewController.m"
-            timestampString = "440583311.620279"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
             landmarkName = "-searchDisplayController:didShowSearchResultsTableView:"
             landmarkType = "5">
          </BreakpointContent>
@@ -864,11 +736,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRGlobalSearchDocumentsListViewController.m"
-            timestampString = "440583311.620279"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "-searchDisplayControllerDidBeginSearch:"
             landmarkType = "5">
          </BreakpointContent>
@@ -880,11 +752,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRGlobalSearchDocumentsListViewController.m"
-            timestampString = "440583311.620279"
+            timestampString = "442225675.790859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "572"
-            endingLineNumber = "572"
+            startingLineNumber = "577"
+            endingLineNumber = "577"
             landmarkName = "-fetchMoreDocumentsWithDocumentCount:"
             landmarkType = "5">
          </BreakpointContent>
@@ -895,13 +767,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Leerink/LRAppDelegate.m"
-            timestampString = "440590570.051428"
+            filePath = "Leerink/LRTermsAndConditionsViewController.m"
+            timestampString = "442395286.051378"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "-submit_Terms:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -911,13 +783,235 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Leerink/LRAppDelegate.m"
-            timestampString = "440590570.051428"
+            filePath = "Leerink/LRTermsAndConditionsViewController.m"
+            timestampString = "442395286.051378"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
-            landmarkName = "-handleCrashReport"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "-submit_Terms:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Leerink/LRTermsAndConditionsViewController.m"
+            timestampString = "442395286.051378"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
+            landmarkName = "-submit_Terms:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Leerink/LRUtilityClasses/LRWebEngine.m"
+            timestampString = "442135090.406866"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "452"
+            endingLineNumber = "452"
+            landmarkName = "-sendRequestToAcceptTermsAndConditions:andResponseBlock:errorHandler:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[LRWebEngine sendRequestToAcceptTermsAndConditions:andResponseBlock:errorHandler:]"
+                  moduleName = "Leerink"
+                  urlString = "file:///Users/admin/Desktop/leeRink_app/Leerink/LRUtilityClasses/LRWebEngine.m"
+                  timestampString = "442396069.667368"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "454"
+                  endingLineNumber = "454"
+                  offsetFromSymbolStart = "350">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__83-[LRWebEngine sendRequestToAcceptTermsAndConditions:andResponseBlock:errorHandler:]_block_invoke"
+                  moduleName = "Leerink"
+                  urlString = "file:///Users/admin/Desktop/leeRink_app/Leerink/LRUtilityClasses/LRWebEngine.m"
+                  timestampString = "442396069.66756"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "454"
+                  endingLineNumber = "454"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Leerink/LRUtilityClasses/LRWebEngine.m"
+            timestampString = "442135090.406866"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "455"
+            endingLineNumber = "455"
+            landmarkName = "-sendRequestToAcceptTermsAndConditions:andResponseBlock:errorHandler:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Leerink/LRUtilityClasses/LRWebEngine.m"
+            timestampString = "442135090.406866"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "473"
+            endingLineNumber = "473"
+            landmarkName = "-sendRequestToChangePassWord:andResponseBlock:errorHandler:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Leerink/LRUtilityClasses/LRWebEngine.m"
+            timestampString = "442135090.406866"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "469"
+            endingLineNumber = "469"
+            landmarkName = "-sendRequestToChangePassWord:andResponseBlock:errorHandler:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Leerink/LRTermsAndConditionsViewController.m"
+            timestampString = "442395286.051378"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "-submit_Terms:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Leerink/LRChangePaswordViewController.m"
+            timestampString = "442241188.453447"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
+            landmarkName = "-save_New_Password:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Leerink/LRDocumentViewController.m"
+            timestampString = "442225675.790859"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "405"
+            endingLineNumber = "405"
+            landmarkName = "-Mp3_Player_Actions:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Leerink/LRDocumentViewController.m"
+            timestampString = "442225675.790859"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "460"
+            endingLineNumber = "460"
+            landmarkName = "-setAudioToPause"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Leerink/LRDocumentViewController.m"
+            timestampString = "442225675.790859"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
+            landmarkName = "-viewWillDisappear:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Leerink/CrashHelper.m"
+            timestampString = "442231843.772803"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
+            landmarkName = "-alertView:clickedButtonAtIndex:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Leerink/LRTermsAndConditionsViewController.m"
+            timestampString = "442395286.051378"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "-platformNiceString"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -928,13 +1022,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Leerink/LRMainClientPageViewController.m"
-            timestampString = "440590610.876029"
+            timestampString = "442488721.085867"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "320"
+            endingLineNumber = "320"
+            landmarkName = "-fetchMainMenuItems"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[LRMainClientPageViewController fetchMainMenuItems]"
+                  moduleName = "Leerink"
+                  urlString = "file:///Users/admin/Desktop/leeRink_app/Leerink/LRMainClientPageViewController.m"
+                  timestampString = "442396069.682595"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "319"
+                  endingLineNumber = "319"
+                  offsetFromSymbolStart = "129">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__52-[LRMainClientPageViewController fetchMainMenuItems]_block_invoke"
+                  moduleName = "Leerink"
+                  urlString = "file:///Users/admin/Desktop/leeRink_app/Leerink/LRMainClientPageViewController.m"
+                  timestampString = "442396069.682788"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "319"
+                  endingLineNumber = "319"
+                  offsetFromSymbolStart = "72">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

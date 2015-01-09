@@ -26,6 +26,7 @@
 
 @property (nonatomic, assign) BOOL isSearchResultEmpty;
 @property (nonatomic, assign) BOOL isSearching;
+@property (nonatomic, assign) BOOL hasIconContent;
 
 @end
 
@@ -46,9 +47,13 @@
     //
     self.isSearchResultEmpty = FALSE;
     self.isSearching = FALSE;
+    self.hasIconContent = FALSE;
     // Do any additional setup after loading the view.
     self.delegate = [LRWebEngine defaultWebEngine];
-    
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:TRUE];
     self.navigationItem.title = self.titleHeader;
     
     [self didLoadData];
@@ -59,11 +64,23 @@
     self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     self.navigationItem.backBarButtonItem.tintColor = [UIColor whiteColor];
-    
+
 }
 #pragma mark - Load the data into the table
 - (void)didLoadData
 {
+    for (NSDictionary *aDictionary in self.subMenuItemsArray) {
+        NSString *aDocumentEncodedString = [aDictionary objectForKey:@"IconByte"];
+        
+        NSData *data = [[NSData alloc] initWithBase64EncodedString:aDocumentEncodedString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        
+        UIImage *iconImage = [UIImage imageWithData:data];
+        if(iconImage != nil)
+        {
+            self.hasIconContent = TRUE;
+            break;
+        }
+    }
     self.analystsListTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.searchDisplayController.searchResultsTableView setRowHeight:self.analystsListTableView.rowHeight];
     self.analystsListTableView.bounces = TRUE;
@@ -171,8 +188,10 @@
     if(cell == nil)
     {
         NSArray *bundle = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
-        
-        cell = (LRContactListTableViewCell *)[bundle objectAtIndex: 1];
+        if(self.hasIconContent)
+            cell = (LRContactListTableViewCell *)[bundle objectAtIndex:1];
+        else
+            cell = (LRContactListTableViewCell *)[bundle objectAtIndex:0];
         cell.tag = indexPath.row;
         cell.delegate = self;
     }
@@ -200,7 +219,7 @@
     NSData *data = [[NSData alloc] initWithBase64EncodedString:aDocumentEncodedString options:NSDataBase64DecodingIgnoreUnknownCharacters];
     
     UIImage *iconImage = [UIImage imageWithData:data];
-
+    
     [cell fillDataForMenuCellWithDisplayName:[aSubMenuDetailsDictionary objectForKey:@"DisplayName"] andIconImage:iconImage];
     
     return cell;
@@ -303,7 +322,9 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 64;
+    if(self.hasIconContent == TRUE)
+        return 64;
+    return 44;
 }
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     

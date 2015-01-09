@@ -20,4 +20,7 @@
 - (void)showBioInformationForSelectedAnalystwithTag:(int)iTag;
 - (void)showTextOnlyVersionOfTheDocumentWithTag:(int)iTag;
 - (void)showPDFOnlyVersionOfTheDocumentWithTag:(int)iTag;
+- (void)autoLoginAfterPasswordResetWithUserName:(NSString *)userName andPassword:(NSString *)passWord;
+- (void)dismissControllerAfterPasswordReset;
+- (void)sendCrashReportToServiceWithByteConvertedString:(NSString *)byteString;
 @end

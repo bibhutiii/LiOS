@@ -33,14 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Do any additional setup after loading the view.
-    self.title = @"Tweets";
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0f],
-                                                                      NSForegroundColorAttributeName : [UIColor whiteColor]
-                                                                      }];
-    
-     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-    self.tweetCount = 15;
+       self.tweetCount = 15;
     if(self.isTwitterListCountMoreThanOne == TRUE) {
         [self fetchTweetsForSpecifiedListCount:[NSString stringWithFormat:@"%d",self.tweetCount]];
     }
@@ -56,6 +49,18 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:TRUE];
+    // Do any additional setup after loading the view.
+    self.title = @"Tweets";
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0f],
+                                                                      NSForegroundColorAttributeName : [UIColor whiteColor]
+                                                                      }];
+    
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+
+}
 
 - (void)fetchTweetsForSpecifiedListCount:(NSString *)iCount
 {

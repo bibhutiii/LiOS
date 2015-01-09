@@ -444,6 +444,68 @@ static LRWebEngine *sDefaultWebEngine = nil;
     
     return self.iOperation;
 }
+- (MKNetworkOperation *)sendRequestToAcceptTermsAndConditions:(NSDictionary *)aRequestDictionary andResponseBlock:(LRResponseBlock) completion errorHandler:(LRErrorBlock) errorBlock
+{
+    __block NSString *valueString = nil;
+ 
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/AcceptTNC" params:aRequestDictionary httpMethod:@"POST" ssl:TRUE];
+   // [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        valueString = [completedOperation responseString];
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
+        completion(valueString);
+        
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        errorBlock(error);
+    }];
+    [self enqueueOperation:self.iOperation];
+    return self.iOperation;
+}
+- (MKNetworkOperation *)sendRequestToChangePassWord:(NSDictionary *)aRequestDictionary andResponseBlock:(LRResponseBlock) completion errorHandler:(LRErrorBlock) errorBlock
+{
+    __block NSString *valueString = nil;
+    
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/ChangePassword" params:aRequestDictionary httpMethod:@"POST" ssl:TRUE];
+   // [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        valueString = [completedOperation responseString];
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
+        completion(valueString);
+        
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        errorBlock(error);
+    }];
+    [self enqueueOperation:self.iOperation];
+    return self.iOperation;
+}
+- (MKNetworkOperation *)sendCrashReportToServiceWithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
+{
+    __block NSString *valueString = nil;
+    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/SendCrashReport" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
+    
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    
+    [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        valueString = [completedOperation responseString];
+        NSLog(@"recieved response -- %@",[completedOperation responseString]);
+        
+        NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSDictionary *the_parsedcontents = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
+        completion(the_parsedcontents);
+        
+        
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        errorBlock(error);
+    }];
+    [self enqueueOperation:self.iOperation];
+    
+    return self.iOperation;
+}
 #pragma mark - Cancel Network operations
 - (void)cancelaNetWorkOperation
 {

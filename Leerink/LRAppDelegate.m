@@ -22,6 +22,7 @@
 #import "LRDocumentViewController.h"
 #import <CrashReporter/CrashReporter.h>
 #import "CrashHelper.h"
+#import "LRTermsAndConditionsViewController.h"
 
 @implementation LRAppDelegate
 @synthesize coreDataHelper;
@@ -70,72 +71,54 @@
     }
     return TRUE;
 }
-- (void) handleCrashReport {
-    PLCrashReporter *crashReporter = [PLCrashReporter sharedReporter];
-    NSData *crashData;
-    NSError *error;
-    
-    // Try loading the crash report
-    crashData = [crashReporter loadPendingCrashReportDataAndReturnError: &error];
-    
-    // We could send the report from here, but we'll just print out
-    // some debugging info instead
-    if (crashData == nil) {
-        NSLog(@"Could not load crash report: %@", error);
-        [crashReporter purgePendingCrashReport];
-        return;
-    }
-    PLCrashReport *report = [[PLCrashReport alloc] initWithData: crashData error: &error] ;
-    if (report == nil) {
-        NSLog(@"Could not parse crash report");
-        goto finish;
-    }
-    
-    
-    NSLog(@"Crashed on %@", report.systemInfo.timestamp);
-    NSLog(@"Crashed with signal %@ (code %@, address=0x%" PRIx64 ")", report.signalInfo.name,
-          report.signalInfo.code, report.signalInfo.address);
-    
-    // Purge the report
-    finish:
-        [crashReporter purgePendingCrashReport];
-    return;
-}
+
+/*http://localhost/IRP/Portal/Web/FirstTimeLogin.aspx
+ http://localhost/IRP/Portal/Web/ConsultantChangePassword.aspx*/
 //DExt
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[CrashHelper sharedCrashHelper] checkForCrashes];
     
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    BOOL ok;
+    NSError *setCategoryError = nil;
+    ok = [audioSession setCategory:AVAudioSessionCategoryPlayback
+                             error:&setCategoryError];
+    if (!ok) {
+        NSLog(@"%s setCategoryError=%@", __PRETTY_FUNCTION__, setCategoryError);
+    }
+    
     // Let the device know we want to receive push notifications
-    /* if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]){
+     if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]){
      [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:nil]];
      [[UIApplication sharedApplication] registerForRemoteNotifications];
      
-     NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+     /*NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
      if (RemoteNoti) {
      //your methods to process notification
      [[NSUserDefaults standardUserDefaults] setObject:@"pdf" forKey:@"DocumentPathForNotification"];
      [[NSUserDefaults standardUserDefaults] setObject:@"123" forKey:@"NotificationDocId"];
      [[NSUserDefaults standardUserDefaults] synchronize];
-     }
+     }*/
      
      }
      else{
      [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
      
-     NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+     /*NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
      if (RemoteNoti) {
      //your methods to process notification
      [[NSUserDefaults standardUserDefaults] setObject:@"pdf" forKey:@"DocumentPathForNotification"];
      [[NSUserDefaults standardUserDefaults] setObject:@"123" forKey:@"NotificationDocId"];
      [[NSUserDefaults standardUserDefaults] synchronize];
-     }
+     }*/
      
      }
+    /*
      [Parse setApplicationId:@"0921QnBasJhIv1cFQkxC8f4aJupFnUbIuCnq8qB6"
      clientKey:@"CrXy8wSEnkuvmm67ebWMbEOpzFbUA55dI3MFtLjL"];
-     */
+    */
     // initialise the core data helper singleton class
     if (!self.coreDataHelper) {
         self.coreDataHelper = [LRCoreDataHelper new];
@@ -241,7 +224,95 @@
     
     return YES;
 }
+- (void)cancelledPasswordResetController
+{
+    LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
+    [self.window setRootViewController:loginVC];
+}
+- (void)autoLoginAfterPassWordReset
+{
+    LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
+    [self.window setRootViewController:loginVC];
+    
+    loginVC.userNameTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"];
+    loginVC.passwordTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"PassWord"];
+   
+    NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
+    [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"] forKey:@"Username"];
+    [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"PassWord"] forKey:@"Password"];
+    
+    if(([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"DeviceId"])) {
+        [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] forKey:@"DeviceId"];
+    }
+    else {
+        [aRequestDict setObject:@"<9f829b9b 4ed9eaaf b070e85a def45657 169394da eb3d483e 14301960 c420bbc4>" forKey:@"DeviceId"];
+    }
+    [LRUtility startActivityIndicatorOnView:self.window.rootViewController.view withText:@"Please wait..."];
+    
+    [[LRWebEngine defaultWebEngine] sendRequestToLoginWithParameters:aRequestDict andResponseBlock:^(NSString *responseString) {
+        
+        NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+        NSData *responseData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+        if(responseData) {
+            NSDictionary *aResponseDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
+            if(![aResponseDictionary isKindOfClass:([NSNull class])]) {
+                NSDictionary *aTempDictionary = [aResponseDictionary objectForKey:@"Data"];
+                if([[aResponseDictionary objectForKey:@"IsSuccess"] boolValue] == TRUE) {
+                    
+                    [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
+                    
+                    if([[aTempDictionary objectForKey:@"FirstTimeLogin"] isEqualToString:@"HomePage"]) {
+                        
+                        [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
+                        //   [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
+                        [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"FirstName"] forKey:@"FirstName"];
+                        [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"LastName"] forKey:@"LastName"];
+                        [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"DocList"] forKey:@"DocList"];
+                        [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"UserId"] forKey:@"UserId"];
+                        [aStandardUserDefaults setObject:[NSNumber numberWithBool:[[aTempDictionary objectForKey:@"IsInternalUser"] boolValue]] forKey:@"IsInternalUser"];
+                        
+                        [aStandardUserDefaults synchronize];
+                        
+                        [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
+                    }
+                }
+                else {
+                    [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
+                    NSString *aMsgStr = nil;
+                    if(![[aResponseDictionary objectForKey:@"Message"] isKindOfClass:([NSNull class])]) {
+                        aMsgStr = [aResponseDictionary objectForKey:@"Message"];
+                    }
+                    else if(![[aResponseDictionary objectForKey:@"Error"] isKindOfClass:([NSNull class])]) {
+                        aMsgStr = [aResponseDictionary objectForKey:@"Error"];
+                    }
+                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                             message:aMsgStr
+                                                                            delegate:self
+                                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                   otherButtonTitles:nil, nil];
+                    [errorAlertView show];
+                    
+                }
+            }
+        }
+        
+        
+    } errorHandler:^(NSError *errorString) {
+        
+        [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
+        UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                 message:[errorString localizedDescription]
+                                                                delegate:self
+                                                       cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                       otherButtonTitles:nil, nil];
+        [errorAlertView show];
+        DLog(@"%@\t%@\t%@\t%@", [errorString localizedDescription], [errorString localizedFailureReason],
+             [errorString localizedRecoveryOptions], [errorString localizedRecoverySuggestion]);
+        
+        
+    }];
 
+}
 #pragma mark - Orientation methods
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
     NSUInteger orientations = UIInterfaceOrientationMaskAllButUpsideDown;
@@ -487,6 +558,7 @@
     if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"DocumentPathForNotification"]){
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DocumentPathForNotification"];
     }
+
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     /*  NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"]);

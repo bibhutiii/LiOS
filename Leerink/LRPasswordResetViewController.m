@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.emailTextField.delegate = self;
     // Do any additional setup after loading the view.
 }
 
@@ -33,6 +34,7 @@
 }
 - (IBAction)sendPasswordResetInstructionsToMail:(id)sender {
     
+
     if([self.emailTextField.text length] == 0) {
         UIAlertView *aUserNameAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
                                                                      message:[NSString stringWithFormat:@"Please enter an email id"]
@@ -43,6 +45,7 @@
         return;
 
     }
+    [self.emailTextField resignFirstResponder];
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
     NSMutableDictionary *aRequestDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:self.emailTextField.text,@"EmailAddress", nil];
     [[LRWebEngine defaultWebEngine] sendRequestToSendInstructionsToResetPasswordForEmailAddress:aRequestDictionary withResponseBlock:^(NSDictionary *responseDictionary) {

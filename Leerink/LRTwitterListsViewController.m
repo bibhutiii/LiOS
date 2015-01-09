@@ -41,6 +41,11 @@
     
     [self.twitterListsTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
     
+    
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:TRUE];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:18.0f],
                                                                       NSForegroundColorAttributeName : [UIColor whiteColor]
                                                                       }];
@@ -48,7 +53,7 @@
     [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:9.0/255.0 green:60.0/255.0 blue:113/255.0 alpha:1];
     self.navigationController.navigationBar.translucent = NO;
-    
+
 }
 #pragma mark - UITableViewDataSource
 

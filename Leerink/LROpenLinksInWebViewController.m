@@ -20,7 +20,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
     // NSString *encodedString=[[self.linkURL relativeString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //  NSURL *weburl = [NSURL URLWithString:encodedString];
@@ -72,7 +71,11 @@
 
     }
 }
-
+ - (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:TRUE];
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+}
 - (void)Close
 {
     [self dismissViewControllerAnimated:TRUE completion:^{

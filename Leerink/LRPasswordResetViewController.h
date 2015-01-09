@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LRPasswordResetViewController : UIViewController
+@interface LRPasswordResetViewController : UIViewController<UITextFieldDelegate>
 
 @end
