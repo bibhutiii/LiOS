@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface LRTwitterListsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@property (nonatomic, strong) NSArray *twitterListsArray;
 
 @end

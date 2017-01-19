@@ -12,9 +12,7 @@
 #import "LRSubMenuListController.h"
 #import "LRTwitterListsViewController.h"
 #import "STTwitter.h"
-#import "LRTwitterList.h"
 #import "LRTwitterListTweetsViewController.h"
-#import "LRTweets.h"
 #import "LRWebEngine.h"
 #import "LRLoginViewController.h"
 #import "LRDocumentListViewController.h"
@@ -42,8 +40,6 @@
 @property (nonatomic, assign) BOOL hasIconContent;
 
 - (IBAction)sendDocumentIdsFromCartToService:(id)sender;
-- (void)saveTwitterListDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray;
-- (void)saveTweetDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray;
 - (void)fetchMainMenuItems;
 @end
 
@@ -389,8 +385,6 @@
         
         [twitter getListsSubscribedByUsername:@"LeerPortal" orUserID:nil reverse:0 successBlock:^(NSArray *lists) {
             
-            [self saveTwitterListDetailsToCoreDataForArray:lists];
-            
             if(lists.count <= 1) {
                 if(lists.count == 0) {
                     [LRUtility stopActivityIndicatorFromView:self.view];
@@ -402,17 +396,19 @@
                     [errorAlertView show];
                 }
                 else {
-                    NSArray *twitterLists = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRTwitterList" withPredicate:nil, nil];
-                    if(twitterLists && twitterLists.count > 0) {
-                        LRTwitterList *aTwitterList = (LRTwitterList *)[twitterLists objectAtIndex:0];
+                        NSDictionary *twitterListDictionary = [NSDictionary new];
+                        twitterListDictionary = [lists objectAtIndex:0];
+                    NSDictionary *aUserDetailsDictionary = [twitterListDictionary objectForKey:@"user"];
                         
                         [twitter verifyCredentialsWithSuccessBlock:^(NSString *bearerToken) {
                             
-                            [twitter getListsStatusesForSlug:aTwitterList.listSlug screenName:aTwitterList.listScreenName ownerID:aTwitterList.listOwnerId sinceID:nil maxID:nil count:@"15" includeEntities:[NSNumber numberWithBool:1] includeRetweets:[NSNumber numberWithBool:1] successBlock:^(NSArray *statuses) {
-                                [self saveTweetDetailsToCoreDataForArray:statuses];
+                            [twitter getListsStatusesForSlug:[twitterListDictionary objectForKey:@"slug"] screenName:[aUserDetailsDictionary objectForKey:@"name"] ownerID:[aUserDetailsDictionary objectForKey:@"id_str"] sinceID:nil maxID:nil count:@"15" includeEntities:[NSNumber numberWithBool:1] includeRetweets:[NSNumber numberWithBool:1] successBlock:^(NSArray *statuses) {
                                 LRTwitterListTweetsViewController *aTweetsListController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:(NSStringFromClass([LRTwitterListTweetsViewController class]))];
                                 aTweetsListController.isTwitterListCountMoreThanOne = FALSE;
-                                aTweetsListController.aTwitterList = aTwitterList;
+                                aTweetsListController.tweetsListArray = [NSMutableArray arrayWithArray:statuses];
+                                aTweetsListController.aTwitterListScreenName = [aUserDetailsDictionary objectForKey:@"name"];
+                                aTweetsListController.aTwitterListOwnerId = [aUserDetailsDictionary objectForKey:@"id_str"];
+                                aTweetsListController.aTwitterListSlug = [twitterListDictionary objectForKey:@"slug"];
                                 [self.navigationController pushViewController:aTweetsListController animated:TRUE];
                                 [LRUtility stopActivityIndicatorFromView:self.view];
                                 
@@ -438,12 +434,12 @@
                                                                            otherButtonTitles:nil, nil];
                             [errorAlertView show];
                         }];
-                    }
                     ///
                 }
             }
             else {
                 LRTwitterListsViewController *twitterListViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRTwitterListsViewController class])];
+                twitterListViewController.twitterListsArray = lists;
                 [self.navigationController pushViewController:twitterListViewController animated:TRUE];
                 [LRUtility stopActivityIndicatorFromView:self.view];
                 
@@ -610,77 +606,6 @@
     
 }
 
-- (void)saveTwitterListDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray
-{
-    LRTwitterList *aTweetList = nil;
-    NSArray *twitterLists = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRTwitterList" withPredicate:nil, nil];
-    if(twitterLists.count > 0) {
-        for (LRTwitterList *twitterListObj in twitterLists) {
-            [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:twitterListObj];
-            
-            [[LRCoreDataHelper sharedStorageManager] saveContext];
-        }
-    }
-    if(iTweetDetailsArray && iTweetDetailsArray.count > 0) {
-        
-        for (NSDictionary *aTweetDetailsDictionary in iTweetDetailsArray) {
-            
-            NSDictionary *aUserDetailsDictionary = [aTweetDetailsDictionary objectForKey:@"user"];
-            
-            aTweetList = (LRTwitterList *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRTwitterList" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
-            aTweetList.listName = [aTweetDetailsDictionary objectForKey:@"name"];
-            aTweetList.listOwnerId = [[aUserDetailsDictionary objectForKey:@"id"] stringValue];
-            aTweetList.listScreenName = [aUserDetailsDictionary objectForKey:@"name"];
-            aTweetList.listImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[aUserDetailsDictionary objectForKey:@"profile_image_url"]]]];
-            aTweetList.listSlug = [aTweetDetailsDictionary objectForKey:@"slug"];
-            // aTweetList.listCreatedDate = [aTweetDetailsDictionary objectForKey:@"created_at"];
-            NSDateFormatter *aDateFormatterObj = [[NSDateFormatter alloc] init];
-            
-            
-            //Mon Oct 20 00:20:36 +0000 2014
-            // [aDateFormatterObj setDateFormat:@"EE LLLL d HH:mm:ss Z yyyy"];
-            [aDateFormatterObj setDateFormat:@"EEE MMM d HH:mm:ss Z y"];
-            
-            // "Tue, 25 May 2010 12:53:58 +0000";
-            //    [aDateFormatterObj setDateFormat:@"EE, d LLLL yyyy HH:mm:ss Z"];
-            
-            NSDate *aDateObj = [aDateFormatterObj dateFromString:[aTweetDetailsDictionary objectForKey:@"created_at"]];
-            //  NSLog(@"date--%@",aDateObj);
-            
-            [aDateFormatterObj setDateFormat:@"yyyy-MMM-dd HH:mm"];
-            //2014-10-19 23:00:15 +0000
-            aTweetList.listCreatedDate = [aDateFormatterObj stringFromDate:aDateObj];
-            aTweetList.listDate = aDateObj;
-            
-            [[LRCoreDataHelper sharedStorageManager] saveContext];
-        }
-    }
-}
-- (void)saveTweetDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray
-{
-    NSArray *tweetsForUser = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRTweets" withPredicate:nil, nil];
-    if(tweetsForUser.count > 0) {
-        for (LRTweets *tweetObj in tweetsForUser) {
-            [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:tweetObj];
-        }
-        [[LRCoreDataHelper sharedStorageManager] saveContext];
-        
-    }
-    if(iTweetDetailsArray && iTweetDetailsArray.count > 0) {
-        
-        for (NSDictionary *aTweetDetailsDictionary in iTweetDetailsArray) {
-            NSDictionary *aUserDetailsDictionary = [aTweetDetailsDictionary objectForKey:@"user"];
-            
-            LRTweets *aTweetList = (LRTweets *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRTweets" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
-            aTweetList.tweet = [aTweetDetailsDictionary objectForKey:@"text"];
-            aTweetList.memberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[aUserDetailsDictionary objectForKey:@"profile_image_url"]]]];
-            aTweetList.tweetScreenName = [aUserDetailsDictionary objectForKey:@"screen_name"];
-            aTweetList.tweetDate = [aTweetDetailsDictionary objectForKey:@"created_at"];
-            
-            [[LRCoreDataHelper sharedStorageManager] saveContext];
-        }
-    }
-}
 #pragma mark - UITableViewDataSource
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView*)tableView

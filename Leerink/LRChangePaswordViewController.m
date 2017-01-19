@@ -11,11 +11,6 @@
 #import "LRWebEngine.h"
 
 #define fontHelveticaNeueSize14 [UIFont systemFontOfSize:14.0]
-static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
-static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2;
-static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8;
-static const CGFloat PORTRAIT_KEYBOARD_HEIGHT = 216;
-static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 CGFloat animatedDistance;
 
@@ -24,6 +19,7 @@ CGFloat animatedDistance;
     NSMutableArray *prevNextArray;
     UITextField *_refTextField;
 }
+@property (weak, nonatomic) IBOutlet UIScrollView *scrolView;
 @property (weak, nonatomic) IBOutlet UITextField *choose_New_Password;
 @property (weak, nonatomic) IBOutlet UITextField *confirm_New_password;
 - (IBAction)save_New_Password:(id)sender;
@@ -66,6 +62,10 @@ CGFloat animatedDistance;
     
     prevNextArray = [[NSMutableArray alloc]initWithObjects:self.choose_New_Password,self.confirm_New_password, nil];
     
+    
+    self.scrolView.scrollEnabled = TRUE;
+    [self.scrolView setContentSize:CGSizeMake(320, 850)];
+    
 }
 #pragma mark -
 #pragma mark - UITextFielDelegate
@@ -79,7 +79,7 @@ CGFloat animatedDistance;
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     _refTextField = textField;
-    CGRect textFieldRect =
+  /*  CGRect textFieldRect =
     [self.view.window convertRect:textField.bounds fromView:textField];
     CGRect viewRect =
     [self.view.window convertRect:self.view.bounds fromView:self.view];
@@ -119,12 +119,12 @@ CGFloat animatedDistance;
     
     [self.view setFrame:viewFrame];
     
-    [UIView commitAnimations];
+    [UIView commitAnimations];*/
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    CGRect viewFrame = self.view.frame;
+   /* CGRect viewFrame = self.view.frame;
     viewFrame.origin.y += animatedDistance;
     
     [UIView beginAnimations:nil context:NULL];
@@ -133,7 +133,7 @@ CGFloat animatedDistance;
     
     [self.view setFrame:viewFrame];
     
-    [UIView commitAnimations];
+    [UIView commitAnimations];*/
     
     textField.secureTextEntry = TRUE;
 }

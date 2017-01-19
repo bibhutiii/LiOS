@@ -8,19 +8,17 @@
 
 #import "LRTwitterListTweetsViewController.h"
 #import "STTwitter.h"
-#import "LRTweets.h"
 #import "LROpenLinksInWebViewController.h"
 #import "LRUserTimeLineTwitterViewController.h"
 
 @interface LRTwitterListTweetsViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tweetsListViewTable;
-@property (strong, nonatomic) NSMutableArray *tweetsListArray;
-- (void)saveTweetDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray;
 - (void)fetchTweetsForSpecifiedListCount:(NSString *)iCount;
 @property (assign, nonatomic) int tweetCount;
 @property (nonatomic, readwrite, strong) MNMPullToRefreshManager *pullToRefreshManager;
 @property (nonatomic, readwrite, assign) NSUInteger reloads;
 @property (strong, nonatomic) IBOutlet NSObject *topBar;
+@property (strong, nonatomic) NSMutableArray *aMemberImagesArray;
 
 
 @end
@@ -38,7 +36,16 @@
         [self fetchTweetsForSpecifiedListCount:[NSString stringWithFormat:@"%d",self.tweetCount]];
     }
     else {
-        self.tweetsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRTweets" withPredicate:nil, nil];
+        
+        self.aMemberImagesArray = [NSMutableArray new];
+
+        for (int i = 0; i < self.tweetsListArray.count; i++) {
+            NSDictionary *aTweetDetailsDictionary = [self.tweetsListArray objectAtIndex:i];
+            NSDictionary *aUserDetailsDictionary = [aTweetDetailsDictionary objectForKey:@"user"];
+            UIImage *aMemberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[aUserDetailsDictionary objectForKey:@"profile_image_url"]]]];
+            [self.aMemberImagesArray addObject:aMemberImage];
+        }
+        
         [self.tweetsListViewTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
         pullToRefreshManager_ = [[MNMPullToRefreshManager alloc] initWithPullToRefreshViewHeight:60.0f
                                                                                        tableView:self.tweetsListViewTable
@@ -71,13 +78,25 @@
     
     [twitter verifyCredentialsWithSuccessBlock:^(NSString *bearerToken) {
         
-        [twitter getListsStatusesForSlug:self.aTwitterList.listSlug screenName:self.aTwitterList.listScreenName ownerID:self.aTwitterList.listOwnerId sinceID:nil maxID:nil count:iCount includeEntities:[NSNumber numberWithBool:1] includeRetweets:[NSNumber numberWithBool:1] successBlock:^(NSArray *statuses) {
-            [self saveTweetDetailsToCoreDataForArray:statuses];
+        [twitter getListsStatusesForSlug:self.aTwitterListSlug screenName:self.aTwitterListScreenName ownerID:self.aTwitterListOwnerId sinceID:nil maxID:nil count:iCount includeEntities:[NSNumber numberWithBool:1] includeRetweets:[NSNumber numberWithBool:1] successBlock:^(NSArray *statuses) {
+            
+            self.tweetsListArray = [NSMutableArray arrayWithArray:statuses];
+            self.aMemberImagesArray = [NSMutableArray new];
+            for (int i = 0; i < self.tweetsListArray.count; i++) {
+                NSDictionary *aTweetDetailsDictionary = [self.tweetsListArray objectAtIndex:i];
+                NSDictionary *aUserDetailsDictionary = [aTweetDetailsDictionary objectForKey:@"user"];
+                UIImage *aMemberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[aUserDetailsDictionary objectForKey:@"profile_image_url"]]]];
+                [self.aMemberImagesArray addObject:aMemberImage];
+            }
+            
+            [self.tweetsListViewTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+
             pullToRefreshManager_ = [[MNMPullToRefreshManager alloc] initWithPullToRefreshViewHeight:60.0f
                                                                                            tableView:self.tweetsListViewTable
                                                                                           withClient:self];
 
-             [pullToRefreshManager_ tableViewReloadFinishedAnimated:YES];
+            [LRUtility stopActivityIndicatorFromView:self.view];
+            [pullToRefreshManager_ tableViewReloadFinishedAnimated:YES];
             
         } errorBlock:^(NSError *error) {
             
@@ -102,38 +121,6 @@
         [errorAlertView show];
     }];
 }
-- (void)saveTweetDetailsToCoreDataForArray:(NSArray *)iTweetDetailsArray
-{
-    NSLog(@"%@",[iTweetDetailsArray objectAtIndex:0]);
-    NSArray *tweetsForUser = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRTweets" withPredicate:nil, nil];
-    if(tweetsForUser.count > 0) {
-        for (LRTweets *tweetObj in tweetsForUser) {
-            [[[LRCoreDataHelper sharedStorageManager] context] deleteObject:tweetObj];
-        }
-        [[LRCoreDataHelper sharedStorageManager] saveContext];
-        
-    }
-    if(iTweetDetailsArray && iTweetDetailsArray.count > 0) {
-        
-        for (NSDictionary *aTweetDetailsDictionary in iTweetDetailsArray) {
-            NSDictionary *aUserDetailsDictionary = [aTweetDetailsDictionary objectForKey:@"user"];
-            
-            LRTweets *aTweetList = (LRTweets *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRTweets" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
-            aTweetList.tweet = [aTweetDetailsDictionary objectForKey:@"text"];
-            aTweetList.memberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[aUserDetailsDictionary objectForKey:@"profile_image_url"]]]];
-            aTweetList.tweetScreenName = [aUserDetailsDictionary objectForKey:@"screen_name"];
-            aTweetList.tweetDate = [aTweetDetailsDictionary objectForKey:@"created_at"];
-            
-            [[LRCoreDataHelper sharedStorageManager] saveContext];
-            
-        }
-        
-    }
-    self.tweetsListArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRTweets" withPredicate:nil, nil];
-    [self.tweetsListViewTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-    [LRUtility stopActivityIndicatorFromView:self.view];
-    
-}
 
 #pragma mark - UITableViewDataSource
 
@@ -144,7 +131,7 @@
 
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.tweetsListArray.count;
+    return self.tweetsListArray.count + 1;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -156,20 +143,21 @@
     if(cell == nil)
     {
         NSArray *bundle = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
-        if(indexPath.row == self.tweetsListArray.count - 1) {
+        if(indexPath.row == self.tweetsListArray.count) {
             cell = (LRTwitterListTableViewCell *)[bundle objectAtIndex:2];
         }
         else {
             cell = (LRTwitterListTableViewCell *)[bundle objectAtIndex: 1];
         }
     }
-    if(indexPath.row != self.tweetsListArray.count - 1) {
+    if(indexPath.row != self.tweetsListArray.count) {
         
-        LRTweets *aTweetObj = (LRTweets *)[self.tweetsListArray objectAtIndex:indexPath.row];
-        
+        NSDictionary *aTweetDetailsDictionary = [self.tweetsListArray objectAtIndex:indexPath.row];
+        NSDictionary *aUserDetailsDictionary = [aTweetDetailsDictionary objectForKey:@"user"];
         cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [cell fillDataForTweetCellWithTweet:aTweetObj.tweet andMemberImage:aTweetObj.memberImage andDate:aTweetObj.tweetDate andUserName:aTweetObj.tweetScreenName];
+        
+        [cell fillDataForTweetCellWithTweet:[aTweetDetailsDictionary objectForKey:@"text"] andMemberImage:[self.aMemberImagesArray objectAtIndex:indexPath.row] andDate:[aTweetDetailsDictionary objectForKey:@"created_at"] andUserName:[aUserDetailsDictionary objectForKey:@"screen_name"]];
         
     }
     
@@ -191,16 +179,16 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row != self.tweetsListArray.count - 1) {
+    if(indexPath.row != self.tweetsListArray.count) {
         
-        LRTweets *aTweetObj = (LRTweets *)[self.tweetsListArray objectAtIndex:indexPath.row];
+        NSDictionary *aTweetDetailsDictionary = [self.tweetsListArray objectAtIndex:indexPath.row];
         CGSize constrainedSize = CGSizeMake(249  , 9999);
         
         NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                               [UIFont fontWithName:@"HelveticaNeue" size:13.0], NSFontAttributeName,
                                               nil];
         
-        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:aTweetObj.tweet attributes:attributesDictionary];
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:[aTweetDetailsDictionary objectForKey:@"text"] attributes:attributesDictionary];
         
         CGRect requiredHeight = [string boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin context:nil];
         return requiredHeight.size.height + 80.0;
@@ -210,7 +198,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == self.tweetsListArray.count - 1) {
+    if(indexPath.row == self.tweetsListArray.count) {
         
         if(self.tweetCount >= 100) {
             UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
@@ -229,8 +217,9 @@
     }
     else {
         LRUserTimeLineTwitterViewController *aUserTimeLineViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:@"LRUserTimeLineTwitterViewController"];
-        LRTweets *aTweetObj = (LRTweets *)[self.tweetsListArray objectAtIndex:indexPath.row];
-        aUserTimeLineViewController.tweetUserName = aTweetObj.tweetScreenName;
+        NSDictionary *aTweetDetailsDictionary = [self.tweetsListArray objectAtIndex:indexPath.row];
+        NSDictionary *aUserDetailsDictionary = [aTweetDetailsDictionary objectForKey:@"user"];
+        aUserTimeLineViewController.tweetUserName = [aUserDetailsDictionary objectForKey:@"screen_name"];
         [self.navigationController pushViewController:aUserTimeLineViewController animated:TRUE];
         
     }

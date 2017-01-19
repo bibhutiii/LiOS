@@ -11,15 +11,13 @@
 #import "UITextField+previousNextToolBar.h"
 #import "LRWebEngine.h"
 #import "LRAppDelegate.h"
-#import "LRUser.h"
-#import "LRUserRoles.h"
 #import "LRDocumentViewController.h"
 #import "LROpenLinksInWebViewController.h"
 #import "LRPasswordResetViewController.h"
 #import "LRTermsAndConditionsViewController.h"
 #import "LRChangePaswordViewController.h"
 #import <sys/sysctl.h>
-
+#import "LRUtility.h"
 
 #define fontHelveticaNeueSize14 [UIFont systemFontOfSize:14.0]
 static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
@@ -38,8 +36,6 @@ CGFloat animatedDistance;
 
 - (IBAction)termsOfUseLeerinkPartners:(id)sender;
 - (IBAction)forgotPasswordClicked:(id)sender;
-#pragma mark - Add the user roles to the database
-- (void) addTheUserRolesToDatabase;
 @end
 
 @implementation LRLoginViewController
@@ -141,8 +137,8 @@ CGFloat animatedDistance;
    // self.userNameTextField.text = @"Poonamps@aditi.com";
    // self.passwordTextField.text = @"Aditi06*";
     
-   // self.userNameTextField.text = @"rameshv@aditi.com";
-   // self.passwordTextField.text = @"Aditi01*";
+  //  self.userNameTextField.text = @"rameshv@aditi.com";
+  //  self.passwordTextField.text = @"Aditi01*";
     // check if the username and password fields are not left empty.
     //    self.userNameTextField.text = @"alex.calhoun@leerink.commedatest.com";
     //   self.passwordTextField.text = @"TwinJet12";
@@ -268,27 +264,7 @@ CGFloat animatedDistance;
     }];
     
 }
-#pragma mark - Add the user roles to the database
-- (void) addTheUserRolesToDatabase
-{
-    NSArray *userRoles = nil;
-    userRoles = [[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRUserRoles" withPredicate:nil, nil];
-    
-    // if there are no user roles present in the database only then add the new roles.
-    if(!userRoles.count) {
-        userRoles = [NSArray arrayWithObjects:@"Institutional Sales Group",@"Equity Research Group",@"Institutional Client",@"Consultant",@"Corporate Consulting Group",@"Investment Banking Group",@"Sales Trading",@"Accounting",@"Middle Market Group",@"Marketing Group",@"Medacorp", nil];
-        NSArray *aUserRoleIds = [NSArray arrayWithObjects:@"3",@"5",@"6",@"7",@"8",@"9",@"49",@"86",@"106",@"113",@"132", nil];
-        
-        for (int i = 0; i < [userRoles count]; i++) {
-            
-            LRUserRoles *aUserRole = (LRUserRoles *)[[LRCoreDataHelper sharedStorageManager] createManagedObjectForName:@"LRUserRoles" inContext:[[LRCoreDataHelper sharedStorageManager] context]];
-            aUserRole.userRole = [userRoles objectAtIndex:i];
-            aUserRole.userRoleId = [NSNumber numberWithInt:[[aUserRoleIds objectAtIndex:i] intValue]];
-        }
-        
-        [[LRCoreDataHelper sharedStorageManager] saveContext];
-    }
-}
+
 - (NSUInteger)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskPortrait;
 }

@@ -25,7 +25,7 @@
     //  NSURL *weburl = [NSURL URLWithString:encodedString];
     //self.linkURL = @"http://www.google.com";
     
-    if([self.linkURL length] == 0) {
+    if(self.linkURL == nil) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Leerink" message:@"No URL available" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
         return;

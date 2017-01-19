@@ -7,10 +7,6 @@
 //
 
 #import "LRWebEngine.h"
-#import "LRSaveDataToDatabase.h"
-#import "LRAnalyst.h"
-#import "LRSector.h"
-#import "LRSymbol.h"
 
 static LRWebEngine *sDefaultWebEngine = nil;
 @interface LRWebEngine ()
@@ -58,7 +54,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     [aRequestDict setObject:@"cbrinzey@hqcm.commedatest.com" forKey:@"Username"];
     [aRequestDict setObject:@"WolfRayet12" forKey:@"Password"];
     
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/Login" params:aRequestDictionary httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/Login" params:aRequestDictionary httpMethod:@"POST" ssl:FALSE];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
@@ -76,7 +72,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetAnalysts" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetAnalysts" params:nil httpMethod:@"POST" ssl:FALSE];
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     self.iOperation.documentType = eLRDocumentAnalyst;
     
@@ -84,7 +80,9 @@ static LRWebEngine *sDefaultWebEngine = nil;
         valueString = [completedOperation responseString];
         NSLog(@"recieved response -- %@",[completedOperation responseString]);
         
-        NSDictionary *the_parsedcontents = [LRSaveDataToDatabase getparsedJSONDataForString:valueString forOperation:completedOperation withContextInfo:nil];
+        NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
+
+        NSDictionary *the_parsedcontents = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
         completion(the_parsedcontents);
         
         
@@ -100,7 +98,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetSectors" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetSectors" params:nil httpMethod:@"POST" ssl:FALSE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     self.iOperation.documentType = eLRDocumentSector;
@@ -109,7 +107,9 @@ static LRWebEngine *sDefaultWebEngine = nil;
         valueString = [completedOperation responseString];
         NSLog(@"recieved response -- %@",[completedOperation responseString]);
         
-        NSDictionary *the_parsedcontents = [LRSaveDataToDatabase getparsedJSONDataForString:valueString forOperation:completedOperation withContextInfo:nil];
+        NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
+
+        NSDictionary *the_parsedcontents = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
         completion(the_parsedcontents);
         
         
@@ -124,7 +124,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetSymbols" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetSymbols" params:nil httpMethod:@"POST" ssl:FALSE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     self.iOperation.documentType = eLRDocumentSymbol;
@@ -133,7 +133,9 @@ static LRWebEngine *sDefaultWebEngine = nil;
         valueString = [completedOperation responseString];
         NSLog(@"recieved response -- %@",[completedOperation responseString]);
         
-        NSDictionary *the_parsedcontents = [LRSaveDataToDatabase getparsedJSONDataForString:valueString forOperation:completedOperation withContextInfo:nil];
+        NSData *responseData = [valueString dataUsingEncoding:NSUTF8StringEncoding];
+
+        NSDictionary *the_parsedcontents = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
         completion(the_parsedcontents);
         
         
@@ -153,7 +155,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
         {
             [aRequestDict setObject:[iContextInfo objectForKey:@"TopCount"] forKey:@"TopCount"];
             [aRequestDict setObject:[iContextInfo objectForKey:@"AuthorID"] forKey:@"AuthorID"];
-            self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+            self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:FALSE];
             self.iOperation.documentListType = eLRDocumentListAnalyst;
 
         }
@@ -162,7 +164,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
         {
             [aRequestDict setObject:[iContextInfo objectForKey:@"TopCount"] forKey:@"TopCount"];
             [aRequestDict setObject:[iContextInfo objectForKey:@"ResearchID"] forKey:@"ResearchID"];
-            self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+            self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:FALSE];
             self.iOperation.documentListType = eLRDocumentListSector;
 
         }
@@ -171,7 +173,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
         {
             [aRequestDict setObject:[iContextInfo objectForKey:@"TopCount"] forKey:@"TopCount"];
             [aRequestDict setObject:[iContextInfo objectForKey:@"tickerID"] forKey:@"tickerID"];
-            self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+            self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:FALSE];
             self.iOperation.documentListType = eLRDocumentListSymbol;
             
         }
@@ -209,7 +211,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     
     [aRequestDict setObject:[iContextInfo objectForKey:@"ListId"] forKey:@"ListId"];
     [aRequestDict setObject:[iContextInfo objectForKey:@"TopCount"] forKey:@"TopCount"];
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentList" params:aRequestDict httpMethod:@"POST" ssl:FALSE];
 
     __block NSString *valueString = nil;
     
@@ -242,7 +244,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     [aRequestDict setObject:iContextInfo forKey:@"DocumentID"];
     [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserId"] forKey:@"UserId"];
     
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocument" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocument" params:aRequestDict httpMethod:@"POST" ssl:FALSE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     
@@ -272,7 +274,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     [aRequestDict setObject:@"abc" forKey:@"Guid"];
     [aRequestDict setObject:[aStandardUserDefaults objectForKey:@"SessionId"] forKey:@"sessionId"];
 
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/logout" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/logout" params:nil httpMethod:@"POST" ssl:FALSE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     //self.iOperation.documentListRequestType = eLRDocumentListAnalyst;
@@ -302,7 +304,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
     [aRequestDict setObject:@"55702" forKey:@"DocumentID"];
     
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/SendDocumentList" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/SendDocumentList" params:iContextInfo httpMethod:@"POST" ssl:FALSE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     
@@ -327,7 +329,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/IsSessionExpired" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/IsSessionExpired" params:nil httpMethod:@"POST" ssl:FALSE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     
@@ -351,7 +353,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
 {
     __block NSString *valueString = nil;
     
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/ResetPassword" params:aEmailIdDetails httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/ResetPassword" params:aEmailIdDetails httpMethod:@"POST" ssl:FALSE];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
@@ -374,7 +376,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetHomePageMenus" params:nil httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetHomePageMenus" params:nil httpMethod:@"POST" ssl:FALSE];
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
@@ -399,7 +401,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetSubMenus" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetSubMenus" params:iContextInfo httpMethod:@"POST" ssl:FALSE];
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
@@ -424,7 +426,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentSearch" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentSearch" params:iContextInfo httpMethod:@"POST" ssl:FALSE];
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
@@ -448,7 +450,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
 {
     __block NSString *valueString = nil;
  
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/AcceptTNC" params:aRequestDictionary httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/AcceptTNC" params:aRequestDictionary httpMethod:@"POST" ssl:FALSE];
    // [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"],@"Session-Id" ,nil]];
 
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
@@ -466,7 +468,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
 {
     __block NSString *valueString = nil;
     
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/ChangePassword" params:aRequestDictionary httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/ChangePassword" params:aRequestDictionary httpMethod:@"POST" ssl:FALSE];
    // [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"],@"Session-Id" ,nil]];
 
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
@@ -485,7 +487,7 @@ static LRWebEngine *sDefaultWebEngine = nil;
     __block NSString *valueString = nil;
     NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
     
-    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/SendCrashReport" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
+    self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/SendCrashReport" params:iContextInfo httpMethod:@"POST" ssl:FALSE];
     
     [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
     

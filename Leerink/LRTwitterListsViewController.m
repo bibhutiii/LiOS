@@ -10,10 +10,8 @@
 #import "STTwitter.h"
 #import "LRTwitterListTableViewCell.h"
 #import "LRTwitterListTweetsViewController.h"
-#import "LRTwitterList.h"
 
 @interface LRTwitterListsViewController ()
-@property (nonatomic, strong) NSArray *twitterListsArray;
 @property (weak, nonatomic) IBOutlet UITableView *twitterListsTableView;
 
 @end
@@ -23,20 +21,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.twitterListsArray = [NSArray new];
     self.twitterListsTableView.delegate = self;
     self.twitterListsTableView.dataSource = self;
     self.twitterListsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     self.title = @"Lists";
     
-    self.twitterListsArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRTwitterList" withPredicate:nil, nil];
+    //self.twitterListsArray = (NSMutableArray *)[[LRCoreDataHelper sharedStorageManager] fetchObjectsForEntityName:@"LRTwitterList" withPredicate:nil, nil];
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"listCreatedDate"
-                                                                  ascending:NO];
-    NSArray *sortDescriptors = @[sortDescriptor];
+  //  NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"listCreatedDate"
+      //                                                            ascending:NO];
+   // NSArray *sortDescriptors = @[sortDescriptor];
     
-    self.twitterListsArray = [self.twitterListsArray sortedArrayUsingDescriptors:sortDescriptors];
+    //self.twitterListsArray = [self.twitterListsArray sortedArrayUsingDescriptors:sortDescriptors];
     
     
     [self.twitterListsTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
@@ -79,9 +76,11 @@
         cell = (LRTwitterListTableViewCell *)[bundle objectAtIndex: 0];
     }
     
-    LRTwitterList *aTweetList = (LRTwitterList *)[self.twitterListsArray objectAtIndex:indexPath.row];
+    NSDictionary *twitterListDictionary = [self.twitterListsArray objectAtIndex:indexPath.row];
     
-    [cell fillDataForDocumentCellwithTwitterListMemberName:aTweetList.listName andMemberImage:aTweetList.listImage];
+    NSString *profileImageUrlString = [twitterListDictionary objectForKey:@"profile_image_url"];
+    UIImage *memberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:profileImageUrlString]]];
+    [cell fillDataForDocumentCellwithTwitterListMemberName:[twitterListDictionary objectForKey:@"name"] andMemberImage:memberImage];
     
     return cell;
 }
@@ -102,7 +101,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LRTwitterListTweetsViewController *aTweetsListVoiewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:@"LRTwitterListTweetsViewController"];
-    aTweetsListVoiewController.aTwitterList = (LRTwitterList *)[self.twitterListsArray objectAtIndex:indexPath.row];
+    NSDictionary *twitterListDictionary = [NSDictionary new];
+    twitterListDictionary = [self.twitterListsArray objectAtIndex:indexPath.row];
+    NSDictionary *aUserDetailsDictionary = [twitterListDictionary objectForKey:@"user"];
+    
+    aTweetsListVoiewController.aTwitterListScreenName = [aUserDetailsDictionary objectForKey:@"name"];
+    aTweetsListVoiewController.aTwitterListOwnerId = [aUserDetailsDictionary objectForKey:@"id_str"];
+    aTweetsListVoiewController.aTwitterListSlug = [twitterListDictionary objectForKey:@"slug"];
+
     aTweetsListVoiewController.isTwitterListCountMoreThanOne = TRUE;
     [self.navigationController pushViewController:aTweetsListVoiewController animated:TRUE];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

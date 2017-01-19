@@ -8,9 +8,6 @@
 
 #import "LRSubMenuListController.h"
 #import "LRContactListTableViewCell.h"
-#import "LRAnalyst.h"
-#import "LRSymbol.h"
-#import "LRSector.h"
 #import "LRDocumentTypeTableViewCell.h"
 #import "LRDocumentListViewController.h"
 #import "LRWebEngine.h"

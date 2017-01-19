@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LRTwitterList.h"
 #import "LRTwitterListTableViewCell.h"
 #import "MNMPullToRefreshManager.h"
 
 
 @interface LRTwitterListTweetsViewController : UIViewController<LRLoadURLDelegate,MNMPullToRefreshManagerClient>
 
-@property (nonatomic, strong) LRTwitterList *aTwitterList;
+@property (strong, nonatomic) NSMutableArray *tweetsListArray;
 @property (nonatomic, assign) BOOL isTwitterListCountMoreThanOne;
+@property (strong, nonatomic) NSString *aTwitterListScreenName;
+@property (strong, nonatomic) NSString *aTwitterListOwnerId;
+@property (strong, nonatomic) NSString *aTwitterListSlug;
 @end

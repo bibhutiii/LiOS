@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LRCoreDataHelper.h"
 
 #define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 
@@ -16,15 +15,11 @@
 @property (strong, nonatomic) UIWindow *window;
 // the base navigation controller from where all the other controllers like lists,twitter will be pushed.
 @property (strong, nonatomic) UINavigationController *aBaseNavigationController;
-// a core data helper class to avoid the methods to be written in appDelegate.
-@property (nonatomic, strong) LRCoreDataHelper *coreDataHelper;
 @property (nonatomic, assign) BOOL documentFetchedFromNotification;
 
 
 
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
 
 // class methods to fetch the storyboard and the appdelegare instead of defining them everywhere.
 + (LRAppDelegate *)myAppdelegate;
@@ -35,10 +30,7 @@
 - (void)cancelledPasswordResetController;
 - (BOOL) isUserLoggedIn;
 - (void)resetUserDefaultValues;
+- (void)setupAudio;
 
-- (void)saveContext;
-- (NSURL *)applicationDocumentsDirectory;
-
-- (NSManagedObjectContext *) createManagedObjectContext;
 
 @end

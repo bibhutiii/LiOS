@@ -15,8 +15,6 @@
 #import <Foundation/Foundation.h>
 #import "MKNetworkEngine.h"
 #import "LRUtility.h"
-#import <CoreData/CoreData.h>
-#import "LRCoreDataHelper.h"
 #import "LRAppDelegate.h"
 #import "NSString+HTML.h"
 #import "LRLoadDataDelegate.h"
@@ -25,9 +23,10 @@
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
 #import "NSDate+Helper.h"
+#import <CoreData/CoreData.h>
 #endif
 
 // Macro to enable log files
-#define ENABLE_DEVICE_LOGS 0
+#define ENABLE_DEVICE_LOGS 1
 
-#define SERVICE_URL_BASE @"portal.leerink.com"
+#define SERVICE_URL_BASE @"10.98.57.42"
