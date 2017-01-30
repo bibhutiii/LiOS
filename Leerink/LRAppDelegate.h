@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LRDocumentViewController.h"
 
 #define SYSTEM_VERSION_LESS_THAN(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 
@@ -16,7 +17,7 @@
 // the base navigation controller from where all the other controllers like lists,twitter will be pushed.
 @property (strong, nonatomic) UINavigationController *aBaseNavigationController;
 @property (nonatomic, assign) BOOL documentFetchedFromNotification;
-
+@property (weak, nonatomic) LRDocumentViewController *lrDocumentViewController;
 
 
 

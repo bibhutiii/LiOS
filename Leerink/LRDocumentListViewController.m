@@ -14,6 +14,7 @@
 #import "LROpenLinksInWebViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 
+
 @interface LRDocumentListViewController ()
 {
     NSArray *searchResults;
@@ -524,6 +525,26 @@
             aFileTypeExtension = [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
             documentViewController.isAudioFilePlayed = FALSE;
             documentViewController.documentType = aFileTypeExtension;
+            documentViewController.author = [aDocumentDetailsDictionary objectForKey:@"Author"];
+            documentViewController.date = [aDocumentDetailsDictionary objectForKey:@"UpdateDate"];
+            if(![documentViewController.date isEqual:@""])
+            {
+                NSArray *dateArray = [documentViewController.date componentsSeparatedByString:@"T"];
+                NSString *dateString = nil;
+                if(dateArray.count > 0) {
+                    documentViewController.date = [dateArray objectAtIndex:0];
+                }
+                else {
+                    documentViewController.date = @"-";
+                }
+            }
+            else{
+                documentViewController.date = @"-";
+            }
+            if([documentViewController.author isEqual:@""])
+            {
+                documentViewController.author = @"-";
+            }
         }
         else {
             aFileTypeExtension = [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
@@ -532,6 +553,26 @@
             documentViewController.documentId = [aDocumentDetailsDictionary objectForKey:@"DocumentID"];
             documentViewController.isAudioFilePlayed = FALSE;
             documentViewController.documentType = aFileTypeExtension;
+            documentViewController.author = [aDocumentDetailsDictionary objectForKey:@"Author"];
+            documentViewController.date = [aDocumentDetailsDictionary objectForKey:@"UpdateDate"];
+            if(![documentViewController.date isEqual:@""])
+            {
+                NSArray *dateArray = [documentViewController.date componentsSeparatedByString:@"T"];
+                NSString *dateString = nil;
+                if(dateArray.count > 0) {
+                    documentViewController.date = [dateArray objectAtIndex:0];
+                }
+                else {
+                    documentViewController.date = @"-";
+                }
+            }
+            else{
+                documentViewController.date = @"-";
+            }
+            if([documentViewController.author isEqual:@""])
+            {
+                documentViewController.author = @"-";
+            }
         }
         CFStringRef fileExtension = (__bridge CFStringRef) [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
         CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
@@ -576,6 +617,26 @@
             aFileTypeExtension = [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
             documentViewController.isAudioFilePlayed = FALSE;
             documentViewController.documentType = aFileTypeExtension;
+            documentViewController.author = [aDocumentDetailsDictionary objectForKey:@"Author"];
+            documentViewController.date = [aDocumentDetailsDictionary objectForKey:@"UpdateDate"];
+            if(![documentViewController.date isEqual:@""])
+            {
+                NSArray *dateArray = [documentViewController.date componentsSeparatedByString:@"T"];
+                NSString *dateString = nil;
+                if(dateArray.count > 0) {
+                    documentViewController.date = [dateArray objectAtIndex:0];
+                }
+                else {
+                    documentViewController.date = @"-";
+                }
+            }
+            else{
+                documentViewController.date = @"-";
+            }
+            if([documentViewController.author isEqual:@""])
+            {
+                documentViewController.author = @"-";
+            }
         }
         else {
             aFileTypeExtension = [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
@@ -584,6 +645,26 @@
             documentViewController.documentId = [aDocumentDetailsDictionary objectForKey:@"DocumentID"];
             documentViewController.isAudioFilePlayed = FALSE;
             documentViewController.documentType = aFileTypeExtension;
+            documentViewController.author = [aDocumentDetailsDictionary objectForKey:@"Author"];
+            documentViewController.date = [aDocumentDetailsDictionary objectForKey:@"UpdateDate"];
+            if(![documentViewController.date isEqual:@""])
+            {
+                NSArray *dateArray = [documentViewController.date componentsSeparatedByString:@"T"];
+                NSString *dateString = nil;
+                if(dateArray.count > 0) {
+                    documentViewController.date = [dateArray objectAtIndex:0];
+                }
+                else {
+                    documentViewController.date = @"-";
+                }
+            }
+            else{
+                documentViewController.date = @"-";
+            }
+            if([documentViewController.author isEqual:@""])
+            {
+                documentViewController.author = @"-";
+            }
         }
         CFStringRef fileExtension = (__bridge CFStringRef) [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
         CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);

@@ -36,14 +36,16 @@ static MediaManager *sharedInstance = nil;
     //create an instance if not already else return
     if(!sharedInstance){
         sharedInstance = [[[self class] alloc] init];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAudioSessionEvent:) name:AVAudioSessionInterruptionNotification object:nil];
     }
     return sharedInstance;
 }
 
 -(void)playWithURL:(NSURL *)url{
     NSError *error = nil;
-    audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    audioPlayer = [[AVAudioPlayer alloc]    initWithContentsOfURL:url error:&error ];
     if(error == nil){
+        [audioPlayer setDelegate:self];
         [audioPlayer play];
         _isSongPaused=false;
         [self setUpRemoteControl];
@@ -55,6 +57,7 @@ static MediaManager *sharedInstance = nil;
 -(void)initWithURL:(NSURL *)url{
     NSError *error = nil;
     audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    [audioPlayer setDelegate:self];
 }
 
 
@@ -135,14 +138,14 @@ static MediaManager *sharedInstance = nil;
         
         NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
         
-        MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"Leerink-App-Icon-120x120"]];
+        MPMediaItemArtwork *albumArt = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:@"LeerinkLogo"]];
         
-        [songInfo setObject:@"your song" forKey:MPMediaItemPropertyTitle];
-        [songInfo setObject:@"your artist" forKey:MPMediaItemPropertyArtist];
-        [songInfo setObject:@"your album" forKey:MPMediaItemPropertyAlbumTitle];
+        [songInfo setObject:self.songName forKey:MPMediaItemPropertyTitle];
+        [songInfo setObject:self.artist forKey:MPMediaItemPropertyArtist];
+        [songInfo setObject:self.album forKey:MPMediaItemPropertyAlbumTitle];
         [songInfo setObject:[NSNumber numberWithDouble:audioPlayer.currentTime] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
         [songInfo setObject:[NSNumber numberWithDouble:audioPlayer.duration] forKey:MPMediaItemPropertyPlaybackDuration];
-       // [songInfo setObject:[NSNumber numberWithDouble:(isPaused ? 0.0f : 1.0f)] forKey:MPNowPlayingInfoPropertyPlaybackRate];
+      
         [songInfo setObject:[NSNumber numberWithDouble:(_isSongPaused? 0.0f:1.0f)] forKey:MPNowPlayingInfoPropertyPlaybackRate];
 
         [songInfo setObject:albumArt forKey:MPMediaItemPropertyArtwork];
@@ -159,10 +162,30 @@ static MediaManager *sharedInstance = nil;
     
 }
 
+- (void) onAudioSessionEvent: (NSNotification *) notification
+{
+    //Check the type of notification, especially if you are sending multiple AVAudioSession events here
+    if ([notification.name isEqualToString:AVAudioSessionInterruptionNotification]) {
+        NSLog(@"Interruption notification received!");
+        
+        //Check to see if it was a Begin interruption
+        if ([[notification.userInfo valueForKey:AVAudioSessionInterruptionTypeKey] isEqualToNumber:[NSNumber numberWithInt:AVAudioSessionInterruptionTypeBegan]]) {
+            NSLog(@"Interruption began!");
+            [self pause];
+            
+        } else {
+            NSLog(@"Interruption ended!");
+            [self play];
+            //Resume your audio
+        }
+    }
+}
+
 // Stop the timer when the music is finished (Need to implement the AVAudioPlayerDelegate in the Controller header)
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     // Music completed
-    [self deleteFileEntry];
+    _isSongPaused=TRUE;
+    [self stop];
 }
 
 

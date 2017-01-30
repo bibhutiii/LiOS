@@ -54,7 +54,7 @@ CGFloat animatedDistance;
     [super viewDidLoad];
     
     // Do any additional setup after loading the view.
-    self.userNameTextField.frame = CGRectMake(45.0, 154.0, 206.0, self.userNameTextField.frame.size.height);
+    //self.userNameTextField.frame = CGRectMake(45.0, 154.0, 206.0, self.userNameTextField.frame.size.height);
     self.userNameTextField.textColor = [UIColor colorWithRed:65.0/255.0 green:65.0/255.0 blue:65.0/255.0 alpha:1.0];
     self.userNameTextField.layer.cornerRadius = 3.0;
     self.userNameTextField.backgroundColor = [UIColor whiteColor];
@@ -64,10 +64,12 @@ CGFloat animatedDistance;
     self.userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.userNameTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     self.userNameTextField.delegate = self;
+
+
     self.userNameTextField.tag = 1;
      [self.userNameTextField setTintColor:[UIColor blackColor]];
     
-    self.passwordTextField.frame = CGRectMake(45.0, 209.0, 206.0, 32.0);
+   // self.passwordTextField.frame = CGRectMake(45.0, 209.0, 206.0, 32.0);
     self.passwordTextField.textColor = [UIColor colorWithRed:65.0/255.0 green:65.0/255.0 blue:65.0/255.0 alpha:1.0];
     self.passwordTextField.layer.cornerRadius = 3.0;
     self.passwordTextField.backgroundColor = [UIColor whiteColor];

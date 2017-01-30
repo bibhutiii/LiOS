@@ -13,6 +13,11 @@
 @interface MediaManager : NSObject<AVAudioPlayerDelegate>
 
 +(MediaManager *)sharedInstance;
+
+@property (nonatomic, strong) NSString *songName;
+@property (nonatomic, strong) NSString *artist;
+@property (nonatomic, strong) NSString *album;
+
 -(void)playWithURL:(NSURL *)url;
 -(void)initWithURL:(NSURL *)url;
 -(float)currentPlaybackTime;

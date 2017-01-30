@@ -10,6 +10,7 @@
 		18A95F9F1E2E032E00AB86BE /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A95F9E1E2E032E00AB86BE /* CoreData.framework */; };
 		18A95FCD1E2F61AE00AB86BE /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A95FCC1E2F61AE00AB86BE /* DBManager.m */; };
 		18C49EE21E239B0C00316490 /* MediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C49EE11E239B0C00316490 /* MediaManager.m */; };
+		18E146DC1E3604FC0071BF8E /* LeerinkLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E146DB1E3604FC0071BF8E /* LeerinkLogo.png */; };
 		84093CA919E68B3300D20D19 /* LRTwitterListTweetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84093CA819E68B3300D20D19 /* LRTwitterListTweetsViewController.m */; };
 		84093CB719ED01FF00D20D19 /* logoutBtn1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84093CB619ED01FF00D20D19 /* logoutBtn1@2x.png */; };
 		84093CBC19ED5ABA00D20D19 /* Share-black-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 84093CBB19ED5ABA00D20D19 /* Share-black-32.png */; };
@@ -171,6 +172,7 @@
 		18A95FCC1E2F61AE00AB86BE /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		18C49EE01E239B0C00316490 /* MediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaManager.h; sourceTree = "<group>"; };
 		18C49EE11E239B0C00316490 /* MediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaManager.m; sourceTree = "<group>"; };
+		18E146DB1E3604FC0071BF8E /* LeerinkLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LeerinkLogo.png; sourceTree = "<group>"; };
 		84093CA719E68B3300D20D19 /* LRTwitterListTweetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LRTwitterListTweetsViewController.h; sourceTree = "<group>"; };
 		84093CA819E68B3300D20D19 /* LRTwitterListTweetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LRTwitterListTweetsViewController.m; sourceTree = "<group>"; };
 		84093CB619ED01FF00D20D19 /* logoutBtn1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logoutBtn1@2x.png"; sourceTree = "<group>"; };
@@ -738,6 +740,7 @@
 		84D3C08C19B886A7007455F9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				18E146DB1E3604FC0071BF8E /* LeerinkLogo.png */,
 				8448B3A71A4ABC0000EBBB86 /* Button_Pause_32.png */,
 				8448B3A81A4ABC0000EBBB86 /* Button_Play_32.png */,
 				8448B3A91A4ABC0000EBBB86 /* Button_Stop_32.png */,
@@ -856,6 +859,9 @@
 							com.apple.InAppPurchase = {
 								enabled = 0;
 							};
+							com.apple.Push = {
+								enabled = 0;
+							};
 						};
 					};
 					84D3C02319B86F9E007455F9 = {
@@ -892,6 +898,7 @@
 				84093CBC19ED5ABA00D20D19 /* Share-black-32.png in Resources */,
 				84D3C0BB19B886A7007455F9 /* login_button@2x.png in Resources */,
 				84D3C0B719B886A7007455F9 /* Cloud Contacts Silver-32.png in Resources */,
+				18E146DC1E3604FC0071BF8E /* LeerinkLogo.png in Resources */,
 				848495171A03902A003CC384 /* Close-32.png in Resources */,
 				841BE6E01A40604E0084F1FD /* Cancel-32.png in Resources */,
 				8448B3AC1A4ABC0000EBBB86 /* Button_Stop_32.png in Resources */,
@@ -1117,6 +1124,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Leerink Swann LLC (C62C6496NL)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Leerink Swann LLC (C62C6496NL)";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1159,6 +1167,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Leerink Swann LLC (C62C6496NL)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Leerink Swann LLC (C62C6496NL)";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1185,6 +1194,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = C62C6496NL;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Leerink/Leerink-Prefix.pch";
@@ -1207,6 +1217,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = C62C6496NL;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Leerink/Leerink-Prefix.pch";

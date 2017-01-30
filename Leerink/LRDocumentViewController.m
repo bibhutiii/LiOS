@@ -33,9 +33,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *audioPlayerSlider;
 @property (strong, nonatomic) NSTimer *sliderTimer;
 - (IBAction)sliderValueChanged:(id)sender;
-@property (weak, nonatomic) IBOutlet UIButton *button_Play;
-@property (weak, nonatomic) IBOutlet UIButton *button_Pause;
-@property (weak, nonatomic) IBOutlet UIButton *button_Stop;
+
 - (IBAction)Mp3_Player_Actions:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextView *mp3ContentTextView;
 
@@ -61,6 +59,11 @@
     self.audioPlayerView.hidden = TRUE;
     self.documentReaderWebView.hidden = TRUE;
     // self.isAudioFilePlayed = FALSE;
+    
+    [MediaManager sharedInstance].songName=self.documentTitleToBeSavedAsPdf;
+    [MediaManager sharedInstance].artist=self.author;
+    [MediaManager sharedInstance].album=self.date;
+
     
     if(self.isAudioFilePlayed == TRUE) {
         
@@ -90,10 +93,10 @@
         self.progressSuperView.layer.borderWidth = 2.0f;
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
+   /* [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(appplicationIsActive:)
                                                  name:UIApplicationDidBecomeActiveNotification
-                                               object:nil];
+                                               object:nil]; */
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationEnteredForeground:)
@@ -104,9 +107,11 @@
      NSLog(@"document fetched");
      } withDocumentId:self.documentId withUserId:self.userId andPath:self.documentPath];
      */
+    LRAppDelegate *appDelegate = (LRAppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.lrDocumentViewController = self;
 }
 
-- (void)appplicationIsActive:(NSNotification *)notification {
+/*- (void)appplicationIsActive:(NSNotification *)notification {
     NSLog(@"Application Did Become Active");
     if(![[MediaManager sharedInstance] isAudioPlaying])
     {
@@ -122,7 +127,9 @@
         [self.button_Stop setEnabled:TRUE];
         
     }
-}
+    float slidervalue=[[MediaManager sharedInstance] currentPlaybackTime];
+    self.audioPlayerSlider.value = slidervalue;
+}*/
 
 - (void)applicationEnteredForeground:(NSNotification *)notification {
     NSLog(@"Application Entered Foreground");
@@ -140,6 +147,8 @@
         [self.button_Stop setEnabled:TRUE];
         
     }
+    float slidervalue=[[MediaManager sharedInstance] currentPlaybackTime];
+    self.audioPlayerSlider.value = slidervalue;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -158,7 +167,16 @@
 - (void)updateSlider {
     // Update the slider about the music time
     //self.audioPlayerSlider.value = self.audioPlayer.currentTime;
-    self.audioPlayerSlider.value = [[MediaManager sharedInstance] currentPlaybackTime];
+    float slidervalue=[[MediaManager sharedInstance] currentPlaybackTime];
+    self.audioPlayerSlider.value = slidervalue;
+   if(slidervalue<=0.0f)
+    {
+        [self.button_Play setEnabled:TRUE];
+        [self.button_Pause setEnabled:FALSE];
+        [self.button_Stop setEnabled:TRUE];
+        [self.sliderTimer invalidate];
+        self.sliderTimer=nil;
+    }
 }
 
 // Stop the timer when the music is finished (Need to implement the AVAudioPlayerDelegate in the Controller header)
@@ -206,13 +224,18 @@
                 // self.documentTitleToBeSavedAsPdf = @"abc def fgt dasdsadasd dssdsd ererer 4535454dsfdf";
                 self.documentTitleToBeSavedAsPdf = [self.documentTitleToBeSavedAsPdf stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
                 // self.documentTitleToBeSavedAsPdf = [self.documentTitleToBeSavedAsPdf stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-                [decodedData writeToFile:[libraryDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",self.documentTitleToBeSavedAsPdf,self.documentType]] atomically:YES];
+                [decodedData writeToFile:[libraryDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@.%@",self.documentTitleToBeSavedAsPdf,self.documentId,self.documentType]] atomically:YES];
                 
                 CFStringRef fileExtension = (__bridge CFStringRef) self.documentType;
                 CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
                 
                 if (UTTypeConformsTo(fileUTI, kUTTypeAudio)) {
                     NSLog(@"It's Audio");
+                    
+                    if([[MediaManager sharedInstance] isAudioPlaying])
+                    {
+                        [[MediaManager sharedInstance] pause];
+                    }
                     
                     self.audioPlayerView.hidden = FALSE;
                     // Get the file path to the song to play.
@@ -228,10 +251,10 @@
                     
                     filemgr = [NSFileManager defaultManager];
                     
-                    if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentType]] == YES) {
+                    if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.documentType]] == YES) {
                         NSLog (@"File exists");
                         
-                        NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentType];// your file URL as *string*
+                        NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.documentType];// your file URL as *string*
                         
                         NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:fileURLString];
                         [[MediaManager sharedInstance] initWithURL:fileURL];
@@ -343,7 +366,7 @@
     self.defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: [NSOperationQueue mainQueue]];
     
     
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/iOSAppSvcsV1.2/api/IOS/GetDocument",SERVICE_URL_BASE]];
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/iOSAppSvcsV1.2/api/IOS/GetDocument",SERVICE_URL_BASE]];
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     NSString * params = [NSString stringWithFormat:@"DocumentID=%@",self.documentId];
     [urlRequest addValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] forHTTPHeaderField:@"Session-Id"];
@@ -475,6 +498,10 @@
     [self.button_Play setEnabled:FALSE];
     [self.button_Pause setEnabled:TRUE];
     [self.button_Stop setEnabled:TRUE];
+    /*SEL updateSlider = sel_registerName("updateSlider");
+    self.sliderTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:updateSlider userInfo:nil repeats:YES];
+    self.audioPlayerSlider.maximumValue = [[MediaManager sharedInstance] getDuration];
+    self.audioPlayerSlider.value = [[MediaManager sharedInstance] currentPlaybackTime];*/
 }
 - (IBAction)Mp3_Player_Actions:(id)sender {
     
@@ -482,14 +509,20 @@
         case 501:
         {
             if(self.audioPlayerSlider.value > 0.0) {
-                //[self.audioPlayer play];
+                [self.sliderTimer invalidate];
+                self.sliderTimer=nil;
                 [[MediaManager sharedInstance] play];
+                SEL updateSlider = sel_registerName("updateSlider");
+                // Set a timer which keep getting the current music time and update the UISlider in 1 sec interval
+                self.sliderTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:updateSlider userInfo:nil repeats:YES];
+                // Set the maximum value of the UISlider
+                self.audioPlayerSlider.maximumValue = [[MediaManager sharedInstance] getDuration];
             }
             else {
                 NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
                 NSString *libraryDirectory = [paths objectAtIndex:0];
                 
-                NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentType];// your file URL as *string*
+                NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.documentType];// your file URL as *string*
                 
                 NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:fileURLString];
                  [[MediaManager sharedInstance] initWithURL:fileURL];
@@ -503,8 +536,12 @@
                 [[MediaManager sharedInstance] prepareToPlay];
 
                 [[MediaManager sharedInstance] play];
+                [self.sliderTimer invalidate];
+                self.sliderTimer=nil;
                 SEL updateSlider = sel_registerName("updateSlider");
                 self.sliderTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:updateSlider userInfo:nil repeats:YES];
+                self.audioPlayerSlider.maximumValue = [[MediaManager sharedInstance] getDuration];
+                
             }
             [self.button_Play setEnabled:FALSE];
             [self.button_Pause setEnabled:TRUE];
@@ -515,6 +552,7 @@
         case 502:
         {
             //[self.audioPlayer pause];
+            [self.sliderTimer invalidate];
             [[MediaManager sharedInstance] pause];
             [self.button_Play setEnabled:TRUE];
             [self.button_Pause setEnabled:FALSE];
@@ -548,16 +586,15 @@
     NSString *libraryDirectory = [paths objectAtIndex:0];
     
     filemgr = [NSFileManager defaultManager];
-    if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentType]] == YES) {
+    if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.documentType]] == YES) {
         self.audioPlayerView.hidden = FALSE;
         NSLog (@"File exists");
-        NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentType];// your file URL as *string*
+        NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.documentType];// your file URL as *string*
         
         NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:fileURLString];
         NSString *urlString=[NSString stringWithFormat:@"%@",[[MediaManager sharedInstance] url]];
         NSString *newUrlString=[NSString stringWithFormat:@"%@",fileURL];
         
-       
         if([[MediaManager sharedInstance] currentPlaybackTime]>0.0f && [urlString isEqual:newUrlString]) {
             
             if(![[MediaManager sharedInstance] isAudioPlaying])
@@ -577,6 +614,8 @@
             }
             
             self.progressSuperView.hidden = TRUE;
+            [self.sliderTimer invalidate];
+            self.sliderTimer=nil;
             SEL updateSlider = sel_registerName("updateSlider");
             // Set a timer which keep getting the current music time and update the UISlider in 1 sec interval
             self.sliderTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:updateSlider userInfo:nil repeats:YES];
@@ -609,6 +648,8 @@
             [[MediaManager sharedInstance] setCurrentTime:0];
             self.progressSuperView.hidden = TRUE;
             
+            [self.sliderTimer invalidate];
+            self.sliderTimer=nil;
             SEL updateSlider = sel_registerName("updateSlider");
             // Set a timer which keep getting the current music time and update the UISlider in 1 sec interval
             self.sliderTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:updateSlider userInfo:nil repeats:YES];

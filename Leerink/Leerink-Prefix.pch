@@ -29,4 +29,4 @@
 // Macro to enable log files
 #define ENABLE_DEVICE_LOGS 1
 
-#define SERVICE_URL_BASE @"10.98.57.42"
+#define SERVICE_URL_BASE @"portalqa.leerink.com"

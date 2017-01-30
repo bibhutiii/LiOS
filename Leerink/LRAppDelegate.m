@@ -19,7 +19,7 @@
 #import "LRMainClientPageViewController.h"
 #import <Parse/Parse.h>
 #import "LRWebEngine.h"
-#import "LRDocumentViewController.h"
+
 #import <CrashReporter/CrashReporter.h>
 #import "CrashHelper.h"
 #import "LRTermsAndConditionsViewController.h"
@@ -328,6 +328,7 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:deviceToken forKey:@"DeviceId"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
@@ -562,6 +563,10 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SessionId"];
     //[[NSUserDefaults standardUserDefaults] synchronize];
+    if([[MediaManager sharedInstance] isAudioPlaying])
+    {
+        [[MediaManager sharedInstance] pause];
+    }
     
 }
 
@@ -586,24 +591,48 @@
     return YES;
 }
 
+
+
 - (void)remoteControlReceivedWithEvent:(UIEvent *)event
 {
     //if it is a remote control event handle it correctly
-    if (event.type == UIEventTypeRemoteControl) {
+       if (event.type == UIEventTypeRemoteControl) {
         if (event.subtype == UIEventSubtypeRemoteControlPlay)
         {
             NSLog(@"UIEventSubtypeRemoteControlPlay");
              [[MediaManager sharedInstance] play];
+            [_lrDocumentViewController.button_Play setEnabled:FALSE];
+            [_lrDocumentViewController.button_Pause setEnabled:TRUE];
+            [_lrDocumentViewController.button_Stop setEnabled:TRUE];
         }
         else if (event.subtype == UIEventSubtypeRemoteControlPause)
         {
             NSLog(@"UIEventSubtypeRemoteControlPause");
             [[MediaManager sharedInstance] pause];
+            [_lrDocumentViewController.button_Play setEnabled:TRUE];
+            [_lrDocumentViewController.button_Pause setEnabled:FALSE];
+            [_lrDocumentViewController.button_Stop setEnabled:TRUE];
 
         }
         else if (event.subtype == UIEventSubtypeRemoteControlTogglePlayPause)
         {
             NSLog(@"UIEventSubtypeRemoteControlTogglePlayPause");
+            if([[MediaManager sharedInstance] isAudioPlaying])
+            {
+                [[MediaManager sharedInstance] pause];
+                [_lrDocumentViewController.button_Play setEnabled:TRUE];
+                [_lrDocumentViewController.button_Pause setEnabled:FALSE];
+                [_lrDocumentViewController.button_Stop setEnabled:TRUE];
+            }
+            else
+            {
+                [[MediaManager sharedInstance] play];
+                [_lrDocumentViewController.button_Play setEnabled:FALSE];
+                [_lrDocumentViewController.button_Pause setEnabled:TRUE];
+                [_lrDocumentViewController.button_Stop setEnabled:TRUE];
+
+            }
+            
         }
     }
 }
