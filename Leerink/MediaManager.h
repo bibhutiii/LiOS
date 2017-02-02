@@ -30,6 +30,7 @@
 -(void)setUpRemoteControl;
 -(bool)isAudioPlaying;
 -(NSURL *)url;
+-(void)deleteOlderMP3Files;
 
 
 @end

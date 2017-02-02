@@ -163,7 +163,7 @@ static MediaManager *sharedInstance = nil;
 }
 
 
-// Stop the timer when the music is finished (Need to implement the AVAudioPlayerDelegate in the Controller header)
+
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     // Music completed
     _isSongPaused=TRUE;
@@ -178,7 +178,6 @@ static MediaManager *sharedInstance = nil;
 }
 
 
-//----------- THIS PART NOT WORKING WHEN RUNNING IN BACKGROUND ----------
 - (void)audioPlayerEndInterruption:(AVAudioPlayer *)player
                          withFlags:(NSUInteger)flags
 {
@@ -186,5 +185,59 @@ static MediaManager *sharedInstance = nil;
         [self play];
     }
 }
+
+
+-(void)deleteOlderMP3Files{
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *libraryDirectory = [paths objectAtIndex:0];
+    
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    
+    NSDirectoryEnumerator* en = [fileManager enumeratorAtPath:libraryDirectory ];
+    
+    NSString* file;
+    while (file = [en nextObject])
+    {
+        if ([[file pathExtension]isEqualToString:@"mp3"])
+        {
+            NSLog(@"File To Delete : %@",file);
+            NSError *error= nil;
+            
+            NSString *filepath=[NSString stringWithFormat:[libraryDirectory stringByAppendingString:@"/%@"],file];
+            
+            
+            NSDate   *creationDate =[[fileManager attributesOfItemAtPath:filepath error:nil] fileCreationDate];
+            NSDate *d =[[NSDate date] dateByAddingTimeInterval:-1*24*60*60];
+            
+            NSDateFormatter *df=[[NSDateFormatter alloc]init];// = [NSDateFormatter initWithDateFormat:@"yyyy-MM-dd"];
+            [df setDateFormat:@"EEEE d"];
+            
+            NSString *createdDate = [df stringFromDate:creationDate];
+            
+            NSString *twoDaysOld = [df stringFromDate:d];
+            
+            NSLog(@"create Date----->%@, two days before date ----> %@", createdDate, twoDaysOld);
+            
+            // if ([[dictAtt valueForKey:NSFileCreationDate] compare:d] == NSOrderedAscending)
+            /*if ([creationDate compare:d] == NSOrderedAscending)
+             
+             {
+             if([file isEqualToString:@"RDRProject.sqlite"])
+             {
+             
+             NSLog(@"Imp Do not delete");
+             }
+             
+             else
+             {
+             [[NSFileManager defaultManager] removeItemAtPath:[libraryDirectory stringByAppendingPathComponent:file] error:&error];
+             }
+             }*/
+        }
+    }
+}
+
+
 
 @end

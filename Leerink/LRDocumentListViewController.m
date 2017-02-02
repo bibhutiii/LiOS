@@ -13,6 +13,7 @@
 #import "FPPopoverController.h"
 #import "LROpenLinksInWebViewController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "MediaManager.h"
 
 
 @interface LRDocumentListViewController ()
@@ -54,6 +55,7 @@
     // fetch the existing docIds from plist
     self.existingDocIdsArray = [NSMutableArray arrayWithArray:[LRAppDelegate fetchDataFromPlist]];
     
+    [[MediaManager sharedInstance] deleteOlderMP3Files];
     
     [self didLoadData];
 }
