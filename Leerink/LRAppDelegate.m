@@ -87,9 +87,11 @@
     }
     
     // Let the device know we want to receive push notifications
+    
+    /* Commented By bibhuti  to disable push notification
      if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]){
      [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:nil]];
-     [[UIApplication sharedApplication] registerForRemoteNotifications];
+     [[UIApplication sharedApplication] registerForRemoteNotifications]; */
      
      /*NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
      if (RemoteNoti) {
@@ -98,11 +100,13 @@
      [[NSUserDefaults standardUserDefaults] setObject:@"123" forKey:@"NotificationDocId"];
      [[NSUserDefaults standardUserDefaults] synchronize];
      }*/
-     
+    
+      /* Commented By bibhuti  to disable push notification
      }
      else{
      [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
+     } */
      
      /*NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
      if (RemoteNoti) {
@@ -112,7 +116,7 @@
      [[NSUserDefaults standardUserDefaults] synchronize];
      }*/
      
-     }
+    
     /*
      [Parse setApplicationId:@"0921QnBasJhIv1cFQkxC8f4aJupFnUbIuCnq8qB6"
      clientKey:@"CrXy8wSEnkuvmm67ebWMbEOpzFbUA55dI3MFtLjL"];
@@ -319,7 +323,7 @@
 }
 
 #pragma mark - Push notification code
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+/*- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     // Store the deviceToken in the current installation and save it to Parse.
     //   PFInstallation *currentInstallation = [PFInstallation currentInstallation];
@@ -376,14 +380,14 @@
              [[NSUserDefaults standardUserDefaults] synchronize];
              
              }*/
-        }
+     /*   }
         
     }
     else {
         [self.window setRootViewController:loginVC];
     }
     
-}
+} */
 #pragma mark - Alert View delegate methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -570,6 +574,8 @@
     
 }
 
+
+#pragma mark - Lock Screen Audio Player Setting
 -(void)setupAudio
 {
     // Set AVAudioSession
