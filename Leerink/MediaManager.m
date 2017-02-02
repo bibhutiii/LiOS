@@ -36,7 +36,7 @@ static MediaManager *sharedInstance = nil;
     //create an instance if not already else return
     if(!sharedInstance){
         sharedInstance = [[[self class] alloc] init];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onAudioSessionEvent:) name:AVAudioSessionInterruptionNotification object:nil];
+  
     }
     return sharedInstance;
 }
@@ -162,24 +162,6 @@ static MediaManager *sharedInstance = nil;
     
 }
 
-- (void) onAudioSessionEvent: (NSNotification *) notification
-{
-    //Check the type of notification, especially if you are sending multiple AVAudioSession events here
-    if ([notification.name isEqualToString:AVAudioSessionInterruptionNotification]) {
-        NSLog(@"Interruption notification received!");
-        
-        //Check to see if it was a Begin interruption
-        if ([[notification.userInfo valueForKey:AVAudioSessionInterruptionTypeKey] isEqualToNumber:[NSNumber numberWithInt:AVAudioSessionInterruptionTypeBegan]]) {
-            NSLog(@"Interruption began!");
-            [self pause];
-            
-        } else {
-            NSLog(@"Interruption ended!");
-            [self play];
-            //Resume your audio
-        }
-    }
-}
 
 // Stop the timer when the music is finished (Need to implement the AVAudioPlayerDelegate in the Controller header)
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
@@ -188,5 +170,21 @@ static MediaManager *sharedInstance = nil;
     [self stop];
 }
 
+
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player
+{
+    NSLog(@"-- interrupted --");
+    [self pause];
+}
+
+
+//----------- THIS PART NOT WORKING WHEN RUNNING IN BACKGROUND ----------
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player
+                         withFlags:(NSUInteger)flags
+{
+    if (flags == AVAudioSessionInterruptionFlags_ShouldResume) {
+        [self play];
+    }
+}
 
 @end
