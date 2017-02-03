@@ -219,7 +219,7 @@
                 
                 NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:aDocumentEncodedString options:0];
                 
-                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                 NSString *libraryDirectory = [paths objectAtIndex:0];
                 // self.documentTitleToBeSavedAsPdf = @"abc def fgt dasdsadasd dssdsd ererer 4535454dsfdf";
                 self.documentTitleToBeSavedAsPdf = [self.documentTitleToBeSavedAsPdf stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
@@ -380,7 +380,7 @@
 {
     NSLog(@"%@",self.documentTitleToBeSavedAsPdf);
     // self.documentTitleToBeSavedAsPdf = @"BAX/Managing Through Headwinds While Still Reinvesting in Future Growth/Outperform";
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *libraryDirectory = [paths objectAtIndex:0];
     
     NSFileManager *filemgr;
@@ -519,7 +519,7 @@
                 self.audioPlayerSlider.maximumValue = [[MediaManager sharedInstance] getDuration];
             }
             else {
-                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                 NSString *libraryDirectory = [paths objectAtIndex:0];
                 
                 NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.date,self.documentType];// your file URL as *string*
@@ -582,7 +582,7 @@
 -(bool)isFileAlreadyExist
 {
     NSFileManager *filemgr;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *libraryDirectory = [paths objectAtIndex:0];
     
     filemgr = [NSFileManager defaultManager];

@@ -189,7 +189,7 @@ static MediaManager *sharedInstance = nil;
 
 -(void)deleteOlderMP3Files{
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *libraryDirectory = [paths objectAtIndex:0];
     
     NSFileManager* fileManager = [NSFileManager defaultManager];
@@ -199,7 +199,7 @@ static MediaManager *sharedInstance = nil;
     NSString* file;
     while (file = [en nextObject])
     {
-        if ([[file pathExtension]isEqualToString:@"mp3"])
+        if ([[file pathExtension]isEqualToString:@"mp3"] || [[file pathExtension]isEqualToString:@"pdf"])
         {
             NSLog(@"File To Delete : %@",file);
             NSError *error= nil;
@@ -208,32 +208,35 @@ static MediaManager *sharedInstance = nil;
             
             
             NSDate   *creationDate =[[fileManager attributesOfItemAtPath:filepath error:nil] fileCreationDate];
-            NSDate *d =[[NSDate date] dateByAddingTimeInterval:-1*24*60*60];
+            NSDate *currentdate =[NSDate date];
+            NSDateComponents *components;
+            NSInteger days;
             
-            NSDateFormatter *df=[[NSDateFormatter alloc]init];// = [NSDateFormatter initWithDateFormat:@"yyyy-MM-dd"];
-            [df setDateFormat:@"EEEE d"];
+            components = [[NSCalendar currentCalendar] components: NSDayCalendarUnit
+                                                         fromDate: creationDate toDate: currentdate options: 0];
+            days = [components day];
+            NSLog(@"File To Delete : %ld",(long)days);
+            //NSDate *d =[[NSDate date] dateByAddingTimeInterval:-29*24*60*60];
             
-            NSString *createdDate = [df stringFromDate:creationDate];
+           // NSDateFormatter *df=[[NSDateFormatter alloc]init];// = [NSDateFormatter initWithDateFormat:@"yyyy-MM-dd"];
+            //[df setDateFormat:@"EEEE d"];
             
-            NSString *twoDaysOld = [df stringFromDate:d];
+           // NSString *createdDate = [df stringFromDate:creationDate];
             
-            NSLog(@"create Date----->%@, two days before date ----> %@", createdDate, twoDaysOld);
+           // NSString *thirtyDaysOld = [df stringFromDate:d];
+            
+           // NSLog(@"create Date----->%@, two days before date ----> %@", createdDate, thirtyDaysOld);
             
             // if ([[dictAtt valueForKey:NSFileCreationDate] compare:d] == NSOrderedAscending)
-            /*if ([creationDate compare:d] == NSOrderedAscending)
-             
-             {
-             if([file isEqualToString:@"RDRProject.sqlite"])
-             {
-             
-             NSLog(@"Imp Do not delete");
-             }
-             
-             else
-             {
-             [[NSFileManager defaultManager] removeItemAtPath:[libraryDirectory stringByAppendingPathComponent:file] error:&error];
-             }
-             }*/
+            if (days>30)
+            {
+                if([[file pathExtension]isEqualToString:@"mp3"])
+                {
+                    NSString *fileName = [file lastPathComponent];
+                    [[DBManager getSharedInstance]deleteFileEntry:fileName];
+                }
+                [[NSFileManager defaultManager] removeItemAtPath:[libraryDirectory stringByAppendingPathComponent:file] error:&error];
+            }
         }
     }
 }
