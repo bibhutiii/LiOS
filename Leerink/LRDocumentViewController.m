@@ -221,10 +221,9 @@
                 
                 NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                 NSString *libraryDirectory = [paths objectAtIndex:0];
-                // self.documentTitleToBeSavedAsPdf = @"abc def fgt dasdsadasd dssdsd ererer 4535454dsfdf";
                 self.documentTitleToBeSavedAsPdf = [self.documentTitleToBeSavedAsPdf stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
-                // self.documentTitleToBeSavedAsPdf = [self.documentTitleToBeSavedAsPdf stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-                [decodedData writeToFile:[libraryDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_%@.%@",self.documentTitleToBeSavedAsPdf,self.documentId,self.date,self.documentType]] atomically:YES];
+                
+                [decodedData writeToFile:[libraryDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@.%@",self.documentId,self.date,self.documentType]] atomically:YES];
                 
                 CFStringRef fileExtension = (__bridge CFStringRef) self.documentType;
                 CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
@@ -251,10 +250,10 @@
                     
                     filemgr = [NSFileManager defaultManager];
                     
-                    if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@_%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.date,self.documentType]] == YES) {
+                    if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentId,self.date,self.documentType]] == YES) {
                         NSLog (@"File exists");
                         
-                        NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.date,self.documentType];// your file URL as *string*
+                        NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentId,self.date,self.documentType];// your file URL as *string*
                         
                         NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:fileURLString];
                         [[MediaManager sharedInstance] initWithURL:fileURL];
@@ -306,10 +305,10 @@
                         
                         filemgr = [NSFileManager defaultManager];
                         
-                        if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@_%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.date,self.documentType]] == YES) {
+                        if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentId,self.date,self.documentType]] == YES) {
                             NSLog (@"File exists");
                             
-                            NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.date,self.documentType];// your file URL as *string*
+                            NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentId,self.date,self.documentType];// your file URL as *string*
                             [self.documentReaderWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:fileURLString]]];
                             
                         }
@@ -387,10 +386,10 @@
     
     filemgr = [NSFileManager defaultManager];
     
-    if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@_%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.date,self.documentType]] == YES) {
+    if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentId,self.date,self.documentType]] == YES) {
         NSLog (@"File exists");
         
-        NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.date, self.documentType];// your file URL as *string*
+        NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentId,self.date, self.documentType];// your file URL as *string*
         
         if(![fileURLString isKindOfClass:([NSNull class])]) {
             
@@ -446,7 +445,7 @@
     }
     [[[LRAppDelegate myAppdelegate] window] setTintColor:[UIColor whiteColor]];
     
-    [self.sessionDataTask suspend];
+    //[self.sessionDataTask suspend];
     
     [self.documentReaderWebView stopLoading];
     self.documentReaderWebView.delegate = nil;
@@ -454,7 +453,7 @@
     if([self.sliderTimer isValid]) {
         [self.sliderTimer invalidate];
     }
-    [self.defaultSession invalidateAndCancel];
+   // [self.defaultSession invalidateAndCancel];
     
     [super viewWillDisappear:TRUE];
 }
@@ -522,7 +521,7 @@
                 NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                 NSString *libraryDirectory = [paths objectAtIndex:0];
                 
-                NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.date,self.documentType];// your file URL as *string*
+                NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentId,self.date,self.documentType];// your file URL as *string*
                 
                 NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:fileURLString];
                  [[MediaManager sharedInstance] initWithURL:fileURL];
@@ -586,10 +585,10 @@
     NSString *libraryDirectory = [paths objectAtIndex:0];
     
     filemgr = [NSFileManager defaultManager];
-    if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@_%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.date,self.documentType]] == YES) {
+    if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentId,self.date,self.documentType]] == YES) {
         self.audioPlayerView.hidden = FALSE;
         NSLog (@"File exists");
-        NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@_%@.%@",libraryDirectory,self.documentTitleToBeSavedAsPdf,self.documentId,self.date,self.documentType];// your file URL as *string*
+        NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentId,self.date,self.documentType];// your file URL as *string*
         
         NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:fileURLString];
         NSString *urlString=[NSString stringWithFormat:@"%@",[[MediaManager sharedInstance] url]];
