@@ -13,6 +13,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "MediaManager.h"
 
+
 @interface LRDocumentViewController () {
     IBOutlet UIButton *playButton;
     IBOutlet UIButton *stopButton;
@@ -32,6 +33,8 @@
 - (IBAction)closeProgressView:(id)sender;
 @property (weak, nonatomic) IBOutlet UISlider *audioPlayerSlider;
 @property (strong, nonatomic) NSTimer *sliderTimer;
+
+@property (strong, nonatomic) NSTimer *downloadProgressTimer;
 - (IBAction)sliderValueChanged:(id)sender;
 
 - (IBAction)Mp3_Player_Actions:(id)sender;
@@ -81,14 +84,20 @@
         }
         else
         {
-            [self fetchDocument];
+            if([[DBManager getSharedInstance]isFileDonwloading:self.documentTitleToBeSavedAsPdf]==NO)
+                [self fetchDocument];
+            else
+            {
+                self.aProgressView.progress= [[DBManager getSharedInstance]getCurrentProgressByFileName:self.documentTitleToBeSavedAsPdf];
+                [self startDownloadTimer];
+            }
             self.progressSuperView.layer.cornerRadius = 3.0f;
             self.progressSuperView.layer.borderWidth = 2.0f;
         }
     }
     else
     {
-    [self fetchDocument];
+        [self fetchDocument];
         self.progressSuperView.layer.cornerRadius = 3.0f;
         self.progressSuperView.layer.borderWidth = 2.0f;
     }
@@ -109,7 +118,9 @@
      */
     LRAppDelegate *appDelegate = (LRAppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.lrDocumentViewController = self;
+
 }
+
 
 /*- (void)appplicationIsActive:(NSNotification *)notification {
     NSLog(@"Application Did Become Active");
@@ -164,6 +175,51 @@
    
 
 }
+
+-(void)startDownloadTimer{
+    
+    [self.downloadProgressTimer invalidate];
+    self.downloadProgressTimer=nil;
+    SEL updateDownloadProgress = sel_registerName("updateDownloadProgress");
+    self.downloadProgressTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:updateDownloadProgress userInfo:nil repeats:YES];
+}
+
+-(void)stopDownloadTimer
+{
+    [self.downloadProgressTimer invalidate];
+    self.downloadProgressTimer=nil;
+}
+
+-(void)updateDownloadProgress
+{
+    float progress=[[DBManager getSharedInstance]getCurrentProgressByFileName:self.documentTitleToBeSavedAsPdf];
+    
+    self.aProgressView.progress= progress;
+    if(progress==0.0f &&[[MediaManager sharedInstance] isAudioPlaying])
+    {
+        [self stopDownloadTimer];
+        self.audioPlayerView.hidden = FALSE;
+        self.audioPlayerView.userInteractionEnabled = TRUE;
+        self.audioPlayerSlider.userInteractionEnabled = TRUE;
+        self.progressSuperView.hidden = TRUE;
+        if(self.mp3Content.length > 0)
+            self.mp3ContentTextView.text = self.mp3Content;
+        else
+            self.mp3ContentTextView.text = @"No MP3 Doc Content available";
+        
+        [self.sliderTimer invalidate];
+        self.sliderTimer=nil;
+        SEL updateSlider = sel_registerName("updateSlider");
+        // Set a timer which keep getting the current music time and update the UISlider in 1 sec interval
+        self.sliderTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:updateSlider userInfo:nil repeats:YES];
+        // Set the maximum value of the UISlider
+        self.audioPlayerSlider.maximumValue = [[MediaManager sharedInstance] getDuration];
+        [self.button_Play setEnabled:FALSE];
+        [self.button_Pause setEnabled:TRUE];
+        [self.button_Stop setEnabled:TRUE];
+    }
+}
+
 - (void)updateSlider {
     // Update the slider about the music time
     //self.audioPlayerSlider.value = self.audioPlayer.currentTime;
@@ -179,23 +235,41 @@
     }
 }
 
-// Stop the timer when the music is finished (Need to implement the AVAudioPlayerDelegate in the Controller header)
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-    // Music completed
-    [self.sliderTimer invalidate];
-}
+
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
     completionHandler(NSURLSessionResponseAllow);
     
     self.aProgressView.progress = 0.0f;
     self.downloadSize=[response expectedContentLength];
     self.dataToDownload=[[NSMutableData alloc]init];
+    
+    CFStringRef fileExtension = (__bridge CFStringRef) self.documentType;
+    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
+    
+    if (UTTypeConformsTo(fileUTI, kUTTypeAudio)) {
+        NSLog(@"It's Audio");
+        [[DBManager getSharedInstance]saveDownloadEntry:self.documentTitleToBeSavedAsPdf AndProgress:0.0f];
+        [self startDownloadTimer];
+    }
+
+    
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
     [_dataToDownload appendData:data];
-    self.aProgressView.progress=[ _dataToDownload length ]/_downloadSize;
+    //self.aProgressView.progress=[ _dataToDownload length ]/_downloadSize;
+    CFStringRef fileExtension = (__bridge CFStringRef) self.documentType;
+    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
     
+    if (UTTypeConformsTo(fileUTI, kUTTypeAudio)) {
+        NSLog(@"It's Audio");
+        float progress=[ _dataToDownload length ]/_downloadSize;
+        [[DBManager getSharedInstance]updateDownloadEntry:self.documentTitleToBeSavedAsPdf AndProgress:progress];
+    }
+    else
+    {
+        self.aProgressView.progress=[ _dataToDownload length ]/_downloadSize;
+    }
     
     NSString *str = [[NSString alloc] initWithData:_dataToDownload encoding:NSUTF8StringEncoding];
     // NSLog(@"recieved currency -- %@",str);
@@ -206,6 +280,8 @@
 }
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
+    [[DBManager getSharedInstance]deleteDownloadEntry:self.documentTitleToBeSavedAsPdf];
+    [self stopDownloadTimer];
     if(error == nil)
     {
         NSLog(@"Download is Succesfull");
@@ -358,9 +434,8 @@
         self.documentType = self.documentPath;
     }
     
-    //  [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
     self.delegate = [LRWebEngine defaultWebEngine];
-    ///
+
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     self.defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: [NSOperationQueue mainQueue]];
     
@@ -445,7 +520,7 @@
     }
     [[[LRAppDelegate myAppdelegate] window] setTintColor:[UIColor whiteColor]];
     
-    //[self.sessionDataTask suspend];
+    
     
     [self.documentReaderWebView stopLoading];
     self.documentReaderWebView.delegate = nil;
@@ -453,7 +528,20 @@
     if([self.sliderTimer isValid]) {
         [self.sliderTimer invalidate];
     }
-   // [self.defaultSession invalidateAndCancel];
+    CFStringRef fileExtension = (__bridge CFStringRef) self.documentType;
+    CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, NULL);
+    
+    if (UTTypeConformsTo(fileUTI, kUTTypeAudio)) {
+        NSLog(@"It's Audio");
+    //[self.sessionDataTask suspend];
+    // [self.defaultSession invalidateAndCancel];
+    }
+    else
+    {
+        [self.sessionDataTask suspend];
+        [self.defaultSession invalidateAndCancel];
+    }
+    [self stopDownloadTimer];
     
     [super viewWillDisappear:TRUE];
 }
@@ -485,7 +573,8 @@
     if([self.sliderTimer isValid]) {
         [self.sliderTimer invalidate];
     }
-    //  [self.defaultSession invalidateAndCancel];
+    [self.defaultSession invalidateAndCancel];
+    [self stopDownloadTimer];
     
     [self.navigationController popViewControllerAnimated:TRUE];
 }

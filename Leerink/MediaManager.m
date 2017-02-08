@@ -216,18 +216,7 @@ static MediaManager *sharedInstance = nil;
                                                          fromDate: creationDate toDate: currentdate options: 0];
             days = [components day];
             NSLog(@"File To Delete : %ld",(long)days);
-            //NSDate *d =[[NSDate date] dateByAddingTimeInterval:-29*24*60*60];
-            
-           // NSDateFormatter *df=[[NSDateFormatter alloc]init];// = [NSDateFormatter initWithDateFormat:@"yyyy-MM-dd"];
-            //[df setDateFormat:@"EEEE d"];
-            
-           // NSString *createdDate = [df stringFromDate:creationDate];
-            
-           // NSString *thirtyDaysOld = [df stringFromDate:d];
-            
-           // NSLog(@"create Date----->%@, two days before date ----> %@", createdDate, thirtyDaysOld);
-            
-            // if ([[dictAtt valueForKey:NSFileCreationDate] compare:d] == NSOrderedAscending)
+           
             if (days>30)
             {
                 if([[file pathExtension]isEqualToString:@"mp3"])
