@@ -30,8 +30,14 @@ static sqlite3 *database = nil;
     dirPaths = NSSearchPathForDirectoriesInDomains (NSLibraryDirectory, NSUserDomainMask, YES);
     docsDir = dirPaths[0];
     // Build the path to the database file
+    
+    NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *appVersion = [[infoDict objectForKey:@"CFBundleShortVersionString"]stringByReplacingOccurrencesOfString :@"." withString:@"_"];
+    NSString *buildNumber = [[infoDict objectForKey:@"CFBundleVersion"] stringByReplacingOccurrencesOfString :@"." withString:@"_"];
+    NSString *dbFileName=[NSString stringWithFormat:@"%@%@%@%@%@",@"Leerink_",appVersion,@"_",buildNumber,@".db"];
+    
     databasePath = [[NSString alloc] initWithString:
-                    [docsDir stringByAppendingPathComponent: @"Leerink.db"]];
+                    [docsDir stringByAppendingPathComponent: dbFileName]];
     BOOL isSuccess = YES;
     NSFileManager *filemgr = [NSFileManager defaultManager];
     if ([filemgr fileExistsAtPath: databasePath ] == NO)
