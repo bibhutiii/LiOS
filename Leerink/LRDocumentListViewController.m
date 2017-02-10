@@ -527,12 +527,17 @@
             aFileTypeExtension = [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
             documentViewController.isAudioFilePlayed = FALSE;
             documentViewController.documentType = aFileTypeExtension;
-            documentViewController.author = [aDocumentDetailsDictionary objectForKey:@"Author"];
+            if(![[aDocumentDetailsDictionary objectForKey:@"Authors"] isKindOfClass:([NSNull class])]) {
+                if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
+                    
+                    documentViewController.author = [[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"];
+                }
+            }
+            
             documentViewController.date = [aDocumentDetailsDictionary objectForKey:@"UpdateDate"];
             if(![documentViewController.date isEqual:@""])
             {
                 NSArray *dateArray = [documentViewController.date componentsSeparatedByString:@"T"];
-                NSString *dateString = nil;
                 if(dateArray.count > 0) {
                     documentViewController.date = [dateArray objectAtIndex:0];
                 }
@@ -555,12 +560,17 @@
             documentViewController.documentId = [aDocumentDetailsDictionary objectForKey:@"DocumentID"];
             documentViewController.isAudioFilePlayed = FALSE;
             documentViewController.documentType = aFileTypeExtension;
-            documentViewController.author = [aDocumentDetailsDictionary objectForKey:@"Author"];
+            if(![[aDocumentDetailsDictionary objectForKey:@"Authors"] isKindOfClass:([NSNull class])]) {
+                if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
+                    
+                    documentViewController.author = [[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"];
+                }
+            }
+
             documentViewController.date = [aDocumentDetailsDictionary objectForKey:@"UpdateDate"];
             if(![documentViewController.date isEqual:@""])
             {
                 NSArray *dateArray = [documentViewController.date componentsSeparatedByString:@"T"];
-                NSString *dateString = nil;
                 if(dateArray.count > 0) {
                     documentViewController.date = [dateArray objectAtIndex:0];
                 }
@@ -619,12 +629,18 @@
             aFileTypeExtension = [[aDocumentDetailsDictionary objectForKey:@"Path"] pathExtension];
             documentViewController.isAudioFilePlayed = FALSE;
             documentViewController.documentType = aFileTypeExtension;
-            documentViewController.author = [aDocumentDetailsDictionary objectForKey:@"Author"];
+            if(![[aDocumentDetailsDictionary objectForKey:@"Authors"] isKindOfClass:([NSNull class])]) {
+                if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
+                    
+                    documentViewController.author = [[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"];
+                }
+            }
+
             documentViewController.date = [aDocumentDetailsDictionary objectForKey:@"UpdateDate"];
             if(![documentViewController.date isEqual:@""])
             {
                 NSArray *dateArray = [documentViewController.date componentsSeparatedByString:@"T"];
-                NSString *dateString = nil;
+
                 if(dateArray.count > 0) {
                     documentViewController.date = [dateArray objectAtIndex:0];
                 }
@@ -647,12 +663,17 @@
             documentViewController.documentId = [aDocumentDetailsDictionary objectForKey:@"DocumentID"];
             documentViewController.isAudioFilePlayed = FALSE;
             documentViewController.documentType = aFileTypeExtension;
-            documentViewController.author = [aDocumentDetailsDictionary objectForKey:@"Author"];
+            if(![[aDocumentDetailsDictionary objectForKey:@"Authors"] isKindOfClass:([NSNull class])]) {
+                if([[aDocumentDetailsDictionary objectForKey:@"Authors"] count] > 0) {
+                    
+                    documentViewController.author = [[[aDocumentDetailsDictionary objectForKey:@"Authors"] objectAtIndex:0] objectForKey:@"AuthorName"];
+                }
+            }
             documentViewController.date = [aDocumentDetailsDictionary objectForKey:@"UpdateDate"];
             if(![documentViewController.date isEqual:@""])
             {
                 NSArray *dateArray = [documentViewController.date componentsSeparatedByString:@"T"];
-                NSString *dateString = nil;
+
                 if(dateArray.count > 0) {
                     documentViewController.date = [dateArray objectAtIndex:0];
                 }
