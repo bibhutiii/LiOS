@@ -1144,35 +1144,42 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,        // 5
         [challenge.sender cancelAuthenticationChallenge:challenge];
       }
     }
-    else if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust) {
+   //Commented to resolve veracode flaw
+   /* else if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust) {
       
-      if(challenge.previousFailureCount < 5) {
-        
-        self.serverTrust = challenge.protectionSpace.serverTrust;
-        SecTrustResultType result;
-        SecTrustEvaluate(self.serverTrust, &result);
-        
-        if(result == kSecTrustResultProceed ||
-           result == kSecTrustResultUnspecified //The cert is valid, but user has not explicitly accepted/denied. Ok to proceed (Ch 15: iOS PTL :Pg 269)
-           ) {
-          
-          [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+        if(challenge.previousFailureCount < 5) {
+            
+            self.serverTrust = challenge.protectionSpace.serverTrust;
+            SecTrustResultType result;
+            OSStatus trustEvalStatus=SecTrustEvaluate(self.serverTrust, &result);
+            //Modified to resolve veracode error
+            if (trustEvalStatus == errSecSuccess) {
+                if(result == kSecTrustResultProceed ||
+                   result == kSecTrustResultUnspecified //The cert is valid, but user has not explicitly accepted/denied. Ok to proceed (Ch 15: iOS PTL :Pg 269)
+                   ) {
+                    
+                    [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+                } else {
+                    
+                    // invalid or revoked certificate
+                    if(self.shouldContinueWithInvalidCertificate) {
+                        DLog(@"Certificate is invalid, but self.shouldContinueWithInvalidCertificate is YES");
+                        [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+                    } else {
+                        DLog(@"Certificate is invalid, continuing without credentials. Might result in 401 Unauthorized");
+                        [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
+                    }
+                }
+            }
+            else
+            {
+                [challenge.sender cancelAuthenticationChallenge:challenge];
+            }
         } else {
-          
-          // invalid or revoked certificate
-          if(self.shouldContinueWithInvalidCertificate) {
-            DLog(@"Certificate is invalid, but self.shouldContinueWithInvalidCertificate is YES");
-            [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
-          } else {
-            DLog(@"Certificate is invalid, continuing without credentials. Might result in 401 Unauthorized");
-            [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
-          }
+            
+            [challenge.sender cancelAuthenticationChallenge:challenge];
         }
-      } else {
-        
-        [challenge.sender cancelAuthenticationChallenge:challenge];
-      }
-    }
+    } */
     else if (self.authHandler) {
       
       // forward the authentication to the view controller that created this operation

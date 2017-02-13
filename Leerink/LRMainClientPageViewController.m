@@ -58,8 +58,9 @@
 {
     [super viewDidLoad];
     
+     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     // Do any additional setup after loading the view.
-    if([[[NSUserDefaults standardUserDefaults] objectForKey:@"FirstName"] length] > 0){
+    /*if([[[NSUserDefaults standardUserDefaults] objectForKey:@"FirstName"] length] > 0){
         self.aUserNameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"FirstName"];
     }
     else {
@@ -76,6 +77,25 @@
         }
         else {
             self.aUserNameLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"FirstName"];
+        }
+    } */
+    if([[AESCrypt decrypt:keychain[@"FirstName"] password:PASS] length] > 0){
+        self.aUserNameLabel.text = [AESCrypt decrypt:keychain[@"FirstName"] password:PASS];
+    }
+    else {
+        // split the user email and fetch the first name and last name of the user.
+        NSArray *user = [[AESCrypt decrypt:keychain[@"FirstName"] password:PASS] componentsSeparatedByString:@"@"];
+        if(user.count > 0) {
+            NSArray *splitUserFirstNameArray = [[user objectAtIndex:0] componentsSeparatedByString:@"."];
+            if(splitUserFirstNameArray.count > 0) {
+                self.aUserNameLabel.text = [splitUserFirstNameArray objectAtIndex:0];
+            }
+            else {
+                self.aUserNameLabel.text = [user objectAtIndex:0];
+            }
+        }
+        else {
+            self.aUserNameLabel.text = [AESCrypt decrypt:keychain[@"FirstName"] password:PASS];
         }
     }
     
@@ -108,9 +128,12 @@
 }
 - (void)sendCrashReportToServiceWithByteConvertedString:(NSString *)byteString
 {
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     NSMutableDictionary *aRequestDictionary = [NSMutableDictionary new];
-    [aRequestDictionary setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"FirstName"] forKey:@"UserName"];
-    [aRequestDictionary setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserId"] forKey:@"UserId"];
+    //[aRequestDictionary setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"FirstName"] forKey:@"UserName"];
+    //[aRequestDictionary setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserId"] forKey:@"UserId"];
+    [aRequestDictionary setObject:[AESCrypt decrypt:keychain[@"FirstName"] password:PASS] forKey:@"UserName"];
+    [aRequestDictionary setObject:[AESCrypt decrypt:keychain[@"UserId"] password:PASS] forKey:@"UserId"];
     [aRequestDictionary setObject:byteString forKey:@"CrashReport"];
     
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
@@ -485,7 +508,7 @@
             [[LRWebEngine defaultWebEngine] sendRequestToLogOutWithwithContextInfo:nil forResponseBlock:^(NSDictionary *responseDictionary) {
                 if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {
                     
-                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SessionId"];
+                    /*[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SessionId"];
                     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"PrimaryRoleID"];
                     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"FirstName"];
                     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LastName"];
@@ -494,7 +517,14 @@
                     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsInternalUser"];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
-                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [[NSUserDefaults standardUserDefaults] synchronize]; */
+                    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+                    keychain[@"SessionId"]=nil;
+                    keychain[@"PrimaryRoleID"]=nil;
+                    keychain[@"FirstName"]=nil;
+                    keychain[@"LastName"]=nil;
+                    //keychain[@"DocList"]=nil;
+                    keychain[@"UserId"]=nil;
                     [LRUtility stopActivityIndicatorFromView:self.view];
                     
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:[[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone?@"Main_iPhone":@"Main_iPad" bundle:nil];
@@ -556,7 +586,9 @@
                 
                 [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait.."];
                 NSMutableDictionary *aRequestDictionary = [NSMutableDictionary new];
-                [aRequestDictionary setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserId"] forKey:@"UserId"];
+                UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+                //[aRequestDictionary setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserId"] forKey:@"UserId"];
+                [aRequestDictionary setObject:[AESCrypt decrypt:keychain[@"UserId"] password:PASS] forKey:@"UserId"];
                 [aRequestDictionary setObject:aDocIdsString forKey:@"DocumentIds"];
                 [[LRWebEngine defaultWebEngine] sendRequestToSendCartWithDocIdswithContextInfo:aRequestDictionary forResponseBlock:^(NSDictionary *responseDictionary) {
                     if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 200) {

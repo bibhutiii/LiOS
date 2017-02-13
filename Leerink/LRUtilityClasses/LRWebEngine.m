@@ -35,9 +35,14 @@ static LRWebEngine *sDefaultWebEngine = nil;
 	{
         // use this if you want to set custom headers for the request.
         //http://172.16.133.124/LeerinkWebServices/LeerinkServices.asmx?op=Login
-        NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
-        if ([aStandardUserDefaults objectForKey:@"SessionId"]) {
+        //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+        UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+        /*if ([aStandardUserDefaults objectForKey:@"SessionId"]) {
             mnetworkEngine = [[MKNetworkEngine alloc] initWithHostName:SERVICE_URL_BASE customHeaderFields:[NSDictionary dictionaryWithObject:[aStandardUserDefaults objectForKey:@"SessionId"] forKey:@"SessionId"]];
+            
+        }*/
+        if (keychain[@"SessionId"]) {
+            mnetworkEngine = [[MKNetworkEngine alloc] initWithHostName:SERVICE_URL_BASE customHeaderFields:[NSDictionary dictionaryWithObject:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS] forKey:@"SessionId"]];
             
         }
         else {
@@ -70,10 +75,10 @@ static LRWebEngine *sDefaultWebEngine = nil;
 - (MKNetworkOperation *)sendRequestToGetAnalystsWithResponseDataBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
-    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
+    //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetAnalysts" params:nil httpMethod:@"POST" ssl:TRUE];
-    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS],@"Session-Id" ,nil]];
     self.iOperation.documentType = eLRDocumentAnalyst;
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
@@ -96,11 +101,11 @@ static LRWebEngine *sDefaultWebEngine = nil;
 - (MKNetworkOperation *)sendRequestToGetSectorsWithResponseDataBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
-    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
+    //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetSectors" params:nil httpMethod:@"POST" ssl:TRUE];
     
-    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS],@"Session-Id" ,nil]];
     self.iOperation.documentType = eLRDocumentSector;
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
@@ -122,11 +127,11 @@ static LRWebEngine *sDefaultWebEngine = nil;
 - (MKNetworkOperation *)sendRequestToGetSymbolsWithResponseDataBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
-    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
+    //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetSymbols" params:nil httpMethod:@"POST" ssl:TRUE];
     
-    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS],@"Session-Id" ,nil]];
     self.iOperation.documentType = eLRDocumentSymbol;
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
@@ -184,8 +189,8 @@ static LRWebEngine *sDefaultWebEngine = nil;
     }
     __block NSString *valueString = nil;    
     
-    
-    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
@@ -215,8 +220,8 @@ static LRWebEngine *sDefaultWebEngine = nil;
 
     __block NSString *valueString = nil;
     
-    
-    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
@@ -238,15 +243,18 @@ static LRWebEngine *sDefaultWebEngine = nil;
 - (MKNetworkOperation *)sendRequestToGetDocumentWithwithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
-    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
+    //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
     [aRequestDict setObject:iContextInfo forKey:@"DocumentID"];
-    [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserId"] forKey:@"UserId"];
+    //[aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserId"] forKey:@"UserId"];
+    [aRequestDict setObject:[AESCrypt decrypt:keychain[@"UserId"] password:PASS] forKey:@"UserId"];
+    
+   
     
     self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocument" params:aRequestDict httpMethod:@"POST" ssl:TRUE];
     
-    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
@@ -268,15 +276,15 @@ static LRWebEngine *sDefaultWebEngine = nil;
 - (MKNetworkOperation *)sendRequestToLogOutWithwithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
-    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
+    //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
     [aRequestDict setObject:@"abc" forKey:@"Guid"];
-    [aRequestDict setObject:[aStandardUserDefaults objectForKey:@"SessionId"] forKey:@"sessionId"];
+    [aRequestDict setObject:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS] forKey:@"sessionId"];
 
     self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/logout" params:nil httpMethod:@"POST" ssl:TRUE];
     
-    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS],@"Session-Id" ,nil]];
     //self.iOperation.documentListRequestType = eLRDocumentListAnalyst;
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
@@ -299,14 +307,14 @@ static LRWebEngine *sDefaultWebEngine = nil;
 - (MKNetworkOperation *)sendRequestToSendCartWithDocIdswithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
-    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
+    //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
     [aRequestDict setObject:@"55702" forKey:@"DocumentID"];
     
     self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/SendDocumentList" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
     
-    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
@@ -327,11 +335,11 @@ static LRWebEngine *sDefaultWebEngine = nil;
 - (MKNetworkOperation *)sendRequestToCheckSessionIsValidforResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
-    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
+    //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/Login/IsSessionExpired" params:nil httpMethod:@"POST" ssl:TRUE];
     
-    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
@@ -374,10 +382,10 @@ static LRWebEngine *sDefaultWebEngine = nil;
 - (MKNetworkOperation *)sendRequestToGetMainMenuItemsWithResponseDataBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
-    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
+    //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetHomePageMenus" params:nil httpMethod:@"POST" ssl:TRUE];
-    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
@@ -399,10 +407,10 @@ static LRWebEngine *sDefaultWebEngine = nil;
 - (MKNetworkOperation *)sendRequestToGetSubMenuItemsWithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
-    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
+    //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetSubMenus" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
-    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
@@ -424,10 +432,10 @@ static LRWebEngine *sDefaultWebEngine = nil;
 - (MKNetworkOperation *)sendRequestToSearchForDocumentsForKeyWordsWithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
-    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
+    //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/GetDocumentSearch" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
-    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];
@@ -485,11 +493,11 @@ static LRWebEngine *sDefaultWebEngine = nil;
 - (MKNetworkOperation *)sendCrashReportToServiceWithContextInfo:(id)iContextInfo forResponseBlock:(LRResponseDataBlock)completion errorHandler:(LRErrorBlock) errorBlock
 {
     __block NSString *valueString = nil;
-    NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
+    //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     self.iOperation = [self operationWithPath:@"/iOSAppSvcsV1.2/api/IOS/SendCrashReport" params:iContextInfo httpMethod:@"POST" ssl:TRUE];
     
-    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[aStandardUserDefaults objectForKey:@"SessionId"],@"Session-Id" ,nil]];
+    [self.iOperation addHeaders:[NSDictionary dictionaryWithObjectsAndKeys:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS],@"Session-Id" ,nil]];
     
     [self.iOperation addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         valueString = [completedOperation responseString];

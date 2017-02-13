@@ -119,13 +119,16 @@ void *mk_NewBase64Decode(
 		//
 		// (Uses improved bounds checking suggested by Alexandre Colucci)
 		//
-		if(accumulateIndex >= 2)  
-			outputBuffer[j] = (unsigned char)(accumulated[0] << 2) | (accumulated[1] >> 4);
-		if(accumulateIndex >= 3)  
-			outputBuffer[j + 1] = (unsigned char)(accumulated[1] << 4) | (accumulated[2] >> 2);
-		if(accumulateIndex >= 4)  
-			outputBuffer[j + 2] = (unsigned char)(accumulated[2] << 6) | accumulated[3];
-		j += accumulateIndex - 1;
+        if(outputBuffer!=NULL)
+        {
+            if(accumulateIndex >= 2)
+                outputBuffer[j] = (unsigned char)(accumulated[0] << 2) | (accumulated[1] >> 4);
+            if(accumulateIndex >= 3)
+                outputBuffer[j + 1] = (unsigned char)(accumulated[1] << 4) | (accumulated[2] >> 2);
+            if(accumulateIndex >= 4)
+                outputBuffer[j + 2] = (unsigned char)(accumulated[2] << 6) | accumulated[3];
+            j += accumulateIndex - 1;
+        }
 	}
 	
 	if (outputLength)

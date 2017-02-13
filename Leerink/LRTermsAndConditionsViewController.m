@@ -34,10 +34,17 @@
     size_t size;
     sysctlbyname("hw.machine", NULL, &size, NULL, 0);
     char *machine = malloc(size);
-    sysctlbyname("hw.machine", machine, &size, NULL, 0);
-    NSString *platform = [NSString stringWithUTF8String:machine];
-    free(machine);
-    return platform;
+    if(machine!=NULL)
+    {
+        sysctlbyname("hw.machine", machine, &size, NULL, 0);
+        NSString *platform = [NSString stringWithUTF8String:machine];
+        free(machine);
+        return platform;
+    }
+    else
+    {
+        return @"";
+    }
 }
 - (NSString *)platformNiceString {
     NSString *platform = [self platformRawString];
@@ -106,8 +113,11 @@
 - (IBAction)submit_Terms:(id)sender {
     if(self.termsAccepted == TRUE) {
         NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
-        [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"] forKey:@"Username"];
-        [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"PassWord"] forKey:@"Password"];
+        //[aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"] forKey:@"Username"];
+        //[aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"PassWord"] forKey:@"Password"];
+        UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+        [aRequestDict setObject:[AESCrypt decrypt:keychain[@"UserName"] password:PASS] forKey:@"Username"];
+        [aRequestDict setObject:[AESCrypt decrypt:keychain[@"PassWord"] password:PASS] forKey:@"Password"];
         
         [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
         

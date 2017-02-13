@@ -439,11 +439,12 @@
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     self.defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: [NSOperationQueue mainQueue]];
     
-    
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/iOSAppSvcsV1.2/api/IOS/GetDocument",SERVICE_URL_BASE]];
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     NSString * params = [NSString stringWithFormat:@"DocumentID=%@",self.documentId];
-    [urlRequest addValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] forHTTPHeaderField:@"Session-Id"];
+    //[urlRequest addValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] forHTTPHeaderField:@"Session-Id"];
+    [urlRequest addValue:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS] forHTTPHeaderField:@"Session-Id"];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     

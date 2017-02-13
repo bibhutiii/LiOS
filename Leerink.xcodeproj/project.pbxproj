@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		18A95F9F1E2E032E00AB86BE /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A95F9E1E2E032E00AB86BE /* CoreData.framework */; };
 		18A95FCD1E2F61AE00AB86BE /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A95FCC1E2F61AE00AB86BE /* DBManager.m */; };
+		18BA633E1E4DA150007217F7 /* AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA63371E4DA150007217F7 /* AESCrypt.m */; };
+		18BA633F1E4DA150007217F7 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA63391E4DA150007217F7 /* NSData+Base64.m */; };
+		18BA63401E4DA150007217F7 /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA633B1E4DA150007217F7 /* NSData+CommonCrypto.m */; };
+		18BA63411E4DA150007217F7 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA633D1E4DA150007217F7 /* NSString+Base64.m */; };
+		18BA63481E517B46007217F7 /* UICKeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA63471E517B46007217F7 /* UICKeyChainStore.m */; };
 		18C49EE21E239B0C00316490 /* MediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C49EE11E239B0C00316490 /* MediaManager.m */; };
 		18E146DC1E3604FC0071BF8E /* LeerinkLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E146DB1E3604FC0071BF8E /* LeerinkLogo.png */; };
 		84093CA919E68B3300D20D19 /* LRTwitterListTweetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84093CA819E68B3300D20D19 /* LRTwitterListTweetsViewController.m */; };
@@ -170,6 +175,16 @@
 		18A95F9E1E2E032E00AB86BE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		18A95FCB1E2F61AE00AB86BE /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		18A95FCC1E2F61AE00AB86BE /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		18BA63361E4DA150007217F7 /* AESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AESCrypt.h; sourceTree = "<group>"; };
+		18BA63371E4DA150007217F7 /* AESCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AESCrypt.m; sourceTree = "<group>"; };
+		18BA63381E4DA150007217F7 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		18BA63391E4DA150007217F7 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		18BA633A1E4DA150007217F7 /* NSData+CommonCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+CommonCrypto.h"; sourceTree = "<group>"; };
+		18BA633B1E4DA150007217F7 /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CommonCrypto.m"; sourceTree = "<group>"; };
+		18BA633C1E4DA150007217F7 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
+		18BA633D1E4DA150007217F7 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
+		18BA63461E517B46007217F7 /* UICKeyChainStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICKeyChainStore.h; sourceTree = "<group>"; };
+		18BA63471E517B46007217F7 /* UICKeyChainStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICKeyChainStore.m; sourceTree = "<group>"; };
 		18C49EE01E239B0C00316490 /* MediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaManager.h; sourceTree = "<group>"; };
 		18C49EE11E239B0C00316490 /* MediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaManager.m; sourceTree = "<group>"; };
 		18E146DB1E3604FC0071BF8E /* LeerinkLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LeerinkLogo.png; sourceTree = "<group>"; };
@@ -440,6 +455,30 @@
 			name = LocalDB;
 			sourceTree = "<group>";
 		};
+		18BA63351E4DA09B007217F7 /* EncriptionModule */ = {
+			isa = PBXGroup;
+			children = (
+				18BA63361E4DA150007217F7 /* AESCrypt.h */,
+				18BA63371E4DA150007217F7 /* AESCrypt.m */,
+				18BA63381E4DA150007217F7 /* NSData+Base64.h */,
+				18BA63391E4DA150007217F7 /* NSData+Base64.m */,
+				18BA633A1E4DA150007217F7 /* NSData+CommonCrypto.h */,
+				18BA633B1E4DA150007217F7 /* NSData+CommonCrypto.m */,
+				18BA633C1E4DA150007217F7 /* NSString+Base64.h */,
+				18BA633D1E4DA150007217F7 /* NSString+Base64.m */,
+			);
+			name = EncriptionModule;
+			sourceTree = "<group>";
+		};
+		18BA63451E517B2C007217F7 /* UICKeyChain */ = {
+			isa = PBXGroup;
+			children = (
+				18BA63461E517B46007217F7 /* UICKeyChainStore.h */,
+				18BA63471E517B46007217F7 /* UICKeyChainStore.m */,
+			);
+			name = UICKeyChain;
+			sourceTree = "<group>";
+		};
 		18C49EDF1E239AC700316490 /* MediaManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -561,6 +600,8 @@
 		84D3C00919B86F9E007455F9 /* Leerink */ = {
 			isa = PBXGroup;
 			children = (
+				18BA63451E517B2C007217F7 /* UICKeyChain */,
+				18BA63351E4DA09B007217F7 /* EncriptionModule */,
 				18A95FA01E2E039000AB86BE /* LocalDB */,
 				18C49EDF1E239AC700316490 /* MediaManager */,
 				84D3C01219B86F9E007455F9 /* LRAppDelegate.h */,
@@ -990,6 +1031,7 @@
 				8413D7FD1A6AB3D10053C5D4 /* LRUtility.m in Sources */,
 				18A95FCD1E2F61AE00AB86BE /* DBManager.m in Sources */,
 				84799DCC1A495ABD00EAC683 /* LRTermsAndConditionsViewController.m in Sources */,
+				18BA633F1E4DA150007217F7 /* NSData+Base64.m in Sources */,
 				84D3C0B119B886A7007455F9 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
 				84D3C05119B88657007455F9 /* LRDocumentListViewController.m in Sources */,
 				845F095E1A24769600C66E27 /* LRPasswordResetViewController.m in Sources */,
@@ -1000,6 +1042,7 @@
 				84BED46619D59EE3005C80F3 /* LRTwitterListsViewController.m in Sources */,
 				84D3C05219B88657007455F9 /* LRSubMenuListController.m in Sources */,
 				84BED45C19D5988C005C80F3 /* STTwitterOAuth.m in Sources */,
+				18BA63401E4DA150007217F7 /* NSData+CommonCrypto.m in Sources */,
 				84D3C05319B88657007455F9 /* LRLoginViewController.m in Sources */,
 				84D22D5119F548E700131FA2 /* AUIAutoGrowingTextView.m in Sources */,
 				84DC10C61A1B5A8D005CE54D /* NSDate+Helper.m in Sources */,
@@ -1012,6 +1055,7 @@
 				84BED45D19D5988C005C80F3 /* STTwitterOS.m in Sources */,
 				84D3C01419B86F9E007455F9 /* LRAppDelegate.m in Sources */,
 				84D3C0B219B886A7007455F9 /* MKNetworkEngine.m in Sources */,
+				18BA63411E4DA150007217F7 /* NSString+Base64.m in Sources */,
 				18C49EE21E239B0C00316490 /* MediaManager.m in Sources */,
 				84D3C0AA19B886A7007455F9 /* LRDocumentTypeTableViewCell.m in Sources */,
 				84D3C12419BEF96C007455F9 /* NSString+HTML.m in Sources */,
@@ -1023,6 +1067,7 @@
 				84D3C0AD19B886A7007455F9 /* NSDate+RFC1123.m in Sources */,
 				84D3C0AE19B886A7007455F9 /* NSDictionary+RequestEncoding.m in Sources */,
 				84E0226819F4F0C80057DA6D /* LROpenLinksInWebViewController.m in Sources */,
+				18BA63481E517B46007217F7 /* UICKeyChainStore.m in Sources */,
 				84BED45B19D5988C005C80F3 /* STTwitterHTML.m in Sources */,
 				84BED46019D5988C005C80F3 /* JSONSyntaxHighlight.m in Sources */,
 				84D3C11019B88A77007455F9 /* RTCustomTextField.m in Sources */,
@@ -1039,6 +1084,7 @@
 				84D22D6119F5516600131FA2 /* MNMPullToRefreshView.m in Sources */,
 				84D3C01019B86F9E007455F9 /* main.m in Sources */,
 				84D3C10419B88914007455F9 /* LRWebEngine.m in Sources */,
+				18BA633E1E4DA150007217F7 /* AESCrypt.m in Sources */,
 				84D3C12319BEF96C007455F9 /* GTMNSString+HTML.m in Sources */,
 				84D3C10519B88914007455F9 /* MBProgressHUD.m in Sources */,
 				84D3C0AC19B886A7007455F9 /* NSData+MKBase64.m in Sources */,

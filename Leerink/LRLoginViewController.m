@@ -26,6 +26,7 @@ static const CGFloat MAXIMUM_SCROLL_FRACTION = 0.8;
 static const CGFloat PORTRAIT_KEYBOARD_HEIGHT = 216;
 static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
+
 CGFloat animatedDistance;
 
 @interface LRLoginViewController ()
@@ -39,6 +40,7 @@ CGFloat animatedDistance;
 @end
 
 @implementation LRLoginViewController
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -83,11 +85,15 @@ CGFloat animatedDistance;
     self.passwordTextField.tintColor = [UIColor blackColor];
     
     prevNextArray = [[NSMutableArray alloc]initWithObjects:self.userNameTextField,self.passwordTextField, nil];
-    
-    if([[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] != nil)
+     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+    //if([[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] != nil)
+    if(keychain[@"SessionId"] != nil)
     {
-        self.userNameTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"];
-        self.passwordTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"PassWord"];
+        //self.userNameTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"];
+        //self.passwordTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"PassWord"];
+        self.userNameTextField.text = [AESCrypt decrypt:keychain[@"UserName"] password:PASS] ;
+        self.passwordTextField.text = [AESCrypt decrypt:keychain[@"PassWord"] password:PASS] ;
+        
     }
 }
 
@@ -95,10 +101,15 @@ CGFloat animatedDistance;
     size_t size;
     sysctlbyname("hw.machine", NULL, &size, NULL, 0);
     char *machine = malloc(size);
-    sysctlbyname("hw.machine", machine, &size, NULL, 0);
-    NSString *platform = [NSString stringWithUTF8String:machine];
-    free(machine);
-    return platform;
+    if(machine !=NULL)
+    {
+        sysctlbyname("hw.machine", machine, &size, NULL, 0);
+        NSString *platform = [NSString stringWithUTF8String:machine];
+        free(machine);
+        return platform;
+    }
+    else
+        return @"";
 }
 - (NSString *)platformNiceString {
     NSString *platform = [self platformRawString];
@@ -172,10 +183,17 @@ CGFloat animatedDistance;
     // based on the login add the static user roles to the database.
     //[self addTheUserRolesToDatabase];
     
-    [[NSUserDefaults standardUserDefaults] setObject:self.userNameTextField.text forKey:@"UserName"];
-    [[NSUserDefaults standardUserDefaults] setObject:self.passwordTextField.text forKey:@"PassWord"];
+   // [[NSUserDefaults standardUserDefaults] setObject:self.userNameTextField.text forKey:@"UserName"];
+   //[[NSUserDefaults standardUserDefaults] setObject:self.passwordTextField.text forKey:@"PassWord"];
     
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+    
+    keychain[@"UserName"]=[AESCrypt encrypt:self.userNameTextField.text password:PASS];
+    keychain[@"PassWord"]=[AESCrypt encrypt:self.passwordTextField.text password:PASS];
+    //[[NSUserDefaults standardUserDefaults] setObject:[AESCrypt encrypt:self.userNameTextField.text password:PASS] forKey:@"UserName"];
+    //[[NSUserDefaults standardUserDefaults] setObject:[AESCrypt encrypt:self.passwordTextField.text password:PASS]  forKey:@"PassWord"];
+    
+    //[[NSUserDefaults standardUserDefaults] synchronize];
 
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
     [aRequestDict setObject:self.userNameTextField.text forKey:@"Username"];
@@ -195,7 +213,7 @@ CGFloat animatedDistance;
     
     [[LRWebEngine defaultWebEngine] sendRequestToLoginWithParameters:aRequestDict andResponseBlock:^(NSString *responseString) {
         
-        NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+        //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
         NSData *responseData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
         if(responseData) {
             NSDictionary *aResponseDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
@@ -205,15 +223,26 @@ CGFloat animatedDistance;
                     
                     [LRUtility stopActivityIndicatorFromView:self.view];
                     
-                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
-                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
-                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"FirstName"] forKey:@"FirstName"];
-                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"LastName"] forKey:@"LastName"];
-                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"DocList"] forKey:@"DocList"];
-                    [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"UserId"] forKey:@"UserId"];
-                    [aStandardUserDefaults setObject:[NSNumber numberWithBool:[[aTempDictionary objectForKey:@"IsInternalUser"] boolValue]] forKey:@"IsInternalUser"];
+                    keychain[@"SessionId"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"SessionId"] password:PASS];
+                    //keychain[@"PrimaryRoleID"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"PrimaryRoleID"] password:PASS];
+                    if(![[aTempDictionary objectForKey:@"PrimaryRoleID"] isEqual:@""])
+                        keychain[@"PrimaryRoleID"]=[NSString stringWithFormat: @"%@", [aTempDictionary objectForKey:@"PrimaryRoleID"]] ;
+                    else
+                        keychain[@"PrimaryRoleID"]=[AESCrypt encrypt:@"0" password:PASS];
+                    keychain[@"FirstName"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"FirstName"] password:PASS];
+                    keychain[@"LastName"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"LastName"] password:PASS];
+                    //keychain[@"DocList"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"DocList"] password:PASS];
+                    keychain[@"UserId"]=[AESCrypt encrypt:[NSString stringWithFormat: @"%@", [aTempDictionary objectForKey:@"UserId"]] password:PASS];
                     
-                    [aStandardUserDefaults synchronize];
+                    //[aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
+                    //[aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
+                    //[aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"FirstName"] forKey:@"FirstName"];
+                    //[aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"LastName"] forKey:@"LastName"];
+                    //[aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"DocList"] forKey:@"DocList"];
+                    //[aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"UserId"] forKey:@"UserId"];
+                    //[aStandardUserDefaults setObject:[NSNumber numberWithBool:[[aTempDictionary objectForKey:@"IsInternalUser"] boolValue]] forKey:@"IsInternalUser"];
+                    
+                    //[aStandardUserDefaults synchronize];
 
                     if([[aTempDictionary objectForKey:@"FirstTimeLogin"] isEqualToString:@"HomePage"]) {
                       

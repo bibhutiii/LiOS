@@ -226,7 +226,9 @@ CGFloat animatedDistance;
         return;
     }
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
-    [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"] forKey:@"Username"];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+    //[aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"] forKey:@"Username"];
+    [aRequestDict setObject:[AESCrypt decrypt:keychain[@"UserName"] password:PASS] forKey:@"Username"];
     [aRequestDict setObject:self.choose_New_Password.text forKey:@"Password"];
     
     [LRUtility startActivityIndicatorOnView:self.view withText:@"Please wait..."];
@@ -240,7 +242,10 @@ CGFloat animatedDistance;
                 if([[aResponseDictionary objectForKey:@"IsSuccess"] boolValue] == TRUE) {
                     
                     [LRUtility stopActivityIndicatorFromView:self.view];
-                    [[NSUserDefaults standardUserDefaults] setObject:self.choose_New_Password.text forKey:@"PassWord"];
+                    keychain[@"PassWord"]=[AESCrypt encrypt:self.choose_New_Password.text password:PASS];
+                    //[[NSUserDefaults standardUserDefaults] setObject:[AESCrypt encrypt:self.choose_New_Password.text password:PASS] forKey:@"PassWord"];
+                    //[[NSUserDefaults standardUserDefaults] setObject:self.choose_New_Password.text forKey:@"PassWord"];
+                    
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
                     [[LRAppDelegate myAppdelegate] autoLoginAfterPassWordReset];

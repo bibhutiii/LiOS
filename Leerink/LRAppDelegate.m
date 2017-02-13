@@ -27,7 +27,6 @@
 
 @implementation LRAppDelegate
 
-
 // return the Appdelegate and the storyboard from these class methods.
 + (LRAppDelegate *)myAppdelegate
 {
@@ -133,7 +132,9 @@
      [self.window setRootViewController:loginVC];
      }
      else {*/
-    if([[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] != nil)
+    //if([[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] != nil)
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+    if(keychain[@"SessionId"] != nil)
     {
         [LRUtility startActivityIndicatorOnView:self.window.rootViewController.view withText:@"Please wait.."];
         
@@ -230,13 +231,18 @@
 {
     LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
     [self.window setRootViewController:loginVC];
-    
-    loginVC.userNameTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"];
-    loginVC.passwordTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"PassWord"];
+    //loginVC.userNameTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"];
+    //loginVC.passwordTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"PassWord"];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+    loginVC.userNameTextField.text = [AESCrypt decrypt:keychain[@"UserName"] password:PASS];
+    loginVC.passwordTextField.text = [AESCrypt decrypt:keychain[@"PassWord"] password:PASS];
    
     NSMutableDictionary *aRequestDict = [[NSMutableDictionary alloc] init];
-    [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"] forKey:@"Username"];
-    [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"PassWord"] forKey:@"Password"];
+    //[aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"UserName"] forKey:@"Username"];
+    //[aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"PassWord"] forKey:@"Password"];
+    [aRequestDict setObject:[AESCrypt decrypt:keychain[@"UserName"] password:PASS] forKey:@"Username"];
+    [aRequestDict setObject:[AESCrypt decrypt:keychain[@"PassWord"] password:PASS] forKey:@"Password"];
+
     
     if(([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"DeviceId"])) {
         [aRequestDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"DeviceId"] forKey:@"DeviceId"];
@@ -248,7 +254,7 @@
     
     [[LRWebEngine defaultWebEngine] sendRequestToLoginWithParameters:aRequestDict andResponseBlock:^(NSString *responseString) {
         
-        NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
+        //NSUserDefaults *aStandardUserDefaults = [NSUserDefaults standardUserDefaults];
         NSData *responseData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
         if(responseData) {
             NSDictionary *aResponseDictionary = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments|NSJSONReadingMutableContainers error:nil];
@@ -260,7 +266,18 @@
                     
                     if([[aTempDictionary objectForKey:@"FirstTimeLogin"] isEqualToString:@"HomePage"]) {
                         
-                        [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
+                        keychain[@"SessionId"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"SessionId"] password:PASS];
+                        if(![[aTempDictionary objectForKey:@"PrimaryRoleID"] isEqual:@""])
+                            keychain[@"PrimaryRoleID"]=[NSString stringWithFormat: @"%@", [aTempDictionary objectForKey:@"PrimaryRoleID"]];
+                        else
+                            keychain[@"PrimaryRoleID"]=[AESCrypt encrypt:@"0" password:PASS];
+                        keychain[@"FirstName"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"FirstName"] password:PASS];
+                        keychain[@"LastName"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"LastName"] password:PASS];
+                        //keychain[@"DocList"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"DocList"] password:PASS];
+                        keychain[@"UserId"]=[AESCrypt encrypt:[NSString stringWithFormat: @"%@", [aTempDictionary objectForKey:@"UserId"]] password:PASS];
+
+                        
+                        /*[aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
                         //   [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
                         [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"FirstName"] forKey:@"FirstName"];
                         [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"LastName"] forKey:@"LastName"];
@@ -268,7 +285,7 @@
                         [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"UserId"] forKey:@"UserId"];
                         [aStandardUserDefaults setObject:[NSNumber numberWithBool:[[aTempDictionary objectForKey:@"IsInternalUser"] boolValue]] forKey:@"IsInternalUser"];
                         
-                        [aStandardUserDefaults synchronize];
+                        [aStandardUserDefaults synchronize]; */
                         
                         [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
                     }
@@ -483,8 +500,9 @@
      }
      else {*/
     LRDocumentViewController *aDocumentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
-    
-    if([[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] != nil)
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+    //if([[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] != nil)
+    if(keychain[@"SessionId"] != nil)
     {
         [LRUtility startActivityIndicatorOnView:self.window.rootViewController.view withText:@"Please wait.."];
         [[LRWebEngine defaultWebEngine] sendRequestToCheckSessionIsValidforResponseBlock:^(NSDictionary *responseDictionary) {
@@ -545,13 +563,21 @@
 // reset all the values stored in NSUserDefaults when there is an internal user or if the user is logged out etc.
 - (void)resetUserDefaultValues
 {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SessionId"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"PrimaryRoleID"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"FirstName"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LastName"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DocList"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserId"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsInternalUser"];
+    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SessionId"];
+    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"PrimaryRoleID"];
+    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"FirstName"];
+    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"LastName"];
+    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DocList"];
+    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserId"];
+    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsInternalUser"];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+    keychain[@"SessionId"]=nil;
+    keychain[@"PrimaryRoleID"]=nil;
+    keychain[@"FirstName"]=nil;
+    keychain[@"LastName"]=nil;
+    //keychain[@"DocList"]=nil;
+    keychain[@"UserId"]=nil;
+
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"NotificationDocId"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DocumentPathForNotification"];
     [[NSUserDefaults standardUserDefaults] synchronize];

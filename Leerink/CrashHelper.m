@@ -86,9 +86,9 @@ static BOOL _hasCrashReportPending;
         return;
     }
     
-    NSLog(@"Crashed on %@", report.systemInfo.timestamp);
-    NSLog(@"Crashed with signal %@ (code %@, address=0x%" PRIx64 ")", report.signalInfo.name,
-          report.signalInfo.code, report.signalInfo.address);
+    //NSLog(@"Crashed on %@", report.systemInfo.timestamp);
+    //NSLog(@"Crashed with signal %@ (code %@, address=0x%" PRIx64 ")", report.signalInfo.name,
+    //      report.signalInfo.code, report.signalInfo.address);
     
     [self saveCrashReport:crashReporter];
     
@@ -227,7 +227,7 @@ static BOOL _hasCrashReportPending;
         PLCrashReport *report = [[PLCrashReport alloc] initWithData:crashData error:&error];
         
         NSString *humanReadable = [PLCrashReportTextFormatter stringValueForCrashReport:report withTextFormat:PLCrashReportTextFormatiOS];
-        NSLog(@"Report: %@", humanReadable);
+        //NSLog(@"Report: %@", humanReadable);
         
         // Get NSString from NSData object in Base64
         NSString *base64Encoded = [crashData base64EncodedStringWithOptions:0];

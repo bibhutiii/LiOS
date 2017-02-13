@@ -24,9 +24,13 @@
 #import <Accounts/Accounts.h>
 #import "NSDate+Helper.h"
 #import <CoreData/CoreData.h>
+#import "AESCrypt.h"
+#import "UICKeyChainStore.h"
 #endif
 
 // Macro to enable log files
 #define ENABLE_DEVICE_LOGS 1
 
 #define SERVICE_URL_BASE @"portalqa.leerink.com"
+#define PASS @"paSSw0ared"
+#define KEYCHAIN_SERVICE_NAME @"com.leerink.leerinkIOS"
