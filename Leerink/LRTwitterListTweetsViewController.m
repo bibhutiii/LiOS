@@ -42,8 +42,19 @@
         for (int i = 0; i < self.tweetsListArray.count; i++) {
             NSDictionary *aTweetDetailsDictionary = [self.tweetsListArray objectAtIndex:i];
             NSDictionary *aUserDetailsDictionary = [aTweetDetailsDictionary objectForKey:@"user"];
-            UIImage *aMemberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[aUserDetailsDictionary objectForKey:@"profile_image_url"]]]];
-            [self.aMemberImagesArray addObject:aMemberImage];
+            NSError* error = nil;
+            UIImage *aMemberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[aUserDetailsDictionary objectForKey:@"profile_image_url"]] options:NSDataReadingUncached error:&error ]];
+            if(aMemberImage!=nil)
+                [self.aMemberImagesArray addObject:aMemberImage];
+            else
+            {
+                aMemberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[[aUserDetailsDictionary objectForKey:@"profile_image_url"] stringByReplacingOccurrencesOfString:@"http" withString:@"https"]] options:NSDataReadingUncached error:&error ]];
+                if(aMemberImage!=nil)
+                    [self.aMemberImagesArray addObject:aMemberImage];
+                else
+                    [self.aMemberImagesArray addObject:[UIImage imageNamed:@"Twitter-32"]];
+                
+            }
         }
         
         [self.tweetsListViewTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
@@ -85,8 +96,19 @@
             for (int i = 0; i < self.tweetsListArray.count; i++) {
                 NSDictionary *aTweetDetailsDictionary = [self.tweetsListArray objectAtIndex:i];
                 NSDictionary *aUserDetailsDictionary = [aTweetDetailsDictionary objectForKey:@"user"];
-                UIImage *aMemberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[aUserDetailsDictionary objectForKey:@"profile_image_url"]]]];
-                [self.aMemberImagesArray addObject:aMemberImage];
+                NSError* error = nil;
+                UIImage *aMemberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[aUserDetailsDictionary objectForKey:@"profile_image_url"]] options:NSDataReadingUncached error:&error ]];
+                if(aMemberImage!=nil)
+                    [self.aMemberImagesArray addObject:aMemberImage];
+                else
+                {
+                    aMemberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[[aUserDetailsDictionary objectForKey:@"profile_image_url"] stringByReplacingOccurrencesOfString:@"http" withString:@"https"]] options:NSDataReadingUncached error:&error ]];
+                    if(aMemberImage!=nil)
+                        [self.aMemberImagesArray addObject:aMemberImage];
+                    else
+                        [self.aMemberImagesArray addObject:[UIImage imageNamed:@"Twitter-32"]];
+                    
+                }
             }
             
             [self.tweetsListViewTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];

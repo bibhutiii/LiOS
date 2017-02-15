@@ -47,4 +47,14 @@
   return [[NSString alloc] initWithData:decryptedData encoding:NSUTF8StringEncoding];
 }
 
++ (NSData *)encryptNSData:(NSData *)message password:(NSString *)password {
+    NSData *encryptedData = [message AES256EncryptedDataUsingKey:[[password dataUsingEncoding:NSUTF8StringEncoding] SHA256Hash] error:nil];
+    return encryptedData;
+}
+
++ (NSData *)decryptNSData:(NSData *)encryptedData password:(NSString *)password {
+    NSData *decryptedData = [encryptedData decryptedAES256DataUsingKey:[[password dataUsingEncoding:NSUTF8StringEncoding] SHA256Hash] error:nil];
+    return decryptedData;
+}
+
 @end

@@ -146,7 +146,20 @@
                 NSDictionary *aUserDetailsDictionary = [aTweetDetailsDictionary objectForKey:@"user"];
                 
                 UIImage *aUserImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[aUserDetailsDictionary objectForKey:@"profile_image_url"]]]];
-                [self.aTweetDetailsDictionary setObject:aUserImage forKey:@"aUserImage"];
+                if(aUserImage!=nil)
+                    [self.aTweetDetailsDictionary setObject:aUserImage forKey:@"aUserImage"];
+                else
+                {
+                    aUserImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[[aUserDetailsDictionary objectForKey:@"profile_image_url"] stringByReplacingOccurrencesOfString:@"http" withString:@"https"]]  ]];
+                    if(aUserImage!=nil)
+                        [self.aTweetDetailsDictionary setObject:aUserImage forKey:@"aUserImage"];
+                    else
+                        [self.aTweetDetailsDictionary setObject:[UIImage imageNamed:@"Twitter-32"] forKey:@"aUserImage"];
+                    
+                }
+                
+
+                
             }
             
             /////

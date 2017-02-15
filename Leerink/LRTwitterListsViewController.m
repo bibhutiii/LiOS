@@ -80,7 +80,16 @@
     
     NSString *profileImageUrlString = [twitterListDictionary objectForKey:@"profile_image_url"];
     UIImage *memberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:profileImageUrlString]]];
-    [cell fillDataForDocumentCellwithTwitterListMemberName:[twitterListDictionary objectForKey:@"name"] andMemberImage:memberImage];
+    if(memberImage!=nil)
+        [cell fillDataForDocumentCellwithTwitterListMemberName:[twitterListDictionary objectForKey:@"name"] andMemberImage:memberImage];
+    else
+    {
+        memberImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[[twitterListDictionary objectForKey:@"profile_image_url"] stringByReplacingOccurrencesOfString:@"http" withString:@"https"]]  ]];
+        if(memberImage!=nil)
+            [cell fillDataForDocumentCellwithTwitterListMemberName:[twitterListDictionary objectForKey:@"name"] andMemberImage:memberImage];
+        else
+            [cell fillDataForDocumentCellwithTwitterListMemberName:[twitterListDictionary objectForKey:@"name"] andMemberImage:[UIImage imageNamed:@"Twitter-32"]];
+    }
     
     return cell;
 }
