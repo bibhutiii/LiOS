@@ -292,11 +292,11 @@ static NSMutableArray *localCookiesStorage = nil;
     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     //NSString *scheme = [url scheme];
     //NSString *host = [url host];
-    keychain[@"scheme"]=[url scheme];
-    keychain[@"host"]=[url host];
+    keychain[@"scheme"]=[AESCrypt encrypt:[url scheme] password:PASS];
+    keychain[@"host"]=[AESCrypt encrypt:[url host] password:PASS];
     
     //BOOL hostAlreadyContainsCredentials = [host rangeOfString:@"@"].location != NSNotFound;
-    BOOL hostAlreadyContainsCredentials = [keychain[@"host"] rangeOfString:@"@"].location != NSNotFound;
+    BOOL hostAlreadyContainsCredentials = [[AESCrypt decrypt:keychain[@"host"] password:PASS] rangeOfString:@"@"].location != NSNotFound;
     if(hostAlreadyContainsCredentials) return url;
     
     NSMutableString *resourceSpecifier = [[url resourceSpecifier] mutableCopy];
@@ -311,7 +311,7 @@ static NSMutableArray *localCookiesStorage = nil;
     //NSString *urlString = [NSString stringWithFormat:@"%@:%@", scheme, resourceSpecifier];
     //NSString *urlString = [NSString stringWithFormat:@"%@:%@", keychain[@"scheme"], resourceSpecifier];
     
-    return [NSURL URLWithString:[NSString stringWithFormat:@"%@:%@", keychain[@"scheme"], resourceSpecifier]];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@:%@", [AESCrypt decrypt:keychain[@"scheme"] password:PASS], resourceSpecifier]];
 }
 
 // {k2:v2, k1:v1} -> [{k1:v1}, {k2:v2}]
