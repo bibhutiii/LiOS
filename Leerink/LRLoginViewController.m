@@ -221,6 +221,8 @@ CGFloat animatedDistance;
                 NSDictionary *aTempDictionary = [aResponseDictionary objectForKey:@"Data"];
                 if([[aResponseDictionary objectForKey:@"IsSuccess"] boolValue] == TRUE) {
                     
+                    NSString *firstTimeLogin=aTempDictionary[@"FirstTimeLogin"];
+                    keychain[@"FirstTimeLogin"]=[AESCrypt encrypt:firstTimeLogin password:PASS];
                     [LRUtility stopActivityIndicatorFromView:self.view];
                     
                     keychain[@"SessionId"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"SessionId"] password:PASS];
@@ -233,7 +235,7 @@ CGFloat animatedDistance;
                     keychain[@"LastName"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"LastName"] password:PASS];
                     //keychain[@"DocList"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"DocList"] password:PASS];
                     keychain[@"UserId"]=[AESCrypt encrypt:[NSString stringWithFormat: @"%@", [aTempDictionary objectForKey:@"UserId"]] password:PASS];
-                    
+                   
                     //[aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
                     //[aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];
                     //[aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"FirstName"] forKey:@"FirstName"];
@@ -244,16 +246,18 @@ CGFloat animatedDistance;
                     
                     //[aStandardUserDefaults synchronize];
 
-                    if([[aTempDictionary objectForKey:@"FirstTimeLogin"] isEqualToString:@"HomePage"]) {
-                      
+                    if([[AESCrypt decrypt:keychain[@"FirstTimeLogin"] password:PASS]  isEqualToString:@"HomePage"]) {
+                        keychain[@"FirstTimeLogin"]=nil;
                         [[LRAppDelegate myAppdelegate].window setRootViewController:[LRAppDelegate myAppdelegate].aBaseNavigationController];
                     }
-                    else if([[aTempDictionary objectForKey:@"FirstTimeLogin"] isEqualToString:@"ChangePassword"]) {
+                    else if([[AESCrypt decrypt:keychain[@"FirstTimeLogin"] password:PASS] isEqualToString:@"ChangePassword"]) {
+                        keychain[@"FirstTimeLogin"]=nil;
                         LRChangePaswordViewController *aChangePassWordController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRChangePaswordViewController class])];
                        aChangePassWordController.isFromLogin = @"fromLogin";
                         [self presentViewController:aChangePassWordController animated:TRUE completion:nil];
                     }
-                    else if([[aTempDictionary objectForKey:@"FirstTimeLogin"] isEqualToString:@"FirstTimeLogin"]) {
+                    else if([[AESCrypt decrypt:keychain[@"FirstTimeLogin"] password:PASS] isEqualToString:@"FirstTimeLogin"]) {
+                        keychain[@"FirstTimeLogin"]=nil;
                         LRTermsAndConditionsViewController *aTermsController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRTermsAndConditionsViewController class])];
                         [self presentViewController:aTermsController animated:TRUE completion:nil];
                     }

@@ -183,6 +183,28 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:TRUE];
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+    if([[AESCrypt decrypt:keychain[@"FirstName"] password:PASS] length] > 0){
+        self.aUserNameLabel.text = [AESCrypt decrypt:keychain[@"FirstName"] password:PASS];
+    }
+    else {
+        // split the user email and fetch the first name and last name of the user.
+        NSArray *user = [[AESCrypt decrypt:keychain[@"FirstName"] password:PASS] componentsSeparatedByString:@"@"];
+        if(user.count > 0) {
+            NSArray *splitUserFirstNameArray = [[user objectAtIndex:0] componentsSeparatedByString:@"."];
+            if(splitUserFirstNameArray.count > 0) {
+                self.aUserNameLabel.text = [splitUserFirstNameArray objectAtIndex:0];
+            }
+            else {
+                self.aUserNameLabel.text = [user objectAtIndex:0];
+            }
+        }
+        else {
+            self.aUserNameLabel.text = [AESCrypt decrypt:keychain[@"FirstName"] password:PASS];
+        }
+    }
+
+    
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Leerink-White_320x64"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0f],
                                                                       NSForegroundColorAttributeName : [UIColor whiteColor]

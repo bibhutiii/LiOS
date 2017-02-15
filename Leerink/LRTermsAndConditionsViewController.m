@@ -129,14 +129,16 @@
                 if(![aResponseDictionary isKindOfClass:([NSNull class])]) {
                     NSDictionary *aTempDictionary = [aResponseDictionary objectForKey:@"Data"];
                     if([[aResponseDictionary objectForKey:@"IsSuccess"] boolValue] == TRUE) {
-                        
+                        NSString *firstTimeLogin=aTempDictionary[@"FirstTimeLogin"];
                         [LRUtility stopActivityIndicatorFromView:self.view];
-                        
-                        if([[aTempDictionary objectForKey:@"FirstTimeLogin"] isEqualToString:@"ChangePassword"]) {
+                        keychain[@"FirstTimeLogin"]=[AESCrypt encrypt:firstTimeLogin password:PASS];
+                        if([[AESCrypt decrypt:keychain[@"FirstTimeLogin"] password:PASS] isEqualToString:@"ChangePassword"]) {
+                            keychain[@"FirstTimeLogin"]=nil;
                             LRChangePaswordViewController *aChangePassWordController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRChangePaswordViewController class])];
                             [self presentViewController:aChangePassWordController animated:TRUE completion:nil];
                         }
-                        else if([[aTempDictionary objectForKey:@"FirstTimeLogin"] isEqualToString:@"HomePage"]) {
+                        else if([[AESCrypt decrypt:keychain[@"FirstTimeLogin"] password:PASS] isEqualToString:@"HomePage"]) {
+                            keychain[@"FirstTimeLogin"]=nil;
                             [[[LRAppDelegate myAppdelegate] window] setRootViewController:[[LRAppDelegate myAppdelegate] aBaseNavigationController]];
                         }
                     }

@@ -166,9 +166,10 @@ static BOOL _hasCrashReportPending;
         NSArray *receipients = [[NSArray alloc]initWithObjects:kDefaultEmailID, nil];
         [controller setToRecipients:receipients];
         [controller setSubject:kCrashEmailSubject];
-        NSData *crashData = [NSData dataWithContentsOfFile:crashPath];
-        
-        [controller addAttachmentData:crashData mimeType:@"text/plain" fileName:kCrashFileName];
+        UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+        //NSData *crashData = [NSData dataWithContentsOfFile:crashPath];
+        [keychain setData:[NSData dataWithContentsOfFile:crashPath] forKey:@"crashData"];
+        [controller addAttachmentData:[keychain dataForKey:@"crashData"] mimeType:@"text/plain" fileName:kCrashFileName];
         [controller setMessageBody:kCrashEmailMessage isHTML:YES];
         if (controller) {
             [_parentController presentViewController:controller animated:YES completion: ^{

@@ -263,8 +263,9 @@
                 if([[aResponseDictionary objectForKey:@"IsSuccess"] boolValue] == TRUE) {
                     
                     [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
-                    
-                    if([[aTempDictionary objectForKey:@"FirstTimeLogin"] isEqualToString:@"HomePage"]) {
+                    NSString *firstTimeLogin=aTempDictionary[@"FirstTimeLogin"];
+                    keychain[@"FirstTimeLogin"]=[AESCrypt encrypt:firstTimeLogin password:PASS];
+                    if([[AESCrypt decrypt:keychain[@"FirstTimeLogin"] password:PASS] isEqualToString:@"HomePage"]) {
                         
                         keychain[@"SessionId"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"SessionId"] password:PASS];
                         if(![[aTempDictionary objectForKey:@"PrimaryRoleID"] isEqual:@""])
@@ -275,7 +276,7 @@
                         keychain[@"LastName"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"LastName"] password:PASS];
                         //keychain[@"DocList"]=[AESCrypt encrypt:[aTempDictionary objectForKey:@"DocList"] password:PASS];
                         keychain[@"UserId"]=[AESCrypt encrypt:[NSString stringWithFormat: @"%@", [aTempDictionary objectForKey:@"UserId"]] password:PASS];
-
+                        keychain[@"FirstTimeLogin"]=nil;
                         
                         /*[aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"SessionId"] forKey:@"SessionId"];
                         //   [aStandardUserDefaults setObject:[aTempDictionary objectForKey:@"PrimaryRoleID"] forKey:@"PrimaryRoleID"];

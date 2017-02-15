@@ -289,24 +289,29 @@ static NSMutableArray *localCookiesStorage = nil;
 + (NSURL *)urlByAddingCredentials:(NSURLCredential *)credentials toURL:(NSURL *)url {
     
     if(credentials == nil) return nil; // no credentials to add
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+    //NSString *scheme = [url scheme];
+    //NSString *host = [url host];
+    keychain[@"scheme"]=[url scheme];
+    keychain[@"host"]=[url host];
     
-    NSString *scheme = [url scheme];
-    NSString *host = [url host];
-    
-    BOOL hostAlreadyContainsCredentials = [host rangeOfString:@"@"].location != NSNotFound;
+    //BOOL hostAlreadyContainsCredentials = [host rangeOfString:@"@"].location != NSNotFound;
+    BOOL hostAlreadyContainsCredentials = [keychain[@"host"] rangeOfString:@"@"].location != NSNotFound;
     if(hostAlreadyContainsCredentials) return url;
     
     NSMutableString *resourceSpecifier = [[url resourceSpecifier] mutableCopy];
     
     if([resourceSpecifier hasPrefix:@"//"] == NO) return nil;
     
-    NSString *userPassword = [NSString stringWithFormat:@"%@:%@@", credentials.user, credentials.password];
+    //NSString *userPassword = [NSString stringWithFormat:@"%@:%@@", credentials.user, credentials.password];
+    keychain[@"userPassword"]=[AESCrypt encrypt:[NSString stringWithFormat:@"%@:%@@", credentials.user, credentials.password] password:PASS];
     
-    [resourceSpecifier insertString:userPassword atIndex:2];
+    [resourceSpecifier insertString:[AESCrypt decrypt:keychain[@"userPassword"] password:PASS] atIndex:2];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@:%@", scheme, resourceSpecifier];
+    //NSString *urlString = [NSString stringWithFormat:@"%@:%@", scheme, resourceSpecifier];
+    //NSString *urlString = [NSString stringWithFormat:@"%@:%@", keychain[@"scheme"], resourceSpecifier];
     
-    return [NSURL URLWithString:urlString];
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@:%@", keychain[@"scheme"], resourceSpecifier]];
 }
 
 // {k2:v2, k1:v1} -> [{k1:v1}, {k2:v2}]

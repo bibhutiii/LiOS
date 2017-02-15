@@ -373,6 +373,7 @@
                     }
                 }
                 else {
+                    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
                     if([self.documentType isEqualToString:@"pdf"]) {
                         [self.documentReaderWebView loadData:decodedData MIMEType:[NSString stringWithFormat:@"application/%@",self.documentType] textEncodingName:@"utf-8" baseURL:nil];
                     }
@@ -385,7 +386,8 @@
                             NSLog (@"File exists");
                             
                             NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentId,self.date,self.documentType];// your file URL as *string*
-                            [self.documentReaderWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:fileURLString]]];
+                            keychain[@"fileURL"]=[AESCrypt encrypt:fileURLString password:PASS];
+                            [self.documentReaderWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[AESCrypt decrypt:keychain[@"fileURL"] password:PASS]]]];
                             
                         }
                     }
@@ -442,11 +444,12 @@
     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
     NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/iOSAppSvcsV1.2/api/IOS/GetDocument",SERVICE_URL_BASE]];
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-    NSString * params = [NSString stringWithFormat:@"DocumentID=%@",self.documentId];
+    //NSString * params = [NSString stringWithFormat:@"DocumentID=%@",self.documentId];
+    keychain[@"params"]=[AESCrypt encrypt:[NSString stringWithFormat:@"DocumentID=%@",self.documentId] password:PASS] ;
     //[urlRequest addValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] forHTTPHeaderField:@"Session-Id"];
     [urlRequest addValue:[AESCrypt decrypt:keychain[@"SessionId"] password:PASS] forHTTPHeaderField:@"Session-Id"];
     [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+    [urlRequest setHTTPBody:[[AESCrypt decrypt:keychain[@"params"] password:PASS]  dataUsingEncoding:NSUTF8StringEncoding]];
     
     self.sessionDataTask = [self.defaultSession dataTaskWithRequest:urlRequest];
     [self.sessionDataTask resume];
@@ -465,11 +468,13 @@
     if ([filemgr fileExistsAtPath:[NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentId,self.date,self.documentType]] == YES) {
         NSLog (@"File exists");
         
+        UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
         NSString *fileURLString = [NSString stringWithFormat:@"/%@/%@_%@.%@",libraryDirectory,self.documentId,self.date, self.documentType];// your file URL as *string*
+        keychain[@"fileURLString"] = [AESCrypt encrypt:fileURLString password:PASS] ;
         
-        if(![fileURLString isKindOfClass:([NSNull class])]) {
+        if(![[AESCrypt decrypt:keychain[@"fileURLString"] password:PASS] isKindOfClass:([NSNull class])]) {
             
-            self.documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:fileURLString]];
+            self.documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:[AESCrypt decrypt:keychain[@"fileURLString"] password:PASS]]];
             self.documentController.delegate = self;
             //self.documentController.UTI = @"com.adobe.pdf";
             [[[LRAppDelegate myAppdelegate] window] setTintColor:[UIColor blackColor]];
