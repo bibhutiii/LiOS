@@ -442,7 +442,7 @@
     self.defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: [NSOperationQueue mainQueue]];
     
     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/iOSAppSvcsV1.2/api/IOS/GetDocument",SERVICE_URL_BASE]];
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/%@/api/IOS/GetDocument",SERVICE_URL_BASE,API_SERVICE_NAME]];
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     //NSString * params = [NSString stringWithFormat:@"DocumentID=%@",self.documentId];
     keychain[@"params"]=[AESCrypt encrypt:[NSString stringWithFormat:@"DocumentID=%@",self.documentId] password:PASS] ;

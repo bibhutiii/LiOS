@@ -34,3 +34,4 @@
 #define SERVICE_URL_BASE @"portalqa.leerink.com"
 #define PASS @"paSSw0ared"
 #define KEYCHAIN_SERVICE_NAME @"com.leerink.leerinkIOS"
+#define API_SERVICE_NAME @"iOSAppSvcsV1.2"

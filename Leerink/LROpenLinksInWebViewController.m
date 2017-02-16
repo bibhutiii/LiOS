@@ -105,12 +105,16 @@
 {
     NSLog(@"error--%@",error);
     [LRUtility stopActivityIndicatorFromView:self.view];
-    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+    if(error)
+    {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.linkURL]];
+    }
+   /* UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
                                                              message:[error localizedDescription]
                                                             delegate:self
                                                    cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                    otherButtonTitles:nil, nil];
-    [errorAlertView show];
+    [errorAlertView show]; */
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
