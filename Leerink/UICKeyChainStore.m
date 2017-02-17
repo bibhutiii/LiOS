@@ -1,14 +1,15 @@
 //
 //  UICKeyChainStore.m
-//  UICKeyChainStore
+//  Leerink
 //
-//  Created by Kishikawa Katsumi on 11/11/20.
-//  Copyright (c) 2011 Kishikawa Katsumi. All rights reserved.
+//  Created by Bibhuti on 17/02/17.
+//  Copyright © 2017 leerink. All rights reserved.
 //
+
 
 #import "UICKeyChainStore.h"
 
-NSString * const UICKeyChainStoreErrorDomain = @"com.kishikawakatsumi.uickeychainstore";
+NSString * const UICKeyChainStoreErrorDomain = @"com.leerink.leerinkIOS.uickeychainstore";
 static NSString *_defaultService;
 
 @interface UICKeyChainStore ()

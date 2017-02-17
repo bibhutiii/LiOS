@@ -2,7 +2,7 @@
 //  DBManager.h
 //  Leerink
 //
-//  Created by Apple on 18/01/17.
+//  Created by Bibhuti on 18/01/17.
 //  Copyright © 2017 leerink. All rights reserved.
 //
 

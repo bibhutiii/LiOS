@@ -24,6 +24,7 @@
 #import "CrashHelper.h"
 #import "LRTermsAndConditionsViewController.h"
 #import "MediaManager.h"
+#import "LeerinkUpdater.h"
 
 @implementation LRAppDelegate
 
@@ -219,7 +220,7 @@
     freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
     
 #endif
-    
+    [[LeerinkUpdater sharedUpdater] showUpdateWithForce];
     return YES;
 }
 - (void)cancelledPasswordResetController

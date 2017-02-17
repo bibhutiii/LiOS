@@ -14,6 +14,7 @@
 		18BA63401E4DA150007217F7 /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA633B1E4DA150007217F7 /* NSData+CommonCrypto.m */; };
 		18BA63411E4DA150007217F7 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA633D1E4DA150007217F7 /* NSString+Base64.m */; };
 		18BA63481E517B46007217F7 /* UICKeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA63471E517B46007217F7 /* UICKeyChainStore.m */; };
+		18BA63531E56BE10007217F7 /* LeerinkUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA63521E56BE10007217F7 /* LeerinkUpdater.m */; };
 		18C49EE21E239B0C00316490 /* MediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C49EE11E239B0C00316490 /* MediaManager.m */; };
 		18E146DC1E3604FC0071BF8E /* LeerinkLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E146DB1E3604FC0071BF8E /* LeerinkLogo.png */; };
 		84093CA919E68B3300D20D19 /* LRTwitterListTweetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84093CA819E68B3300D20D19 /* LRTwitterListTweetsViewController.m */; };
@@ -185,6 +186,8 @@
 		18BA633D1E4DA150007217F7 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
 		18BA63461E517B46007217F7 /* UICKeyChainStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICKeyChainStore.h; sourceTree = "<group>"; };
 		18BA63471E517B46007217F7 /* UICKeyChainStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICKeyChainStore.m; sourceTree = "<group>"; };
+		18BA63511E56BE0F007217F7 /* LeerinkUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeerinkUpdater.h; sourceTree = "<group>"; };
+		18BA63521E56BE10007217F7 /* LeerinkUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeerinkUpdater.m; sourceTree = "<group>"; };
 		18C49EE01E239B0C00316490 /* MediaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaManager.h; sourceTree = "<group>"; };
 		18C49EE11E239B0C00316490 /* MediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaManager.m; sourceTree = "<group>"; };
 		18E146DB1E3604FC0071BF8E /* LeerinkLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LeerinkLogo.png; sourceTree = "<group>"; };
@@ -479,6 +482,15 @@
 			name = UICKeyChain;
 			sourceTree = "<group>";
 		};
+		18BA63501E56BDE6007217F7 /* CheckUpdate */ = {
+			isa = PBXGroup;
+			children = (
+				18BA63511E56BE0F007217F7 /* LeerinkUpdater.h */,
+				18BA63521E56BE10007217F7 /* LeerinkUpdater.m */,
+			);
+			name = CheckUpdate;
+			sourceTree = "<group>";
+		};
 		18C49EDF1E239AC700316490 /* MediaManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -600,6 +612,7 @@
 		84D3C00919B86F9E007455F9 /* Leerink */ = {
 			isa = PBXGroup;
 			children = (
+				18BA63501E56BDE6007217F7 /* CheckUpdate */,
 				18BA63451E517B2C007217F7 /* UICKeyChain */,
 				18BA63351E4DA09B007217F7 /* EncriptionModule */,
 				18A95FA01E2E039000AB86BE /* LocalDB */,
@@ -1065,6 +1078,7 @@
 				84D3C11119B88A77007455F9 /* UITextField+previousNextToolBar.m in Sources */,
 				84093CA919E68B3300D20D19 /* LRTwitterListTweetsViewController.m in Sources */,
 				84D3C0AD19B886A7007455F9 /* NSDate+RFC1123.m in Sources */,
+				18BA63531E56BE10007217F7 /* LeerinkUpdater.m in Sources */,
 				84D3C0AE19B886A7007455F9 /* NSDictionary+RequestEncoding.m in Sources */,
 				84E0226819F4F0C80057DA6D /* LROpenLinksInWebViewController.m in Sources */,
 				18BA63481E517B46007217F7 /* UICKeyChainStore.m in Sources */,

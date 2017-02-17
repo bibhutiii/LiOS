@@ -1,9 +1,9 @@
 //
-//  NSData+Base64.m
-//  Gurpartap Singh
+//  NSData+Base64.h
+//  Leerink
 //
-//  Created by Gurpartap Singh on 06/05/12.
-//  Copyright (c) 2012 Gurpartap Singh. All rights reserved.
+//  Created by Bibhuti on 17/02/17.
+//  Copyright © 2017 leerink. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
