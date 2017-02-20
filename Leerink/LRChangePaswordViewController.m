@@ -9,7 +9,7 @@
 #import "LRChangePaswordViewController.h"
 #import "UITextField+previousNextToolBar.h"
 #import "LRWebEngine.h"
-
+#import "CustomIOSAlertView.h"
 #define fontHelveticaNeueSize14 [UIFont systemFontOfSize:14.0]
 
 CGFloat animatedDistance;
@@ -259,13 +259,25 @@ CGFloat animatedDistance;
                     else if(![[aResponseDictionary objectForKey:@"Error"] isKindOfClass:([NSNull class])]) {
                         aMsgStr = [aResponseDictionary objectForKey:@"Error"];
                     }
-                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                             message:aMsgStr
+                    
+                    
+                    
+                    /*UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                             message:[aMsgStr stringByReplacingOccurrencesOfString:@"<br/>" withString:@"\n"]
                                                                             delegate:self
                                                                    cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                                                                   otherButtonTitles:nil, nil];
-                    [errorAlertView show];
-                    
+                                                                   otherButtonTitles:nil, nil]; */
+                    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 280, 200)];
+                    webView.backgroundColor = [UIColor clearColor];
+                    webView.opaque = NO;
+                    [webView loadHTMLString:[NSString stringWithFormat:@"%@%@%@",@"<body><b><center>Leerink</center></b><br/>",aMsgStr,@"</body>"] baseURL:nil];
+                    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 300, 200)];
+                    view.backgroundColor = [UIColor clearColor];
+                    [view addSubview:webView];
+                    //[errorAlertView show];
+                    CustomIOSAlertView *alertView = [[CustomIOSAlertView alloc] init];
+                    [alertView setContainerView:view];
+                    [alertView show];
                 }
             }
         }
@@ -286,6 +298,10 @@ CGFloat animatedDistance;
         
     }];
 }
+
+
+
+
 - (IBAction)cancel_New_PAssword:(id)sender {
     if([self.isFromLogin length] > 0) {
         if([self.isFromLogin isEqualToString:@"fromLogin"]) {

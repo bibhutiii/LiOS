@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		18A95F9F1E2E032E00AB86BE /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A95F9E1E2E032E00AB86BE /* CoreData.framework */; };
 		18A95FCD1E2F61AE00AB86BE /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A95FCC1E2F61AE00AB86BE /* DBManager.m */; };
+		18B6F54F1E5B096800478E5B /* CustomIOSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B6F54E1E5B096800478E5B /* CustomIOSAlertView.m */; };
 		18BA633E1E4DA150007217F7 /* AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA63371E4DA150007217F7 /* AESCrypt.m */; };
 		18BA633F1E4DA150007217F7 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA63391E4DA150007217F7 /* NSData+Base64.m */; };
 		18BA63401E4DA150007217F7 /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA633B1E4DA150007217F7 /* NSData+CommonCrypto.m */; };
@@ -176,6 +177,8 @@
 		18A95F9E1E2E032E00AB86BE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		18A95FCB1E2F61AE00AB86BE /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		18A95FCC1E2F61AE00AB86BE /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		18B6F54D1E5B095900478E5B /* CustomIOSAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomIOSAlertView.h; sourceTree = "<group>"; };
+		18B6F54E1E5B096800478E5B /* CustomIOSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOSAlertView.m; sourceTree = "<group>"; };
 		18BA63361E4DA150007217F7 /* AESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AESCrypt.h; sourceTree = "<group>"; };
 		18BA63371E4DA150007217F7 /* AESCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AESCrypt.m; sourceTree = "<group>"; };
 		18BA63381E4DA150007217F7 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
@@ -458,6 +461,15 @@
 			name = LocalDB;
 			sourceTree = "<group>";
 		};
+		18B6F54C1E5B091B00478E5B /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				18B6F54E1E5B096800478E5B /* CustomIOSAlertView.m */,
+				18B6F54D1E5B095900478E5B /* CustomIOSAlertView.h */,
+			);
+			name = CustomView;
+			sourceTree = "<group>";
+		};
 		18BA63351E4DA09B007217F7 /* EncriptionModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -612,6 +624,7 @@
 		84D3C00919B86F9E007455F9 /* Leerink */ = {
 			isa = PBXGroup;
 			children = (
+				18B6F54C1E5B091B00478E5B /* CustomView */,
 				18BA63501E56BDE6007217F7 /* CheckUpdate */,
 				18BA63451E517B2C007217F7 /* UICKeyChain */,
 				18BA63351E4DA09B007217F7 /* EncriptionModule */,
@@ -1067,6 +1080,7 @@
 				84D3C0B319B886A7007455F9 /* MKNetworkOperation.m in Sources */,
 				84BED45D19D5988C005C80F3 /* STTwitterOS.m in Sources */,
 				84D3C01419B86F9E007455F9 /* LRAppDelegate.m in Sources */,
+				18B6F54F1E5B096800478E5B /* CustomIOSAlertView.m in Sources */,
 				84D3C0B219B886A7007455F9 /* MKNetworkEngine.m in Sources */,
 				18BA63411E4DA150007217F7 /* NSString+Base64.m in Sources */,
 				18C49EE21E239B0C00316490 /* MediaManager.m in Sources */,
