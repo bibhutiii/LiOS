@@ -31,7 +31,7 @@
 // Macro to enable log files
 #define ENABLE_DEVICE_LOGS 1
 
-#define SERVICE_URL_BASE @"portalqa.leerink.com"
+#define SERVICE_URL_BASE @"portal.leerink.com"
 #define PASS @"paSSw0ared"
 #define KEYCHAIN_SERVICE_NAME @"com.leerink.leerinkIOS"
 #define API_SERVICE_NAME @"iOSAppSvcsV1.4"
