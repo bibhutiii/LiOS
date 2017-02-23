@@ -267,11 +267,11 @@ CGFloat animatedDistance;
                                                                             delegate:self
                                                                    cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                                    otherButtonTitles:nil, nil]; */
-                    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 280, 210)];
+                    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 280, 270)];
                     webView.backgroundColor = [UIColor clearColor];
                     webView.opaque = NO;
                     [webView loadHTMLString:[NSString stringWithFormat:@"%@%@%@",@"<body style='font-family: arial !important;'><b><center>Leerink</center></b><br/>",aMsgStr,@"</body>"] baseURL:nil];
-                    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 300, 210)];
+                    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, 300, 270)];
                     view.backgroundColor = [UIColor clearColor];
                     [view addSubview:webView];
                     //[errorAlertView show];
