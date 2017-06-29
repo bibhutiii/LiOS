@@ -31,7 +31,23 @@
 // return the Appdelegate and the storyboard from these class methods.
 + (LRAppDelegate *)myAppdelegate
 {
-    return (LRAppDelegate *)[[UIApplication sharedApplication] delegate];
+    if(isDeviceJailbroken()==NO && isAppStoreVersion()==NO && isAppCracked()==NO)
+    {
+        return (LRAppDelegate *)[[UIApplication sharedApplication] delegate];
+    }
+    else
+    {
+        UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:JAIL_BREAK_MESSAGE_TITLE
+                                                         message:JAIL_BREAK_MESSAGE
+                                                        delegate:self
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles:nil];
+        alert.tag=5000;
+        [alert show];
+        //exit(0);
+        return nil;
+    }
+    
 }
 + (UIStoryboard *)myStoryBoard
 {
@@ -75,153 +91,168 @@
 //DExt
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [[CrashHelper sharedCrashHelper] checkForCrashes];
-    [self setupAudio];
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    BOOL ok;
-    NSError *setCategoryError = nil;
-    ok = [audioSession setCategory:AVAudioSessionCategoryPlayback
-                             error:&setCategoryError];
-    if (!ok) {
-        NSLog(@"%s setCategoryError=%@", __PRETTY_FUNCTION__, setCategoryError);
-    }
-    
-    // Let the device know we want to receive push notifications
-    
-    /* Commented By bibhuti  to disable push notification
-     if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]){
-     [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:nil]];
-     [[UIApplication sharedApplication] registerForRemoteNotifications]; */
-     
-     /*NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-     if (RemoteNoti) {
-     //your methods to process notification
-     [[NSUserDefaults standardUserDefaults] setObject:@"pdf" forKey:@"DocumentPathForNotification"];
-     [[NSUserDefaults standardUserDefaults] setObject:@"123" forKey:@"NotificationDocId"];
-     [[NSUserDefaults standardUserDefaults] synchronize];
-     }*/
-    
-      /* Commented By bibhuti  to disable push notification
-     }
-     else{
-     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
-     } */
-     
-     /*NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-     if (RemoteNoti) {
-     //your methods to process notification
-     [[NSUserDefaults standardUserDefaults] setObject:@"pdf" forKey:@"DocumentPathForNotification"];
-     [[NSUserDefaults standardUserDefaults] setObject:@"123" forKey:@"NotificationDocId"];
-     [[NSUserDefaults standardUserDefaults] synchronize];
-     }*/
-     
-    
-    /*
-     [Parse setApplicationId:@"0921QnBasJhIv1cFQkxC8f4aJupFnUbIuCnq8qB6"
-     clientKey:@"CrXy8wSEnkuvmm67ebWMbEOpzFbUA55dI3MFtLjL"];
-    */
-     // [[NSUserDefaults standardUserDefaults] setObject:[userInfo objectForKey:@"DId"] forKey:@""];
-    LRMainClientPageViewController *aMainClientPAgeController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRMainClientPageViewController class])];
-    self.aBaseNavigationController = [[UINavigationController alloc] initWithRootViewController:aMainClientPAgeController];
-    [self.aBaseNavigationController.navigationBar setTranslucent:NO];
-    
-    /*   if([[[NSUserDefaults standardUserDefaults] objectForKey:@"IsInternalUser"] boolValue] == TRUE) {
-     
-     [self resetUserDefaultValues];
-     LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
-     [self.window setRootViewController:loginVC];
-     }
-     else {*/
-    //if([[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] != nil)
-    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
-    if(keychain[@"SessionId"] != nil)
+    if(isDeviceJailbroken()==NO && isAppStoreVersion()==NO && isAppCracked()==NO)
     {
-        [LRUtility startActivityIndicatorOnView:self.window.rootViewController.view withText:@"Please wait.."];
+        [[CrashHelper sharedCrashHelper] checkForCrashes];
+        [self setupAudio];
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        BOOL ok;
+        NSError *setCategoryError = nil;
+        ok = [audioSession setCategory:AVAudioSessionCategoryPlayback
+                                 error:&setCategoryError];
+        if (!ok) {
+            NSLog(@"%s setCategoryError=%@", __PRETTY_FUNCTION__, setCategoryError);
+        }
         
-        [[LRWebEngine defaultWebEngine] sendRequestToCheckSessionIsValidforResponseBlock:^(NSDictionary *responseDictionary) {
-            if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 401) {
-                //Add the login view controller as the root controller of the app window
+        // Let the device know we want to receive push notifications
+        
+        /* Commented By bibhuti  to disable push notification
+         if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]){
+         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:nil]];
+         [[UIApplication sharedApplication] registerForRemoteNotifications]; */
+        
+        /*NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+         if (RemoteNoti) {
+         //your methods to process notification
+         [[NSUserDefaults standardUserDefaults] setObject:@"pdf" forKey:@"DocumentPathForNotification"];
+         [[NSUserDefaults standardUserDefaults] setObject:@"123" forKey:@"NotificationDocId"];
+         [[NSUserDefaults standardUserDefaults] synchronize];
+         }*/
+        
+        /* Commented By bibhuti  to disable push notification
+         }
+         else{
+         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+         (UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
+         } */
+        
+        /*NSDictionary *RemoteNoti =[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+         if (RemoteNoti) {
+         //your methods to process notification
+         [[NSUserDefaults standardUserDefaults] setObject:@"pdf" forKey:@"DocumentPathForNotification"];
+         [[NSUserDefaults standardUserDefaults] setObject:@"123" forKey:@"NotificationDocId"];
+         [[NSUserDefaults standardUserDefaults] synchronize];
+         }*/
+        
+        
+        /*
+         [Parse setApplicationId:@"0921QnBasJhIv1cFQkxC8f4aJupFnUbIuCnq8qB6"
+         clientKey:@"CrXy8wSEnkuvmm67ebWMbEOpzFbUA55dI3MFtLjL"];
+         */
+        // [[NSUserDefaults standardUserDefaults] setObject:[userInfo objectForKey:@"DId"] forKey:@""];
+        LRMainClientPageViewController *aMainClientPAgeController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRMainClientPageViewController class])];
+        self.aBaseNavigationController = [[UINavigationController alloc] initWithRootViewController:aMainClientPAgeController];
+        [self.aBaseNavigationController.navigationBar setTranslucent:NO];
+        
+        /*   if([[[NSUserDefaults standardUserDefaults] objectForKey:@"IsInternalUser"] boolValue] == TRUE) {
+         
+         [self resetUserDefaultValues];
+         LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
+         [self.window setRootViewController:loginVC];
+         }
+         else {*/
+        //if([[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] != nil)
+        UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+        if(keychain[@"SessionId"] != nil)
+        {
+            [LRUtility startActivityIndicatorOnView:self.window.rootViewController.view withText:@"Please wait.."];
+            
+            [[LRWebEngine defaultWebEngine] sendRequestToCheckSessionIsValidforResponseBlock:^(NSDictionary *responseDictionary) {
+                if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 401) {
+                    //Add the login view controller as the root controller of the app window
+                    
+                    [self resetUserDefaultValues];
+                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                             message:@"Session expired"
+                                                                            delegate:self
+                                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                   otherButtonTitles:nil, nil];
+                    [errorAlertView show];
+                    
+                    [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
+                    LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
+                    [self.window setRootViewController:loginVC];
+                    
+                }
+                else {
+                    LRDocumentViewController *aDocumentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
+                    // direct the user to the main client page controller if already logged in.
+                    [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
+                    [self.window setRootViewController:self.aBaseNavigationController];
+                    
+                    
+                    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"NotificationDocId"]){
+                        
+                        NSLog(@"notification found");
+                        aDocumentViewController.documentId = [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDocId"];
+                        aDocumentViewController.documentPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"DocumentPathForNotification"];
+                        if([self.aBaseNavigationController.visibleViewController isKindOfClass:([LRDocumentViewController class])]) {
+                            [aDocumentViewController fetchDocument];
+                        }
+                        else {
+                            [self.aBaseNavigationController pushViewController:aDocumentViewController animated:TRUE];
+                        }
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"NotificationDocId"];
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DocumentPathForNotification"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                    }
+                }
                 
-                [self resetUserDefaultValues];
+            } errorHandler:^(NSError *errorString) {
+                [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
                 UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                         message:@"Session expired"
+                                                                         message:[errorString localizedDescription]
                                                                         delegate:self
                                                                cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                                otherButtonTitles:nil, nil];
                 [errorAlertView show];
+                DLog(@"%@\t%@\t%@\t%@", [errorString localizedDescription], [errorString localizedFailureReason],
+                     [errorString localizedRecoveryOptions], [errorString localizedRecoverySuggestion]);
                 
-                [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
-                LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
-                [self.window setRootViewController:loginVC];
-                
-            }
-            else {
-                LRDocumentViewController *aDocumentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
-                // direct the user to the main client page controller if already logged in.
-                [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
-                [self.window setRootViewController:self.aBaseNavigationController];
-                
-                
-                if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"NotificationDocId"]){
-                    
-                    NSLog(@"notification found");
-                    aDocumentViewController.documentId = [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDocId"];
-                    aDocumentViewController.documentPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"DocumentPathForNotification"];
-                    if([self.aBaseNavigationController.visibleViewController isKindOfClass:([LRDocumentViewController class])]) {
-                        [aDocumentViewController fetchDocument];
-                    }
-                    else {
-                        [self.aBaseNavigationController pushViewController:aDocumentViewController animated:TRUE];
-                    }
-                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"NotificationDocId"];
-                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DocumentPathForNotification"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                }
-            }
-            
-        } errorHandler:^(NSError *errorString) {
-            [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
-            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                     message:[errorString localizedDescription]
-                                                                    delegate:self
-                                                           cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                                                           otherButtonTitles:nil, nil];
-            [errorAlertView show];
-            DLog(@"%@\t%@\t%@\t%@", [errorString localizedDescription], [errorString localizedFailureReason],
-                 [errorString localizedRecoveryOptions], [errorString localizedRecoverySuggestion]);
-            
-        }];
-    }
-    else {
-        LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
-        [self.window setRootViewController:loginVC];
-    }
-    //}
-    
-    
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-    self.window.tintColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-    
-    //   [Crashlytics startWithAPIKey:@"538f8236cc2bab28cc8de91308000df9c232a03d"];
-    
-    /* Enabling device logs*/
+            }];
+        }
+        else {
+            LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
+            [self.window setRootViewController:loginVC];
+        }
+        //}
+        
+        
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+        self.window.tintColor = [UIColor whiteColor];
+        [self.window makeKeyAndVisible];
+        
+        //   [Crashlytics startWithAPIKey:@"538f8236cc2bab28cc8de91308000df9c232a03d"];
+        
+        /* Enabling device logs*/
 #if ENABLE_DEVICE_LOGS == 1
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    
-    NSString *fileName =[NSString stringWithFormat:@"%@.log",[NSDate date]];
-    
-    NSString *logFilePath = [documentsDirectory stringByAppendingPathComponent:fileName];
-    
-    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
-    
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        
+        NSString *fileName =[NSString stringWithFormat:@"%@.log",[NSDate date]];
+        
+        NSString *logFilePath = [documentsDirectory stringByAppendingPathComponent:fileName];
+        
+        freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+        
 #endif
-    [[LeerinkUpdater sharedUpdater] showUpdateWithForce];
-    return YES;
+        [[LeerinkUpdater sharedUpdater] showUpdateWithForce];
+        return YES;
+    }
+    else
+    {
+        UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:JAIL_BREAK_MESSAGE_TITLE
+                                                         message:JAIL_BREAK_MESSAGE
+                                                        delegate:self
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles:nil];
+        alert.tag=5000;
+        [alert show];
+        //exit(0);
+        return NO;
+    }
 }
 - (void)cancelledPasswordResetController
 {
@@ -433,6 +464,12 @@
             
         }
     }
+    if(alertView.tag == 5000) {
+         if(buttonIndex == 0) {
+             exit(0);
+         }
+    }
+    
 }
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
@@ -492,74 +529,79 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    /*   if([[[NSUserDefaults standardUserDefaults] objectForKey:@"IsInternalUser"] boolValue] == TRUE) {
-     
-     [self resetUserDefaultValues];
-     
-     LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
-     [self.window setRootViewController:loginVC];
-     }
-     else {*/
-    LRDocumentViewController *aDocumentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
-    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
-    //if([[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] != nil)
-    if(keychain[@"SessionId"] != nil)
+    if(isDeviceJailbroken()==NO && isAppStoreVersion()==NO && isAppCracked()==NO)
     {
-        [LRUtility startActivityIndicatorOnView:self.window.rootViewController.view withText:@"Please wait.."];
-        [[LRWebEngine defaultWebEngine] sendRequestToCheckSessionIsValidforResponseBlock:^(NSDictionary *responseDictionary) {
-            if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 401) {
+        [[LeerinkUpdater sharedUpdater] showUpdateWithForce];
+        LRDocumentViewController *aDocumentViewController = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRDocumentViewController class])];
+        UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:KEYCHAIN_SERVICE_NAME];
+        //if([[NSUserDefaults standardUserDefaults] objectForKey:@"SessionId"] != nil)
+        if(keychain[@"SessionId"] != nil)
+        {
+            [LRUtility startActivityIndicatorOnView:self.window.rootViewController.view withText:@"Please wait.."];
+            [[LRWebEngine defaultWebEngine] sendRequestToCheckSessionIsValidforResponseBlock:^(NSDictionary *responseDictionary) {
+                if([[responseDictionary objectForKey:@"StatusCode"] intValue] == 401) {
+                    
+                    [self resetUserDefaultValues];
+                    
+                    UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
+                                                                             message:@"Session expired"
+                                                                            delegate:self
+                                                                   cancelButtonTitle:NSLocalizedString(@"OK", @"")
+                                                                   otherButtonTitles:nil, nil];
+                    [errorAlertView show];
+                    
+                    //Add the login view controller as the root controller of the app window
+                    [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
+                    LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
+                    [self.window setRootViewController:loginVC];
+                    
+                }
+                else {
+                    // direct the user to the main client page controller if already logged in.
+                    [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
+                    [self.window setRootViewController:self.aBaseNavigationController];
+                    if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"NotificationDocId"]){
+                        
+                        NSLog(@"notification found");
+                        aDocumentViewController.documentId = [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDocId"];
+                        aDocumentViewController.documentPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"DocumentPathForNotification"];
+                        if([self.aBaseNavigationController.visibleViewController isKindOfClass:([LRDocumentViewController class])]) {
+                            [aDocumentViewController fetchDocument];
+                        }
+                        else {
+                            [self.aBaseNavigationController pushViewController:aDocumentViewController animated:TRUE];
+                        }
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"NotificationDocId"];
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DocumentPathForNotification"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                    }
+                }
                 
-                [self resetUserDefaultValues];
-                
+            } errorHandler:^(NSError *errorString) {
+                [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
                 UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                         message:@"Session expired"
+                                                                         message:[errorString localizedDescription]
                                                                         delegate:self
                                                                cancelButtonTitle:NSLocalizedString(@"OK", @"")
                                                                otherButtonTitles:nil, nil];
                 [errorAlertView show];
+                DLog(@"%@\t%@\t%@\t%@", [errorString localizedDescription], [errorString localizedFailureReason],
+                     [errorString localizedRecoveryOptions], [errorString localizedRecoverySuggestion]);
                 
-                //Add the login view controller as the root controller of the app window
-                [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
-                LRLoginViewController *loginVC = [[LRAppDelegate myStoryBoard] instantiateViewControllerWithIdentifier:NSStringFromClass([LRLoginViewController class])];
-                [self.window setRootViewController:loginVC];
-                
-            }
-            else {
-                // direct the user to the main client page controller if already logged in.
-                [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
-                [self.window setRootViewController:self.aBaseNavigationController];
-                if([[[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys] containsObject:@"NotificationDocId"]){
-                    
-                    NSLog(@"notification found");
-                    aDocumentViewController.documentId = [[NSUserDefaults standardUserDefaults] objectForKey:@"NotificationDocId"];
-                    aDocumentViewController.documentPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"DocumentPathForNotification"];
-                    if([self.aBaseNavigationController.visibleViewController isKindOfClass:([LRDocumentViewController class])]) {
-                        [aDocumentViewController fetchDocument];
-                    }
-                    else {
-                        [self.aBaseNavigationController pushViewController:aDocumentViewController animated:TRUE];
-                    }
-                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"NotificationDocId"];
-                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"DocumentPathForNotification"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                }
-            }
-            
-        } errorHandler:^(NSError *errorString) {
-            [LRUtility stopActivityIndicatorFromView:self.window.rootViewController.view];
-            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Leerink"
-                                                                     message:[errorString localizedDescription]
-                                                                    delegate:self
-                                                           cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                                                           otherButtonTitles:nil, nil];
-            [errorAlertView show];
-            DLog(@"%@\t%@\t%@\t%@", [errorString localizedDescription], [errorString localizedFailureReason],
-                 [errorString localizedRecoveryOptions], [errorString localizedRecoverySuggestion]);
-            
-        }];
+            }];
+        }
+
     }
-    //}
+    else
+    {
+        UIAlertView * alert =[[UIAlertView alloc ] initWithTitle:JAIL_BREAK_MESSAGE_TITLE
+                                                         message:JAIL_BREAK_MESSAGE
+                                                        delegate:self
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles:nil];
+        alert.tag=5000;
+        [alert show];
+    }
     
 }
 // reset all the values stored in NSUserDefaults when there is an internal user or if the user is logged out etc.

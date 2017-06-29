@@ -26,12 +26,15 @@
 #import <CoreData/CoreData.h>
 #import "AESCrypt.h"
 #import "UICKeyChainStore.h"
+#import "JBroken.h"
 #endif
 
 // Macro to enable log files
 #define ENABLE_DEVICE_LOGS 1
 
-#define SERVICE_URL_BASE @"portal.leerink.com"
+#define SERVICE_URL_BASE @"portalQA.leerink.com"
 #define PASS @"paSSw0ared"
 #define KEYCHAIN_SERVICE_NAME @"com.leerink.leerinkIOS"
 #define API_SERVICE_NAME @"iOSAppSvcsV1.4"
+#define JAIL_BREAK_MESSAGE @"This app is only supported on unmodified versions of iOS."
+#define JAIL_BREAK_MESSAGE_TITLE @"System Requirements"
