@@ -25,6 +25,8 @@
 #import "LRTermsAndConditionsViewController.h"
 #import "MediaManager.h"
 #import "LeerinkUpdater.h"
+#import "ISPCertificatePinning.h"
+#import "SSLPinsTestUtility.h"
 
 @implementation LRAppDelegate
 
@@ -91,6 +93,16 @@
 //DExt
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Create our SSL pins dictionnary for portalQA and portal
+    NSDictionary *domainsToPin = [SSLPinsTestUtility setupTestSSLPinsDictionnary];
+    if (domainsToPin == nil) {
+        NSLog(@"Failed to pin a certificate");
+    }
+    
+    // Save the SSL pins so that our session delegates automatically use them
+    if ([ISPCertificatePinning setupSSLPinsUsingDictionnary:domainsToPin] != YES) {
+        NSLog(@"Failed to pin the certificates");
+    }
     if(isDeviceJailbroken()==NO && isAppStoreVersion()==NO && isAppCracked()==NO)
     {
         [[CrashHelper sharedCrashHelper] checkForCrashes];

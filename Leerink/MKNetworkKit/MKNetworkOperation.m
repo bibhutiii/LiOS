@@ -24,7 +24,7 @@
 //  THE SOFTWARE.
 
 #import "MKNetworkKit.h"
-
+#import "ISPCertificatePinning.h"
 #import <ImageIO/ImageIO.h>
 
 #ifdef __OBJC_GC__
@@ -1144,22 +1144,31 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,        // 5
         [challenge.sender cancelAuthenticationChallenge:challenge];
       }
     }
-   //Commented to resolve veracode flaw
-   /* else if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust) {
+       else if (challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust) {
       
         if(challenge.previousFailureCount < 5) {
             
             self.serverTrust = challenge.protectionSpace.serverTrust;
             SecTrustResultType result;
+            NSString *domain = [[challenge protectionSpace] host];
             OSStatus trustEvalStatus=SecTrustEvaluate(self.serverTrust, &result);
             //Modified to resolve veracode error
             if (trustEvalStatus == errSecSuccess) {
                 if(result == kSecTrustResultProceed ||
                    result == kSecTrustResultUnspecified //The cert is valid, but user has not explicitly accepted/denied. Ok to proceed (Ch 15: iOS PTL :Pg 269)
                    ) {
-                    
+                    // Look for a pinned certificate in the server's certificate chain
+                    if ([ISPCertificatePinning verifyPinnedCertificateForTrust:self.serverTrust andDomain:domain]) {
+
                     [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
-                } else {
+                    }
+                    else {
+                        // The certificate wasn't found in the certificate chain; cancel the connection
+                        [[challenge sender] cancelAuthenticationChallenge: challenge];
+                    }
+                }
+                //Commented to resolve veracode flaw
+               /* else {
                     
                     // invalid or revoked certificate
                     if(self.shouldContinueWithInvalidCertificate) {
@@ -1169,7 +1178,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,        // 5
                         DLog(@"Certificate is invalid, continuing without credentials. Might result in 401 Unauthorized");
                         [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
                     }
-                }
+                }*/
             }
             else
             {
@@ -1179,7 +1188,7 @@ OSStatus extractIdentityAndTrust(CFDataRef inPKCS12Data,        // 5
             
             [challenge.sender cancelAuthenticationChallenge:challenge];
         }
-    } */
+    }
     else if (self.authHandler) {
       
       // forward the authentication to the view controller that created this operation

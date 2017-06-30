@@ -10,6 +10,12 @@
 		18A95F9F1E2E032E00AB86BE /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A95F9E1E2E032E00AB86BE /* CoreData.framework */; };
 		18A95FCD1E2F61AE00AB86BE /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A95FCC1E2F61AE00AB86BE /* DBManager.m */; };
 		18B6261F1F04DE3700D91E9F /* JBroken.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B6261E1F04DE3700D91E9F /* JBroken.m */; };
+		18B626271F062D4C00D91E9F /* ISPCertificatePinning.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B626221F062D4C00D91E9F /* ISPCertificatePinning.m */; };
+		18B626281F062D4C00D91E9F /* ISPPinnedNSURLConnectionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B626241F062D4C00D91E9F /* ISPPinnedNSURLConnectionDelegate.m */; };
+		18B626291F062D4C00D91E9F /* ISPPinnedNSURLSessionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B626261F062D4C00D91E9F /* ISPPinnedNSURLSessionDelegate.m */; };
+		18B6262C1F0648A300D91E9F /* SSLPinsTestUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B6262B1F0648A300D91E9F /* SSLPinsTestUtility.m */; };
+		18B6262F1F0653F600D91E9F /* portalqa.leerink.com.der in Resources */ = {isa = PBXBuildFile; fileRef = 18B6262E1F0653F600D91E9F /* portalqa.leerink.com.der */; };
+		18B626311F06573400D91E9F /* portal.leerink.com.der in Resources */ = {isa = PBXBuildFile; fileRef = 18B626301F06573400D91E9F /* portal.leerink.com.der */; };
 		18B6F54F1E5B096800478E5B /* CustomIOSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B6F54E1E5B096800478E5B /* CustomIOSAlertView.m */; };
 		18BA633E1E4DA150007217F7 /* AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA63371E4DA150007217F7 /* AESCrypt.m */; };
 		18BA633F1E4DA150007217F7 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BA63391E4DA150007217F7 /* NSData+Base64.m */; };
@@ -180,6 +186,16 @@
 		18A95FCC1E2F61AE00AB86BE /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		18B6261D1F04DE3700D91E9F /* JBroken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBroken.h; sourceTree = "<group>"; };
 		18B6261E1F04DE3700D91E9F /* JBroken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBroken.m; sourceTree = "<group>"; };
+		18B626211F062D4C00D91E9F /* ISPCertificatePinning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISPCertificatePinning.h; sourceTree = "<group>"; };
+		18B626221F062D4C00D91E9F /* ISPCertificatePinning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISPCertificatePinning.m; sourceTree = "<group>"; };
+		18B626231F062D4C00D91E9F /* ISPPinnedNSURLConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISPPinnedNSURLConnectionDelegate.h; sourceTree = "<group>"; };
+		18B626241F062D4C00D91E9F /* ISPPinnedNSURLConnectionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISPPinnedNSURLConnectionDelegate.m; sourceTree = "<group>"; };
+		18B626251F062D4C00D91E9F /* ISPPinnedNSURLSessionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISPPinnedNSURLSessionDelegate.h; sourceTree = "<group>"; };
+		18B626261F062D4C00D91E9F /* ISPPinnedNSURLSessionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISPPinnedNSURLSessionDelegate.m; sourceTree = "<group>"; };
+		18B6262A1F0648A300D91E9F /* SSLPinsTestUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSLPinsTestUtility.h; sourceTree = "<group>"; };
+		18B6262B1F0648A300D91E9F /* SSLPinsTestUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSLPinsTestUtility.m; sourceTree = "<group>"; };
+		18B6262E1F0653F600D91E9F /* portalqa.leerink.com.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = portalqa.leerink.com.der; sourceTree = "<group>"; };
+		18B626301F06573400D91E9F /* portal.leerink.com.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = portal.leerink.com.der; sourceTree = "<group>"; };
 		18B6F54D1E5B095900478E5B /* CustomIOSAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomIOSAlertView.h; sourceTree = "<group>"; };
 		18B6F54E1E5B096800478E5B /* CustomIOSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomIOSAlertView.m; sourceTree = "<group>"; };
 		18BA63361E4DA150007217F7 /* AESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AESCrypt.h; sourceTree = "<group>"; };
@@ -473,6 +489,21 @@
 			name = JailBreakDetection;
 			sourceTree = "<group>";
 		};
+		18B626201F06280B00D91E9F /* SSLPinning */ = {
+			isa = PBXGroup;
+			children = (
+				18B6262A1F0648A300D91E9F /* SSLPinsTestUtility.h */,
+				18B6262B1F0648A300D91E9F /* SSLPinsTestUtility.m */,
+				18B626211F062D4C00D91E9F /* ISPCertificatePinning.h */,
+				18B626221F062D4C00D91E9F /* ISPCertificatePinning.m */,
+				18B626231F062D4C00D91E9F /* ISPPinnedNSURLConnectionDelegate.h */,
+				18B626241F062D4C00D91E9F /* ISPPinnedNSURLConnectionDelegate.m */,
+				18B626251F062D4C00D91E9F /* ISPPinnedNSURLSessionDelegate.h */,
+				18B626261F062D4C00D91E9F /* ISPPinnedNSURLSessionDelegate.m */,
+			);
+			name = SSLPinning;
+			sourceTree = "<group>";
+		};
 		18B6F54C1E5B091B00478E5B /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
@@ -636,6 +667,9 @@
 		84D3C00919B86F9E007455F9 /* Leerink */ = {
 			isa = PBXGroup;
 			children = (
+				18B626301F06573400D91E9F /* portal.leerink.com.der */,
+				18B6262E1F0653F600D91E9F /* portalqa.leerink.com.der */,
+				18B626201F06280B00D91E9F /* SSLPinning */,
 				18B6261C1F04DB8100D91E9F /* JailBreakDetection */,
 				18B6F54C1E5B091B00478E5B /* CustomView */,
 				18BA63501E56BDE6007217F7 /* CheckUpdate */,
@@ -981,6 +1015,7 @@
 				18E146DC1E3604FC0071BF8E /* LeerinkLogo.png in Resources */,
 				848495171A03902A003CC384 /* Close-32.png in Resources */,
 				841BE6E01A40604E0084F1FD /* Cancel-32.png in Resources */,
+				18B626311F06573400D91E9F /* portal.leerink.com.der in Resources */,
 				8448B3AC1A4ABC0000EBBB86 /* Button_Stop_32.png in Resources */,
 				84D286F11A137E9000917ECD /* Leerink-White_200x44.png in Resources */,
 				84D3C0AB19B886A7007455F9 /* LRDocumentTypeTableViewCell.xib in Resources */,
@@ -1029,6 +1064,7 @@
 				84D22D5E19F5516600131FA2 /* MNMPullToRefreshIcon.png in Resources */,
 				84D3C00E19B86F9E007455F9 /* InfoPlist.strings in Resources */,
 				84D2D46919FFB493004C884C /* checkbox@2x.png in Resources */,
+				18B6262F1F0653F600D91E9F /* portalqa.leerink.com.der in Resources */,
 				8448B3AA1A4ABC0000EBBB86 /* Button_Pause_32.png in Resources */,
 				84D2D46C19FFCD84004C884C /* Document.plist in Resources */,
 				845F09591A23275600C66E27 /* simsg355q.wav in Resources */,
@@ -1083,10 +1119,12 @@
 				84BED45C19D5988C005C80F3 /* STTwitterOAuth.m in Sources */,
 				18BA63401E4DA150007217F7 /* NSData+CommonCrypto.m in Sources */,
 				84D3C05319B88657007455F9 /* LRLoginViewController.m in Sources */,
+				18B626271F062D4C00D91E9F /* ISPCertificatePinning.m in Sources */,
 				84D22D5119F548E700131FA2 /* AUIAutoGrowingTextView.m in Sources */,
 				84DC10C61A1B5A8D005CE54D /* NSDate+Helper.m in Sources */,
 				84BED45919D5988C005C80F3 /* STTwitterAPI.m in Sources */,
 				84BED46119D5988C005C80F3 /* STHTTPRequest.m in Sources */,
+				18B6262C1F0648A300D91E9F /* SSLPinsTestUtility.m in Sources */,
 				84D22D6019F5516600131FA2 /* MNMPullToRefreshManager.m in Sources */,
 				8484951A1A0395AC003CC384 /* UIView+MGBadgeView.m in Sources */,
 				84BED45519D5988C005C80F3 /* NSDateFormatter+STTwitter.m in Sources */,
@@ -1105,6 +1143,7 @@
 				84D3C11119B88A77007455F9 /* UITextField+previousNextToolBar.m in Sources */,
 				84093CA919E68B3300D20D19 /* LRTwitterListTweetsViewController.m in Sources */,
 				84D3C0AD19B886A7007455F9 /* NSDate+RFC1123.m in Sources */,
+				18B626291F062D4C00D91E9F /* ISPPinnedNSURLSessionDelegate.m in Sources */,
 				18BA63531E56BE10007217F7 /* LeerinkUpdater.m in Sources */,
 				84D3C0AE19B886A7007455F9 /* NSDictionary+RequestEncoding.m in Sources */,
 				84E0226819F4F0C80057DA6D /* LROpenLinksInWebViewController.m in Sources */,
@@ -1132,6 +1171,7 @@
 				84D3C0AC19B886A7007455F9 /* NSData+MKBase64.m in Sources */,
 				84D3C0B019B886A7007455F9 /* UIAlertView+MKNetworkKitAdditions.m in Sources */,
 				84BED45619D5988C005C80F3 /* NSError+STTwitter.m in Sources */,
+				18B626281F062D4C00D91E9F /* ISPPinnedNSURLConnectionDelegate.m in Sources */,
 				84DC159F1A1E1EE9005CE54D /* FPTouchView.m in Sources */,
 				84DC159D1A1E1EE9005CE54D /* FPPopoverController.m in Sources */,
 			);
